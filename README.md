@@ -14,3 +14,4 @@ In spite of the command *run*, the functions will be loaded into memory but not 
 Enter **SC** to get a list of shortcuts printed to the command history window.
 Enter **help PW** to have the documentation for the function **PW()** printed to the command history window.
  
+Videos that demonstrate representatives from each class of shortcut are planned. 
