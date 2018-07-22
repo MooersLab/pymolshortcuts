@@ -1,6 +1,6 @@
 # pymolshortcuts
 The repository ***pymolschortucts*** contains over 200 functions mapped to short-names that work like aliases. 
-These shortcuts include many other convienence functions that make work in PyMOL more productive.
+These shortcuts include many convienence functions that make work in PyMOL more productive.
 For example, the shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
 A browser tab opens for each search term to run multiple searches in parallel.
 
