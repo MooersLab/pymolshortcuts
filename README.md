@@ -3,7 +3,7 @@ The repository ***pymolschortucts*** contains over 200 functions mapped to short
 These shortcuts include many convienence functions that make work in PyMOL more productive.
 
 For example, the shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
-A browser tab opens for each search term to run multiple searches in parallel.
+A browser tab opens for each search term, so multiple searches are run in parallel.
 Other search functions can submit parallel searches of PubMed, google, BioAriv, ResearchGate, GitHub, and so on.
 
 Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL.
