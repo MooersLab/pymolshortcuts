@@ -18,7 +18,7 @@ The shortcuts work best on the top command line right below the command history 
  
 Videos that demonstrate representatives from each class of shortcut are planned. 
 
-# Visit websites with default web browser and submit searchs from PyMOL command line
+## Visit websites with default web browser and submit searchs from PyMOL command line
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       SC|Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
@@ -62,7 +62,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       WM|Open Web Mail in defualt browser. Adjust url for your institution. |
 |       WS|                Open National Weather Service website for locale.  |
 
-# Launch your favorite text editor from PyMOL
+## Launch your favorite text editor from PyMOL
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     atom|           Open file with the text editor Atom from within PyMOL.  |
@@ -76,14 +76,14 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |    pdbed|                            Open PDBEditor.jar from within PyMOL.  |
 |      st3|                           Open sublime text 3 from within PyMOL.  |
 
-# Launch other molecular graphics programs from PyMOL
+## Launch other molecular graphics programs from PyMOL
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |  chimera|                                  Open Chimera from within PyMOL.  |
 |     jmol|                                     Open Jmol from within PyMOL.  |
 |      vmd|                                      Open vmd from within PyMOL.  |
 
-# Molecules in standard orientation
+## Molecules in standard orientation
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      GGT|           WT human gamma glutamyl transpeptidase at 1.67 Angstrom |
@@ -99,7 +99,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      LU8| 16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |     LWC8|              16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom  |
 
-# Complex figures
+## Complex figures
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      BST|                             G2G3/U9U8 base step , PDB code 4PCO.  |
@@ -128,19 +128,19 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |  getchem|Create selections based on the biophysical properties of each residue. |
 | timcolor|Use Tim Mather's coloring scheme applied to the selections defined in getchem().  |
 
-# PyMOL to 3D PDFs
+## PyMOL to 3D PDFs
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |   ms2pdf|    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.  |
 |    topdf|   Send stick models as pse file from PyMOL through Jmol to 3DPDF. |
 
-# Horizontal scripting related
+## Horizontal scripting related
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |    rline|   Enter "help(rline)" to refresh memory of the readline commands. |
 |       rv|            Get the view settings in a compact format on one line. |
 
-# Many models (NMR and crystal packing)
+## Many models (NMR and crystal packing)
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      nmr|                         Show all of the models in nmr structure.  |
@@ -152,12 +152,12 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |    sc222|                          Make a lattice of 2 x 2 x 2 unit cells.  |
 |    sc333|                          Make a lattice of 3 x 3 x 3 unit cells.  |
 
-# File backups
+## File backups
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |  gitInit| Enter help(gitInit) to print steps for creating a git repository. |
 
-# Files with time stamps
+## Files with time stamps
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     spdb| Save pdb file with a time stamp in the filename to avoid overwriting work. |
