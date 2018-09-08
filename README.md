@@ -160,6 +160,6 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 # Files with time stamps
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
-|     spdb| Read as a commandline argument, a string as the filename stem or  |
-|     spng|Save png file with a time stamp included in the filename to avoid overwriting work.. |
-|     spse| Read as a commandline argument, a string as the filename stem or  |
+|     spdb| Save pdb file with a time stamp in the filename to avoid overwriting work. |
+|     spng| Save png file with a time stamp in the filename to avoid overwriting work. |
+|     spse| Save pse file with a time stamp in the filename to avoid overwriting work.  |
