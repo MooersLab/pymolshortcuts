@@ -103,7 +103,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Submit search terms using default web browser
 
-### (Send multiple searches with commands on one line sepearted by semicolons)
+Send multiple searches with multiple commands on one line separated by semicolons.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
@@ -115,7 +115,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       PM|                             Send search term or phrase to PubMed. |
 |      PML|             Submit a search term to the PyMOL Users Mail Service. |
 |       PW|                            Submit search term to the PyMOL Wiki.  |
-|       RG|                         Submit a search queruy to Research Gate.  |
+|       RG|                         Submit a search query to Research Gate.  |
 
 
 ## Open static websites with default web browser
@@ -126,7 +126,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      ALS|                        Open website of the Advanced Light Source. |
 |      APS|                       Open website of the Advanced Photon Source. |
 |       BC|Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source. |
-|       BD|Open the webpage of the SASBDB Small Angle Scattering Biological Data Bank.  |
+|       BD|Open the webpage of the  Small Angle Scattering Biological Data Bank (SASBDB).|
 |       CH|                                  Open the website of UCSF Chimera. |
 |    CHESS|                                       Open the website of CHESS.  |
 |     EMDB|            Open the website of the Electron Microscopy Data Bank. |
@@ -134,13 +134,13 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       GM|                                                      Open gmail.  |
 |       JM|                                               Open the Jmol wiki. |
 |     IUCR|                                Open website of the IUCr Journals. |
-|     LBSF|Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC. |
+|     LBSF|Open website of the Laboratory of Biomolecular Structure and Function (LBSF), the X-ray diffraction facility at OUHSC. |
 |      MCL|    Open website of Macromolecular Crystallograhy Laboratory at OU |
 |       MG|               Open website of the OUHSC molecular graphics course |
 |      NDB|                        Open website of the Nucleic Acid Database. |
 | notPyMOL|      Open website with list of other molecular graphics programs. |
 |   NSLSII|Open the website of the National Synchrotron Light Source (NSLSII) at Brookhaven National Laboratory. |
-|      PPC|        Open the website of the Protien Production Facility at OU. |
+|      PPC|        Open the website of the Protein Production Facility at OU. |
 |       PS|                       Open the home page of the Protein Soceity.  |
 |       RS|                             Open the homepage of the RNA Society. |
 |     SAXS|                         Open the webpage of SAXS links at OUHSC.  |
@@ -150,13 +150,13 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |     SSRL|            Open the webpage of SSRL Structural Molecular Biology. |
 |    SSURF|Open the webpage of the Society for Science at User Research Facilities. |
 |      VSC|Open Visual Studio Code Market to obtain extensions. Use Safari on the Mac. |
-|       WM|Open Web Mail in defualt browser. Adjust url for your institution. |
+|       WM|Open Web Mail in default browser. Adjust url for your institution. |
 |       WS|Open National Weather Service website. Adjust url for your locale. |
 
 
 ## Launch other molecular graphics programs from inside PyMOL
 
-### Edit paths to your executables
+Edit file paths to your executable files.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
@@ -166,7 +166,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Molecules in standard orientation
 
-### Requires internet
+Require internet connection to retrieve the coordinate and map files.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
@@ -177,7 +177,9 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       U8| 16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |      WC8|              16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom  |
 
-## Molecules in standard orientation (internet free, requires local copies of pdb and map files)
+## Molecules in standard orientation 
+
+Require local copies of pdb and map files.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
