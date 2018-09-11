@@ -1,4 +1,5 @@
 # pymolshortcuts
+
 This repository for ***pymolschortucts.py*** which contains 103 functions mapped to short-names that work like aliases. 
 These shortcuts include many convienence functions that make work in PyMOL more productive and fun!
 Some save hours of work assemblying a new script file while others save only a few minutes but lower motivation barriers.
@@ -17,37 +18,54 @@ You can instpect the results of the searches when there is a natural break in yo
 Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
 See the table below.
 
-Another class of shortcuts launch your favorite full-featured text editor from withn PyMOL. 
+Another class of shortcuts launch your favorite full-featured text editor from withn PyMOL.
 You have to install the text editor and edit the file path to the executable.
 
 Another class of shorcuts opens the manuscript or grant application that you are working on in Overleaf.
 You have to edit the script by pasting in the appropriate link to the specific document.
 
-Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL. 
-These save function names begin with **s**, (e.g., **spse filename** saves the current session with date and time to nearest second embedded in the file name). 
+Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL.
+These save function names begin with **s**, (e.g., **spse filename** saves the current session with date and time to nearest second embedded in the file name).
 You can delete the unwanted version(s) at a latter time. 
-These functions are useful if you do not have these files under version control.          
+These functions are useful if you do not have these files under version control.
 
 The functions are stored in a single file: pymolshortcuts.py
 
 Edit the filepaths to outside executables like text editors.
 The shortcuts work best on the top command line right below the command history window because you can copy and paste text onto this command line.
  
-Videos that demonstrate representatives from each class of shortcut are planned. 
+Videos that demonstrate representatives from each class of shortcut are planned.
 
-## List avialable shortcuts
+## List available shortcuts
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       SC|Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
 
-## Save files with time stamps
+## Show many models (NMR and crystal packing)
+
+| shortcut | Description |
+|:--------|:---------------------------------------------------------------|
+|      nmr|                         Show all of the models in nmr structure.  |
+|   nmroff|                     Hide all but first model in a nmr structure.  |
+|     rmsc|                          Remove supercell and the symmetry mates. |
+|    sc111|                          Make a lattice of 1 x 1 x 1 unit cells.  |
+|    sc221|                          Make a lattice of 2 x 2 x 1 unit cells.  |
+|    sc112|                          Make a lattice of 1 x 1 x 2 unit cells.  |
+|    sc222|                          Make a lattice of 2 x 2 x 2 unit cells.  |
+|    sc333|                          Make a lattice of 3 x 3 x 3 unit cells.  |
+
+
+## Save files with date and time in filename
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     spdb| Save pdb file with a time stamp in the filename to avoid overwriting previous work. |
 |     spng| Save png file with a time stamp in the filename to avoid overwriting previous work. |
 |     spse| Save pse file with a time stamp in the filename to avoid overwriting previous work.  |
 
-## Apply custom molecular representations not available in PyMOL
+## Make molecular representations that are not available in PyMOL
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       AO| Commands to make ambient occlusion image like those in Qutemole.  |
@@ -67,6 +85,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 | timcolor|Use Tim Mather's coloring scheme applied to the selections defined in getchem().  |
 
 ## Launch a full-featured text editor from PyMOL
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     atom|           Open file with the text editor Atom from within PyMOL.  |
@@ -79,10 +98,13 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      oni|                           Open the editor Oni from within PyMOL.  |
 |    pdbed|                            Open PDBEditor.jar from within PyMOL.  |
 |      st3|                           Open sublime text 3 from within PyMOL.  |
-|      vim|                         Open file with neovim from within PyMOL.  |
+|      vim|                         Open file with vim from within PyMOL.  |
 
 
-## Submit search terms using default web browser. Send multiple searches with commands on one line sepearted by semicolons.
+## Submit search terms using default web browser
+
+### (Send multiple searches with commands on one line sepearted by semicolons)
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       AX|                              Send search term or phrase to arXiv. |
@@ -97,6 +119,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 
 ## Open static websites with default web browser
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      ACA|Open the American Crystallographic Association Annual Meeting webpage. |
@@ -131,14 +154,20 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       WS|Open National Weather Service website. Adjust url for your locale. |
 
 
-## Launch other molecular graphics programs from inside PyMOL. Edit paths to your executables.
+## Launch other molecular graphics programs from inside PyMOL
+
+### Edit paths to your executables
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |  chimera|                         Open Chimera from within PyMOL.  |
 |     jmol|                            Open Jmol from within PyMOL.  |
 |      vmd|                             Open vmd from within PyMOL.  |
 
-## Molecules in standard orientation (requires internet)
+## Molecules in standard orientation
+
+### Requires internet
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      GGT|           WT human gamma glutamyl transpeptidase at 1.67 Angstrom |
@@ -149,6 +178,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      WC8|              16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom  |
 
 ## Molecules in standard orientation (internet free, requires local copies of pdb and map files)
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     LGGT|           WT human gamma glutamyl transpeptidase at 1.67 Angstrom |
@@ -158,7 +188,8 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      LU8| 16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |     LWC8|              16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom  |
 
-## Complex figures, require internet connection.
+## Complex figures, require internet connection
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      BST|                             G2G3/U9U8 base step , PDB code 4PCO.  |
@@ -167,6 +198,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 
 ## Complex figures, internet free (local copies of pdb files required)
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     LBST|                             G2G3/U9U8 base step , PDB code 4PCO.  |
@@ -175,6 +207,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 
 ## PyMOL to 3D PDFs
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |   ms2pdf|    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.  |
@@ -182,26 +215,15 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 
 ## Horizontal scripting related
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |    rline|   Enter "help(rline)" to refresh memory of the readline commands. |
 |       rv|   Get the view settings in a compact format on one line suitable for use on the command line. |
 
 
-## Show many any models (NMR and crystal packing)
-| shortcut | Description |
-|:--------|:---------------------------------------------------------------|
-|      nmr|                         Show all of the models in nmr structure.  |
-|   nmroff|                     Hide all but first model in a nmr structure.  |
-|     rmsc|                          Remove supercell and the symmetry mates. |
-|    sc111|                          Make a lattice of 1 x 1 x 1 unit cells.  |
-|    sc221|                          Make a lattice of 2 x 2 x 1 unit cells.  |
-|    sc112|                          Make a lattice of 1 x 1 x 2 unit cells.  |
-|    sc222|                          Make a lattice of 2 x 2 x 2 unit cells.  |
-|    sc333|                          Make a lattice of 3 x 3 x 3 unit cells.  |
-
-
 ## File backups
+
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |  gitInit| Enter help(gitInit) to print the steps for creating a git repository. |
