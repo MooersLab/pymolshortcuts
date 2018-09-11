@@ -336,20 +336,6 @@ def EP():
 cmd.extend('EP',EP)
 
 
-def GM():
-    '''
-    DESCRIPTION
-
-    Open gmail. 
-
-    USAGE
-
-    GM
-    '''
-    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
-cmd.extend('GM',GM)
-
-
 def GO(searchTerm="pymol",numHits="200"):
     '''
     DESCRIPTION
@@ -677,6 +663,34 @@ def VSC(fileName="bioSyntax"):
     return
 cmd.extend('VSC',VSC)
 
+############################### Webapps ########################################
+
+def gcal():
+    '''
+    DESCRIPTION
+
+    Open Google Calendar. 
+
+    USAGE
+
+    GM
+    '''
+    webbrowser.open('https://calendar.google.com/calendar/r')
+cmd.extend('gcal',gcal)
+
+
+def GM():
+    '''
+    DESCRIPTION
+
+    Open gmail. 
+
+    USAGE
+
+    GM
+    '''
+    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
+cmd.extend('GM',GM)
 
 
 def WM():
