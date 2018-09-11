@@ -47,7 +47,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |     spng| Save png file with a time stamp in the filename to avoid overwriting previous work. |
 |     spse| Save pse file with a time stamp in the filename to avoid overwriting previous work.  |
 
-# Custom molecular representations not available in PyMOL
+## Apply custom molecular representations not available in PyMOL
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       AO| Commands to make ambient occlusion image like those in Qutemole.  |
@@ -82,8 +82,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |      vim|                         Open file with neovim from within PyMOL.  |
 
 
-## Submit search terms from PyMOL command line using default web browser
-## (send mmultiple searches with commands on one line sepearted by semicolons)
+## Submit search terms using default web browser. Send multiple searches with commands on one line sepearted by semicolons.
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |       AX|                              Send search term or phrase to arXiv. |
@@ -97,7 +96,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       RG|                         Submit a search queruy to Research Gate.  |
 
 
-## Visit websites with default web browser or submit searchs from PyMOL command line
+## Open static websites with default web browser
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      ACA|Open the American Crystallographic Association Annual Meeting webpage. |
@@ -149,7 +148,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       U8| 16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |      WC8|              16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom  |
 
-## Molecules in standard orientation (internet free, requires local copy of file)
+## Molecules in standard orientation (internet free, requires local copies of pdb and map files)
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |     LGGT|           WT human gamma glutamyl transpeptidase at 1.67 Angstrom |
@@ -189,7 +188,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |       rv|   Get the view settings in a compact format on one line suitable for use on the command line. |
 
 
-## Many models (NMR and crystal packing)
+## Show many any models (NMR and crystal packing)
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
 |      nmr|                         Show all of the models in nmr structure.  |
