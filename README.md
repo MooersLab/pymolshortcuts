@@ -1,27 +1,27 @@
 # pymolshortcuts
 
 This repository for ***pymolschortucts.py*** which contains 103 functions mapped to short-names that work like aliases. 
-These shortcuts include many convienence functions that make work in PyMOL more productive and fun!
-Some save hours of work assemblying a new script file while others save only a few minutes but lower motivation barriers.
+These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
+Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-Add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml to load the functions in pymolshortcuts.py on startup of PyMOL.
+To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml file in your home directory to load the functions in pymolshortcuts.py on startup of PyMOL.
 In spite of the command *run*, the functions will be loaded into memory but not executed.
 Enter **SC** to get a list of shortcuts printed to the command history window.
-Enter **help PW** to print the documentation for the shortcut **PW** printed to the command history window.
-While most shortcuts are ready to use, some shortcuts require pasting of path names to executables on your computer.
+Enter **help PW** to print the documentation for the shortcut **PW** to the command history window.
+While most shortcuts are ready to use, some shortcuts require pasting of path names to the executables on your computer.
 
-For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecuale into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
+For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecule into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
 
 The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
-You can instpect the results of the searches when there is a natural break in your work in PyMOL.
+You can inspect the results of the searches when there is a natural break in your work in PyMOL.
 Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
 See the table below.
 
-Another class of shortcuts launch your favorite full-featured text editor from withn PyMOL.
+Another class of shortcuts launch your favorite full-featured text editor from within PyMOL.
 You have to install the text editor and edit the file path to the executable.
 
-Another class of shorcuts opens the manuscript or grant application that you are working on in Overleaf.
+Another class of shortcuts opens the manuscript or grant application that you are working on in Overleaf.
 You have to edit the script by pasting in the appropriate link to the specific document.
 
 Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL.
@@ -31,8 +31,8 @@ These functions are useful if you do not have these files under version control.
 
 The functions are stored in a single file: pymolshortcuts.py
 
-Edit the filepaths to outside executables like text editors.
-The shortcuts work best on the top command line right below the command history window because you can copy and paste text onto this command line.
+Edit the file paths to outside executables like text editors.
+The shortcuts work best on the command line below the command history window because you can copy and paste text onto this command line.
  
 Videos that demonstrate representatives from each class of shortcut are planned.
 
@@ -135,7 +135,7 @@ Send multiple searches with multiple commands on one line separated by semicolon
 |       JM|                                               Open the Jmol wiki. |
 |     IUCR|                                Open website of the IUCr Journals. |
 |     LBSF|Open website of the Laboratory of Biomolecular Structure and Function (LBSF), the X-ray diffraction facility at OUHSC. |
-|      MCL|    Open website of Macromolecular Crystallograhy Laboratory at OU |
+|      MCL|    Open website of Macromolecular Crystallography Laboratory at OU |
 |       MG|               Open website of the OUHSC molecular graphics course |
 |      NDB|                        Open website of the Nucleic Acid Database. |
 | notPyMOL|      Open website with list of other molecular graphics programs. |
@@ -212,8 +212,8 @@ Require local copies of pdb and map files.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
-|   ms2pdf|    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.  |
-|    topdf|   Send stick models as pse file from PyMOL through Jmol to 3DPDF. |
+|   ms2pdf|    Send molecular surface or ribbon cartoon from PyMOL to 3D-PDF.  |
+|    topdf|   Send stick models as pse file from PyMOL through Jmol to 3D-PDF. |
 
 
 ## Horizontal scripting related
@@ -228,4 +228,4 @@ Require local copies of pdb and map files.
 
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
-|  gitInit| Enter help(gitInit) to print the steps for creating a git repository. |
+|  gitInit| Enter **help(gitInit)** to print the steps for creating a git repository. |
