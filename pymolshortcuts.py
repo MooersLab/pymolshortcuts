@@ -110,7 +110,7 @@ def SC():
     GSM, google scholar multiple search terms
     JM, JMol
     LBSF, Laboratory of Molecular Biology at OUHSC
-    MCL, link to Macromolecular Crystallograhy Laboratory at OU
+    MCL, link to Macromolecular Crystallography Laboratory at OU
     MG, links for OUHSC molecular graphics course 
     NDB, Nucleic Acid Database 
     NSLSII, 
@@ -241,7 +241,7 @@ def AX(searchTerm="pymol"):
 
     Send search term or phrase to arXiv.
     The search phrase does not need to be enclosed in quotes. 
-    The default web brower is used. 
+    The default web browser is used. 
 
     USAGE
     
@@ -269,7 +269,7 @@ def BD():
     '''
     DESCRIPTION
     
-    Open the webpage of the SASBDB Small Angle Scattering Biological Data Bank. 
+    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
     '''
     webbrowser.open('https://www.sasbdb.org/')
 cmd.extend('BD',BD)
@@ -282,7 +282,7 @@ def BX(searchTerm="pymol"):
     Send search term or phrase to bioRxiv 
     which is maintained by Cold Spring Harbor Laboratory.
     The search phrase does not need to be enclosed in quotes. 
-    The default web brower is used. 
+    The default web browser is used. 
 
     USAGE
     
@@ -357,7 +357,7 @@ def GO(searchTerm="pymol",numHits="200"):
     Send search term or phrase Google in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
-    The default web brower is used. 
+    The default web browser is used. 
 
     USAGE
 
@@ -377,7 +377,7 @@ def GS(searchTerm="pymol"):
 
     Send search term or phrase to Google Scholar in default browser.
     The search phrase does not need to be enclosed in quotes. 
-    The default web brower is used. 
+    The default web browser is used. 
     The default search term is pymol.
 
     USAGE
@@ -388,7 +388,8 @@ def GS(searchTerm="pymol"):
 
     GS Linus Pauling
     '''
-    webbrowser.open('https://scholar.google.se/scholar?hl=en&q='+searchTerm)
+    url = 'https://scholar.google.se/scholar?hl=en&q='
+    webbrowser.open(url+searchTerm)
 cmd.extend('GS',GS)
 
 
@@ -407,14 +408,10 @@ def IUCR(searchTerm="pymol"):
     DESCRIPTION
 
     Open website of the IUCr Journals.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web brower is used. 
 
     USAGE
-    IUCR search term(s)
+    IUCR
 
-    EXAMPLE
-    IUCr molecular graphics
     '''
     webbrowser.open('https://journals.iucr.org/')
 cmd.extend('IUCR',IUCR)
@@ -433,7 +430,7 @@ def MCL():
     '''
     DESCRIPTION
     
-    Open website of Macromolecular Crystallograhy Laboratory at OU
+    Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma. 
     '''
     webbrowser.open('http://structuralbiology.ou.edu/mcl')
 cmd.extend('MCL',MCL)
@@ -443,7 +440,7 @@ def MG():
     '''
     DESCRIPTION
     
-    Open website of the OUHSC molecular graphics course
+    Open website of the OUHSC molecular graphics course.
     '''
     webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
 cmd.extend('MG',MG)
@@ -473,7 +470,7 @@ def NSLSII():
     '''
     DESCRIPTION
     
-    Open the website of the National Synchrotron Light Source (NSLSII) at Brookhaven National Laboratory.
+    Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
     '''
     webbrowser.open('https://www.bnl.gov/ps/')
 cmd.extend('NSLSII',NSLSII)
@@ -483,7 +480,7 @@ def PPC():
     '''
     DESCRIPTION
     
-    Open the website of the Protien Production Facility at OU.
+    Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
     '''
     webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
 cmd.extend('PPC',PPC)
@@ -493,7 +490,7 @@ def PDB(searchTerm="3fa0"):
     '''
     DESCRIPTION
     
-    Submit a term for searching the Protein Data Bank.
+    Submit a search term to the Protein Data Bank.
 
     USAGE:
     PBB 3fa0
@@ -509,7 +506,12 @@ def PML(searchTerm="3d_pdf"):
     Submit a search term to the PyMOL Users Mail Service.
 
     USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
     PML session file
+
+    Multiple term search: 
+    PML text editor; PML 3d pdf; PML black and white cartoon;
     '''
     webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
 cmd.extend('PML',PML)
@@ -520,14 +522,19 @@ def PM(searchTerm="pymol"):
     DESCRIPTION
 
     Send search term or phrase to PubMed.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web brower is used. 
+    The default web browser is used.
+    The multi word search terms do not need to be enclosed in quotes. 
+    Takes one search term but multiple commands can be submitted at once (see below).
 
     USAGE
-    PM search term(s)
+    PM search term
 
-    EXAMPLE
+    EXAMPLES
+    single
     PM molecular graphics
+
+    Multiple search:
+    PM molecular graphics;  PM molecular representation; PM ambient occlusion
     '''
     webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
 cmd.extend('PM',PM)
@@ -561,7 +568,7 @@ def RG(searchTerm='best molecular graphics program'):
     '''
     DESCRIPTION
     
-    Submit a search queruy of Research Gate. 
+    Submit a search query of Research Gate. 
 
     Usage:
 
@@ -608,7 +615,7 @@ def SBGRID():
     '''
     DESCRIPTION
     
-    Open the webpage of the SBGRID YouTube Channel.
+    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
     
     '''
     webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
@@ -619,7 +626,7 @@ def SciPy18():
     '''
     DESCRIPTION
     
-    Open the webpage of the SciPy 2018 YouTube Channel.
+    Open the SciPy 2018 YouTube Channel.
     
     '''
     webbrowser.open('https://www.youtube.com/playlist?list=PLYx7XA2nY5Gd-tNhm79CNMe_qvi35PgUR')
@@ -640,13 +647,13 @@ def SSURF():
     '''
     DESCRIPTION
     
-    Open the webpage of the Society for Science at User Research Facilities.
+    Open the webpage of the Society for Science at User Research Facilities (SSURF).
     SSURF is nonprofit organization in the US that serves as the
     nexus for users and user executive committees at
-    national laboratories. SUURF is not a lobbying ogranization, but
+    national laboratories. SUURF is not a lobbying organization, but
     it help organize visits to Congress to educate legislators about
     the importance of national laboratories in science. Membership
-    is free of students. The annual fee is nominial for PIs. 
+    is free of students. The annual fee is nominal for PIs. 
     '''
     webbrowser.open('http://www.ssurf.org/')
 cmd.extend('SSURF',SSURF)
@@ -761,7 +768,7 @@ def emacs(fileName="testme.pml"):
     nv test.pml
     
     Currently opening neovim in new shell and testme.pml in buffer 2. 
-    In Normal mode, enter :bnext to switch to second buffer.
+    In Normal mode, enter :.bnext to switch to second buffer.
     '''
     arg = ("/opt/local/bin/emacs " + fileName)
     arg2 = ('--file ' + fileName)
@@ -830,29 +837,29 @@ cmd.extend('mate',mate)
 
 
 
-def nv(fileName="testme.pml"):
-    '''
-    DESCRIPTION
+# def nv(fileName="testme.pml"):
+#     '''
+#     DESCRIPTION
 
-    Open file with neovim from within PyMOL. 
-    Adjust path to neovim on your computer as needed.
+#     Open file with neovim from within PyMOL. 
+#     Adjust path to neovim on your computer as needed.
 
-    USAGE
-    nv test.pml
+#     USAGE
+#     nv test.pml
     
-    Currently opening neovim in new shell and testme.pml in buffer 2. 
-    In Normal mode, enter :bnext to switch to second buffer.
-    '''
-    arg = ("/opt/local/bin/nvim " + fileName)
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
-    #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
-    #process.wait()
-    ########subprocess.call(arg,shell=True)
-    #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
-    #print handle.stdout.read()
-    #handle.flush()
-    return
-cmd.extend('nv',nv)
+#     Currently opening neovim in new shell and testme.pml in buffer 2. 
+#     In Normal mode, enter :bnext to switch to second buffer.
+#     '''
+#     arg = ("/opt/local/bin/nvim " + fileName
+#     subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+#     #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
+#     #process.wait()
+#     ########subprocess.call(arg,shell=True)
+#     #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
+#     #print handle.stdout.read()
+#     #handle.flush()
+#     return
+# cmd.extend('nv',nv)
 
 
 
@@ -909,7 +916,55 @@ def st3(fileName="test.pml"):
     return
 cmd.extend('st3',st3)
 
-############################### End Editors ########################################
+
+def vim(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open vim from within PyMOL. 
+    Adjust file path to vim on your computer.
+
+    USAGE
+    vim testme.pml
+    '''
+    arg = ("/opt/local/bin/vim " + fileName)
+    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
+    return
+cmd.extend('vim',vim)
+
+
+############################### Terminal windows ########################################
+
+def iterm():
+    '''
+    DESCRIPTION
+
+    Open iTerm2 window on MacOS. 
+
+    USAGE
+    iterm
+    '''
+    subprocess.call(['open', '-a', 'iTerm'])
+    return
+cmd.extend('iterm',iterm)
+
+def term():
+    '''
+    DESCRIPTION
+
+    Open a Terminal window on MacOS. 
+
+    USAGE
+    iterm
+    '''
+    subprocess.call(['open', '-a', 'Terminal'])
+    return
+cmd.extend('term',term)
+
+
+
+
+
 
 ############################### Molecular Graphics ########################################
 
@@ -935,7 +990,7 @@ def jmol(fileName="test.pdb"):
     DESCRIPTION
 
     Open Jmol from within PyMOL. 
-    Adjust url for your location.
+    Adjust file path for your location of Jmol.
 
     USAGE
     jmol test.pdb
@@ -1040,7 +1095,9 @@ def GU():
     
     USAGE
 
-    Type 'GU' to activate. Type 'help GU' to see this documentation
+    Type 'GU' to activate. 
+    
+    Type 'help GU' to see this documentation
     printed to the command history window. Select from the command
     history individual lines of code to build a new script. Select the
     hortizontal script at the bottom if retaining most of the commands
@@ -1117,8 +1174,8 @@ def N9():
     '''
     DESCRIPTION
     
-    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
-    4dgr. The biological unit has four copies of the asymmetric unit.
+    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
+    The biological unit has four copies of the asymmetric unit.
     View is down the four-fold axis. Requires the quat.py script by
     Thomas Holder and available at the PyMOL Wiki page. Store quat.py
     in ~/mg18OU.
