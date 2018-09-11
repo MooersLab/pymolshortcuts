@@ -1,21 +1,35 @@
 # pymolshortcuts
-The repository ***pymolschortucts*** contains 103 functions mapped to short-names that work like aliases. 
+This repository for ***pymolschortucts.py*** which contains 103 functions mapped to short-names that work like aliases. 
 These shortcuts include many convienence functions that make work in PyMOL more productive and fun!
-For example, the shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
-A browser tab opens for each search term, so multiple searches are run in parallel.
-Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
-See the table below.
-
-Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL. 
-These save function names begin with **s**, e.g., **spse filename** saves the current session with a timestamp embedded in the file name. 
-You can delete the unwanted versions at a latter time. 
-These functions are useful if you do not have these files under version control.          
-
-The functions are stored in a single file: pymolshortcuts.py
+Some save hours of work assemblying a new script file while others save only a few minutes but lower motivation barriers.
+You do not need to understand Python to be able run the script.
 Add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml to load the functions in pymolshortcuts.py on startup of PyMOL.
 In spite of the command *run*, the functions will be loaded into memory but not executed.
 Enter **SC** to get a list of shortcuts printed to the command history window.
-Enter **help PW** to have the documentation for the function **PW()** printed to the command history window.
+Enter **help PW** to print the documentation for the shortcut **PW** printed to the command history window.
+While most shortcuts are ready to use, some shortcuts require pasting of path names to executables on your computer.
+
+For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecuale into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
+
+The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
+A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
+You can instpect the results of the searches when there is a natural break in your work in PyMOL.
+Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
+See the table below.
+
+Another class of shortcuts launch your favorite full-featured text editor from withn PyMOL. 
+You have to install the text editor and edit the file path to the executable.
+
+Another class of shorcuts opens the manuscript or grant application that you are working on in Overleaf.
+You have to edit the script by pasting in the appropriate link to the specific document.
+
+Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL. 
+These save function names begin with **s**, (e.g., **spse filename** saves the current session with date and time to nearest second embedded in the file name). 
+You can delete the unwanted version(s) at a latter time. 
+These functions are useful if you do not have these files under version control.          
+
+The functions are stored in a single file: pymolshortcuts.py
+
 Edit the filepaths to outside executables like text editors.
 The shortcuts work best on the top command line right below the command history window because you can copy and paste text onto this command line.
  
@@ -191,4 +205,4 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 ## File backups
 | shortcut | Description |
 |:--------|:---------------------------------------------------------------|
-|  gitInit| Enter help(gitInit) to print steps for creating a git repository. |
+|  gitInit| Enter help(gitInit) to print the steps for creating a git repository. |
