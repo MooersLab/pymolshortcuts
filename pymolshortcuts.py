@@ -626,7 +626,25 @@ def SSRL():
     Open the webpage of SSRL Structural Molecular Biology.
     '''
     webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
-cmd.extend('SSRL',SSRL)
+cmd.extend('SSRL',SSRL)                                                                                               
+
+
+def SO(searchTerm="3d_pdf"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Stackoverflow.
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SO session file
+
+    Multiple term search: 
+    SO text editor; SO 3d pdf; SO black and white cartoon;
+    '''
+    webbrowser.open('https://stackoverflow.com/search?q='+searchTerm)
+cmd.extend('SO',SO)
 
 
 def SSURF():
@@ -662,6 +680,27 @@ def VSC(fileName="bioSyntax"):
     webbrowser.open('https://marketplace.visualstudio.com/search?target=VSCode&category=All%20categories&sortBy=Downloads')
     return
 cmd.extend('VSC',VSC)
+
+
+
+def UT(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+
+    Submit search term to YouTube.
+
+    USAGE
+    
+    Single search:
+    UT pymol
+
+    Multiple searches:
+    UT pymol; UT pymol scripts; UT pymol movies; UT pymol ray tracing
+    '''
+    webbrowser.open('https://www.youtube.com/results?search_query='+searchTerm)
+    return
+cmd.extend('UT',UT)
+
 
 ############################### Webapps ########################################
 
