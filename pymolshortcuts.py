@@ -3574,6 +3574,330 @@ cmd.extend("sc333", sc333)
 
 
 ############################# File saving and archiving ###########
+
+def saln(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    saln currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".aln") 
+cmd.extend('saln',saln)
+
+
+def scif(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    scif currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".cif") 
+cmd.extend('scif',scif)
+
+
+def sccp4(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a ccp4 file (CCP4 electron density map file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    sccp4 currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".ccp4") 
+cmd.extend('sccp4',sccp4)
+
+
+def sdae(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a dae file (Collada File) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    sdae currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".dae") 
+cmd.extend('sdae',sdae)
+
+
+def sdat(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save dat file (output data file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".dat") 
+cmd.extend('sdat',sdat)
+
+
+def sfasta(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a fasta file (sequence file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    sfasta currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".fasta") 
+cmd.extend('sfasta',sfasta)
+
+
+def sidtf(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a idtf file (Intermediate Data Text Format) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    sidtf currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".idtf") 
+cmd.extend('sidtf',sidtf)
+
+
+def smae(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mae file (Maestro file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smoe currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mae") 
+cmd.extend('smae',smae)
+
+
+def smmd(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smmd currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mmd") 
+cmd.extend('smmd',smmd)
+
+
+def smmod(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smmd currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mmod") 
+cmd.extend('smmod',smmod)
+
+
+def spmo(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save pmo file (XYZ, binary format file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spmo currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pmo") 
+cmd.extend('spmo',spmo)
+
+
+def smoe(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save moe file (Molecular Operating Environment) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smoe currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".moe") 
+cmd.extend('smoe',smoe)
+
+
+def smol(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mol file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mol") 
+cmd.extend('smol',smol)
+
+
+def smol2(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mol2 (Sybyl file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol2 currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mol2") 
+cmd.extend('smol2',smol2)
+
+
+def smtl(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save mtl (Wavefront Material file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smtl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mtl") 
+cmd.extend('smtl',smtl)
+
+
+def sobj(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save obj file (Wavefront mesh file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".obj") 
+cmd.extend('sobj',sobj)
+
+
+def sout(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save out file (output data file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".out") 
+cmd.extend('sout',sout)
+
+
 def spdb(stemName="saved"):
     """
     DESCRIPTION
@@ -3593,12 +3917,50 @@ def spdb(stemName="saved"):
 cmd.extend('spdb',spdb)
 
 
+def spkl(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a pkl file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spkl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pkl") 
+cmd.extend('spkl',spkl)
+
+
+def spkla(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a pkla file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spkl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pkla") 
+cmd.extend('spkla',spkla)
+
+
 
 def spng(stemName="saved"):
     """
     DESCRIPTION
 
-    Save png file with a time stamp included in the filename to avoid overwriting work..
+    Save png file with a time stamp included in the filename to avoid overwriting work.
     Read as a commandline argument, a string as the filename stem or 
     use the default filename stem "saved".
 
@@ -3612,6 +3974,44 @@ def spng(stemName="saved"):
     cmd.save(stemName+s+".png") 
 cmd.extend('spng',spng)
 
+
+def spov(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save pov (POV-ray tracing file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spov currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pov") 
+cmd.extend('spov',spov)
+
+
+
+def spqr(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save pqr file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spng currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pqr") 
+cmd.extend('spqr',spqr)
 
 
 def spse(stemName="saved"):
@@ -3630,6 +4030,47 @@ def spse(stemName="saved"):
     s = str(DT) 
     cmd.save(stemName+s+".pse") 
 cmd.extend('spse',spse)
+
+
+def ssdf(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save sdf file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".sdf") 
+cmd.extend('ssdf',ssdf)
+
+
+def swrl(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save wrl (VRML 2 file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    swrl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".wrl") 
+cmd.extend('swrl',swrl)
+
+
+
 
 
 
