@@ -288,11 +288,18 @@ def BX(searchTerm="pymol"):
     
     BX search term(s)
 
-    EXAMPLE
+    EXAMPLES
+
+    Single search:
 
     BX molecular graphics
+
+    Multiple search:
+
+    BX molecular graphics; BX pymol
     '''
-    webbrowser.open('https://www.biorxiv.org/search/'+searchTerm)
+    url = 'https://www.biorxiv.org/search/'
+    webbrowser.open(url+searchTerm)
 cmd.extend('BX',BX)
 
 
@@ -336,6 +343,48 @@ def EP():
 cmd.extend('EP',EP)
 
 
+def GB(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to Google Books in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
+
+    USAGE
+
+    GB search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GB pymol
+    '''
+    webbrowser.open('https://www.google.com/search?tbm=bks&q='+searchTerm)
+cmd.extend('GB',GB)
+
+
+def GH(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to GitHub in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
+
+    USAGE
+
+    GH search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GH pymol
+    '''
+    webbrowser.open('https://www.github.com/search?q='+searchTerm)
+cmd.extend('GH',GH)
+
+
 def GO(searchTerm="pymol",numHits="200"):
     '''
     DESCRIPTION
@@ -370,13 +419,44 @@ def GS(searchTerm="pymol"):
 
     GS search term(s)
 
-    EXAMPLE
+    EXAMPLES
+    Single search phrase:
 
     GS Linus Pauling
+
+    Multiple search terms:
+
+    GS Linus Pauling; GS Francis Crick; GS Alexander Rich
     '''
     url = 'https://scholar.google.se/scholar?hl=en&q='
     webbrowser.open(url+searchTerm)
 cmd.extend('GS',GS)
+
+def GV(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to Google Videos in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
+    The default search term is pymol.
+
+    USAGE
+
+    GV search term(s)
+
+    EXAMPLES
+    Single search phrase:
+
+    GV Linus Pauling
+
+    Multiple search terms:
+
+    GV Linus Pauling; GS Francis Crick; GS Alexander Rich
+    '''
+    url = 'https://www.google.com/search?q=video+'
+    webbrowser.open(url+searchTerm)
+cmd.extend('GV',GV)
 
 
 def JM():
@@ -402,6 +482,7 @@ def IUCR(searchTerm="pymol"):
     webbrowser.open('https://journals.iucr.org/')
 cmd.extend('IUCR',IUCR)
 
+
 def LBSF():
     '''
     DESCRIPTION
@@ -412,6 +493,135 @@ def LBSF():
 cmd.extend('LBSF',LBSF)
 
 
+def MA(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+
+    Send search term to all searchable websites in pymolshortcuts:
+
+    arXiv
+    bioRxiv
+    GitHub
+    Google
+    Google Books
+    Google Scholar
+    Google Video
+    PBD
+    PubMed
+    Pymol Mailing List
+    Pymol Wiki
+    Research Gate
+    Science Direct
+    Springer
+    Source Forge
+    Stackoverflow
+
+
+    Example
+
+    MA pymol plugin
+    '''
+    AX(searchTerm)
+    BX(searchTerm)
+    GB(searchTerm)
+    GH(searchTerm)
+    GO(searchTerm)
+    GS(searchTerm)
+    GV(searchTerm)
+    PDB(searchTerm)
+    PM(searchTerm)
+    PML(searchTerm)
+    PW(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SF(searchTerm)
+    SO(searchTerm)
+    SP(searchTerm)
+cmd.extend('MA',MA)
+
+
+def MB(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+
+    Send search term to search multiple sites for term in books:
+
+    Google Books
+    Science Direct
+    Springer
+
+    Example
+
+    MB pymol plugin
+    '''
+    GB(searchTerm)
+    SD(searchTerm)
+    SP(searchTerm)
+cmd.extend('MB',MB)
+
+
+def MC(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+
+    Send search term to search ten core websites in pymolshortcuts:
+
+    bioRxiv
+    GitHub
+    Google
+    Google Scholar
+    PubMed
+    Pymol Mailing List
+    Pymol Wiki
+    Research Gate
+    Science Direct
+    Stackoverflow
+
+    Example
+
+    MA pymol plugin
+    '''
+    BX(searchTerm)
+    GH(searchTerm)
+    GO(searchTerm)
+    GS(searchTerm)
+    PM(searchTerm)
+    PML(searchTerm)
+    PW(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SF(searchTerm)
+cmd.extend('MC',MC)
+
+
+def MM(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+
+    Send search term to search for manuscripts in pymolshortcuts:
+
+    arXiv
+    bioRxiv
+    Google Scholar
+    PubMed
+    Research Gate
+    Science Direct
+    Springer
+
+    Example
+
+    MM pymol plugin
+    '''
+    AX(searchTerm)
+    BX(searchTerm)
+    GS(searchTerm)
+    PM(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SP(searchTerm)
+cmd.extend('MM',MM)
+
+
 def MCL():
     '''
     DESCRIPTION
@@ -420,6 +630,8 @@ def MCL():
     '''
     webbrowser.open('http://structuralbiology.ou.edu/mcl')
 cmd.extend('MCL',MCL)
+
+
 
 
 def MG():
@@ -596,7 +808,6 @@ def SB():
 cmd.extend('SB',SB)
 
 
-
 def SBGRID():
     '''
     DESCRIPTION
@@ -619,6 +830,46 @@ def SciPy18():
 cmd.extend('SciPy18',SciPy18)
 
 
+def SD(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Science Direct.
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SD session file
+
+    Multiple term search: 
+    SD text editor; SD 3d pdf; SD black and white cartoon;
+    '''
+    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
+    url2 = '&show=100&sortBy=relevance'
+    webbrowser.open(url1+searchTerm+url2)
+cmd.extend('SP',SP)
+
+
+def SP(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Springer Books
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SP session file
+
+    Multiple term search: 
+    SP text editor; SP 3d pdf; SP black and white cartoon;
+    '''
+    url1 = 'https://www.springer.com/gp/search?query='
+    url2 = '&submit=Submit+Query'
+    webbrowser.open(url1+searchTerm+url2)
+cmd.extend('SP',SP)
+
+
 def SSRL():
     '''
     DESCRIPTION
@@ -627,6 +878,27 @@ def SSRL():
     '''
     webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
 cmd.extend('SSRL',SSRL)                                                                                               
+
+
+def SF(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+    
+    Send search term to sourceforge.
+
+    USAGE
+
+    Single search:
+    
+    SF pymol
+
+    Multiple search: 
+
+    SF pymol; SF jmol; 
+    '''
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
+cmd.extend('SF',SF)
 
 
 def SO(searchTerm="3d_pdf"):
@@ -643,7 +915,8 @@ def SO(searchTerm="3d_pdf"):
     Multiple term search: 
     SO text editor; SO 3d pdf; SO black and white cartoon;
     '''
-    webbrowser.open('https://stackoverflow.com/search?q='+searchTerm)
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
 cmd.extend('SO',SO)
 
 
