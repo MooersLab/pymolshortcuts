@@ -1,6 +1,6 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 131 functions mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py*** which contains 141 functions mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
