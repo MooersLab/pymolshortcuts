@@ -52,7 +52,7 @@ from __future__ import division
   Oklahoma City, OK, USA 73104
 
 """ 
-import webbrowser, datetime, numpy, subprocess
+import webbrowser, datetime, numpy, subprocess, bs4, requests
 from pymol import cmd, stored, cgo, xray
 from math import cos, sin, radians, sqrt
 # from subprocess import *
@@ -406,6 +406,54 @@ def GO(searchTerm="pymol",numHits="200"):
 cmd.extend('GO',GO)
 
 
+def GOX(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase Google in default browser and open in top 5 results in new tab.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    Each hit will be opened in a separate tab thereby saving a time consuming step.
+    If the number of results is fewer than the number requested,
+    all of the results will be shown.
+
+    The default web browser is used. 
+
+    Requires the Python modules requests and beautifulsoup4 (bs4).
+    They may already be available to open source PyMOL, but they
+    must be installed for the proprietary PyMOL. Use the following command
+    from a terminal window outside of PyMOL:
+
+    conda install requests beautifulsoup4
+
+    You can launch this command from the commandline in PyMOL, but 
+    the execution of the install can be slow and will tie up your
+    PyMOL session for 10-20 minutes. 
+
+    USAGE
+
+    GO search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GO Nobel Prize in Chemistry, 5
+    '''
+    print 'Googling...'  # display text while downloading the Google page
+    res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
+cmd.extend('GOX',GOX)
+
+
+
+
+
+
+
 def GS(searchTerm="pymol"):
     '''
     DESCRIPTION
@@ -515,7 +563,6 @@ def MA(searchTerm='pymol'):
     Springer
     Source Forge
     Stackoverflow
-
 
     Example
 
@@ -631,9 +678,6 @@ def MCL():
     webbrowser.open('http://structuralbiology.ou.edu/mcl')
 cmd.extend('MCL',MCL)
 
-
-
-
 def MG():
     '''
     DESCRIPTION
@@ -672,16 +716,6 @@ def NSLSII():
     '''
     webbrowser.open('https://www.bnl.gov/ps/')
 cmd.extend('NSLSII',NSLSII)
-
- 
-def PPC():
-    '''
-    DESCRIPTION
-    
-    Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
-    '''
-    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
-cmd.extend('PPC',PPC)
 
 
 def PDB(searchTerm="3fa0"):
@@ -736,6 +770,16 @@ def PM(searchTerm="pymol"):
     '''
     webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
 cmd.extend('PM',PM)
+
+
+def PPC():
+    '''
+    DESCRIPTION
+    
+    Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
+    '''
+    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
+cmd.extend('PPC',PPC)
 
 
 def PS():
@@ -847,7 +891,28 @@ def SD(searchTerm="pymol"):
     url1 = 'https://www.sciencedirect.com/search/advanced?qs='
     url2 = '&show=100&sortBy=relevance'
     webbrowser.open(url1+searchTerm+url2)
-cmd.extend('SP',SP)
+cmd.extend('SD',SD)
+
+
+def SF(searchTerm='pymol'):
+    '''
+    DESCRIPTION
+    
+    Send search term to sourceforge.
+
+    USAGE
+
+    Single search:
+    
+    SF pymol
+
+    Multiple search: 
+
+    SF pymol; SF jmol; 
+    '''
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
+cmd.extend('SF',SF)
 
 
 def SP(searchTerm="pymol"):
@@ -880,25 +945,7 @@ def SSRL():
 cmd.extend('SSRL',SSRL)                                                                                               
 
 
-def SF(searchTerm='pymol'):
-    '''
-    DESCRIPTION
-    
-    Send search term to sourceforge.
 
-    USAGE
-
-    Single search:
-    
-    SF pymol
-
-    Multiple search: 
-
-    SF pymol; SF jmol; 
-    '''
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-cmd.extend('SF',SF)
 
 
 def SO(searchTerm="3d_pdf"):
