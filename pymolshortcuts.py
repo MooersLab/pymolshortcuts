@@ -406,7 +406,7 @@ def GO(searchTerm="pymol",numHits="200"):
 cmd.extend('GO',GO)
 
 
-def GOX(searchTerm="pymol",numHits="5"):
+def GON(searchTerm="pymol",numHits="5"):
     '''
     DESCRIPTION
 
@@ -432,11 +432,18 @@ def GOX(searchTerm="pymol",numHits="5"):
 
     USAGE
 
-    GO search term(s), number of hits to returned
+    GON search term(s), number of hits to returned
+
+    If the second argument is not given, the default value is used.
 
     EXAMPLE
 
-    GO Nobel Prize in Chemistry, 5
+    GON Nobel Prize in Chemistry, 7
+
+    TBD:
+
+    Print message when the last page has finished loading.
+
     '''
     print 'Googling...'  # display text while downloading the Google page
     res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
@@ -446,7 +453,7 @@ def GOX(searchTerm="pymol",numHits="5"):
     numOpen = min(numHits, len(linkElems))
     for i in range(numOpen):
         webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
-cmd.extend('GOX',GOX)
+cmd.extend('GON',GON)
 
 
 
