@@ -1466,6 +1466,26 @@ def atom(fileName="test.pml"):
 cmd.extend('atom',atom)
 
 
+def bbedit(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with the text editor bbedit from within PyMOL. 
+    Adjust the path as needed for your system.
+
+    USAGE
+    bbedit test.pml
+
+    Note that Atom is slow to start. 
+    You might want to keep it open all of the time!
+    Consider Sublime Text 3 or Visual Code Studio which startup are faster. 
+    '''
+    arg = ("/usr/local/bin/bbedit " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('bbedit',bbedit)
+
+
 def code(fileName="test.pml"):
     '''
     DESCRIPTION
@@ -1566,6 +1586,23 @@ def mate(fileName="test.pml"):
     subprocess.call(arg,shell=True)
     return
 cmd.extend('mate',mate)
+
+
+def notepadpp(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with notepadpp (Mac OS only) from within PyMOL. 
+    Adjust path to notepadpp on your computer as needed.
+
+    USAGE
+    
+    notepadpp test.pml
+    '''
+    arg = ("/Applications/Notepad++7.app " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('notepadpp',notepadpp)
 
 
 def nv(fileName="testme.pml"):
@@ -1684,6 +1721,57 @@ def word(fileName="Script.docx"):
     subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName])
     return
 cmd.extend('word',word)
+
+
+############################### Open data analysis programs ########################################
+
+#category: Open data analysis programs
+
+def cranR():
+    '''
+    DESCRIPTION
+
+    Open the Cran R from within PyMOL. 
+
+    USAGE
+        cranR
+    '''
+    arg = ("/usr/local/bin/R")
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('cranR',cranR)
+
+
+def JASP():
+    '''
+    DESCRIPTION
+
+    Open the JASP from within PyMOL. 
+    The is an editor based on JASP.
+
+    USAGE
+        JASP
+    '''
+    arg = ("/Applications/Jasp.app/Contents/MacOS/JASP " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('cranR',cranR)
+
+
+def JMP():
+    '''
+    DESCRIPTION
+
+    Open the JMP from within PyMOL. 
+
+    USAGE
+        JMP
+    '''
+    arg = ("/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP")
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('JMP',JMP)
+
 
 
 ############################### Terminal windows ########################################
@@ -3430,6 +3518,54 @@ cmd.extend('LNA',LNA)
     
 
 
+
+
+######################## Re-orient molecule ##############################
+
+#category: Re-orient molecule
+
+def oy():
+    '''
+    DESCRIPTION
+
+    Align long axis of molecule along z-axis. 
+    '''
+    cmd.orient(); 
+    cmd.turn('y',90) 
+cmd.extend("oy",oy)
+
+
+def omxy():
+    '''
+    DESCRIPTION
+
+    Align long axis of molecule along minus x-y axis. 
+    '''
+    cmd.orient(); 
+    cmd.turn('z',315) 
+cmd.extend("omxy",omxy)
+
+
+def oxy():
+    '''
+    DESCRIPTION
+
+    Align long axis of molecule along x-y axis. 
+    '''
+    cmd.orient(); 
+    cmd.turn('z',225) 
+cmd.extend("oxy",oxy)
+
+
+def oz():
+    '''
+    DESCRIPTION
+
+    Align long axis of molecule along y-axis. 
+    '''
+    cmd.orient(); 
+    cmd.turn('z',270) 
+cmd.extend("oz",oz)
 
 
 ######################## Horizontal Scripting ##############################
