@@ -36,13 +36,13 @@ The shortcuts work best on the command line below the command history window bec
  
 Videos that demonstrate representatives from each class of shortcut are planned.
 
-##Print shortcuts and their descriptions
+## Print shortcuts and their descriptions
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
 |SC        |Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
 
-##Show many models (NMR and crystal packing)
+## Show many models (NMR and crystal packing)
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -55,7 +55,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |sc222     |Make a lattice of 2 x 2 x 2 unit cells.                        |
 |sc333     |Make a lattice of 3 x 3 x 3 unit cells.                        |
 
-##Save files with date and time in filename
+## Save files with date and time in filename
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -86,7 +86,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |ssdf      |Save sdf file with a time stamp included in the filename to avoid overwriting work. |
 |swrl      |Save wrl (VRML 2 file format) file with a time stamp included in the filename to avoid overwriting work. |
 
-##Make molecular representations that are not available in PyMOL
+## Make molecular representations that are not available in PyMOL
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -106,7 +106,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |getchem   |Create selections based on the biophysical properties of each residue. |
 |timcolor  |Use Tim Mather's coloring scheme applied to the selections defined in getchem().  |
 
-##Launch a full-featured text editor from PyMOL
+## Launch a full-featured text editor from PyMOL
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -122,20 +122,20 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |st3       |Open sublime text 3 from within PyMOL.                         |
 |vim       |Open vim from within PyMOL.                                    |
 
-##Open word processord
+## Open word processord
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
 |word      |Open word from within PyMOL.                                   |
 
-##Open terminal windows
+## Open terminal windows
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
 |iterm     |Open iTerm2 window on MacOS.                                   |
 |term      |Open a Terminal window on MacOS.                               |
 
-##Open other molecular graphics programs
+## Open other molecular graphics programs
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -146,14 +146,14 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |vmd       |Open vmd from within PyMOL.                                    |
 |yasara    |Open the molecular graphics prograom YASASRA from within PyMOL.  |
 
-##Image manipulation programs
+## Image manipulation programs
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
 |gimp      |Open the molecular graphics program with gimp from within PyMOL.  |
 |inkscape  |Open the molecular graphics program with gimp from within PyMOL.  |
 
-##Open certain webapps
+## Open certain webapps
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -162,7 +162,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |WM        |Open Web Mail in defualt browser. Adjust url for your institution. |
 |WS        |Open National Weather Service website for locale.              |
 
-##Samples
+## Samples
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -173,7 +173,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |U8        |16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |WC8       |16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom            |
 
-##Commands to display complex scenes.
+## Commands to display complex scenes.
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -181,7 +181,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |LG        |Nine sugar glycan in influenza N9 neuraminidase at             |
 |NA        |Hydrated sodium cation bound in major groove of a              |
 
-##Commands to display complex scenes with pdb files on computer.
+## Commands to display complex scenes with pdb files on computer.
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -195,14 +195,14 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |LLG       |Nine sugar glycan in influenza N9 neuraminidase at             |
 |LNA       |Hydrated sodium cation bound in major groove of a              |
 
-##Horizontal scripting
+## Horizontal scripting
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
 |rline     |Enter "help(rline)" to refresh memory of the readline commands. |
 |rv        |Get the view settings in a compact format on one line.         |
 
-##Print commands for using git.
+## Print commands for using git.
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -212,7 +212,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |gitPull   |Enter help(gitPush) to print steps to send to updates to a repository on github.com.  |
 |gitPush   |Enter help(gitPush) to print steps to send to updates to a repository on github.com.  |
 
-##Send search term(s) to websites with search boxes.
+## Send search term(s) to websites with search boxes.
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -237,7 +237,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |SF        |Send search term to sourceforge.                               |
 |SP        |Submit a search term to Springer Books                         |
 
-##Open static web sites
+## Open static web sites
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
@@ -272,7 +272,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |SSURF     |Open the webpage of the Society for Science at User Research Facilities (SSURF). |
 |SO        |Submit a search term to Stackoverflow.                         |
 
-##3D-PDFs
+## 3D-PDFs
 
 |Shortcuts |Description                                                    |
 |:--------|:---------------------------------------------------------------|
