@@ -52,7 +52,7 @@ from __future__ import division
   Oklahoma City, OK, USA 73104
 
 """ 
-import webbrowser, datetime, numpy, subprocess, bs4, requests
+import webbrowser, datetime, numpy, subprocess, bs4, requests, time
 from pymol import cmd, stored, cgo, xray
 from math import cos, sin, radians, sqrt
 # from subprocess import *
@@ -70,6 +70,10 @@ __email__ = "blaine@ouhsc.edu"
 __status__ = "Testing" 
 
 cmd.set('ray_opaque_background','on')
+
+#################################################################################
+
+#category: Print shortcuts and their descriptions
 
 def SC():
     '''
@@ -203,2709 +207,609 @@ def SC():
     print(SC.__doc__)
 cmd.extend('SC',SC)
 
-############################### Web site searches ########################################
 
-def ACA():
-    '''
-    DESCRIPTION
+############################### Show many models (NMR and crystal packing) ##############
 
-    Open the American Crystallographic Association Annual Meeting webpage.
-    '''
-    webbrowser.open_new_tab('http://www.amercrystalassn.org/2018-meeting-homepage')
-cmd.extend('ACA',ACA)
+#category: Show many models (NMR and crystal packing)
 
-
-def ALS():
-    '''
-    DESCRIPTION
+def nmr():
+    """ 
+    Description
     
-    Open website of the Advanced Light Source.
-    '''
-    webbrowser.open('https://als.lbl.gov/')
-cmd.extend('ALS',ALS)
+    Show all of the models in nmr structure. 
+    I can never remmber this command.
+    """
+    cmd.do('set all_states, on')
+cmd.extend("nmr", nmr)
 
 
-def APS():
-    '''
-    DESCRIPTION
+def nmroff():
+    """ 
+    Description
     
-    Open website of the Advanced Photon Source.
-    '''
-    webbrowser.open('https://www.aps.anl.gov/')
-cmd.extend('APS',APS)
+    Hide all but first model in a nmr structure. 
+    """
+    cmd.do('set all_states, off')
+cmd.extend("nmr", nmr)
 
 
-def AX(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase to arXiv.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web browser is used. 
-
-    USAGE
+def rmsc():
+    """
+    Description
     
-    AX search term(s)
-
-    EXAMPLE
-
-    AX molecular graphics
-    '''
-    webbrowser.open('https://arxiv.org/search/?query='+searchTerm+'&searchtype=all&order=-announced_date_first&size=50')
-cmd.extend('AX',AX)
+    Remove supercell and the symmetry mates.
+    """
+    cmd.do('delete supercell*;delete m*_*')
+cmd.extend("rmsc", rmsc)
 
 
-def BC():
-    '''
-    DESCRIPTION
+def sc111():
+    """
+    Description
     
-    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
-    '''
-    webbrowser.open('http://www.bio.aps.anl.gov/')
-cmd.extend('BC',BC)
+    Make a lattice of 1 x 1 x 1 unit cells. 
+    Use 'rmsc' to remove supercell objects.
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
+cmd.extend("sc111", sc111)
 
 
-def BD():
-    '''
-    DESCRIPTION
+def sc221():
+    """
+    Description
     
-    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
-    '''
-    webbrowser.open('https://www.sasbdb.org/')
-cmd.extend('BD',BD)
+    Make a lattice of 2 x 2 x 1 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
+cmd.extend("sc221", sc221)
 
 
-def BX(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase to bioRxiv 
-    which is maintained by Cold Spring Harbor Laboratory.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web browser is used. 
-
-    USAGE
+def sc112():
+    """
+    Description
     
-    BX search term(s)
-
-    EXAMPLES
-
-    Single search:
-
-    BX molecular graphics
-
-    Multiple search:
-
-    BX molecular graphics; BX pymol
-    '''
-    url = 'https://www.biorxiv.org/search/'
-    webbrowser.open(url+searchTerm)
-cmd.extend('BX',BX)
+    Make a lattice of 1 x 1 x 2 unit cells. 
+    Use 'rmsc' to remove supercell objects.
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
+cmd.extend("sc221", sc112)
 
 
-def CH():
-    '''
-    DESCRIPTION
+def sc222():
+    """
+    Description
     
-    Open the webste of UCSF Chimera.
-    '''
-    webbrowser.open('https://www.cgl.ucsf.edu/chimera/')
-cmd.extend('CH',CH)
+    Make a lattice of 2 x 2 x 2 unit cells. 
+    Use 'rmsc' to remove supercell objects.
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
+cmd.extend("sc222", sc222)
 
 
-def CHESS():
-    '''
-    DESCRIPTION
+def sc333():
+    """
+    Description
     
-    Open the website of CHESS. 
-    '''
-    webbrowser.open('https://www.chess.cornell.edu/')
-cmd.extend('CHESS',CHESS)
-
-
-def EMDB():
-    '''
-    DESCRIPTION
+    Make a lattice of 3 x 3 x 3 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
     
-    Open the website of the Electron Microscopy Data Bank.
-    '''
-    webbrowser.open('https://www.ebi.ac.uk/pdbe/emdb/')
-cmd.extend('EMDB',EMDB)
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 3, 3, 3, , green, supercell333, 1')
+cmd.extend("sc333", sc333)
 
 
-def EP():
-    '''
-    DESCRIPTION
-    
-    EasyPyMOL github site.
-    '''
-    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
-cmd.extend('EP',EP)
+#################### Save files with date and time in filename #########################spng
 
+#category: Save files with date and time in filename
 
-def GB(searchTerm="pymol"):
-    '''
+def saln(stemName="saved"):
+    """
     DESCRIPTION
 
-    Send search term or phrase to Google Books in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The default web browser is used. 
-
-    USAGE
-
-    GB search term(s), number of hits to returned
-
-    EXAMPLE
-
-    GB pymol
-    '''
-    webbrowser.open('https://www.google.com/search?tbm=bks&q='+searchTerm)
-cmd.extend('GB',GB)
-
-
-def GH(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase to GitHub in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The default web browser is used. 
-
-    USAGE
-
-    GH search term(s), number of hits to returned
-
-    EXAMPLE
-
-    GH pymol
-    '''
-    webbrowser.open('https://www.github.com/search?q='+searchTerm)
-cmd.extend('GH',GH)
-
-
-def GO(searchTerm="pymol",numHits="200"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase Google in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The default web browser is used. 
-
-    USAGE
-
-    GO search term(s), number of hits to returned
-
-    EXAMPLE
-
-    GO Nobel Prize in Chemistry, 30
-    '''
-    webbrowser.open('https://www.google.com/search?q='+searchTerm+'&num='+str(numHits))
-cmd.extend('GO',GO)
-
-
-def GON(searchTerm="pymol",numHits="5"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase Google in default browser and open in top 5 results in new tab.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for 10-20 minutes. 
-
-    USAGE
-
-    GON search term(s), number of hits to returned
-
-    If the second argument is not given, the default value is used.
-
-    EXAMPLE
-
-    GON Nobel Prize in Chemistry, 7
-
-    TBD:
-
-    Print message when the last page has finished loading.
-
-    '''
-    print 'Googling...'  # display text while downloading the Google page
-    res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
-cmd.extend('GON',GON)
-
-
-
-
-
-
-
-def GS(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase to Google Scholar in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web browser is used. 
-    The default search term is pymol.
-
-    USAGE
-
-    GS search term(s)
-
-    EXAMPLES
-    Single search phrase:
-
-    GS Linus Pauling
-
-    Multiple search terms:
-
-    GS Linus Pauling; GS Francis Crick; GS Alexander Rich
-    '''
-    url = 'https://scholar.google.se/scholar?hl=en&q='
-    webbrowser.open(url+searchTerm)
-cmd.extend('GS',GS)
-
-def GV(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Send search term or phrase to Google Videos in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The default web browser is used. 
-    The default search term is pymol.
-
-    USAGE
-
-    GV search term(s)
-
-    EXAMPLES
-    Single search phrase:
-
-    GV Linus Pauling
-
-    Multiple search terms:
-
-    GV Linus Pauling; GS Francis Crick; GS Alexander Rich
-    '''
-    url = 'https://www.google.com/search?q=video+'
-    webbrowser.open(url+searchTerm)
-cmd.extend('GV',GV)
-
-
-def JM():
-    '''
-    DESCRIPTION
-    
-    Open the Jmol wiki.
-    '''
-    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
-cmd.extend('JM',JM)
-
-
-def IUCR(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-
-    Open website of the IUCr Journals.
-
-    USAGE
-    IUCR
-
-    '''
-    webbrowser.open('https://journals.iucr.org/')
-cmd.extend('IUCR',IUCR)
-
-
-def LBSF():
-    '''
-    DESCRIPTION
-    
-    Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.
-    '''
-    webbrowser.open('https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx')
-cmd.extend('LBSF',LBSF)
-
-
-def MA(searchTerm='pymol'):
-    '''
-    DESCRIPTION
-
-    Send search term to all searchable websites in pymolshortcuts:
-
-    arXiv
-    bioRxiv
-    GitHub
-    Google
-    Google Books
-    Google Scholar
-    Google Video
-    PBD
-    PubMed
-    Pymol Mailing List
-    Pymol Wiki
-    Research Gate
-    Science Direct
-    Springer
-    Source Forge
-    Stackoverflow
-
-    Example
-
-    MA pymol plugin
-    '''
-    AX(searchTerm)
-    BX(searchTerm)
-    GB(searchTerm)
-    GH(searchTerm)
-    GO(searchTerm)
-    GS(searchTerm)
-    GV(searchTerm)
-    PDB(searchTerm)
-    PM(searchTerm)
-    PML(searchTerm)
-    PW(searchTerm)
-    RG(searchTerm)
-    SD(searchTerm)
-    SF(searchTerm)
-    SO(searchTerm)
-    SP(searchTerm)
-cmd.extend('MA',MA)
-
-
-def MB(searchTerm='pymol'):
-    '''
-    DESCRIPTION
-
-    Send search term to search multiple sites for term in books:
-
-    Google Books
-    Science Direct
-    Springer
-
-    Example
-
-    MB pymol plugin
-    '''
-    GB(searchTerm)
-    SD(searchTerm)
-    SP(searchTerm)
-cmd.extend('MB',MB)
-
-
-def MC(searchTerm='pymol'):
-    '''
-    DESCRIPTION
-
-    Send search term to search ten core websites in pymolshortcuts:
-
-    bioRxiv
-    GitHub
-    Google
-    Google Scholar
-    PubMed
-    Pymol Mailing List
-    Pymol Wiki
-    Research Gate
-    Science Direct
-    Stackoverflow
-
-    Example
-
-    MA pymol plugin
-    '''
-    BX(searchTerm)
-    GH(searchTerm)
-    GO(searchTerm)
-    GS(searchTerm)
-    PM(searchTerm)
-    PML(searchTerm)
-    PW(searchTerm)
-    RG(searchTerm)
-    SD(searchTerm)
-    SF(searchTerm)
-cmd.extend('MC',MC)
-
-
-def MM(searchTerm='pymol'):
-    '''
-    DESCRIPTION
-
-    Send search term to search for manuscripts in pymolshortcuts:
-
-    arXiv
-    bioRxiv
-    Google Scholar
-    PubMed
-    Research Gate
-    Science Direct
-    Springer
-
-    Example
-
-    MM pymol plugin
-    '''
-    AX(searchTerm)
-    BX(searchTerm)
-    GS(searchTerm)
-    PM(searchTerm)
-    RG(searchTerm)
-    SD(searchTerm)
-    SP(searchTerm)
-cmd.extend('MM',MM)
-
-
-def MCL():
-    '''
-    DESCRIPTION
-    
-    Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma. 
-    '''
-    webbrowser.open('http://structuralbiology.ou.edu/mcl')
-cmd.extend('MCL',MCL)
-
-def MG():
-    '''
-    DESCRIPTION
-    
-    Open website of the OUHSC molecular graphics course.
-    '''
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
-cmd.extend('MG',MG)
-
-
-def NDB():
-    '''
-    DESCRIPTION
-    
-    Open website of the Nucleic Acid Database.
-    '''
-    webbrowser.open('http://ndbserver.rutgers.edu/')
-cmd.extend('NDB',NDB)
-
-
-def notPyMOL():
-    '''
-    DESCRIPTION
-    
-    Open website with list of other molecular graphics programs.
-    '''
-    webbrowser.open('https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems')
-cmd.extend('notPyMOL',notPyMOL)
-
-
-def NSLSII():
-    '''
-    DESCRIPTION
-    
-    Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
-    '''
-    webbrowser.open('https://www.bnl.gov/ps/')
-cmd.extend('NSLSII',NSLSII)
-
-
-def PDB(searchTerm="3fa0"):
-    '''
-    DESCRIPTION
-    
-    Submit a search term to the Protein Data Bank.
+    Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
     USAGE:
-    PBB 3fa0
-    '''
-    webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
-cmd.extend('PDB',PDB)
-
-
-def PML(searchTerm="3d_pdf"):
-    '''
-    DESCRIPTION
     
-    Submit a search term to the PyMOL Users Mail Service.
+    saln currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".aln") 
+cmd.extend('saln',saln)
+
+
+def scif(stemName="saved"):
+    """
+    DESCRIPTION
+
+    Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
     USAGE:
+    
+    scif currentScene
 
-    Single term search (multi word searches do NOT have to be inside quotes):
-    PML session file
-
-    Multiple term search: 
-    PML text editor; PML 3d pdf; PML black and white cartoon;
-    '''
-    webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
-cmd.extend('PML',PML)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".cif") 
+cmd.extend('scif',scif)
 
 
-def PM(searchTerm="pymol"):
-    '''
+def sccp4(stemName="saved"):
+    """
     DESCRIPTION
 
-    Send search term or phrase to PubMed.
-    The default web browser is used.
-    The multi word search terms do not need to be enclosed in quotes. 
-    Takes one search term but multiple commands can be submitted at once (see below).
-
-    USAGE
-    PM search term
-
-    EXAMPLES
-    single
-    PM molecular graphics
-
-    Multiple search:
-    PM molecular graphics;  PM molecular representation; PM ambient occlusion
-    '''
-    webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
-cmd.extend('PM',PM)
-
-
-def PPC():
-    '''
-    DESCRIPTION
-    
-    Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
-    '''
-    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
-cmd.extend('PPC',PPC)
-
-
-def PS():
-    '''
-    DESCRIPTION
-    
-    Open the home page of the Protein Soceity. 
-    '''
-    webbrowser.open('https://www.proteinsociety.org/')
-cmd.extend('PS',PS)
-
-
-def PW(searchTerm="3d_pdf"):
-    '''
-    DESCRIPTION
-    
-    Submit search of the PyMOL Wiki. 
-    
-    Usage:
-    
-    PW 3d_pdf
-    '''
-    webbrowser.open('https://pymolwiki.org/index.php/'+searchTerm)
-cmd.extend('PW',PW)
-
-
-def RG(searchTerm='best molecular graphics program'):
-    '''
-    DESCRIPTION
-    
-    Submit a search query of Research Gate. 
-
-    Usage:
-
-    RG best molecular graphics program
-    '''
-    webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
-cmd.extend('RG',RG)
-
-
-def RS():
-    '''
-    DESCRIPTION
-    
-    Open the homepage of the RNA Society.
-    '''
-    webbrowser.open('https://www.rnasociety.org/')
-cmd.extend('RS',RS)
-
-
-def SAXS():
-    '''
-    DESCRIPTION
-    
-    Open the webpage of SAXS links at OUHSC. 
-    
-    '''
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0')
-cmd.extend('SAXS',SAXS)
-
-
-def SB():
-    '''
-    DESCRIPTION
-    
-    Open the webpage of SSRL Biological SAXS at BL 4-2.
-    
-    '''
-    webbrowser.open('https://www-ssrl.slac.stanford.edu/~saxs/')
-cmd.extend('SB',SB)
-
-
-def SBGRID():
-    '''
-    DESCRIPTION
-    
-    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
-    
-    '''
-    webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
-cmd.extend('SBGRID',SBGRID)
-
-
-def SciPy18():
-    '''
-    DESCRIPTION
-    
-    Open the SciPy 2018 YouTube Channel.
-    
-    '''
-    webbrowser.open('https://www.youtube.com/playlist?list=PLYx7XA2nY5Gd-tNhm79CNMe_qvi35PgUR')
-cmd.extend('SciPy18',SciPy18)
-
-
-def SD(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-    
-    Submit a search term to Science Direct.
+    Save a ccp4 file (CCP4 electron density map file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
     USAGE:
+    
+    sccp4 currentScene
 
-    Single term search (multi word searches do NOT have to be inside quotes):
-    SD session file
-
-    Multiple term search: 
-    SD text editor; SD 3d pdf; SD black and white cartoon;
-    '''
-    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
-    url2 = '&show=100&sortBy=relevance'
-    webbrowser.open(url1+searchTerm+url2)
-cmd.extend('SD',SD)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".ccp4") 
+cmd.extend('sccp4',sccp4)
 
 
-def SF(searchTerm='pymol'):
-    '''
+def sdae(stemName="saved"):
+    """
     DESCRIPTION
-    
-    Send search term to sourceforge.
 
-    USAGE
-
-    Single search:
-    
-    SF pymol
-
-    Multiple search: 
-
-    SF pymol; SF jmol; 
-    '''
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-cmd.extend('SF',SF)
-
-
-def SP(searchTerm="pymol"):
-    '''
-    DESCRIPTION
-    
-    Submit a search term to Springer Books
+    Save a dae file (Collada File) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
     USAGE:
-
-    Single term search (multi word searches do NOT have to be inside quotes):
-    SP session file
-
-    Multiple term search: 
-    SP text editor; SP 3d pdf; SP black and white cartoon;
-    '''
-    url1 = 'https://www.springer.com/gp/search?query='
-    url2 = '&submit=Submit+Query'
-    webbrowser.open(url1+searchTerm+url2)
-cmd.extend('SP',SP)
-
-
-def SSRL():
-    '''
-    DESCRIPTION
     
-    Open the webpage of SSRL Structural Molecular Biology.
-    '''
-    webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
-cmd.extend('SSRL',SSRL)                                                                                               
+    sdae currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".dae") 
+cmd.extend('sdae',sdae)
 
 
-
-
-
-def SO(searchTerm="3d_pdf"):
-    '''
+def sdat(stemName="saved"):
+    """
     DESCRIPTION
-    
-    Submit a search term to Stackoverflow.
+
+    Save dat file (output data file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
     USAGE:
-
-    Single term search (multi word searches do NOT have to be inside quotes):
-    SO session file
-
-    Multiple term search: 
-    SO text editor; SO 3d pdf; SO black and white cartoon;
-    '''
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-cmd.extend('SO',SO)
-
-
-def SSURF():
-    '''
-    DESCRIPTION
     
-    Open the webpage of the Society for Science at User Research Facilities (SSURF).
-    SSURF is nonprofit organization in the US that serves as the
-    nexus for users and user executive committees at
-    national laboratories. SUURF is not a lobbying organization, but
-    it help organize visits to Congress to educate legislators about
-    the importance of national laboratories in science. Membership
-    is free of students. The annual fee is nominal for PIs. 
-    '''
-    webbrowser.open('http://www.ssurf.org/')
-cmd.extend('SSURF',SSURF)
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".dat") 
+cmd.extend('sdat',sdat)
 
 
-def VSC(fileName="bioSyntax"):
-    '''
+def sfasta(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open Visual Studio Code Market to obtain extensions to Visual Studio Code. Use Safari on the Mac.
+    Save a fasta file (sequence file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
+    USAGE:
     
-    VSC
+    sfasta currentScene
 
-    Note:
-    
-    See https://code.visualstudio.com/docs/editor/command-line
-    '''
-    webbrowser.open('https://marketplace.visualstudio.com/search?target=VSCode&category=All%20categories&sortBy=Downloads')
-    return
-cmd.extend('VSC',VSC)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".fasta") 
+cmd.extend('sfasta',sfasta)
 
 
-
-def UT(searchTerm="pymol"):
-    '''
+def sidtf(stemName="saved"):
+    """
     DESCRIPTION
 
-    Submit search term to YouTube.
+    Save a idtf file (Intermediate Data Text Format) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
+    USAGE:
     
-    Single search:
-    UT pymol
+    sidtf currentScene
 
-    Multiple searches:
-    UT pymol; UT pymol scripts; UT pymol movies; UT pymol ray tracing
-    '''
-    webbrowser.open('https://www.youtube.com/results?search_query='+searchTerm)
-    return
-cmd.extend('UT',UT)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".idtf") 
+cmd.extend('sidtf',sidtf)
 
 
-############################### Webapps ########################################
-
-def gcal():
-    '''
+def smae(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open Google Calendar. 
+    Save mae file (Maestro file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
+    USAGE:
+    
+    smoe currentScene
 
-    GM
-    '''
-    webbrowser.open('https://calendar.google.com/calendar/r')
-cmd.extend('gcal',gcal)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mae") 
+cmd.extend('smae',smae)
 
 
-def GM():
-    '''
+def smmd(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open gmail. 
+    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-
-    GM
-    '''
-    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
-cmd.extend('GM',GM)
-
-
-def WM():
-    '''
-    DESCRIPTION
+    USAGE:
     
-    Open Web Mail in defualt browser. Adjust url for your institution.
+    smmd currentScene
 
-    USAGE
-    WM
-    '''
-    webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
-cmd.extend('WM',WM)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mmd") 
+cmd.extend('smmd',smmd)
 
 
-def WS():
-    '''
+def smmod(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open National Weather Service website for locale. 
-    Adjust url for your location.
+    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    WS
-    '''
-    webbrowser.open('https://www.weather.gov/oun/')
-cmd.extend('WS',WS)
+    USAGE:
+    
+    smmd currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mmod") 
+cmd.extend('smmod',smmod)
 
 
-############################### Editors ########################################
-
-
-def atom(fileName="test.pml"):
-    '''
+def spmo(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with the text editor Atom from within PyMOL. 
-    Adjust the path as needed for your system.
+    Save pmo file (XYZ, binary format file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    atom test.pml
+    USAGE:
+    
+    spmo currentScene
 
-    Note that Atom is slow to start. 
-    You might want to keep it open all of the time!
-    Consider Sublime Text 3 or Visual Code Studio which startup are faster. 
-    '''
-    arg = ("/usr/local/bin/atom " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('atom',atom)
-
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pmo") 
+cmd.extend('spmo',spmo)
 
 
-
-
-def code(fileName="test.pml"):
-    '''
+def smoe(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with Visual Studio Code from within PyMOL. 
-    Install the bioSyntax extension (free) from the Visual Studio Marketplace
-    to get color syntax highlighting of pml files along with Fasta and other
-    sequence files. 
-    https://marketplace.visualstudio.com/items?itemName=reageyao.biosyntax
+    Save moe file (Molecular Operating Environment) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
     
+    smoe currentScene
 
-    USAGE
-    
-    code test.pml
-
-    Note:
-    
-    See https://code.visualstudio.com/docs/editor/command-line
-    '''
-    arg = ("/usr/local/bin/code " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('code',code)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".moe") 
+cmd.extend('smoe',smoe)
 
 
-def emacs(fileName="testme.pml"):
-    '''
+def smol(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with emacs from within PyMOL. 
-    Adjust path to emacs on your computer as needed.
+    Save mol file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    nv test.pml
+    USAGE:
     
-    Currently opening neovim in new shell and testme.pml in buffer 2. 
-    In Normal mode, enter :.bnext to switch to second buffer.
-    '''
-    arg = ("/opt/local/bin/emacs " + fileName)
-    arg2 = ('--file ' + fileName)
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
-    #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
-    #process.wait()
-    ########subprocess.call(arg,shell=True)
-    #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
-    #print handle.stdout.read()
-    #handle.flush()
-    return
-cmd.extend('emacs',emacs)
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mol") 
+cmd.extend('smol',smol)
 
 
-
-def gedit(fileName="test.pml"):
-    '''
+def smol2(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with gedit from within PyMOL. 
-    Adjust url for your location.
-    Can be installed via macports on the mac.
+    Save mol2 (Sybyl file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    mate test.pml
-    '''
-    arg = ("/opt/local/bin/gedit -w " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('gedit',gedit)
+    USAGE:
+    
+    smol2 currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mol2") 
+cmd.extend('smol2',smol2)
 
 
-
-def jedit(fileName="test.pml"):
-    '''
+def smtl(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with jedit from within PyMOL. 
-    Adjust url for your location.
-    Can be installed via macports on the mac.
+    Save mtl (Wavefront Material file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    mate test.pml
-    '''
-    arg = ("open -a jedit " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('jedit',jedit)
+    USAGE:
+    
+    smtl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".mtl") 
+cmd.extend('smtl',smtl)
 
 
-def mate(fileName="test.pml"):
-    '''
+def sobj(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open file with Textmate (Mac OS only) from within PyMOL. 
-    Adjust path to neovim on your computer as needed.
+    Save obj file (Wavefront mesh file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
+    USAGE:
     
-    mate test.pml
-    '''
-    arg = ("/usr/local/bin/mate -w " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('mate',mate)
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".obj") 
+cmd.extend('sobj',sobj)
 
 
-
-# def nv(fileName="testme.pml"):
-#     '''
-#     DESCRIPTION
-
-#     Open file with neovim from within PyMOL. 
-#     Adjust path to neovim on your computer as needed.
-
-#     USAGE
-#     nv test.pml
-    
-#     Currently opening neovim in new shell and testme.pml in buffer 2. 
-#     In Normal mode, enter :bnext to switch to second buffer.
-#     '''
-#     arg = ("/opt/local/bin/nvim " + fileName
-#     subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
-#     #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
-#     #process.wait()
-#     ########subprocess.call(arg,shell=True)
-#     #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
-#     #print handle.stdout.read()
-#     #handle.flush()
-#     return
-# cmd.extend('nv',nv)
-
-
-
-def oni(fileName="test.pml"):
-    '''
+def sout(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open the editor Oni from within PyMOL. 
-    The is an editor based on neovim.
+    Save out file (output data file) with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-        oni test.pml
-    '''
-    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('oni',oni)
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".out") 
+cmd.extend('sout',sout)
 
 
-def pdbed(fileName="test.pdb"):
-    '''
+def spdb(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open PDBEditor.jar from within PyMOL. 
-    Adjust url for your location.
-    https://sourceforge.net/projects/pdbeditorjl/
+    Save pdb file with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    pdbed test.pdb
+    USAGE:
+    
+    spng currentScene
 
-    Notes:
-    Needs exception for not opening pdb file. 
-    '''
-    print("Please wait. Editor is slow to start.")
-    arg = ("java -jar /Applications/jars/PDB_Editor_FIX090203.jar " + fileName)
-    subprocess.call(arg,shell=True)
-
-    return
-cmd.extend('pdbed',pdbed)
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pdb") 
+cmd.extend('spdb',spdb)
 
 
-def st3(fileName="test.pml"):
-    '''
+def spkl(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open sublime text 3 from within PyMOL. 
-    Adjust url for your location.
+    Save a pkl file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    st3 test.pml
-    '''
-    arg = ("/usr/local/bin/subl -w " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('st3',st3)
+    USAGE:
+    
+    spkl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pkl") 
+cmd.extend('spkl',spkl)
 
 
-def vim(fileName="test.pml"):
-    '''
+def spkla(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open vim from within PyMOL. 
-    Adjust file path to vim on your computer.
+    Save a pkla file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    vim testme.pml
-    '''
-    arg = ("/opt/local/bin/vim " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
-    return
-cmd.extend('vim',vim)
+    USAGE:
+    
+    spkl currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pkla") 
+cmd.extend('spkla',spkla)
 
 
-############################### Terminal windows ########################################
 
-def iterm():
-    '''
+def spng(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open iTerm2 window on MacOS. 
+    Save png file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    iterm
-    '''
-    subprocess.call(['open', '-a', 'iTerm'])
-    return
-cmd.extend('iterm',iterm)
+    USAGE:
+    
+    spng currentScene
 
-def term():
-    '''
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".png") 
+cmd.extend('spng',spng)
+
+
+def spov(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open a Terminal window on MacOS. 
+    Save pov (POV-ray tracing file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    iterm
-    '''
-    subprocess.call(['open', '-a', 'Terminal'])
-    return
-cmd.extend('term',term)
+    USAGE:
+    
+    spov currentScene
 
-
-
-
-
-
-############################### Molecular Graphics ########################################
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pov") 
+cmd.extend('spov',spov)
 
 
-def chimera(fileName="test.pdb"):
-    '''
+
+def spqr(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open Chimera from within PyMOL. 
-    Adjust url for your location.
+    Save pqr file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    chimera test.pbd
-    '''
-    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('chimera',chimera)
+    USAGE:
+    
+    spng currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pqr") 
+cmd.extend('spqr',spqr)
 
 
-def jmol(fileName="test.pdb"):
-    '''
+def spse(stemName="saved"):
+    """ DESCRIPTION
+
+    Save session file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
+
+    USAGE:
+    
+    spse currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".pse") 
+cmd.extend('spse',spse)
+
+
+def ssdf(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open Jmol from within PyMOL. 
-    Adjust file path for your location of Jmol.
+    Save sdf file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    jmol test.pdb
-    '''
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('jmol',jmol)
+    USAGE:
+    
+    smol currentScene
+
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".sdf") 
+cmd.extend('ssdf',ssdf)
 
 
-def vmd(fileName="test.pdb"):
-    '''
+def swrl(stemName="saved"):
+    """
     DESCRIPTION
 
-    Open vmd from within PyMOL. 
-    Adjust url for your location.
+    Save wrl (VRML 2 file format) file with a time stamp included in the filename to avoid overwriting work.
+    Read as a commandline argument, a string as the filename stem or 
+    use the default filename stem "saved".
 
-    USAGE
-    vmd test.pml
-    '''
-    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName)
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('vmd',vmd)
-
-
-############################### End Molecular Graphics ########################################
-    
-def GGT():
-    '''
-    DESCRIPTION
-
-    WT human gamma glutamyl transpeptidase at 1.67 Angstrom
-    resolution as cartoon. PDB Code 4gdx.
-    
-    USAGE
-
-    Type 'GGT' to activate. Type 'help GGT' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    fetch 4gdx, type=pdb, async=0;
-    remove name H*;
-    as cartoon;
-    bg_color white; 
-    hide (name c+o+n);
-    set cartoon_side_chain_helper, on;color red, 4gdx and ss H; 
-    color yellow,4gdx and ss S;color green,4gdx and ss L+; 
-    select ASNNAG, resn NAG or resi 95 or i. 120  or i. 230 or
-    i. 266 or i. 344 or i. 511 or i. 381; 
-    color red, elem o and ASNNAG; 
-    color blue, elem n and ASNNAG;
-    color yellow, elem c and ASNNAG;
-    show sticks,ASNNAG;
-    disable ASNNAG;
-    set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
-    draw 
-    
-    The commands without linebreaks:
-    
-    delete all;fetch 4gdx, type=pdb, async=0;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
-    
-    '''
-    cmd.reinitialize()
-    cmd.fetch('4gdx', type='pdb', async='0')
-    cmd.remove('name H*')
-    cmd.show_as('cartoon')
-    cmd.bg_color('white')
-    cmd.hide('(name c+o+n)')
-    cmd.set('cartoon_side_chain_helper', 'on')
-    cmd.color('red', '4gdx and ss H')
-    cmd.color('yellow', '4gdx and ss S')
-    cmd.color('green', '4gdx and ss L+')
-    cmd.select('ASNNAG', 'resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 or i. 511 or i. 381')
-    cmd.color('red', 'elem o and ASNNAG')
-    cmd.color('blue', 'elem n and ASNNAG')
-    cmd.color('yellow', 'elem c and ASNNAG')
-    cmd.show('sticks', 'ASNNAG')
-    cmd.disable('ASNNAG')
-    cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
-    cmd.draw()
-cmd.extend('GGT',GGT)
-
-
-def GU():
-    '''
-    DESCRIPTION
-
-    10-mer dsRNA with 8 contiguous Us. U-helix RNA. 
-    1.32 Angstrom resolution: 4PCO. Has five strands in 
-    the asymmetric unit. Deleted chain E and cobalt 
-    hexammine 102. Cartoon with filled rings and
-    bases cartoon.
-    
-    
-    USAGE
-
-    Type 'GU' to activate. 
-    
-    Type 'help GU' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    fetch 4PCO,type=pdb,async=0;
-    hide everything; 
-    bg_color white; 
-    cartoon oval; 
-    set cartoon_ring_mode, 3; 
-    set cartoon_nucleic_acid_color, blue;
-    select rna_A, resn A; 
-    select rna_C, resn C;
-    select rna_G, resn G; 
-    select rna_U, resn U;
-    color yellow, rna_A; 
-    color red, rna_C;
-    color gray40, rna_G; 
-    color palecyan, rna_U;
-    as cartoon; 
-    disable rna_U; 
-    set stick_radius, 0.12;
-    set nb_spheres_size, 0.3; 
-    show nb_spheres; 
-    set stick_ball, on;
-    set stick_ball_ratio, 1.8; 
-    show sticks, resn NCO; 
-    show spheres, name Cl; 
-    set_view (0.34,-0.81,0.48,0.89,0.11,
-    -0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,
-    233.71,-20.0);
-    draw 
-    
-    The commands without linebreaks: 
-    
-    delete all;fetch 4PCO,type=pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
-    
-    '''
-    cmd.reinitialize();
-    cmd.fetch('4PCO', type='pdb', async='0')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.cartoon('oval')
-    cmd.set('cartoon_ring_mode', '3')
-    cmd.set('cartoon_nucleic_acid_color', 'blue')
-    cmd.select('rna_A', 'resn A')
-    cmd.select('rna_C', 'resn C')
-    cmd.select('rna_G', 'resn G')
-    cmd.select('rna_U', 'resn U')
-    cmd.color('yellow', 'rna_A')
-    cmd.color('red', 'rna_C')
-    cmd.color('gray40', 'rna_G')
-    cmd.color('palecyan', 'rna_U')
-    cmd.show_as('cartoon')
-    cmd.disable('rna_U')
-    cmd.set('stick_radius', '0.12')
-    cmd.set('nb_spheres_size', '0.3')
-    cmd.show('nb_spheres')
-    cmd.set('stick_ball', 'on')
-    cmd.set('stick_ball_ratio', '1.8')
-    cmd.show('sticks', 'resn NCO')
-    cmd.show('spheres', 'name Cl')
-    cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
-    cmd.draw()
-cmd.extend('GU',GU)
-
-
-def N9():
-    '''
-    DESCRIPTION
-    
-    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
-    The biological unit has four copies of the asymmetric unit.
-    View is down the four-fold axis. Requires the quat.py script by
-    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
-    in ~/mg18OU.
-
-    USAGE
-
-    Type 'N9' to activate. Type 'help N9' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-
-    delete all;
-    fetch 4dgr, type=pdb, async=0;
-    run $HOME/mg18OU/quat.py;
-    quat 4dgr;
-    as cartoon; 
-    bg_color white;
-    color red, 4dgr_1 and ss H;
-    color yellow,4dgr_1 and ss S;
-    color green, 4dgr_1 and ss L+;
-    color cyan, (not 4dgr_1 and ss H);
-    color magenta, (not 4dgr_1 and ss S);
-    color orange, (not 4dgr_1 and ss L+);
-    set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
-    draw 
-
-    The commands without linebreaks:
-
-    delete all;fetch 4dgr, type=pdb, async=0;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
-
-    '''
-    cmd.reinitialize()
-    cmd.fetch('4dgr', type='pdb', async='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 4dgr')
-    cmd.show_as('cartoon')
-    cmd.bg_color('white')
-    cmd.color('red', '4dgr_1 and ss H')
-    cmd.color('yellow', '4dgr_1 and ss S')
-    cmd.color('green', '4dgr_1 and ss L+')
-    cmd.color('cyan', '(not 4dgr_1 and ss H)')
-    cmd.color('magenta', '(not 4dgr_1 and ss S)')
-    cmd.color('orange', '(not 4dgr_1 and ss L+)')
-    cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
-    cmd.draw()
-cmd.extend('N9',N9)
-
-
-def T4L():
-    '''
-    DESCRIPTION
-    
-    WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0. 
-    
-    USAGE
-
-    Type 'T4L' to activate. Type 'help T4L' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-        
-    delete all;
-    fetch 3fa0,type=pdb,async=0;
-    orient;
-    turn z,-90;
-    turn y,-5;
-    turn x,10; 
-    hide everything; 
-    bg_color white; 
-    show cartoon;
-    color red, ss H;
-    color yellow, ss S;
-    color green, ss L+;
-    set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
-    ray 1500,1600;
-
-    The commands without linebreaks:
-    
-    delete all;fetch 3fa0,type=pdb,async=0;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
-    
-    '''
-    cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async='0')
-    cmd.orient()
-    cmd.turn('z', '-90')
-    cmd.turn('y', '-5')
-    cmd.turn('x', '10')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.show('cartoon')
-    cmd.color('red', 'ss H')
-    cmd.color('yellow', 'ss S')
-    cmd.color('green', 'ss L+')
-    cmd.set_view('(-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0)')
-    cmd.ray('1500', '1600')
-    cmd.png("T4L.png")
-cmd.extend('T4L',T4L)
-    
-    
-def U8():
-    '''
-    DESCRIPTION
-
-    16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
-    Has one strand in the asymmetric unit. Uses quat.py to generate
-    the second strand. Cartoon with filled rings and bases cartoon.
-    
-    USAGE
-
-    Type 'U8' to activate. Type 'help U8' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    fetch 3nd3,type=pdb,async=0;
-    run $HOME/mg18OU/quat.py;
-    quat 3nd3;
-    hide everything;
-    bg_color white; 
-    show sticks;
-    set cartoon_ring_mode, 3;
-    set cartoon_ring_finder, 1;
-    set cartoon_ladder_mode, 1;
-    set cartoon_nucleic_acid_mode, 4;
-    set cartoon_ring_transparency, 0.5;
-    as cartoon;
-    set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
-    
-    The commands without linebreaks:
-    
-    delete all;fetch 3nd3,type=pdb,async=0;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
-
-    '''
-    
-    cmd.reinitialize()
-    cmd.fetch('3nd3', type='pdb', async='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd3')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.show('sticks')
-    cmd.set('cartoon_ring_mode', '3')
-    cmd.set('cartoon_ring_finder', '1')
-    cmd.set('cartoon_ladder_mode', '1')
-    cmd.set('cartoon_nucleic_acid_mode', '4')
-    cmd.set('cartoon_ring_transparency', '0.5')
-    cmd.show_as('cartoon')
-    cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
-    cmd.draw()
-cmd.extend('U8',U8)
-    
-    
-def WC8():
-    '''
-    DESCRIPTION
-
-    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
-    resolution: 3nd4.  Has one strand in the asymmetric unit. 
-    Needs quat.py to generate the second strand. Use the 
-    BU alias. Cartoon with filled rings and bases cartoon.
-    
-    
-    USAGE
-
-    Type 'WC8' to activate. Type 'help WC8' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all; 
-    fetch 3nd4,type=pdb,async=0;
-    hide everything;
-    run $HOME/mg18OU/quat.py;
-    quat 3nd4;
-    bg_color white; 
-    show sticks; 
-    set stick_radius, 0.12; 
-    set nb_spheres_size, 0.25;
-    show nb_spheres;
-    set stick_ball, on; 
-    set stick_ball_ratio, 1.8;
-    set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);
-    hide everything,name H*;
-    rock
-
-    The commands without linebreaks:
-    
-    delete all; fetch 3nd4,type=pdb,async=0;hide everything; run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
-
-    '''
-    cmd.reinitialize()
-    cmd.fetch('3nd4', type='pdb', async='0')
-    cmd.remove('name H*')
-    cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4')
-    cmd.bg_color('white')
-    cmd.do('show stick')
-    cmd.do('set stick_radius, 0.12') 
-    cmd.do('set nb_spheres_size, 0.25')
-    cmd.do('show nb_spheres')
-    cmd.do('set stick_ball, on')
-    cmd.do('set stick_ball_ratio, 1.8')
-    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
-    cmd.rock()
-cmd.extend('WC8',WC8)
-    
-    
-#######Commands to display complex scenes. #############
-    
-def BST():
-    '''
-    DESCRIPTION
-    
-    G2G3/U9U8 base step , PDB code 4PCO. 
-    From the 1.32 Angstrom resolution structure 
-    of the RNA decamer with 8 GU base pairs.
-    
-    USAGE
-
-    Type 'BST' to execute. Type 'help BST' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    fetch 4PCO, type=pdb, async=0;
-    select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
-    remove not G2G3;
-    bg_color white;
-    show sticks;
-    set stick_radius=0.14;
-    set stick_ball, on; 
-    set stick_ball_ratio,1.9;
-    set_view 
-    (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0);
-    remove name H*;
-    select carbon1, element C and (resi 3 or resi 8) 
-    # select lower base pair;
-    select carbon2, element C and (resi 2 or resi 9) 
-    #select upper base pair;
-    color gray70, carbon1;
-    color gray10, carbon2;
-    show sticks;
-    space cmyk;
-    distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;
-    distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;
-    distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;
-    distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;
-    color black, hbond1;
-    color black, hbond2;
-    color gray70, hbond3;
-    color gray70, hbond4;
-    show nb_spheres;
-    set nb_spheres_size, 0.35;
-    hide labels;
-    ray 1600,1000;
-    png 4PCO.png
-    
-    Commands without linebreaks: 
-    
-    delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
-
-    '''
-    cmd.reinitialize()
-    cmd.fetch('4PCO', type='pdb', async='0')
-    cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
-    cmd.remove('not G2G3')
-    cmd.bg_color('white')
-    cmd.set('stick_radius', '0.14')
-    cmd.set('stick_ball', 'on')
-    cmd.set('stick_ball_ratio', '1.9')
-    cmd.set_view('(-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0)')
-    cmd.remove('name H*')
-    cmd.select('carbon1', 'element C and (resi 3 or resi 8)')
-    cmd.select('carbon2', 'element C and (resi 2 or resi 9)')
-    cmd.color('gray70', 'carbon1')
-    cmd.color('gray10', 'carbon2')
-    cmd.show('sticks')
-    cmd.space('cmyk')
-    cmd.distance('hbond1', '/4PCO//B/U`9/N3', '/4PCO//A/G`2/O6')
-    cmd.distance('hbond2', '/4PCO//B/U`9/O2', '/4PCO//A/G`2/N1')
-    cmd.distance('hbond3', '/4PCO//A/U`3/N3', '/4PCO//B/G`8/O6')
-    cmd.distance('hbond4', '/4PCO//A/U`3/O2', '/4PCO//B/G`8/N1')
-    cmd.color('black', 'hbond1')
-    cmd.color('black', 'hbond2')
-    cmd.color('gray70', 'hbond3')
-    cmd.color('gray70', 'hbond4')
-    cmd.show('nb_spheres')
-    cmd.set('nb_spheres_size', '0.35')
-    cmd.hide('labels')
-    cmd.ray('1600', '1000')
-    cmd.png('4PCO.png')
-cmd.extend('BST',BST)
-
-
-def LG():
-    '''
-    DESCRIPTION
-    
-    Nine sugar glycan in influenza N9 neuraminidase at 
-    1.55 Angstrom  resolution, PDB code 4dgr. 
-    The electron density map is contoured at 1.0 sigma. 
-    39 commands were used to make this figure.  
-    
-    USAGE
-
-    Type 'LG' to execute. Type 'help LG' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    fetch 4dgr, async=0;
-    fetch 4dgr, type=2fofc,async=0;
-    select LongGlycan, resi 469:477;
-    orient LongGlycan;
-    remove not LongGlycan;
-    remove name H*;
-    isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;
-    color density, 2fofcmap; 
-    show sticks;
-    show spheres;
-    set stick_radius, .07;
-    set sphere_scale, .19;
-    set sphere_scale, .13, elem H;
-    set bg_rgb=[1, 1, 1];
-    set stick_quality, 50;
-    set sphere_quality, 4;
-    color gray85, elem C;
-    color red, elem O;
-    color slate, elem N;
-    color gray98, elem H;
-    set stick_color, gray50;
-    set ray_trace_mode, 1;
-    set ray_texture, 2;
-    set antialias, 3;
-    set ambient, 0.5;
-    set spec_count, 5;
-    set shininess, 50;
-    set specular, 1;
-    set reflect, .1;
-    set dash_gap, 0;
-    set dash_color, black;
-    set dash_gap, .15;
-    set dash_length, .05;
-    set dash_round_ends, 0;
-    set dash_radius, .05;
-    set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);
-    preset.ball_and_stick("all",mode=1);
-    draw 
-    
-    Commands without linebreaks:
-    
-    delete all;fetch 4dgr, async=0;fetch 4dgr, type=2fofc, async=0;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
- 
-    '''
-    cmd.reinitialize()
-    cmd.fetch('4dgr', async='0')
-    cmd.fetch('4dgr', type='2fofc', async='0')
-    cmd.select('LongGlycan', 'resi 469:477')
-    cmd.orient('LongGlycan')
-    cmd.remove('not LongGlycan')
-    cmd.remove('name H*')
-    cmd.isomesh('2fofcmap', '4dgr_2fofc', '1', 'LongGlycan', carve ='1.8')
-    cmd.color('density', '2fofcmap')
-    cmd.show('sticks')
-    cmd.show('spheres')
-    cmd.set('stick_radius', '.07')
-    cmd.set('sphere_scale', '.19')
-    cmd.set('sphere_scale', '.13', 'elem H')
-    cmd.set('bg_rgb', '[1, 1, 1]')
-    cmd.set('stick_quality', '50')
-    cmd.set('sphere_quality', '4')
-    cmd.color('gray85', 'elem C')
-    cmd.color('red', 'elem O')
-    cmd.color('slate', 'elem N')
-    cmd.color('gray98', 'elem H')
-    cmd.set('stick_color', 'gray50')
-    cmd.set('ray_trace_mode', '1')
-    cmd.set('ray_texture', '2')
-    cmd.set('antialias', '3')
-    cmd.set('ambient', '0.5')
-    cmd.set('spec_count', '5')
-    cmd.set('shininess', '50')
-    cmd.set('specular', '1')
-    cmd.set('reflect', '.1')
-    cmd.set('dash_gap', '0')
-    cmd.set('dash_color', 'black')
-    cmd.set('dash_gap', '.15')
-    cmd.set('dash_length', '.05')
-    cmd.set('dash_round_ends', '0')
-    cmd.set('dash_radius', '.05')
-    cmd.set_view('(0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0)')
-    preset.ball_and_stick("all",mode=1);
-    cmd.draw()
-cmd.extend('LG',LG)
-    
-    
-def NA():
-    '''
-    DESCRIPTION
-
-    Hydrated sodium cation bound in major groove of a 
-    16-mer RNA of Watson-Crick base pairs.
-    The sodium is bound to the N7 nitrogen atom of 
-    Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
-    57 commands were used to make this figure. 
-
-    More than one label in a horizontal script is not 
-    allowed. This one label has to be at the end of the line.
-    Labels can be imported from a Labels.pml file.
-    Store the label commands one per row in this file.
-    Import the file with the @Labels.pml command. 
-    Include the path to the file if the labels file is not 
-    in the current working directory of PyMOL. 
-    
-    USAGE
-
-    Type 'NA' to execute. Type 'help NA' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    viewport 900,600;
-    fetch 3nd4, type=pdb, async=0;
-    run ~/mg18OU/quat.py; 
-    quat 3nd4; 
-    show sticks;
-    set stick_radius=0.125;
-    hide everything, name H*;
-    bg_color white;
-    create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));
-    bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 519);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 319);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);
-    show nb_spheres; 
-    set nb_spheres_size, .35;
-    distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;
-    distance hbond2,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/A`3/OP2;
-    distance hbond3,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/HOH`119/O;
-    distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;
-    distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;
-    distance hbond6,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
-    distance hbond7,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/G`2/OP2;
-    distance hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;
-    distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;
-    distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;
-    distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;
-    distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;
-    distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;
-    distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;
-    distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;
-    distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;
-    distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;
-    distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
-    set depth_cue=0;
-    set ray_trace_fog=0;
-    set dash_color, black;
-    set label_font_id, 5;
-    set label_size, 36;
-    set label_position, (0.5, 1.0, 2.0);
-    set label_color, black;
-    set dash_gap, 0.2;
-    set dash_width, 2.0;
-    set dash_length, 0.2;
-    set label_color, black;
-    set dash_gap, 0.2;
-    set dash_width, 2.0;
-    set dash_length, 0.2;
-    select carbon, element C; 
-    color yellow, carbon;
-    disable carbon;
-    set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0)
-    
-    The commands without linebreaks:
-    
-    delete all;viewport 900,600;fetch 3nd4, type=pdb,async=0;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
-
-    '''
-    cmd.reinitialize();
-    cmd.viewport('900','600');
-    cmd.fetch('3nd4', type='pdb', async='0');
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4');
-    cmd.show('sticks');
-    cmd.set('stick_radius', '0.125');
-    cmd.hide('everything', 'name H*');
-    cmd.bg_color('white');
-    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
-    cmd.show('nb_spheres');
-    cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
-    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
-    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
-    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
-    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
-    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
-    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
-    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
-    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
-    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
-    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
-    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
-    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
-    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
-    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.set('depth_cue', '0');
-    cmd.set('ray_trace_fog', '0');
-    cmd.set('dash_color', 'black');
-    cmd.set('label_font_id', '5');
-    cmd.set('label_size', '36')
-    cmd.set('label_position', '(0.5, 1.0,2.0)');
-    cmd.set('label_color', 'black');
-    cmd.set('dash_gap', '0.2');
-    cmd.set('dash_width', '2.0');
-    cmd.set('dash_length', '0.2');
-    cmd.set('label_color', 'black');
-    cmd.set('dash_gap', '0.2');
-    cmd.set('dash_width', '2.0');
-    cmd.set('dash_length', '0.2');
-    cmd.select('carbon', 'element C');
-    cmd.color('yellow', 'carbon');
-    cmd.disable('carbon');
-    cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
-cmd.extend('NA',NA)
-    
-
-
-############################################
-
-
-# VARIANTS OF The ABOVE that are NOT internet dependent. 
-
-
-
-    
-def LGGT():
-    '''
-    DESCRIPTION
-
-    WT human gamma glutamyl transpeptidase at 1.67 Angstrom
-    resolution as cartoon. PDB code 4gdx. 
-    4gdx.pdb must be in the current working directory. 
-    
-    USAGE
-
-    Type 'LGGT' to activate. Type 'help LGGT' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    load 4gdx.pdb;
-    remove name H*;
-    as cartoon;
-    bg_color white; 
-    hide (name c+o+n);
-    set cartoon_side_chain_helper, on;color red, 4gdx and ss H; 
-    color yellow,4gdx and ss S;color green,4gdx and ss L+; 
-    select ASNNAG, resn NAG or resi 95 or i. 120  or i. 230 or
-    i. 266 or i. 344 or i. 511 or i. 381; 
-    color red, elem o and ASNNAG; 
-    color blue, elem n and ASNNAG;
-    color yellow, elem c and ASNNAG;
-    show sticks,ASNNAG;
-    disable ASNNAG;
-    set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
-    draw 
-    
-    The commands without linebreaks:
-    
-    delete all;load 4gdx.pdb;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
-    
-    '''
-    cmd.reinitialize()
-    cmd.load('4gdx.pdb')
-    cmd.remove('name H*')
-    cmd.show_as('cartoon')
-    cmd.bg_color('white')
-    cmd.hide('(name c+o+n)')
-    cmd.set('cartoon_side_chain_helper', 'on')
-    cmd.color('red', '4gdx and ss H')
-    cmd.color('yellow', '4gdx and ss S')
-    cmd.color('green', '4gdx and ss L+')
-    cmd.select('ASNNAG', 'resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 or i. 511 or i. 381')
-    cmd.color('red', 'elem o and ASNNAG')
-    cmd.color('blue', 'elem n and ASNNAG')
-    cmd.color('yellow', 'elem c and ASNNAG')
-    cmd.show('sticks', 'ASNNAG')
-    cmd.disable('ASNNAG')
-    cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
-    cmd.draw()
-cmd.extend('LGGT',LGGT)
-    
-    
-def LGU():
-    '''
-    DESCRIPTION
-
-    10-mer dsRNA. 
-    1.32 Angstrom resolution: 4PCO. Has five strands in 
-    the asymmetric unit. Deleted chain E and cobalt 
-    hexammine 102. Cartoon with filled rings and
-    bases cartoon.
-    
-    
-    USAGE
-
-    Type 'GU' to activate. Type 'help GU' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    load 4PCO.pdb;
-    hide everything; 
-    bg_color white; 
-    cartoon oval; 
-    set cartoon_ring_mode, 3; 
-    set cartoon_nucleic_acid_color, blue;
-    select rna_A, resn A; 
-    select rna_C, resn C;
-    select rna_G, resn G; 
-    select rna_U, resn U;
-    color yellow, rna_A; 
-    color red, rna_C;
-    color gray40, rna_G; 
-    color palecyan, rna_U;
-    as cartoon; 
-    disable rna_U; 
-    set stick_radius, 0.12;
-    set nb_spheres_size, 0.3; 
-    show nb_spheres; 
-    set stick_ball, on;
-    set stick_ball_ratio, 1.8; 
-    show sticks, resn NCO; 
-    show spheres, name Cl; 
-    set_view (0.34,-0.81,0.48,0.89,0.11,
-    -0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,
-    233.71,-20.0);
-    draw 
-    
-    The commands without linebreaks: 
-    
-    delete all;load 4PCO.pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
-    
-    '''
-    cmd.reinitialize();
-    cmd.load('4PCO.pdb')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.cartoon('oval')
-    cmd.set('cartoon_ring_mode', '3')
-    cmd.set('cartoon_nucleic_acid_color', 'blue')
-    cmd.select('rna_A', 'resn A')
-    cmd.select('rna_C', 'resn C')
-    cmd.select('rna_G', 'resn G')
-    cmd.select('rna_U', 'resn U')
-    cmd.color('yellow', 'rna_A')
-    cmd.color('red', 'rna_C')
-    cmd.color('gray40', 'rna_G')
-    cmd.color('palecyan', 'rna_U')
-    cmd.show_as('cartoon')
-    cmd.disable('rna_U')
-    cmd.set('stick_radius', '0.12')
-    cmd.set('nb_spheres_size', '0.3')
-    cmd.show('nb_spheres')
-    cmd.set('stick_ball', 'on')
-    cmd.set('stick_ball_ratio', '1.8')
-    cmd.show('sticks', 'resn NCO')
-    cmd.show('spheres', 'name Cl')
-    cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
-    cmd.draw()
-cmd.extend('LGU',LGU)
-    
-
-
-
-def LN9():
-    '''
-    DESCRIPTION
-    
-    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
-    4dgr. The biological unit has four copies of the asymmetric unit.
-    View is down the four-fold axis. Requires the quat.py script by
-    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
-    in ~/mg18OU.
-
-    USAGE
-
-    Type 'LN9' to activate. Type 'help LN9' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-
-    delete all;
-    load 4dgr.pdb;
-    run $HOME/mg18OU/quat.py;
-    quat 4dgr;
-    as cartoon; 
-    bg_color white;
-    color red, 4dgr_1 and ss H;
-    color yellow,4dgr_1 and ss S;
-    color green, 4dgr_1 and ss L+;
-    color cyan, (not 4dgr_1 and ss H);
-    color magenta, (not 4dgr_1 and ss S);
-    color orange, (not 4dgr_1 and ss L+);
-    set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
-    draw 
-
-    The commands without linebreaks:
-
-    delete all;load 4dgr.pdb;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
-
-    '''
-    cmd.reinitialize()
-    cmd.load('4dgr.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 4dgr')
-    cmd.show_as('cartoon')
-    cmd.bg_color('white')
-    cmd.color('red', '4dgr_1 and ss H')
-    cmd.color('yellow', '4dgr_1 and ss S')
-    cmd.color('green', '4dgr_1 and ss L+')
-    cmd.color('cyan', '(not 4dgr_1 and ss H)')
-    cmd.color('magenta', '(not 4dgr_1 and ss S)')
-    cmd.color('orange', '(not 4dgr_1 and ss L+)')
-    cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
-    cmd.draw()
-cmd.extend('LN9',LN9)
-    
-    
-
-def LT4L():
-    '''
-    DESCRIPTION
-    
-    Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
-    The file 3FA0 must be in the current working directory. 
-    
-    USAGE
-
-    Type 'LT4L' to activate. Type 'help LT4L' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-        
-    delete all;
-    load 3fa0.pdb;
-    orient;
-    turn z,-90;
-    turn y,-5;
-    turn x,10; 
-    hide everything; 
-    bg_color white; 
-    show cartoon;
-    color red, ss H;
-    color yellow, ss S;
-    color green, ss L+;
-    set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
-    ray 1500,1600;
-
-    The commands without linebreaks:
-    
-    delete all;load 3fa0.pdb;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
-    
-    '''
-    cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async='0')
-    cmd.orient()
-    cmd.turn('z', '-90')
-    cmd.turn('y', '-5')
-    cmd.turn('x', '10')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.show('cartoon')
-    cmd.color('red', 'ss H')
-    cmd.color('yellow', 'ss S')
-    cmd.color('green', 'ss L+')
-    cmd.set_view('(-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0)')
-    cmd.ray('1500', '1600')
-    cmd.png("T4L.png")
-cmd.extend('LT4L',LT4L)
-    
-    
-def LU8():
-    '''
-    DESCRIPTION
-
-    16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
-    Has one strand in the asymmetric unit. Uses quat.py to generate
-    the second strand. Cartoon with filled rings and bases cartoon.
-    The file 3nd3.pdb needs to be in the current working directory.
-
-    USAGE
-
-    Type 'LU8' to activate. Type 'help LU8' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    load 3nd3.pdb;
-    run $HOME/mg18OU/quat.py;
-    quat 3nd3;
-    hide everything;
-    bg_color white; 
-    show sticks;
-    set cartoon_ring_mode, 3;
-    set cartoon_ring_finder, 1;
-    set cartoon_ladder_mode, 1;
-    set cartoon_nucleic_acid_mode, 4;
-    set cartoon_ring_transparency, 0.5;
-    as cartoon;
-    set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
-    
-    The commands without linebreaks:
-    
-    delete all;load 3nd3.pdb;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
-
-    '''
-    
-    cmd.reinitialize()
-    cmd.load('3nd3.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd3')
-    cmd.hide('everything')
-    cmd.bg_color('white')
-    cmd.show('sticks')
-    cmd.set('cartoon_ring_mode', '3')
-    cmd.set('cartoon_ring_finder', '1')
-    cmd.set('cartoon_ladder_mode', '1')
-    cmd.set('cartoon_nucleic_acid_mode', '4')
-    cmd.set('cartoon_ring_transparency', '0.5')
-    cmd.show_as('cartoon')
-    cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
-    cmd.draw()
-cmd.extend('LU8',LU8)
-    
-    
-def LWC8():
-    '''
-    DESCRIPTION
-
-    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
-    resolution: 3nd4.  Has one strand in the asymmetric unit. 
-    Needs quat.py to generate the second strand. 
-    Cartoon with filled rings and bases cartoon.
-    The file 3nd4.pdb must be in the current working directory
-    
-    USAGE
-
-    Type 'LWC8' to activate. Type 'help LWC8' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all; 
-    load 3nd4.pdb;
-    hide everything;
-    run $HOME/mg18OU/quat.py;
-    quat 3nd4;
-    bg_color white; 
-    show sticks; 
-    set stick_radius, 0.12; 
-    set nb_spheres_size, 0.25;
-    show nb_spheres;
-    set stick_ball, on; 
-    set stick_ball_ratio, 1.8;
-    set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);
-    hide everything,name H*;
-    rock
-
-    The commands without linebreaks:
-    
-    delete all;load 3nd4.pdb;hide everything;run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
-
-    '''
-    cmd.reinitialize()
-    cmd.load('3nd4.pdb')
-    cmd.remove('name H*')
-    cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4')
-    cmd.bg_color('white')
-    cmd.do('show stick')
-    cmd.do('set stick_radius, 0.12') 
-    cmd.do('set nb_spheres_size, 0.25')
-    cmd.do('show nb_spheres')
-    cmd.do('set stick_ball, on')
-    cmd.do('set stick_ball_ratio, 1.8')
-    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
-    cmd.rock()
-cmd.extend('LWC8',LWC8)
-    
-    
-#######Commands to display complex scenes. #############
-    
-def LBST():
-    '''
-    DESCRIPTION
-    
-    G2G3/U9U8 base step , PDB code 4PCO. 
-    From the 1.32 Angstrom resolution structure 
-    of an RNA decamer with 8 GU base pairs.
-    
-    USAGE
-
-    Type 'BST' to execute. Type 'help BST' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    load 4pco.pdb;
-    select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
-    remove not G2G3;
-    bg_color white;
-    show sticks;
-    set stick_radius=0.14;
-    set stick_ball, on; 
-    set stick_ball_ratio,1.9;
-    set_view 
-    (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0);
-    remove name H*;
-    select carbon1, element C and (resi 3 or resi 8) 
-    # select lower base pair;
-    select carbon2, element C and (resi 2 or resi 9) 
-    #select upper base pair;
-    color gray70, carbon1;
-    color gray10, carbon2;
-    show sticks;
-    space cmyk;
-    distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;
-    distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;
-    distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;
-    distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;
-    color black, hbond1;
-    color black, hbond2;
-    color gray70, hbond3;
-    color gray70, hbond4;
-    show nb_spheres;
-    set nb_spheres_size, 0.35;
-    hide labels;
-    ray 1600,1000;
-    png 4pco.png
-    
-    Commands without linebreaks: 
-    
-    delete all;load 4PCO.pdb;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
-
-    '''
-    cmd.reinitialize()
-    cmd.load('4pco.pdb')
-    cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
-    cmd.remove('not G2G3')
-    cmd.bg_color('white')
-    cmd.set('stick_radius', '0.14')
-    cmd.set('stick_ball', 'on')
-    cmd.set('stick_ball_ratio', '1.9')
-    cmd.set_view('(-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0)')
-    cmd.remove('name H*')
-    cmd.select('carbon1', 'element C and (resi 3 or resi 8)')
-    cmd.select('carbon2', 'element C and (resi 2 or resi 9)')
-    cmd.color('gray70', 'carbon1')
-    cmd.color('gray10', 'carbon2')
-    cmd.show('sticks')
-    cmd.space('cmyk')
-    cmd.distance('hbond1', '/4PCO//B/U`9/N3', '/4PCO//A/G`2/O6')
-    cmd.distance('hbond2', '/4PCO//B/U`9/O2', '/4PCO//A/G`2/N1')
-    cmd.distance('hbond3', '/4PCO//A/U`3/N3', '/4PCO//B/G`8/O6')
-    cmd.distance('hbond4', '/4PCO//A/U`3/O2', '/4PCO//B/G`8/N1')
-    cmd.color('black', 'hbond1')
-    cmd.color('black', 'hbond2')
-    cmd.color('gray70', 'hbond3')
-    cmd.color('gray70', 'hbond4')
-    cmd.show('nb_spheres')
-    cmd.set('nb_spheres_size', '0.35')
-    cmd.hide('labels')
-    cmd.ray('1600', '1000')
-    cmd.png('4PCO.png')
-cmd.extend('LBST',LBST)
-
-
-def LLG():
-    '''
-    DESCRIPTION
-    
-    Nine sugar glycan in influenza N9 neuraminidase at 
-    1.55 Angstrom  resolution, PDB code 4dgr. 
-    The electron density map is contoured at 1.0 sigma. 
-    39 commands were used to make this figure.  
-    
-    USAGE
-
-    Type 'LLG' to execute. Type 'help LLG' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    load 4dgr.pdb;
-    load 4dgr2FoFc.ccp4;
-    select LongGlycan, resi 469:477;
-    orient LongGlycan;
-    remove not LongGlycan;
-    remove name H*;
-    isomesh 2fofcmap, 4dgr2FoFc, 1, LongGlycan, carve = 1.8;
-    color density, 2fofcmap; 
-    show sticks;
-    show spheres;
-    set stick_radius, .07;
-    set sphere_scale, .19;
-    set sphere_scale, .13, elem H;
-    set bg_rgb=[1, 1, 1];
-    set stick_quality, 50;
-    set sphere_quality, 4;
-    color gray85, elem C;
-    color red, elem O;
-    color slate, elem N;
-    color gray98, elem H;
-    set stick_color, gray50;
-    set ray_trace_mode, 1;
-    set ray_texture, 2;
-    set antialias, 3;
-    set ambient, 0.5;
-    set spec_count, 5;
-    set shininess, 50;
-    set specular, 1;
-    set reflect, .1;
-    set dash_gap, 0;
-    set dash_color, black;
-    set dash_gap, .15;
-    set dash_length, .05;
-    set dash_round_ends, 0;
-    set dash_radius, .05;
-    set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);
-    preset.ball_and_stick("all",mode=1);
-    draw 
+    USAGE:
     
-    Commands without linebreaks:
-    
-    delete all;load 4dgr.pdb;fetch 4dgr2FoFc.mtz;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
- 
-    '''
-    cmd.reinitialize()
-    cmd.load('4dgr.pdb')
-    cmd.load('4dgr2FoFc.ccp4')
-    cmd.select('LongGlycan', 'resi 469:477')
-    cmd.orient('LongGlycan')
-    cmd.remove('not LongGlycan')
-    cmd.remove('name H*')
-    cmd.isomesh('2fofcmap','4dgr2FoFc', '1', 'LongGlycan', carve ='1.8')
-    cmd.color('density','2fofcmap')
-    cmd.show('sticks')
-    cmd.show('spheres')
-    cmd.set('stick_radius', '.07')
-    cmd.set('sphere_scale', '.19')
-    cmd.set('sphere_scale', '.13', 'elem H')
-    cmd.set('bg_rgb', '[1, 1, 1]')
-    cmd.set('stick_quality', '50')
-    cmd.set('sphere_quality', '4')
-    cmd.color('gray85', 'elem C')
-    cmd.color('red', 'elem O')
-    cmd.color('slate', 'elem N')
-    cmd.color('gray98', 'elem H')
-    cmd.set('stick_color', 'gray50')
-    cmd.set('ray_trace_mode', '1')
-    cmd.set('ray_texture', '2')
-    cmd.set('antialias', '3')
-    cmd.set('ambient', '0.5')
-    cmd.set('spec_count', '5')
-    cmd.set('shininess', '50')
-    cmd.set('specular', '1')
-    cmd.set('reflect', '.1')
-    cmd.set('dash_gap', '0')
-    cmd.set('dash_color', 'black')
-    cmd.set('dash_gap', '.15')
-    cmd.set('dash_length', '.05')
-    cmd.set('dash_round_ends', '0')
-    cmd.set('dash_radius', '.05')
-    cmd.set_view('(0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0)')
-    preset.ball_and_stick("all",mode=1);
-    cmd.draw()
-cmd.extend('LLG',LLG)
-    
-    
-def LNA():
-    '''
-    DESCRIPTION
-
-    Hydrated sodium cation bound in major groove of a 
-    16-mer RNA of Watson-Crick base pairs.
-    The sodium is bound to the N7 nitrogen atom of 
-    Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
-    57 commands were used to make this figure. 
-
-    More than one label in a horizontal script is not 
-    allowed. This one label has to be at the end of the line.
-    Labels can be imported from a Labels.pml file.
-    Store the label commands one per row in this file.
-    Import the file with the @Labels.pml command. 
-    Include the path to the file if the labels file is not 
-    in the current working directory of PyMOL. 
-    
-    USAGE
-
-    Type 'NA' to execute. Type 'help NA' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
-        
-    The commands with linebreaks:
-    
-    delete all;
-    viewport 900,600;
-    load 3nd4.pdb;
-    run ~/mg18OU/quat.py; 
-    quat 3nd4; 
-    show sticks;
-    set stick_radius=0.125;
-    hide everything, name H*;
-    bg_color white;
-    create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));
-    bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); 
-    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 519);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 319);
-    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);
-    show nb_spheres; 
-    set nb_spheres_size, .35;
-    distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;
-    distance hbond2,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/A`3/OP2;
-    distance hbond3,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/HOH`119/O;
-    distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;
-    distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;
-    distance hbond6,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
-    distance hbond7,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/G`2/OP2;
-    distance hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;
-    distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;
-    distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;
-    distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;
-    distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;
-    distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;
-    distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;
-    distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;
-    distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;
-    distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;
-    distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
-    set depth_cue=0;
-    set ray_trace_fog=0;
-    set dash_color, black;
-    set label_font_id, 5;
-    set label_size, 36;
-    set label_position, (0.5, 1.0, 2.0);
-    set label_color, black;
-    set dash_gap, 0.2;
-    set dash_width, 2.0;
-    set dash_length, 0.2;
-    set label_color, black;
-    set dash_gap, 0.2;
-    set dash_width, 2.0;
-    set dash_length, 0.2;
-    select carbon, element C; 
-    color yellow, carbon;
-    disable carbon;
-    set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0);
-    rock
-
-    The commands without linebreaks:
-    
-    delete all;viewport 900,600;load 3nd4.pdb;hide cartoon;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;rock;AOset_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
-
-    '''
-    cmd.reinitialize();
-    cmd.viewport('900','600');
-    cmd.load('3nd4.pdb');
-    cmd.hide('cartoon');
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4');
-    cmd.show('sticks');
-    cmd.set('stick_radius', '0.125');
-    cmd.set('sphere_scale', '0.225');
-    cmd.hide('everything', 'name H*');
-    cmd.bg_color('white');
-    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
-    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
-    cmd.show('nb_spheres');
-    cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
-    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
-    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
-    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
-    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
-    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
-    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
-    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
-    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
-    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
-    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
-    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
-    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
-    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
-    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.set('depth_cue', '0');
-    cmd.set('ray_trace_fog', '0');
-    cmd.set('dash_color', 'black');
-    cmd.set('label_font_id', '5');
-    cmd.set('label_size', '36')
-    cmd.set('label_position', '(0.5, 1.0,2.0)');
-    cmd.set('label_color', 'black');
-    cmd.set('dash_gap', '0.2');
-    cmd.set('dash_width', '2.0');
-    cmd.set('dash_length', '0.2');
-    cmd.set('label_color', 'black');
-    cmd.set('dash_gap', '0.2');
-    cmd.set('dash_width', '2.0');
-    cmd.set('dash_length', '0.2');
-    cmd.select('carbon', 'element C');
-    cmd.color('yellow', 'carbon');
-    cmd.disable('carbon');
-    cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
-    cmd.rock()
-cmd.extend('LNA',LNA)
-
+    swrl currentScene
 
+    """
+    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT) 
+    cmd.save(stemName+s+".wrl") 
+cmd.extend('swrl',swrl)
 
+############ Make molecular representations that are not available in PyMOL#############
 
+#category: Make molecular representations that are not available in PyMOL
 
 
 # ##### Commands applicable to displayed molecules. ##########
@@ -3481,12 +1385,6 @@ def SE():
 cmd.extend('SE',SE)    
 
 
-
-
-
-
-
-
 def getchem():
     """
     DESCRIPTION
@@ -3544,108 +1442,1999 @@ def timcolor(selection='all'):
 cmd.extend ('timcolor',timcolor)
 
 
+##################### Launch a full-featured text editor from PyMOL ############################
 
+#category: Launch a full-featured text editor from PyMOL
+
+def atom(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with the text editor Atom from within PyMOL. 
+    Adjust the path as needed for your system.
+
+    USAGE
+    atom test.pml
+
+    Note that Atom is slow to start. 
+    You might want to keep it open all of the time!
+    Consider Sublime Text 3 or Visual Code Studio which startup are faster. 
+    '''
+    arg = ("/usr/local/bin/atom " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('atom',atom)
+
+
+def code(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with Visual Studio Code from within PyMOL. 
+    Install the bioSyntax extension (free) from the Visual Studio Marketplace
+    to get color syntax highlighting of pml files along with Fasta and other
+    sequence files. 
+    https://marketplace.visualstudio.com/items?itemName=reageyao.biosyntax
     
 
+    USAGE
+    
+    code test.pml
 
-def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click in the center of the page to activate"):
-    """
+    Note:
+    
+    See https://code.visualstudio.com/docs/editor/command-line
+    '''
+    arg = ("/usr/local/bin/code " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('code',code)
+
+
+def emacs(fileName="testme.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with emacs from within PyMOL. 
+    Adjust path to emacs on your computer as needed.
+
+    USAGE
+    nv test.pml
+    
+    Currently opening emacs in new shell and testme.pml in buffer 2. 
+    In Normal mode, enter :.bnext to switch to second buffer.
+    '''
+    arg = ("/opt/local/bin/emacs " + fileName)
+    arg2 = ('--file ' + fileName)
+    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
+    #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
+    #process.wait()
+    ########subprocess.call(arg,shell=True)
+    #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
+    #print handle.stdout.read()
+    #handle.flush()
+    return
+cmd.extend('emacs',emacs)
+
+
+def gedit(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with gedit from within PyMOL. 
+    Adjust url for your location.
+    Can be installed via macports on the mac.
+
+    USAGE
+    mate test.pml
+    '''
+    arg = ("/opt/local/bin/gedit -w " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('gedit',gedit)
+
+
+def jedit(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with jedit from within PyMOL. 
+    Adjust url for your location.
+    Can be installed via macports on the mac.
+
+    USAGE
+    mate test.pml
+    '''
+    arg = ("open -a jedit " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('jedit',jedit)
+
+
+def mate(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with Textmate (Mac OS only) from within PyMOL. 
+    Adjust path to Textmate on your computer as needed.
+
+    USAGE
+    
+    mate test.pml
+    '''
+    arg = ("/usr/local/bin/mate -w " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('mate',mate)
+
+
+def nv(fileName="testme.pml"):
+    '''
+    DESCRIPTION
+
+    Open file with neovim from within PyMOL. 
+    Adjust path to neovim on your computer as needed.
+
+    USAGE
+    nv test.pml
+    
+    Currently opening neovim in new shell and testme.pml in buffer 2. 
+    In Normal mode, enter :bnext to switch to second buffer.
+    '''
+    arg = ("/opt/local/bin/nvim " + fileName)
+    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+    #Popen(shlex.split("""x-terminal-emulator -e 'nv -c "testme.pml"'"""), stdout=PIPE)
+    #process.wait()
+    ########subprocess.call(arg,shell=True)
+    #handle = Popen(arg, stdin=PIPE, stderr=PIPE, stdout=PIPE, shell=True)
+    #print handle.stdout.read()
+    #handle.flush()
+    return
+cmd.extend('nv',nv)
+
+
+def oni(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open the editor Oni from within PyMOL. 
+    The is an editor based on neovim.
+
+    USAGE
+        oni test.pml
+    '''
+    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('oni',oni)
+
+
+def pdbed(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open PDBEditor.jar from within PyMOL. 
+    Adjust url for your location.
+    https://sourceforge.net/projects/pdbeditorjl/
+
+    USAGE
+    pdbed test.pdb
+
+    Notes:
+    Needs exception for not opening pdb file. 
+    '''
+    print("Please wait. Editor is slow to start.")
+    arg = ("java -jar /Applications/jars/PDB_Editor_FIX090203.jar " + fileName)
+    subprocess.call(arg,shell=True)
+
+    return
+cmd.extend('pdbed',pdbed)
+
+
+def st3(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open sublime text 3 from within PyMOL. 
+    Adjust url for your location.
+
+    USAGE
+    st3 test.pml
+    '''
+    arg = ("/usr/local/bin/subl -w " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('st3',st3)
+
+
+def vim(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open vim from within PyMOL. 
+    Adjust file path to vim on your computer.
+
+    USAGE
+    vim testme.pml
+    '''
+    arg = ("/opt/local/bin/vim " + fileName)
+    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
+    return
+cmd.extend('vim',vim)
+
+
+############################### Open word processor ########################################
+
+#category: Open word processord
+
+
+def word(fileName="Script.docx"):
+    '''
+    DESCRIPTION
+
+    Open word from within PyMOL. 
+    Adjust file path to MS Word on your computer.
+
+    USAGE
+    word testme.docx
+
+    The subprocess command may need more work. 
+    '''
+    arg = ("open " + fileName)
+    subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName])
+    return
+cmd.extend('word',word)
+
+
+############################### Terminal windows ########################################
+
+#category: Open terminal windows
+
+def iterm():
+    '''
+    DESCRIPTION
+
+    Open iTerm2 window on MacOS. 
+
+    USAGE
+    iterm
+    '''
+    subprocess.call(['open', '-a', 'iTerm'])
+    return
+cmd.extend('iterm',iterm)
+
+def term():
+    '''
+    DESCRIPTION
+
+    Open a Terminal window on MacOS. 
+
+    USAGE
+    iterm
+    '''
+    subprocess.call(['open', '-a', 'Terminal'])
+    return
+cmd.extend('term',term)
+
+
+
+############################### Molecular Graphics  programs ########################################
+
+#category: Open other molecular graphics programs
+
+
+def ccp4mg(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open ccp4mg from within PyMOL. 
+    Adjust url for your location.
+
+    USAGE
+    ccp4mg test.pbd
+    '''
+    arg = ("ccp4mg " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('ccp4mg',ccp4mg)
+
+
+def chimera(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open Chimera from within PyMOL. 
+    Adjust url for your location.
+
+    USAGE
+    chimera test.pbd
+    '''
+    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('chimera',chimera)
+
+
+def coot(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open coot from within PyMOL. 
+    Adjust url for your location.
+
+    USAGE
+    coot test.pbd
+    '''
+    arg = ("/Applications/ccp4-7.0/bin/coot " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('coot',coot)
+
+
+def jmol(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open Jmol from within PyMOL. 
+    Adjust file path for your location of Jmol.
+
+    USAGE
+    jmol test.pdb
+    '''
+    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('jmol',jmol)
+
+
+def vmd(fileName="test.pdb"):
+    '''
+    DESCRIPTION
+
+    Open vmd from within PyMOL. 
+    Adjust url for your location.
+
+    USAGE
+    vmd test.pml
+    '''
+    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('vmd',vmd)
+
+
+def yasara(fileName="test.pml"):
+    '''
+    DESCRIPTION
+
+    Open the molecular graphics prograom YASASRA from within PyMOL. 
+
+    USAGE
+        yasara test.pml
+    '''
+    arg = ("/Applications/YASARA.app/Contents/MacOS/yasara.app " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('yasara',yasara)
+
+############################### Graphics programs ########################################
+
+#category: Image manipulation programs
+
+
+def gimp(fileName="test.png"):
+    '''
+    DESCRIPTION
+
+    Open the molecular graphics program with gimp from within PyMOL. 
+
+    USAGE
+        gimp test.png
+    '''
+    arg = ("/opt/local/bin/gimp " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('gimp',gimp)
+
+
+def inkscape(fileName="test.svg"):
+    '''
+    DESCRIPTION
+
+    Open the molecular graphics program with gimp from within PyMOL. 
+
+    USAGE
+        inkscape test.png
+    '''
+    arg = ("/opt/local/bin/inkscape " + fileName)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('inkscape',inkscape)
+
+
+############################### Webapps ########################################
+
+#category: Open certain webapps
+
+def gcal():
+    '''
+    DESCRIPTION
+
+    Open Google Calendar. 
+
+    USAGE
+
+    GM
+    '''
+    webbrowser.open('https://calendar.google.com/calendar/r')
+cmd.extend('gcal',gcal)
+
+
+def GM():
+    '''
+    DESCRIPTION
+
+    Open gmail. 
+
+    USAGE
+
+    GM
+    '''
+    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
+cmd.extend('GM',GM)
+
+
+def WM():
+    '''
     DESCRIPTION
     
-    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf. 
+    Open Web Mail in defualt browser. Adjust url for your institution.
+
+    USAGE
+    WM
+    '''
+    webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
+cmd.extend('WM',WM)
+
+
+def WS():
+    '''
+    DESCRIPTION
+
+    Open National Weather Service website for locale. 
+    Adjust url for your location.
+
+    USAGE
+    WS
+    '''
+    webbrowser.open('https://www.weather.gov/oun/')
+cmd.extend('WS',WS)
+
+
+
+
+
+
+############################### Samples ########################################
     
-    Does not ramp colors well. 
-    Does not work on all other representations.
-    Can instead export pse file, import the pse file into Jmol, 
-    and enter in the console 'write fileNameStem.idtf'.
-    Then enter the commands below in arg = on the command line outside of PyMOL.
-    This works with stick models. 
+#category: Samples
 
-    Usage:
-        ms2pdf [,<fileNameStem> (do not include any file extensions)], [,caption]]
+def GGT():
+    '''
+    DESCRIPTION
 
-    Reads in an optional filename stem. The default is "pymol".
-    Also reads in an optional caption.
-    Saves an idtf file.
-    Passes the idtf file to IDTFConverter, a u3d file to pdflatex,
-            and opens the pdf with Adobe Acrobat Reader DC. 
+    WT human gamma glutamyl transpeptidase at 1.67 Angstrom
+    resolution as cartoon. PDB Code 4gdx.
+    
+    USAGE
 
-    Prerequisites:
-        Install u3d-1.4.5; may have to install zlib, libjpeg, and cairo (libpng)
-        Install tex (on unix, texlive and texlive extra with the movie15 and media9 packages)
-        Install Abode Acrobat Reader DC version 9+.
-        See Jason Vertrees webpage for details (https://pymolwiki.org/index.php/3d_pdf)
-
-        You can run in pymol "save inFile.idtf" to get new 3Droo and 3Dcoo parameters
-        and then edit the corresponding lines below. 
-
-    June 10, 2018
-    Blaine Mooers
-
-
-    """
-
-    x = '''\documentclass[12pt,letter]{article}
-\usepackage{hyperref}
-\usepackage{media9}
-\usepackage{verbatim}
-\pagestyle{empty}
-\\begin{document}
-\\begin{figure}[!htb]
-    \\begin{center}
-        \\addmediapath{./} % here you can set the path where is been saved the u3d file
-        \includemedia[
-            label='''+ InFile +''',
-            width=0.9\\textwidth,
-            height=0.9\\textheight,
-            activate=pageopen,
-            deactivate=pageclose,
-            3Dtoolbar=false,
-            3Dnavpane=false,
-            3Dmenu,
-            3Droo=129.0,
-            3Dcoo= 0.0 0.0 -129.0,
-            3Dc2c=0.0 0.0 1.0,
-            3Daac=20.0,
-            3Droll=0.0,
-            3Dbg=0 0 0, % to set the background color for 3D vwr; white = 1 1 1; so, you need to do the proportion: '255:1=[RGB]:x'
-            transparent=false,
-            3Dlights=Headlamp,
-            3Drender=Solid,
-            3Dpartsattrs=restore,
-        ]{}{'''+ InFile +'''.u3d}
-\\end{center}
-\caption{''' + caption + '''.}
-\\end{figure}
-\\end{document}'''
-
-    cmd.save("%s.idtf" %(InFile))
-    FilePSE = str(InFile+".pse")
-    FileIDTF = str(InFile+".idtf")
-    FileU3D = str(InFile+".u3d")
-    FileTEX = str(InFile+".tex")
-    FilePDF = str(InFile+".pdf")
-    print "InFile = ", InFile
-    print "FileIDTF: ", FileIDTF
-    print "FileU3D: ", FileU3D
-    print "FileTEX: ", FileTEX
-    print "FilePDF: ", FilePDF
-    myFile = open(FileTEX, "a")
-    myFile.write(x+"\n")
-    myFile.close()
-
-# Line continuation in python is done by wrapping the code in parentheses
-    arg = ("/usr/local/bin/IDTFConverter -i " + FileIDTF + " -o " +
-        FileU3D + "; /opt/local/bin/pdflatex " +
-        InFile + "; open -a 'Adobe Acrobat Reader DC.app' " + FilePDF)
-    subprocess.call(arg,shell=True)
-    print "Argument for call: ", arg
-    return
-cmd.extend("ms2pdf", ms2pdf)
+    Type 'GGT' to activate. Type 'help GGT' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    fetch 4gdx, type=pdb, async=0;
+    remove name H*;
+    as cartoon;
+    bg_color white; 
+    hide (name c+o+n);
+    set cartoon_side_chain_helper, on;color red, 4gdx and ss H; 
+    color yellow,4gdx and ss S;color green,4gdx and ss L+; 
+    select ASNNAG, resn NAG or resi 95 or i. 120  or i. 230 or
+    i. 266 or i. 344 or i. 511 or i. 381; 
+    color red, elem o and ASNNAG; 
+    color blue, elem n and ASNNAG;
+    color yellow, elem c and ASNNAG;
+    show sticks,ASNNAG;
+    disable ASNNAG;
+    set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
+    draw 
+    
+    The commands without linebreaks:
+    
+    delete all;fetch 4gdx, type=pdb, async=0;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
+    
+    '''
+    cmd.reinitialize()
+    cmd.fetch('4gdx', type='pdb', async='0')
+    cmd.remove('name H*')
+    cmd.show_as('cartoon')
+    cmd.bg_color('white')
+    cmd.hide('(name c+o+n)')
+    cmd.set('cartoon_side_chain_helper', 'on')
+    cmd.color('red', '4gdx and ss H')
+    cmd.color('yellow', '4gdx and ss S')
+    cmd.color('green', '4gdx and ss L+')
+    cmd.select('ASNNAG', 'resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 or i. 511 or i. 381')
+    cmd.color('red', 'elem o and ASNNAG')
+    cmd.color('blue', 'elem n and ASNNAG')
+    cmd.color('yellow', 'elem c and ASNNAG')
+    cmd.show('sticks', 'ASNNAG')
+    cmd.disable('ASNNAG')
+    cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
+    cmd.draw()
+cmd.extend('GGT',GGT)
 
 
-######## Horizontal Scripting ##############
+def GU():
+    '''
+    DESCRIPTION
 
+    10-mer dsRNA with 8 contiguous Us. U-helix RNA. 
+    1.32 Angstrom resolution: 4PCO. Has five strands in 
+    the asymmetric unit. Deleted chain E and cobalt 
+    hexammine 102. Cartoon with filled rings and
+    bases cartoon.
+    
+    
+    USAGE
+
+    Type 'GU' to activate. 
+    
+    Type 'help GU' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    fetch 4PCO,type=pdb,async=0;
+    hide everything; 
+    bg_color white; 
+    cartoon oval; 
+    set cartoon_ring_mode, 3; 
+    set cartoon_nucleic_acid_color, blue;
+    select rna_A, resn A; 
+    select rna_C, resn C;
+    select rna_G, resn G; 
+    select rna_U, resn U;
+    color yellow, rna_A; 
+    color red, rna_C;
+    color gray40, rna_G; 
+    color palecyan, rna_U;
+    as cartoon; 
+    disable rna_U; 
+    set stick_radius, 0.12;
+    set nb_spheres_size, 0.3; 
+    show nb_spheres; 
+    set stick_ball, on;
+    set stick_ball_ratio, 1.8; 
+    show sticks, resn NCO; 
+    show spheres, name Cl; 
+    set_view (0.34,-0.81,0.48,0.89,0.11,
+    -0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,
+    233.71,-20.0);
+    draw 
+    
+    The commands without linebreaks: 
+    
+    delete all;fetch 4PCO,type=pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
+    
+    '''
+    cmd.reinitialize();
+    cmd.fetch('4PCO', type='pdb', async='0')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.cartoon('oval')
+    cmd.set('cartoon_ring_mode', '3')
+    cmd.set('cartoon_nucleic_acid_color', 'blue')
+    cmd.select('rna_A', 'resn A')
+    cmd.select('rna_C', 'resn C')
+    cmd.select('rna_G', 'resn G')
+    cmd.select('rna_U', 'resn U')
+    cmd.color('yellow', 'rna_A')
+    cmd.color('red', 'rna_C')
+    cmd.color('gray40', 'rna_G')
+    cmd.color('palecyan', 'rna_U')
+    cmd.show_as('cartoon')
+    cmd.disable('rna_U')
+    cmd.set('stick_radius', '0.12')
+    cmd.set('nb_spheres_size', '0.3')
+    cmd.show('nb_spheres')
+    cmd.set('stick_ball', 'on')
+    cmd.set('stick_ball_ratio', '1.8')
+    cmd.show('sticks', 'resn NCO')
+    cmd.show('spheres', 'name Cl')
+    cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
+    cmd.draw()
+cmd.extend('GU',GU)
+
+
+def N9():
+    '''
+    DESCRIPTION
+    
+    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
+    The biological unit has four copies of the asymmetric unit.
+    View is down the four-fold axis. Requires the quat.py script by
+    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
+    in ~/mg18OU.
+
+    USAGE
+
+    Type 'N9' to activate. Type 'help N9' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+
+    delete all;
+    fetch 4dgr, type=pdb, async=0;
+    run $HOME/mg18OU/quat.py;
+    quat 4dgr;
+    as cartoon; 
+    bg_color white;
+    color red, 4dgr_1 and ss H;
+    color yellow,4dgr_1 and ss S;
+    color green, 4dgr_1 and ss L+;
+    color cyan, (not 4dgr_1 and ss H);
+    color magenta, (not 4dgr_1 and ss S);
+    color orange, (not 4dgr_1 and ss L+);
+    set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
+    draw 
+
+    The commands without linebreaks:
+
+    delete all;fetch 4dgr, type=pdb, async=0;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
+
+    '''
+    cmd.reinitialize()
+    cmd.fetch('4dgr', type='pdb', async='0')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 4dgr')
+    cmd.show_as('cartoon')
+    cmd.bg_color('white')
+    cmd.color('red', '4dgr_1 and ss H')
+    cmd.color('yellow', '4dgr_1 and ss S')
+    cmd.color('green', '4dgr_1 and ss L+')
+    cmd.color('cyan', '(not 4dgr_1 and ss H)')
+    cmd.color('magenta', '(not 4dgr_1 and ss S)')
+    cmd.color('orange', '(not 4dgr_1 and ss L+)')
+    cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
+    cmd.draw()
+cmd.extend('N9',N9)
+
+
+def T4L():
+    '''
+    DESCRIPTION
+    
+    WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0. 
+    
+    USAGE
+
+    Type 'T4L' to activate. Type 'help T4L' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+        
+    delete all;
+    fetch 3fa0,type=pdb,async=0;
+    orient;
+    turn z,-90;
+    turn y,-5;
+    turn x,10; 
+    hide everything; 
+    bg_color white; 
+    show cartoon;
+    color red, ss H;
+    color yellow, ss S;
+    color green, ss L+;
+    set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
+    ray 1500,1600;
+
+    The commands without linebreaks:
+    
+    delete all;fetch 3fa0,type=pdb,async=0;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
+    
+    '''
+    cmd.reinitialize()
+    cmd.fetch('3fa0', type='pdb', async='0')
+    cmd.orient()
+    cmd.turn('z', '-90')
+    cmd.turn('y', '-5')
+    cmd.turn('x', '10')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.show('cartoon')
+    cmd.color('red', 'ss H')
+    cmd.color('yellow', 'ss S')
+    cmd.color('green', 'ss L+')
+    cmd.set_view('(-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0)')
+    cmd.ray('1500', '1600')
+    cmd.png("T4L.png")
+cmd.extend('T4L',T4L)
+    
+    
+def U8():
+    '''
+    DESCRIPTION
+
+    16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
+    Has one strand in the asymmetric unit. Uses quat.py to generate
+    the second strand. Cartoon with filled rings and bases cartoon.
+    
+    USAGE
+
+    Type 'U8' to activate. Type 'help U8' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    fetch 3nd3,type=pdb,async=0;
+    run $HOME/mg18OU/quat.py;
+    quat 3nd3;
+    hide everything;
+    bg_color white; 
+    show sticks;
+    set cartoon_ring_mode, 3;
+    set cartoon_ring_finder, 1;
+    set cartoon_ladder_mode, 1;
+    set cartoon_nucleic_acid_mode, 4;
+    set cartoon_ring_transparency, 0.5;
+    as cartoon;
+    set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+    
+    The commands without linebreaks:
+    
+    delete all;fetch 3nd3,type=pdb,async=0;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+
+    '''
+    
+    cmd.reinitialize()
+    cmd.fetch('3nd3', type='pdb', async='0')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd3')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.show('sticks')
+    cmd.set('cartoon_ring_mode', '3')
+    cmd.set('cartoon_ring_finder', '1')
+    cmd.set('cartoon_ladder_mode', '1')
+    cmd.set('cartoon_nucleic_acid_mode', '4')
+    cmd.set('cartoon_ring_transparency', '0.5')
+    cmd.show_as('cartoon')
+    cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
+    cmd.draw()
+cmd.extend('U8',U8)
+    
+    
+def WC8():
+    '''
+    DESCRIPTION
+
+    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
+    resolution: 3nd4.  Has one strand in the asymmetric unit. 
+    Needs quat.py to generate the second strand. Use the 
+    BU alias. Cartoon with filled rings and bases cartoon.
+    
+    
+    USAGE
+
+    Type 'WC8' to activate. Type 'help WC8' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all; 
+    fetch 3nd4,type=pdb,async=0;
+    hide everything;
+    run $HOME/mg18OU/quat.py;
+    quat 3nd4;
+    bg_color white; 
+    show sticks; 
+    set stick_radius, 0.12; 
+    set nb_spheres_size, 0.25;
+    show nb_spheres;
+    set stick_ball, on; 
+    set stick_ball_ratio, 1.8;
+    set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);
+    hide everything,name H*;
+    rock
+
+    The commands without linebreaks:
+    
+    delete all; fetch 3nd4,type=pdb,async=0;hide everything; run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
+
+    '''
+    cmd.reinitialize()
+    cmd.fetch('3nd4', type='pdb', async='0')
+    cmd.remove('name H*')
+    cmd.hide('everything')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd4')
+    cmd.bg_color('white')
+    cmd.do('show stick')
+    cmd.do('set stick_radius, 0.12') 
+    cmd.do('set nb_spheres_size, 0.25')
+    cmd.do('show nb_spheres')
+    cmd.do('set stick_ball, on')
+    cmd.do('set stick_ball_ratio, 1.8')
+    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
+    cmd.rock()
+cmd.extend('WC8',WC8)
+    
+    
+####### Commands to display complex scenes. #############
+
+#category: Commands to display complex scenes.
+
+def BST():
+    '''
+    DESCRIPTION
+    
+    G2G3/U9U8 base step , PDB code 4PCO. 
+    From the 1.32 Angstrom resolution structure 
+    of the RNA decamer with 8 GU base pairs.
+    
+    USAGE
+
+    Type 'BST' to execute. Type 'help BST' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    fetch 4PCO, type=pdb, async=0;
+    select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
+    remove not G2G3;
+    bg_color white;
+    show sticks;
+    set stick_radius=0.14;
+    set stick_ball, on; 
+    set stick_ball_ratio,1.9;
+    set_view 
+    (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0);
+    remove name H*;
+    select carbon1, element C and (resi 3 or resi 8) 
+    # select lower base pair;
+    select carbon2, element C and (resi 2 or resi 9) 
+    #select upper base pair;
+    color gray70, carbon1;
+    color gray10, carbon2;
+    show sticks;
+    space cmyk;
+    distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;
+    distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;
+    distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;
+    distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;
+    color black, hbond1;
+    color black, hbond2;
+    color gray70, hbond3;
+    color gray70, hbond4;
+    show nb_spheres;
+    set nb_spheres_size, 0.35;
+    hide labels;
+    ray 1600,1000;
+    png 4PCO.png
+    
+    Commands without linebreaks: 
+    
+    delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
+
+    '''
+    cmd.reinitialize()
+    cmd.fetch('4PCO', type='pdb', async='0')
+    cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
+    cmd.remove('not G2G3')
+    cmd.bg_color('white')
+    cmd.set('stick_radius', '0.14')
+    cmd.set('stick_ball', 'on')
+    cmd.set('stick_ball_ratio', '1.9')
+    cmd.set_view('(-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0)')
+    cmd.remove('name H*')
+    cmd.select('carbon1', 'element C and (resi 3 or resi 8)')
+    cmd.select('carbon2', 'element C and (resi 2 or resi 9)')
+    cmd.color('gray70', 'carbon1')
+    cmd.color('gray10', 'carbon2')
+    cmd.show('sticks')
+    cmd.space('cmyk')
+    cmd.distance('hbond1', '/4PCO//B/U`9/N3', '/4PCO//A/G`2/O6')
+    cmd.distance('hbond2', '/4PCO//B/U`9/O2', '/4PCO//A/G`2/N1')
+    cmd.distance('hbond3', '/4PCO//A/U`3/N3', '/4PCO//B/G`8/O6')
+    cmd.distance('hbond4', '/4PCO//A/U`3/O2', '/4PCO//B/G`8/N1')
+    cmd.color('black', 'hbond1')
+    cmd.color('black', 'hbond2')
+    cmd.color('gray70', 'hbond3')
+    cmd.color('gray70', 'hbond4')
+    cmd.show('nb_spheres')
+    cmd.set('nb_spheres_size', '0.35')
+    cmd.hide('labels')
+    cmd.ray('1600', '1000')
+    cmd.png('4PCO.png')
+cmd.extend('BST',BST)
+
+
+def LG():
+    '''
+    DESCRIPTION
+    
+    Nine sugar glycan in influenza N9 neuraminidase at 
+    1.55 Angstrom  resolution, PDB code 4dgr. 
+    The electron density map is contoured at 1.0 sigma. 
+    39 commands were used to make this figure.  
+    
+    USAGE
+
+    Type 'LG' to execute. Type 'help LG' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    fetch 4dgr, async=0;
+    fetch 4dgr, type=2fofc,async=0;
+    select LongGlycan, resi 469:477;
+    orient LongGlycan;
+    remove not LongGlycan;
+    remove name H*;
+    isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;
+    color density, 2fofcmap; 
+    show sticks;
+    show spheres;
+    set stick_radius, .07;
+    set sphere_scale, .19;
+    set sphere_scale, .13, elem H;
+    set bg_rgb=[1, 1, 1];
+    set stick_quality, 50;
+    set sphere_quality, 4;
+    color gray85, elem C;
+    color red, elem O;
+    color slate, elem N;
+    color gray98, elem H;
+    set stick_color, gray50;
+    set ray_trace_mode, 1;
+    set ray_texture, 2;
+    set antialias, 3;
+    set ambient, 0.5;
+    set spec_count, 5;
+    set shininess, 50;
+    set specular, 1;
+    set reflect, .1;
+    set dash_gap, 0;
+    set dash_color, black;
+    set dash_gap, .15;
+    set dash_length, .05;
+    set dash_round_ends, 0;
+    set dash_radius, .05;
+    set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);
+    preset.ball_and_stick("all",mode=1);
+    draw 
+    
+    Commands without linebreaks:
+    
+    delete all;fetch 4dgr, async=0;fetch 4dgr, type=2fofc, async=0;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
+ 
+    '''
+    cmd.reinitialize()
+    cmd.fetch('4dgr', async='0')
+    cmd.fetch('4dgr', type='2fofc', async='0')
+    cmd.select('LongGlycan', 'resi 469:477')
+    cmd.orient('LongGlycan')
+    cmd.remove('not LongGlycan')
+    cmd.remove('name H*')
+    cmd.isomesh('2fofcmap', '4dgr_2fofc', '1', 'LongGlycan', carve ='1.8')
+    cmd.color('density', '2fofcmap')
+    cmd.show('sticks')
+    cmd.show('spheres')
+    cmd.set('stick_radius', '.07')
+    cmd.set('sphere_scale', '.19')
+    cmd.set('sphere_scale', '.13', 'elem H')
+    cmd.set('bg_rgb', '[1, 1, 1]')
+    cmd.set('stick_quality', '50')
+    cmd.set('sphere_quality', '4')
+    cmd.color('gray85', 'elem C')
+    cmd.color('red', 'elem O')
+    cmd.color('slate', 'elem N')
+    cmd.color('gray98', 'elem H')
+    cmd.set('stick_color', 'gray50')
+    cmd.set('ray_trace_mode', '1')
+    cmd.set('ray_texture', '2')
+    cmd.set('antialias', '3')
+    cmd.set('ambient', '0.5')
+    cmd.set('spec_count', '5')
+    cmd.set('shininess', '50')
+    cmd.set('specular', '1')
+    cmd.set('reflect', '.1')
+    cmd.set('dash_gap', '0')
+    cmd.set('dash_color', 'black')
+    cmd.set('dash_gap', '.15')
+    cmd.set('dash_length', '.05')
+    cmd.set('dash_round_ends', '0')
+    cmd.set('dash_radius', '.05')
+    cmd.set_view('(0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0)')
+    preset.ball_and_stick("all",mode=1);
+    cmd.draw()
+cmd.extend('LG',LG)
+    
+    
+def NA():
+    '''
+    DESCRIPTION
+
+    Hydrated sodium cation bound in major groove of a 
+    16-mer RNA of Watson-Crick base pairs.
+    The sodium is bound to the N7 nitrogen atom of 
+    Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
+    57 commands were used to make this figure. 
+
+    More than one label in a horizontal script is not 
+    allowed. This one label has to be at the end of the line.
+    Labels can be imported from a Labels.pml file.
+    Store the label commands one per row in this file.
+    Import the file with the @Labels.pml command. 
+    Include the path to the file if the labels file is not 
+    in the current working directory of PyMOL. 
+    
+    USAGE
+
+    Type 'NA' to execute. Type 'help NA' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    viewport 900,600;
+    fetch 3nd4, type=pdb, async=0;
+    run ~/mg18OU/quat.py; 
+    quat 3nd4; 
+    show sticks;
+    set stick_radius=0.125;
+    hide everything, name H*;
+    bg_color white;
+    create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));
+    bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 519);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 319);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);
+    show nb_spheres; 
+    set nb_spheres_size, .35;
+    distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;
+    distance hbond2,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/A`3/OP2;
+    distance hbond3,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/HOH`119/O;
+    distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;
+    distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;
+    distance hbond6,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
+    distance hbond7,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/G`2/OP2;
+    distance hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;
+    distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;
+    distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;
+    distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;
+    distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;
+    distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;
+    distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;
+    distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;
+    distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;
+    distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;
+    distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
+    set depth_cue=0;
+    set ray_trace_fog=0;
+    set dash_color, black;
+    set label_font_id, 5;
+    set label_size, 36;
+    set label_position, (0.5, 1.0, 2.0);
+    set label_color, black;
+    set dash_gap, 0.2;
+    set dash_width, 2.0;
+    set dash_length, 0.2;
+    set label_color, black;
+    set dash_gap, 0.2;
+    set dash_width, 2.0;
+    set dash_length, 0.2;
+    select carbon, element C; 
+    color yellow, carbon;
+    disable carbon;
+    set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0)
+    
+    The commands without linebreaks:
+    
+    delete all;viewport 900,600;fetch 3nd4, type=pdb,async=0;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
+
+    '''
+    cmd.reinitialize();
+    cmd.viewport('900','600');
+    cmd.fetch('3nd4', type='pdb', async='0');
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd4');
+    cmd.show('sticks');
+    cmd.set('stick_radius', '0.125');
+    cmd.hide('everything', 'name H*');
+    cmd.bg_color('white');
+    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
+    cmd.show('nb_spheres');
+    cmd.set('nb_spheres_size', '.35');
+    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
+    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
+    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
+    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
+    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
+    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
+    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
+    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
+    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
+    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
+    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
+    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
+    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
+    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
+    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
+    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
+    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.set('depth_cue', '0');
+    cmd.set('ray_trace_fog', '0');
+    cmd.set('dash_color', 'black');
+    cmd.set('label_font_id', '5');
+    cmd.set('label_size', '36')
+    cmd.set('label_position', '(0.5, 1.0,2.0)');
+    cmd.set('label_color', 'black');
+    cmd.set('dash_gap', '0.2');
+    cmd.set('dash_width', '2.0');
+    cmd.set('dash_length', '0.2');
+    cmd.set('label_color', 'black');
+    cmd.set('dash_gap', '0.2');
+    cmd.set('dash_width', '2.0');
+    cmd.set('dash_length', '0.2');
+    cmd.select('carbon', 'element C');
+    cmd.color('yellow', 'carbon');
+    cmd.disable('carbon');
+    cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
+cmd.extend('NA',NA)
+    
+
+
+
+
+################# VARIANTS OF The ABOVE that are NOT internet dependent  #################
+
+#category: Commands to display complex scenes with pdb files on computer.
+    
+def LGGT():
+    '''
+    DESCRIPTION
+
+    WT human gamma glutamyl transpeptidase at 1.67 Angstrom
+    resolution as cartoon. PDB code 4gdx. 
+    4gdx.pdb must be in the current working directory. 
+    
+    USAGE
+
+    Type 'LGGT' to activate. Type 'help LGGT' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    load 4gdx.pdb;
+    remove name H*;
+    as cartoon;
+    bg_color white; 
+    hide (name c+o+n);
+    set cartoon_side_chain_helper, on;color red, 4gdx and ss H; 
+    color yellow,4gdx and ss S;color green,4gdx and ss L+; 
+    select ASNNAG, resn NAG or resi 95 or i. 120  or i. 230 or
+    i. 266 or i. 344 or i. 511 or i. 381; 
+    color red, elem o and ASNNAG; 
+    color blue, elem n and ASNNAG;
+    color yellow, elem c and ASNNAG;
+    show sticks,ASNNAG;
+    disable ASNNAG;
+    set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
+    draw 
+    
+    The commands without linebreaks:
+    
+    delete all;load 4gdx.pdb;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
+    
+    '''
+    cmd.reinitialize()
+    cmd.load('4gdx.pdb')
+    cmd.remove('name H*')
+    cmd.show_as('cartoon')
+    cmd.bg_color('white')
+    cmd.hide('(name c+o+n)')
+    cmd.set('cartoon_side_chain_helper', 'on')
+    cmd.color('red', '4gdx and ss H')
+    cmd.color('yellow', '4gdx and ss S')
+    cmd.color('green', '4gdx and ss L+')
+    cmd.select('ASNNAG', 'resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 or i. 511 or i. 381')
+    cmd.color('red', 'elem o and ASNNAG')
+    cmd.color('blue', 'elem n and ASNNAG')
+    cmd.color('yellow', 'elem c and ASNNAG')
+    cmd.show('sticks', 'ASNNAG')
+    cmd.disable('ASNNAG')
+    cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
+    cmd.draw()
+cmd.extend('LGGT',LGGT)
+    
+    
+def LGU():
+    '''
+    DESCRIPTION
+
+    10-mer dsRNA. 
+    1.32 Angstrom resolution: 4PCO. Has five strands in 
+    the asymmetric unit. Deleted chain E and cobalt 
+    hexammine 102. Cartoon with filled rings and
+    bases cartoon.
+    
+    
+    USAGE
+
+    Type 'GU' to activate. Type 'help GU' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    load 4PCO.pdb;
+    hide everything; 
+    bg_color white; 
+    cartoon oval; 
+    set cartoon_ring_mode, 3; 
+    set cartoon_nucleic_acid_color, blue;
+    select rna_A, resn A; 
+    select rna_C, resn C;
+    select rna_G, resn G; 
+    select rna_U, resn U;
+    color yellow, rna_A; 
+    color red, rna_C;
+    color gray40, rna_G; 
+    color palecyan, rna_U;
+    as cartoon; 
+    disable rna_U; 
+    set stick_radius, 0.12;
+    set nb_spheres_size, 0.3; 
+    show nb_spheres; 
+    set stick_ball, on;
+    set stick_ball_ratio, 1.8; 
+    show sticks, resn NCO; 
+    show spheres, name Cl; 
+    set_view (0.34,-0.81,0.48,0.89,0.11,
+    -0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,
+    233.71,-20.0);
+    draw 
+    
+    The commands without linebreaks: 
+    
+    delete all;load 4PCO.pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
+    
+    '''
+    cmd.reinitialize();
+    cmd.load('4PCO.pdb')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.cartoon('oval')
+    cmd.set('cartoon_ring_mode', '3')
+    cmd.set('cartoon_nucleic_acid_color', 'blue')
+    cmd.select('rna_A', 'resn A')
+    cmd.select('rna_C', 'resn C')
+    cmd.select('rna_G', 'resn G')
+    cmd.select('rna_U', 'resn U')
+    cmd.color('yellow', 'rna_A')
+    cmd.color('red', 'rna_C')
+    cmd.color('gray40', 'rna_G')
+    cmd.color('palecyan', 'rna_U')
+    cmd.show_as('cartoon')
+    cmd.disable('rna_U')
+    cmd.set('stick_radius', '0.12')
+    cmd.set('nb_spheres_size', '0.3')
+    cmd.show('nb_spheres')
+    cmd.set('stick_ball', 'on')
+    cmd.set('stick_ball_ratio', '1.8')
+    cmd.show('sticks', 'resn NCO')
+    cmd.show('spheres', 'name Cl')
+    cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
+    cmd.draw()
+cmd.extend('LGU',LGU)
+    
+
+
+
+def LN9():
+    '''
+    DESCRIPTION
+    
+    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
+    4dgr. The biological unit has four copies of the asymmetric unit.
+    View is down the four-fold axis. Requires the quat.py script by
+    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
+    in ~/mg18OU.
+
+    USAGE
+
+    Type 'LN9' to activate. Type 'help LN9' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+
+    delete all;
+    load 4dgr.pdb;
+    run $HOME/mg18OU/quat.py;
+    quat 4dgr;
+    as cartoon; 
+    bg_color white;
+    color red, 4dgr_1 and ss H;
+    color yellow,4dgr_1 and ss S;
+    color green, 4dgr_1 and ss L+;
+    color cyan, (not 4dgr_1 and ss H);
+    color magenta, (not 4dgr_1 and ss S);
+    color orange, (not 4dgr_1 and ss L+);
+    set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
+    draw 
+
+    The commands without linebreaks:
+
+    delete all;load 4dgr.pdb;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
+
+    '''
+    cmd.reinitialize()
+    cmd.load('4dgr.pdb')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 4dgr')
+    cmd.show_as('cartoon')
+    cmd.bg_color('white')
+    cmd.color('red', '4dgr_1 and ss H')
+    cmd.color('yellow', '4dgr_1 and ss S')
+    cmd.color('green', '4dgr_1 and ss L+')
+    cmd.color('cyan', '(not 4dgr_1 and ss H)')
+    cmd.color('magenta', '(not 4dgr_1 and ss S)')
+    cmd.color('orange', '(not 4dgr_1 and ss L+)')
+    cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
+    cmd.draw()
+cmd.extend('LN9',LN9)
+    
+    
+
+def LT4L():
+    '''
+    DESCRIPTION
+    
+    Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
+    The file 3FA0 must be in the current working directory. 
+    
+    USAGE
+
+    Type 'LT4L' to activate. Type 'help LT4L' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+        
+    delete all;
+    load 3fa0.pdb;
+    orient;
+    turn z,-90;
+    turn y,-5;
+    turn x,10; 
+    hide everything; 
+    bg_color white; 
+    show cartoon;
+    color red, ss H;
+    color yellow, ss S;
+    color green, ss L+;
+    set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
+    ray 1500,1600;
+
+    The commands without linebreaks:
+    
+    delete all;load 3fa0.pdb;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
+    
+    '''
+    cmd.reinitialize()
+    cmd.fetch('3fa0', type='pdb', async='0')
+    cmd.orient()
+    cmd.turn('z', '-90')
+    cmd.turn('y', '-5')
+    cmd.turn('x', '10')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.show('cartoon')
+    cmd.color('red', 'ss H')
+    cmd.color('yellow', 'ss S')
+    cmd.color('green', 'ss L+')
+    cmd.set_view('(-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0)')
+    cmd.ray('1500', '1600')
+    cmd.png("T4L.png")
+cmd.extend('LT4L',LT4L)
+    
+    
+def LU8():
+    '''
+    DESCRIPTION
+
+    16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
+    Has one strand in the asymmetric unit. Uses quat.py to generate
+    the second strand. Cartoon with filled rings and bases cartoon.
+    The file 3nd3.pdb needs to be in the current working directory.
+
+    USAGE
+
+    Type 'LU8' to activate. Type 'help LU8' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    load 3nd3.pdb;
+    run $HOME/mg18OU/quat.py;
+    quat 3nd3;
+    hide everything;
+    bg_color white; 
+    show sticks;
+    set cartoon_ring_mode, 3;
+    set cartoon_ring_finder, 1;
+    set cartoon_ladder_mode, 1;
+    set cartoon_nucleic_acid_mode, 4;
+    set cartoon_ring_transparency, 0.5;
+    as cartoon;
+    set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+    
+    The commands without linebreaks:
+    
+    delete all;load 3nd3.pdb;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+
+    '''
+    
+    cmd.reinitialize()
+    cmd.load('3nd3.pdb')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd3')
+    cmd.hide('everything')
+    cmd.bg_color('white')
+    cmd.show('sticks')
+    cmd.set('cartoon_ring_mode', '3')
+    cmd.set('cartoon_ring_finder', '1')
+    cmd.set('cartoon_ladder_mode', '1')
+    cmd.set('cartoon_nucleic_acid_mode', '4')
+    cmd.set('cartoon_ring_transparency', '0.5')
+    cmd.show_as('cartoon')
+    cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
+    cmd.draw()
+cmd.extend('LU8',LU8)
+    
+    
+def LWC8():
+    '''
+    DESCRIPTION
+
+    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
+    resolution: 3nd4.  Has one strand in the asymmetric unit. 
+    Needs quat.py to generate the second strand. 
+    Cartoon with filled rings and bases cartoon.
+    The file 3nd4.pdb must be in the current working directory
+    
+    USAGE
+
+    Type 'LWC8' to activate. Type 'help LWC8' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all; 
+    load 3nd4.pdb;
+    hide everything;
+    run $HOME/mg18OU/quat.py;
+    quat 3nd4;
+    bg_color white; 
+    show sticks; 
+    set stick_radius, 0.12; 
+    set nb_spheres_size, 0.25;
+    show nb_spheres;
+    set stick_ball, on; 
+    set stick_ball_ratio, 1.8;
+    set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);
+    hide everything,name H*;
+    rock
+
+    The commands without linebreaks:
+    
+    delete all;load 3nd4.pdb;hide everything;run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
+
+    '''
+    cmd.reinitialize()
+    cmd.load('3nd4.pdb')
+    cmd.remove('name H*')
+    cmd.hide('everything')
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd4')
+    cmd.bg_color('white')
+    cmd.do('show stick')
+    cmd.do('set stick_radius, 0.12') 
+    cmd.do('set nb_spheres_size, 0.25')
+    cmd.do('show nb_spheres')
+    cmd.do('set stick_ball, on')
+    cmd.do('set stick_ball_ratio, 1.8')
+    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
+    cmd.rock()
+cmd.extend('LWC8',LWC8)
+    
+        
+def LBST():
+    '''
+    DESCRIPTION
+    
+    G2G3/U9U8 base step , PDB code 4PCO. 
+    From the 1.32 Angstrom resolution structure 
+    of an RNA decamer with 8 GU base pairs.
+    
+    USAGE
+
+    Type 'BST' to execute. Type 'help BST' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    load 4pco.pdb;
+    select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
+    remove not G2G3;
+    bg_color white;
+    show sticks;
+    set stick_radius=0.14;
+    set stick_ball, on; 
+    set stick_ball_ratio,1.9;
+    set_view 
+    (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0);
+    remove name H*;
+    select carbon1, element C and (resi 3 or resi 8) 
+    # select lower base pair;
+    select carbon2, element C and (resi 2 or resi 9) 
+    #select upper base pair;
+    color gray70, carbon1;
+    color gray10, carbon2;
+    show sticks;
+    space cmyk;
+    distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;
+    distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;
+    distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;
+    distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;
+    color black, hbond1;
+    color black, hbond2;
+    color gray70, hbond3;
+    color gray70, hbond4;
+    show nb_spheres;
+    set nb_spheres_size, 0.35;
+    hide labels;
+    ray 1600,1000;
+    png 4pco.png
+    
+    Commands without linebreaks: 
+    
+    delete all;load 4PCO.pdb;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
+
+    '''
+    cmd.reinitialize()
+    cmd.load('4pco.pdb')
+    cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
+    cmd.remove('not G2G3')
+    cmd.bg_color('white')
+    cmd.set('stick_radius', '0.14')
+    cmd.set('stick_ball', 'on')
+    cmd.set('stick_ball_ratio', '1.9')
+    cmd.set_view('(-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7.24,9.55,11.78,29.46,57.91,-20.0)')
+    cmd.remove('name H*')
+    cmd.select('carbon1', 'element C and (resi 3 or resi 8)')
+    cmd.select('carbon2', 'element C and (resi 2 or resi 9)')
+    cmd.color('gray70', 'carbon1')
+    cmd.color('gray10', 'carbon2')
+    cmd.show('sticks')
+    cmd.space('cmyk')
+    cmd.distance('hbond1', '/4PCO//B/U`9/N3', '/4PCO//A/G`2/O6')
+    cmd.distance('hbond2', '/4PCO//B/U`9/O2', '/4PCO//A/G`2/N1')
+    cmd.distance('hbond3', '/4PCO//A/U`3/N3', '/4PCO//B/G`8/O6')
+    cmd.distance('hbond4', '/4PCO//A/U`3/O2', '/4PCO//B/G`8/N1')
+    cmd.color('black', 'hbond1')
+    cmd.color('black', 'hbond2')
+    cmd.color('gray70', 'hbond3')
+    cmd.color('gray70', 'hbond4')
+    cmd.show('nb_spheres')
+    cmd.set('nb_spheres_size', '0.35')
+    cmd.hide('labels')
+    cmd.ray('1600', '1000')
+    cmd.png('4PCO.png')
+cmd.extend('LBST',LBST)
+
+
+def LLG():
+    '''
+    DESCRIPTION
+    
+    Nine sugar glycan in influenza N9 neuraminidase at 
+    1.55 Angstrom  resolution, PDB code 4dgr. 
+    The electron density map is contoured at 1.0 sigma. 
+    39 commands were used to make this figure.  
+    
+    USAGE
+
+    Type 'LLG' to execute. Type 'help LLG' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    load 4dgr.pdb;
+    load 4dgr2FoFc.ccp4;
+    select LongGlycan, resi 469:477;
+    orient LongGlycan;
+    remove not LongGlycan;
+    remove name H*;
+    isomesh 2fofcmap, 4dgr2FoFc, 1, LongGlycan, carve = 1.8;
+    color density, 2fofcmap; 
+    show sticks;
+    show spheres;
+    set stick_radius, .07;
+    set sphere_scale, .19;
+    set sphere_scale, .13, elem H;
+    set bg_rgb=[1, 1, 1];
+    set stick_quality, 50;
+    set sphere_quality, 4;
+    color gray85, elem C;
+    color red, elem O;
+    color slate, elem N;
+    color gray98, elem H;
+    set stick_color, gray50;
+    set ray_trace_mode, 1;
+    set ray_texture, 2;
+    set antialias, 3;
+    set ambient, 0.5;
+    set spec_count, 5;
+    set shininess, 50;
+    set specular, 1;
+    set reflect, .1;
+    set dash_gap, 0;
+    set dash_color, black;
+    set dash_gap, .15;
+    set dash_length, .05;
+    set dash_round_ends, 0;
+    set dash_radius, .05;
+    set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);
+    preset.ball_and_stick("all",mode=1);
+    draw 
+    
+    Commands without linebreaks:
+    
+    delete all;load 4dgr.pdb;fetch 4dgr2FoFc.mtz;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
+ 
+    '''
+    cmd.reinitialize()
+    cmd.load('4dgr.pdb')
+    cmd.load('4dgr2FoFc.ccp4')
+    cmd.select('LongGlycan', 'resi 469:477')
+    cmd.orient('LongGlycan')
+    cmd.remove('not LongGlycan')
+    cmd.remove('name H*')
+    cmd.isomesh('2fofcmap','4dgr2FoFc', '1', 'LongGlycan', carve ='1.8')
+    cmd.color('density','2fofcmap')
+    cmd.show('sticks')
+    cmd.show('spheres')
+    cmd.set('stick_radius', '.07')
+    cmd.set('sphere_scale', '.19')
+    cmd.set('sphere_scale', '.13', 'elem H')
+    cmd.set('bg_rgb', '[1, 1, 1]')
+    cmd.set('stick_quality', '50')
+    cmd.set('sphere_quality', '4')
+    cmd.color('gray85', 'elem C')
+    cmd.color('red', 'elem O')
+    cmd.color('slate', 'elem N')
+    cmd.color('gray98', 'elem H')
+    cmd.set('stick_color', 'gray50')
+    cmd.set('ray_trace_mode', '1')
+    cmd.set('ray_texture', '2')
+    cmd.set('antialias', '3')
+    cmd.set('ambient', '0.5')
+    cmd.set('spec_count', '5')
+    cmd.set('shininess', '50')
+    cmd.set('specular', '1')
+    cmd.set('reflect', '.1')
+    cmd.set('dash_gap', '0')
+    cmd.set('dash_color', 'black')
+    cmd.set('dash_gap', '.15')
+    cmd.set('dash_length', '.05')
+    cmd.set('dash_round_ends', '0')
+    cmd.set('dash_radius', '.05')
+    cmd.set_view('(0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0)')
+    preset.ball_and_stick("all",mode=1);
+    cmd.draw()
+cmd.extend('LLG',LLG)
+    
+    
+def LNA():
+    '''
+    DESCRIPTION
+
+    Hydrated sodium cation bound in major groove of a 
+    16-mer RNA of Watson-Crick base pairs.
+    The sodium is bound to the N7 nitrogen atom of 
+    Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
+    57 commands were used to make this figure. 
+
+    More than one label in a horizontal script is not 
+    allowed. This one label has to be at the end of the line.
+    Labels can be imported from a Labels.pml file.
+    Store the label commands one per row in this file.
+    Import the file with the @Labels.pml command. 
+    Include the path to the file if the labels file is not 
+    in the current working directory of PyMOL. 
+    
+    USAGE
+
+    Type 'NA' to execute. Type 'help NA' to see this documentation
+    printed to the command history window. Select from the command
+    history individual lines of code to build a new script. Select the
+    hortizontal script at the bottom if retaining most of the commands
+    in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+        
+    The commands with linebreaks:
+    
+    delete all;
+    viewport 900,600;
+    load 3nd4.pdb;
+    run ~/mg18OU/quat.py; 
+    quat 3nd4; 
+    show sticks;
+    set stick_radius=0.125;
+    hide everything, name H*;
+    bg_color white;
+    create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));
+    bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); 
+    bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 519);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 319);
+    distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);
+    show nb_spheres; 
+    set nb_spheres_size, .35;
+    distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;
+    distance hbond2,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/A`3/OP2;
+    distance hbond3,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/HOH`119/O;
+    distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;
+    distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;
+    distance hbond6,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
+    distance hbond7,/3nd4_1/1/A/HOH`319/O,/3nd4_1/1/A/G`2/OP2;
+    distance hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;
+    distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;
+    distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;
+    distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;
+    distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;
+    distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;
+    distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;
+    distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;
+    distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;
+    distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;
+    distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;
+    set depth_cue=0;
+    set ray_trace_fog=0;
+    set dash_color, black;
+    set label_font_id, 5;
+    set label_size, 36;
+    set label_position, (0.5, 1.0, 2.0);
+    set label_color, black;
+    set dash_gap, 0.2;
+    set dash_width, 2.0;
+    set dash_length, 0.2;
+    set label_color, black;
+    set dash_gap, 0.2;
+    set dash_width, 2.0;
+    set dash_length, 0.2;
+    select carbon, element C; 
+    color yellow, carbon;
+    disable carbon;
+    set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0);
+    rock
+
+    The commands without linebreaks:
+    
+    delete all;viewport 900,600;load 3nd4.pdb;hide cartoon;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;rock;AOset_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
+
+    '''
+    cmd.reinitialize();
+    cmd.viewport('900','600');
+    cmd.load('3nd4.pdb');
+    cmd.hide('cartoon');
+    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('quat 3nd4');
+    cmd.show('sticks');
+    cmd.set('stick_radius', '0.125');
+    cmd.set('sphere_scale', '0.225');
+    cmd.hide('everything', 'name H*');
+    cmd.bg_color('white');
+    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
+    cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
+    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
+    cmd.show('nb_spheres');
+    cmd.set('nb_spheres_size', '.35');
+    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
+    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
+    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
+    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
+    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
+    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
+    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
+    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
+    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
+    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
+    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
+    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
+    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
+    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
+    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
+    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
+    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.set('depth_cue', '0');
+    cmd.set('ray_trace_fog', '0');
+    cmd.set('dash_color', 'black');
+    cmd.set('label_font_id', '5');
+    cmd.set('label_size', '36')
+    cmd.set('label_position', '(0.5, 1.0,2.0)');
+    cmd.set('label_color', 'black');
+    cmd.set('dash_gap', '0.2');
+    cmd.set('dash_width', '2.0');
+    cmd.set('dash_length', '0.2');
+    cmd.set('label_color', 'black');
+    cmd.set('dash_gap', '0.2');
+    cmd.set('dash_width', '2.0');
+    cmd.set('dash_length', '0.2');
+    cmd.select('carbon', 'element C');
+    cmd.color('yellow', 'carbon');
+    cmd.disable('carbon');
+    cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
+    cmd.rock()
+cmd.extend('LNA',LNA)
+
+
+
+
+
+
+
+    
+
+
+
+
+######################## Horizontal Scripting ##############################
+
+#category: Horizontal scripting
 
 def rline():
        '''
@@ -3668,8 +3457,6 @@ def rline():
       Control-b moves the cursor to the left by one character.
         '''
 cmd.extend("rline",rline)
-    
-
 
 def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     """
@@ -3772,8 +3559,38 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     #The extend command makes roundview into a PyMOL command.
 cmd.extend("rv", rv)
 
+#################### Print commands for using git #################### 
 
-######## Mulitple models #########
+#category: Print commands for using git.
+
+def gitAdd():
+       '''
+    DESCRIPTION
+
+    Enter help(gitAdd) to print steps for adding updates to a file under version control.
+
+      Step 1: add new file to an existing repository. 
+
+        git add fileToBeAdded 
+
+    This command updates the index using the current content found in the working tree, 
+    to prepare the content staged for the next commit.
+    '''
+cmd.extend("gitAdd",gitAdd)
+
+
+def gitCommit():
+       '''
+    DESCRIPTION
+
+    Enter help(gitInit) to print steps for saving updates to a file under version control.
+
+      Step 1: commit changes to files 
+        git -m commit "Message" file to be updated.  
+    '''
+cmd.extend("gitCommit",gitCommit)
+
+
 def gitInit():
        '''
     DESCRIPTION
@@ -3834,612 +3651,1041 @@ def gitInit():
 cmd.extend("gitInit",gitInit)
 
 
-
-
-
-def nmr():
-    """ 
-    Description
-    
-    Show all of the models in nmr structure. 
-    I can never remmber this command.
-    """
-    cmd.do('set all_states, on')
-cmd.extend("nmr", nmr)
-
-
-def nmroff():
-    """ 
-    Description
-    
-    Hide all but first model in a nmr structure. 
-    """
-    cmd.do('set all_states, off')
-cmd.extend("nmr", nmr)
-
-
-
-
-def rmsc():
-    """
-    Description
-    
-    Remove supercell and the symmetry mates.
-    """
-    cmd.do('delete supercell*;delete m*_*')
-cmd.extend("rmsc", rmsc)
-
-
-
-
-def sc111():
-    """
-    Description
-    
-    Make a lattice of 1 x 1 x 1 unit cells. 
-    Use 'rmsc' to remove supercell objects.
-    Requires Thomas Holder's supercell.py script.
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
-cmd.extend("sc111", sc111)
-
-
-def sc221():
-    """
-    Description
-    
-    Make a lattice of 2 x 2 x 1 unit cells. 
-    Use 'rmsc' to remove supercell objects. 
-    Requires Thomas Holder's supercell.py script.
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
-cmd.extend("sc221", sc221)
-
-
-def sc112():
-    """
-    Description
-    
-    Make a lattice of 1 x 1 x 2 unit cells. 
-    Use 'rmsc' to remove supercell objects.
-    Requires Thomas Holder's supercell.py script.
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
-cmd.extend("sc221", sc112)
-
-
-def sc222():
-    """
-    Description
-    
-    Make a lattice of 2 x 2 x 2 unit cells. 
-    Use 'rmsc' to remove supercell objects.
-    Requires Thomas Holder's supercell.py script.
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
-cmd.extend("sc222", sc222)
-
-
-def sc333():
-    """
-    Description
-    
-    Make a lattice of 3 x 3 x 3 unit cells. 
-    Use 'rmsc' to remove supercell objects. 
-    Requires Thomas Holder's supercell.py script.
-    
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 3, 3, 3, , green, supercell333, 1')
-cmd.extend("sc333", sc333)
-
-
-
-############################# File saving and archiving ###########
-
-def saln(stemName="saved"):
-    """
+def gitPull():
+       '''
     DESCRIPTION
 
-    Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Enter help(gitPush) to print steps to send to updates to a repository on github.com. 
 
-    USAGE:
-    
-    saln currentScene
+      Step 1: pull file from an existing repository. 
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".aln") 
-cmd.extend('saln',saln)
+        git pull 
+    '''
+cmd.extend("gitPull",gitPull)
 
 
-def scif(stemName="saved"):
-    """
+def gitPush():
+       '''
     DESCRIPTION
 
-    Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Enter help(gitPush) to print steps to send to updates to a repository on github.com. 
 
-    USAGE:
-    
-    scif currentScene
+      Step 1: push updated file to an existing repository. 
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".cif") 
-cmd.extend('scif',scif)
+        git push 
+    '''
+cmd.extend("gitPush",gitPush)
 
 
-def sccp4(stemName="saved"):
-    """
+
+
+############################## Send search tems to websites with search boxes #########################################
+
+#category: Send search term(s) to websites with search boxes.
+
+
+def GB(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save a ccp4 file (CCP4 electron density map file) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to Google Books in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
 
-    USAGE:
-    
-    sccp4 currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".ccp4") 
-cmd.extend('sccp4',sccp4)
+    GB search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GB pymol
+    '''
+    webbrowser.open('https://www.google.com/search?tbm=bks&q='+searchTerm)
+cmd.extend('GB',GB)
 
 
-def sdae(stemName="saved"):
-    """
+def GH(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save a dae file (Collada File) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to GitHub in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
 
-    USAGE:
-    
-    sdae currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".dae") 
-cmd.extend('sdae',sdae)
+    GH search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GH pymol
+    '''
+    webbrowser.open('https://www.github.com/search?q='+searchTerm)
+cmd.extend('GH',GH)
 
 
-def sdat(stemName="saved"):
-    """
+def GHN(searchTerm="pymol", numHits=5):
+    '''
     DESCRIPTION
 
-    Save dat file (output data file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to GitHub in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
 
-    USAGE:
-    
-    smol currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".dat") 
-cmd.extend('sdat',sdat)
+    GHN search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GHN pymol, 10
+    '''
+    print 'Searching Github...'  # display text while downloading the Google page
+    url = 'https://www.github.com/search?q='
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching Github.'  # display text while downloading the Google page
+cmd.extend('GHN',GHN)
 
 
-def sfasta(stemName="saved"):
-    """
+def GO(searchTerm="pymol",numHits="200"):
+    '''
     DESCRIPTION
 
-    Save a fasta file (sequence file) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase Google in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
 
-    USAGE:
-    
-    sfasta currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".fasta") 
-cmd.extend('sfasta',sfasta)
+    GO search term(s), number of hits to returned
+
+    EXAMPLE
+
+    GO Nobel Prize in Chemistry, 30
+    '''
+    webbrowser.open('https://www.google.com/search?q='+searchTerm+'&num='+str(numHits))
+cmd.extend('GO',GO)
 
 
-def sidtf(stemName="saved"):
-    """
+def GON(searchTerm="pymol",numHits="5"):
+    '''
     DESCRIPTION
 
-    Save a idtf file (Intermediate Data Text Format) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase Google in default browser and opens the top N results in N new tabs.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The second parameter is optional; its defult value is 5. 
+    Each hit will be opened in a separate tab thereby saving a time consuming step.
+    If the number of results is fewer than the number requested,
+    all of the results will be shown.
 
-    USAGE:
-    
-    sidtf currentScene
+    The default web browser is used. 
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".idtf") 
-cmd.extend('sidtf',sidtf)
+    Requires the Python modules requests and beautifulsoup4 (bs4).
+    They may already be available to open source PyMOL, but they
+    must be installed for the proprietary PyMOL. Use the following command
+    from a terminal window outside of PyMOL:
+
+    conda install requests beautifulsoup4
+
+    You can launch this command from the commandline in PyMOL, but 
+    the execution of the install can be slow and will tie up your
+    PyMOL session for 10-20 minutes. 
+
+    USAGE
+
+    GON search term(s), number of hits to returned
+
+    If the second argument is not given, the default value is used.
+
+    EXAMPLE
+
+    GON Nobel Prize in Chemistry, 7
+
+    Prints message when the last page has finished loading.
+
+    '''
+    print 'Googling', searchTerm, 'and displaying the top', numHits, 'in separate tabs of the default brower.' 
+    res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished googling ', searchTerm, '.' # display text while downloading the Google page
+cmd.extend('GON',GON)
 
 
-def smae(stemName="saved"):
-    """
+def GS(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save mae file (Maestro file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to Google Scholar in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
+    The default search term is pymol.
 
-    USAGE:
-    
-    smoe currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mae") 
-cmd.extend('smae',smae)
+    GS search term(s)
+
+    EXAMPLES
+    Single search phrase:
+
+    GS Linus Pauling
+
+    Multiple search terms:
+
+    GS Linus Pauling; GS Francis Crick; GS Alexander Rich
+    '''
+    url = 'https://scholar.google.se/scholar?hl=en&q='
+    webbrowser.open(url+searchTerm)
+cmd.extend('GS',GS)
 
 
-def smmd(stemName="saved"):
-    """
+def GV(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to Google Videos in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
+    The default search term is pymol.
 
-    USAGE:
-    
-    smmd currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mmd") 
-cmd.extend('smmd',smmd)
+    GV search term(s)
+
+    EXAMPLES
+    Single search phrase:
+
+    GV Linus Pauling
+
+    Multiple search terms:
+
+    GV Linus Pauling; GS Francis Crick; GS Alexander Rich
+    '''
+    url = 'https://www.google.com/search?q=video+'
+    webbrowser.open(url+searchTerm)
+cmd.extend('GV',GV)
 
 
-def smmod(stemName="saved"):
-    """
+def MA(searchTerm='pymol'):
+    '''
     DESCRIPTION
 
-    Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term to all searchable websites in pymolshortcuts:
 
-    USAGE:
-    
-    smmd currentScene
+    arXiv
+    bioRxiv
+    GitHub
+    Google
+    Google Books
+    Google Scholar
+    Google Video
+    PBD
+    PubMed
+    Pymol Mailing List
+    Pymol Wiki
+    Research Gate
+    Science Direct
+    Springer
+    Source Forge
+    Stackoverflow
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mmod") 
-cmd.extend('smmod',smmod)
+    Example
+
+    MA pymol plugin
+    '''
+    AX(searchTerm)
+    BX(searchTerm)
+    GB(searchTerm)
+    GH(searchTerm)
+    GO(searchTerm)
+    GS(searchTerm)
+    GV(searchTerm)
+    PDB(searchTerm)
+    PM(searchTerm)
+    PML(searchTerm)
+    PW(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SF(searchTerm)
+    SO(searchTerm)
+    SP(searchTerm)
+cmd.extend('MA',MA)
 
 
-def spmo(stemName="saved"):
-    """
+def MB(searchTerm='pymol'):
+    '''
     DESCRIPTION
 
-    Save pmo file (XYZ, binary format file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term to search multiple sites for term in books:
 
-    USAGE:
-    
-    spmo currentScene
+    Google Books
+    Science Direct
+    Springer
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pmo") 
-cmd.extend('spmo',spmo)
+    Example
+
+    MB pymol plugin
+    '''
+    GB(searchTerm)
+    SD(searchTerm)
+    SP(searchTerm)
+cmd.extend('MB',MB)
 
 
-def smoe(stemName="saved"):
-    """
+def MC(searchTerm='pymol'):
+    '''
     DESCRIPTION
 
-    Save moe file (Molecular Operating Environment) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term to search ten core websites in pymolshortcuts:
 
-    USAGE:
-    
-    smoe currentScene
+    bioRxiv
+    GitHub
+    Google
+    Google Scholar
+    PubMed
+    Pymol Mailing List
+    Pymol Wiki
+    Research Gate
+    Science Direct
+    Stackoverflow
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".moe") 
-cmd.extend('smoe',smoe)
+    Example
+
+    MA pymol plugin
+    '''
+    BX(searchTerm)
+    GH(searchTerm)
+    GO(searchTerm)
+    GS(searchTerm)
+    PM(searchTerm)
+    PML(searchTerm)
+    PW(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SF(searchTerm)
+cmd.extend('MC',MC)
 
 
-def smol(stemName="saved"):
-    """
+def MM(searchTerm='pymol'):
+    '''
     DESCRIPTION
 
-    Save mol file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term to search for manuscripts in pymolshortcuts:
+
+    arXiv
+    bioRxiv
+    Google Scholar
+    PubMed
+    Research Gate
+    Science Direct
+    Springer
+
+    Example
+
+    MM pymol plugin
+    '''
+    AX(searchTerm)
+    BX(searchTerm)
+    GS(searchTerm)
+    PM(searchTerm)
+    RG(searchTerm)
+    SD(searchTerm)
+    SP(searchTerm)
+cmd.extend('MM',MM)
+
+
+def PDB(searchTerm="3fa0"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to the Protein Data Bank.
 
     USAGE:
+    PBB 3fa0
+    '''
+    webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
+cmd.extend('PDB',PDB)
+
+
+def PML(searchTerm="3d_pdf"):
+    '''
+    DESCRIPTION
     
-    smol currentScene
+    Submit a search term to the PyMOL Users Mail Service.
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mol") 
-cmd.extend('smol',smol)
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    PML session file
+
+    Multiple term search: 
+    PML text editor; PML 3d pdf; PML black and white cartoon;
+    '''
+    webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
+cmd.extend('PML',PML)
 
 
-def smol2(stemName="saved"):
-    """
+def PM(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save mol2 (Sybyl file format) file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to PubMed.
+    The default web browser is used.
+    The multi word search terms do not need to be enclosed in quotes. 
+    Takes one search term but multiple commands can be submitted at once (see below).
 
-    USAGE:
-    
-    smol2 currentScene
+    USAGE
+    PM search term
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mol2") 
-cmd.extend('smol2',smol2)
+    EXAMPLES
+    single
+    PM molecular graphics
+
+    Multiple search:
+    PM molecular graphics;  PM molecular representation; PM ambient occlusion
+    '''
+    webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
+cmd.extend('PM',PM)
 
 
-def smtl(stemName="saved"):
-    """
+def IPM(searchTerms = [], *args):
+    '''
     DESCRIPTION
 
-    Save mtl (Wavefront Material file format) file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Read list of search terms and submit each term to PubMed in a separate browser tab.
+    There a time delay based on the response time of the site to which the request is made.
+    The default web browser is used.
+    Must enclose each search term (can be of multiple words) in single or double quotes.
+    Has a time delay to avoid overwhelming the webserver.
 
-    USAGE:
-    
-    smtl currentScene
+    USAGE
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".mtl") 
-cmd.extend('smtl',smtl)
+    search=[string,string]; IPM(search)
+
+    Note that the name of the list is arbitrary.
+
+    EXAMPLES
+
+    search=["pymol","vmd","jmol"]; IPM(search)
+    '''
+    #termList = searchTerms.split(",")
+    print 'Sending', searchTerms, 'to Pubmed and display list of search results in separate tabs of the default brower.'
+    for term in searchTerms:
+        t0 = time.time()
+        sterm = str(term)
+        webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+sterm)
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+        print 'Finished searching PubMed for', sterm, '.'
+    print 'Finished searching PubMed for', searchTerms, '.' 
+cmd.extend('IPM',IPM)
 
 
-def sobj(stemName="saved"):
-    """
+def IPMN(searchTerms = [], *args):
+    '''
     DESCRIPTION
 
-    Save obj file (Wavefront mesh file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Read list of search terms and submit each term to PubMed in a separate browser tab.
+    There a time delay based on the response time of the site to which the request is made.
+    The default web browser is used.
+    Must enclose each search term (can be of multiple words) in single or double quotes.
+    Has a time delay to avoid overwhelming the webserver.
+
+    USAGE
+
+    search=[string,string]; IPM(int,search)
+
+    Note that the name of the list is arbitrary.
+
+    EXAMPLES
+
+    search=["pymol","vmd","jmol"]; IPMN(10,search)
+    '''
+    #termList = searchTerms.split(",")
+    numHits="5"
+    print 'Sending', searchTerms, 'to PubMed and display top N search results for each term in separate tabs of the default browser.' 
+    for term in searchTerms:
+        sterm = str(term)
+        res = requests.get('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + ' '.join(sterm))
+        res.raise_for_status()
+        soup = bs4.BeautifulSoup(res.text)
+        linkElems = soup.select('.r a')
+        numOpen = min(numHits, len(linkElems))
+        for i in range(numOpen):
+            t0 = time.time()
+            webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + linkElems[i].get('href'))
+            response_delay = time.time() - t0
+            time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+        print 'Finished searching PubMed for', sterm, '.'
+    print 'Finished searching PubMed for', searchTerms, '.' 
+cmd.extend('IPMN',IPMN)
+
+
+def RG(searchTerm='best molecular graphics program'):
+    '''
+    DESCRIPTION
+    
+    Submit a search query of Research Gate. 
+
+    Usage:
+
+    RG best molecular graphics program
+    '''
+    webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
+cmd.extend('RG',RG)
+
+
+def SD(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Science Direct.
 
     USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SD session file
+
+    Multiple term search: 
+    SD text editor; SD 3d pdf; SD black and white cartoon;
+    '''
+    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
+    url2 = '&show=100&sortBy=relevance'
+    webbrowser.open(url1+searchTerm+url2)
+cmd.extend('SD',SD)
+
+
+def SF(searchTerm='pymol'):
+    '''
+    DESCRIPTION
     
-    smol currentScene
+    Send search term to sourceforge.
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".obj") 
-cmd.extend('sobj',sobj)
+    USAGE
+
+    Single search:
+    
+    SF pymol
+
+    Multiple search: 
+
+    SF pymol; SF jmol; 
+    '''
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
+cmd.extend('SF',SF)
 
 
-def sout(stemName="saved"):
-    """
+def SP(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Springer Books
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SP session file
+
+    Multiple term search: 
+    SP text editor; SP 3d pdf; SP black and white cartoon;
+    '''
+    url1 = 'https://www.springer.com/gp/search?query='
+    url2 = '&submit=Submit+Query'
+    webbrowser.open(url1+searchTerm+url2)
+cmd.extend('SP',SP)
+
+
+
+################################ Open static web sites  ####################################
+
+#category: Open static web sites
+
+def ACA():
+    '''
     DESCRIPTION
 
-    Save out file (output data file) with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Open the American Crystallographic Association Annual Meeting webpage.
+    '''
+    webbrowser.open_new_tab('http://www.amercrystalassn.org/2018-meeting-homepage')
+cmd.extend('ACA',ACA)
 
-    USAGE:
+
+def ALS():
+    '''
+    DESCRIPTION
     
-    smol currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".out") 
-cmd.extend('sout',sout)
+    Open website of the Advanced Light Source.
+    '''
+    webbrowser.open('https://als.lbl.gov/')
+cmd.extend('ALS',ALS)
 
 
-def spdb(stemName="saved"):
-    """
+def APS():
+    '''
+    DESCRIPTION
+    
+    Open website of the Advanced Photon Source.
+    '''
+    webbrowser.open('https://www.aps.anl.gov/')
+cmd.extend('APS',APS)
+
+
+def AX(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save pdb file with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to arXiv.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
 
-    USAGE:
+    USAGE
     
-    spng currentScene
+    AX search term(s)
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pdb") 
-cmd.extend('spdb',spdb)
+    EXAMPLE
+
+    AX molecular graphics
+    '''
+    webbrowser.open('https://arxiv.org/search/?query='+searchTerm+'&searchtype=all&order=-announced_date_first&size=50')
+cmd.extend('AX',AX)
 
 
-def spkl(stemName="saved"):
-    """
+def BC():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
+    '''
+    webbrowser.open('http://www.bio.aps.anl.gov/')
+cmd.extend('BC',BC)
+
+
+def BD():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
+    '''
+    webbrowser.open('https://www.sasbdb.org/')
+cmd.extend('BD',BD)
+
+
+def BX(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save a pkl file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Send search term or phrase to bioRxiv 
+    which is maintained by Cold Spring Harbor Laboratory.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
 
-    USAGE:
+    USAGE
     
-    spkl currentScene
+    BX search term(s)
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pkl") 
-cmd.extend('spkl',spkl)
+    EXAMPLES
+
+    Single search:
+
+    BX molecular graphics
+
+    Multiple search:
+
+    BX molecular graphics; BX pymol
+    '''
+    url = 'https://www.biorxiv.org/search/'
+    webbrowser.open(url+searchTerm)
+cmd.extend('BX',BX)
 
 
-def spkla(stemName="saved"):
-    """
+def CH():
+    '''
+    DESCRIPTION
+    
+    Open the webste of UCSF Chimera.
+    '''
+    webbrowser.open('https://www.cgl.ucsf.edu/chimera/')
+cmd.extend('CH',CH)
+
+
+def CHESS():
+    '''
+    DESCRIPTION
+    
+    Open the website of CHESS. 
+    '''
+    webbrowser.open('https://www.chess.cornell.edu/')
+cmd.extend('CHESS',CHESS)
+
+
+def EMDB():
+    '''
+    DESCRIPTION
+    
+    Open the website of the Electron Microscopy Data Bank.
+    '''
+    webbrowser.open('https://www.ebi.ac.uk/pdbe/emdb/')
+cmd.extend('EMDB',EMDB)
+
+
+def EP():
+    '''
+    DESCRIPTION
+    
+    EasyPyMOL github site.
+    '''
+    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
+
+
+def JM():
+    '''
+    DESCRIPTION
+    
+    Open the Jmol wiki.
+    '''
+    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
+cmd.extend('JM',JM)
+
+
+def IUCR(searchTerm="pymol"):
+    '''
     DESCRIPTION
 
-    Save a pkla file (Python pickle file) with a time stamp included in the filename to avoid overwriting work..
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
+    Open website of the IUCr Journals.
+
+    USAGE
+    IUCR
+
+    '''
+    webbrowser.open('https://journals.iucr.org/')
+cmd.extend('IUCR',IUCR)
+
+
+def LBSF():
+    '''
+    DESCRIPTION
+    
+    Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.
+    '''
+    webbrowser.open('https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx')
+cmd.extend('LBSF',LBSF)
+
+
+def MCL():
+    '''
+    DESCRIPTION
+    
+    Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma. 
+    '''
+    webbrowser.open('http://structuralbiology.ou.edu/mcl')
+cmd.extend('MCL',MCL)
+
+
+def MG():
+    '''
+    DESCRIPTION
+    
+    Open website of the OUHSC molecular graphics course.
+    '''
+    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
+cmd.extend('MG',MG)
+
+
+def NDB():
+    '''
+    DESCRIPTION
+    
+    Open website of the Nucleic Acid Database.
+    '''
+    webbrowser.open('http://ndbserver.rutgers.edu/')
+cmd.extend('NDB',NDB)
+
+
+def notPyMOL():
+    '''
+    DESCRIPTION
+    
+    Open website with list of other molecular graphics programs.
+    '''
+    webbrowser.open('https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems')
+cmd.extend('notPyMOL',notPyMOL)
+
+
+def NSLSII():
+    '''
+    DESCRIPTION
+    
+    Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
+    '''
+    webbrowser.open('https://www.bnl.gov/ps/')
+cmd.extend('NSLSII',NSLSII)
+
+
+def PPC():
+    '''
+    DESCRIPTION
+    
+    Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
+    '''
+    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
+cmd.extend('PPC',PPC)
+
+
+def PS():
+    '''
+    DESCRIPTION
+    
+    Open the home page of the Protein Soceity. 
+    '''
+    webbrowser.open('https://www.proteinsociety.org/')
+cmd.extend('PS',PS)
+
+
+def PW(searchTerm="3d_pdf"):
+    '''
+    DESCRIPTION
+    
+    Submit search of the PyMOL Wiki. 
+    
+    Usage:
+    
+    PW 3d_pdf
+    '''
+    webbrowser.open('https://pymolwiki.org/index.php/'+searchTerm)
+cmd.extend('PW',PW)
+
+
+def RS():
+    '''
+    DESCRIPTION
+    
+    Open the homepage of the RNA Society.
+    '''
+    webbrowser.open('https://www.rnasociety.org/')
+cmd.extend('RS',RS)
+
+
+def SAXS():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of SAXS links at OUHSC. 
+    
+    '''
+    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0')
+cmd.extend('SAXS',SAXS)
+
+
+def SB():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of SSRL Biological SAXS at BL 4-2.
+    
+    '''
+    webbrowser.open('https://www-ssrl.slac.stanford.edu/~saxs/')
+cmd.extend('SB',SB)
+
+
+def SBGRID():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
+    
+    '''
+    webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
+cmd.extend('SBGRID',SBGRID)
+
+
+def SciPy18():
+    '''
+    DESCRIPTION
+    
+    Open the SciPy 2018 YouTube Channel.
+    
+    '''
+    webbrowser.open('https://www.youtube.com/playlist?list=PLYx7XA2nY5Gd-tNhm79CNMe_qvi35PgUR')
+cmd.extend('SciPy18',SciPy18)
+
+
+def SSRL():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of SSRL Structural Molecular Biology.
+    '''
+    webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
+cmd.extend('SSRL',SSRL)                                                                                               
+
+
+def SSURF():
+    '''
+    DESCRIPTION
+    
+    Open the webpage of the Society for Science at User Research Facilities (SSURF).
+    SSURF is nonprofit organization in the US that serves as the
+    nexus for users and user executive committees at
+    national laboratories. SUURF is not a lobbying organization, but
+    it help organize visits to Congress to educate legislators about
+    the importance of national laboratories in science. Membership
+    is free of students. The annual fee is nominal for PIs. 
+    '''
+    webbrowser.open('http://www.ssurf.org/')
+cmd.extend('SSURF',SSURF)
+
+
+
+
+
+
+
+
+
+
+
+
+def SO(searchTerm="3d_pdf"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Stackoverflow.
 
     USAGE:
-    
-    spkl currentScene
 
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pkla") 
-cmd.extend('spkla',spkla)
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SO session file
+
+    Multiple term search: 
+    SO text editor; SO 3d pdf; SO black and white cartoon;
+    '''
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
+cmd.extend('SO',SO)
 
 
 
-def spng(stemName="saved"):
+
+########################## 3D-PDFs #################################
+
+#category: 3D-PDFs
+
+def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click in the center of the page to activate"):
     """
     DESCRIPTION
-
-    Save png file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
     
-    spng currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".png") 
-cmd.extend('spng',spng)
-
-
-def spov(stemName="saved"):
-    """
-    DESCRIPTION
-
-    Save pov (POV-ray tracing file format) file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
+    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf. 
     
-    spov currentScene
+    Does not ramp colors well. 
+    Does not work on all other representations.
+    Can instead export pse file, import the pse file into Jmol, 
+    and enter in the console 'write fileNameStem.idtf'.
+    Then enter the commands below in arg = on the command line outside of PyMOL.
+    This works with stick models. 
+
+    Usage:
+        ms2pdf [,<fileNameStem> (do not include any file extensions)], [,caption]]
+
+    Reads in an optional filename stem. The default is "pymol".
+    Also reads in an optional caption.
+    Saves an idtf file.
+    Passes the idtf file to IDTFConverter, a u3d file to pdflatex,
+            and opens the pdf with Adobe Acrobat Reader DC. 
+
+    Prerequisites:
+        Install u3d-1.4.5; may have to install zlib, libjpeg, and cairo (libpng)
+        Install tex (on unix, texlive and texlive extra with the movie15 and media9 packages)
+        Install Abode Acrobat Reader DC version 9+.
+        See Jason Vertrees webpage for details (https://pymolwiki.org/index.php/3d_pdf)
+
+        You can run in pymol "save inFile.idtf" to get new 3Droo and 3Dcoo parameters
+        and then edit the corresponding lines below. 
+
+    June 10, 2018
+    Blaine Mooers
+
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pov") 
-cmd.extend('spov',spov)
 
+    x = '''\documentclass[12pt,letter]{article}
+\usepackage{hyperref}
+\usepackage{media9}
+\usepackage{verbatim}
+\pagestyle{empty}
+\\begin{document}
+\\begin{figure}[!htb]
+    \\begin{center}
+        \\addmediapath{./} % here you can set the path where is been saved the u3d file
+        \includemedia[
+            label='''+ InFile +''',
+            width=0.9\\textwidth,
+            height=0.9\\textheight,
+            activate=pageopen,
+            deactivate=pageclose,
+            3Dtoolbar=false,
+            3Dnavpane=false,
+            3Dmenu,
+            3Droo=129.0,
+            3Dcoo= 0.0 0.0 -129.0,
+            3Dc2c=0.0 0.0 1.0,
+            3Daac=20.0,
+            3Droll=0.0,
+            3Dbg=0 0 0, % to set the background color for 3D vwr; white = 1 1 1; so, you need to do the proportion: '255:1=[RGB]:x'
+            transparent=false,
+            3Dlights=Headlamp,
+            3Drender=Solid,
+            3Dpartsattrs=restore,
+        ]{}{'''+ InFile +'''.u3d}
+\\end{center}
+\caption{''' + caption + '''.}
+\\end{figure}
+\\end{document}'''
 
+    cmd.save("%s.idtf" %(InFile))
+    FilePSE = str(InFile+".pse")
+    FileIDTF = str(InFile+".idtf")
+    FileU3D = str(InFile+".u3d")
+    FileTEX = str(InFile+".tex")
+    FilePDF = str(InFile+".pdf")
+    print "InFile = ", InFile
+    print "FileIDTF: ", FileIDTF
+    print "FileU3D: ", FileU3D
+    print "FileTEX: ", FileTEX
+    print "FilePDF: ", FilePDF
+    myFile = open(FileTEX, "a")
+    myFile.write(x+"\n")
+    myFile.close()
 
-def spqr(stemName="saved"):
-    """
-    DESCRIPTION
-
-    Save pqr file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
-    
-    spng currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pqr") 
-cmd.extend('spqr',spqr)
-
-
-def spse(stemName="saved"):
-    """ DESCRIPTION
-
-    Save session file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
-    
-    spse currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".pse") 
-cmd.extend('spse',spse)
-
-
-def ssdf(stemName="saved"):
-    """
-    DESCRIPTION
-
-    Save sdf file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
-    
-    smol currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".sdf") 
-cmd.extend('ssdf',ssdf)
-
-
-def swrl(stemName="saved"):
-    """
-    DESCRIPTION
-
-    Save wrl (VRML 2 file format) file with a time stamp included in the filename to avoid overwriting work.
-    Read as a commandline argument, a string as the filename stem or 
-    use the default filename stem "saved".
-
-    USAGE:
-    
-    swrl currentScene
-
-    """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
-    s = str(DT) 
-    cmd.save(stemName+s+".wrl") 
-cmd.extend('swrl',swrl)
-
-
-
-
-
-
+# Line continuation in python is done by wrapping the code in parentheses
+    arg = ("/usr/local/bin/IDTFConverter -i " + FileIDTF + " -o " +
+        FileU3D + "; /opt/local/bin/pdflatex " +
+        InFile + "; open -a 'Adobe Acrobat Reader DC.app' " + FilePDF)
+    subprocess.call(arg,shell=True)
+    print "Argument for call: ", arg
+    return
+cmd.extend("ms2pdf", ms2pdf)
 
 
 def topdf(InFile="pymol3"):
