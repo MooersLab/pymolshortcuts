@@ -1045,7 +1045,6 @@ def BU():
 cmd.extend('BU',BU)
 
 
-
 def CB():
     '''
     DESCRIPTION
@@ -1800,7 +1799,6 @@ def JMP():
     subprocess.call(arg,shell=True)
     return
 cmd.extend('JMP',JMP)
-
 
 
 def jabref():
@@ -4148,6 +4146,44 @@ def GS(searchTerm="pymol"):
 cmd.extend('GS',GS)
 
 
+def GSN(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to Google Scholar in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
+    The default search term is pymol.
+
+    USAGE
+
+    GSN search term(s)
+
+    EXAMPLES
+    Single search phrase:
+
+    GSN Linus Pauling
+
+    Multiple search terms:
+
+    GS Linus Pauling; GS Francis Crick; GS Alexander Rich
+    '''
+    url = 'https://scholar.google.se/scholar?hl=en&q='
+    print 'Searching Google Scholar...' 
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching with Google Scholar.'  # display text while downloading the Google page
+cmd.extend('GSN',GSN)
+
+
 def GV(searchTerm="pymol"):
     '''
     DESCRIPTION
@@ -4173,6 +4209,41 @@ def GV(searchTerm="pymol"):
     url = 'https://www.google.com/search?q=video+'
     webbrowser.open(url+searchTerm)
 cmd.extend('GV',GV)
+
+
+def GVN(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to Google Videos in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The default web browser is used. 
+    The default search term is pymol.
+
+    USAGE
+
+    GVN search term(s), N
+
+    EXAMPLES
+    Single search phrase:
+
+    GVN Linus Pauling,5
+
+    '''
+    url = 'https://www.google.com/search?q=video+'
+    print 'Searching Google Video...' 
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching with Google Videos.'  
+cmd.extend('GVN',GVN)
 
 
 def MA(searchTerm='pymol'):
@@ -4303,7 +4374,7 @@ def MM(searchTerm='pymol'):
 cmd.extend('MM',MM)
 
 
-def PDB(searchTerm="3fa0"):
+def PDB(searchTerm="3fa0",numHits="5"):
     '''
     DESCRIPTION
     
@@ -4314,6 +4385,32 @@ def PDB(searchTerm="3fa0"):
     '''
     webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
 cmd.extend('PDB',PDB)
+
+
+def PDBN(searchTerm="3fa0",5):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to the Protein Data Bank and open the top N hits in separate tabs.
+
+    USAGE:
+    search = ["","",]
+    PBBN 3fa0
+    '''
+    print 'Searching PDB'  # display text while downloading the Google page
+    url = 'https://www.rcsb.org/structure/'
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching PBD.'  # display text while downloading the Google page
+cmd.extend('PDBN',PDBN)
 
 
 def PML(searchTerm="3d_pdf"):
@@ -4331,6 +4428,36 @@ def PML(searchTerm="3d_pdf"):
     PML text editor; PML 3d pdf; PML black and white cartoon;
     '''
     webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
+cmd.extend('PML',PML)
+
+
+def PMLN(searchTerm="3d_pdf",numHits="5"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to the PyMOL Users Mail Service.
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    PML session file
+
+    Multiple term search: 
+    PML text editor; PML 3d pdf; PML black and white cartoon;
+    '''
+    print 'Searching PyMOL mailing list.'  # display text while downloading the Google page
+    url = 'https://sourceforge.net/p/pymol/mailman/search/?q='
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching PyMOL mailing list.'  # display text while downloading the Google page
 cmd.extend('PML',PML)
 
 
@@ -4354,7 +4481,42 @@ def PM(searchTerm="pymol"):
     PM molecular graphics;  PM molecular representation; PM ambient occlusion
     '''
     webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
-cmd.extend('PM',PM)
+cmd.extend('PMLN',PMLN)
+
+
+def PMN(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to PubMed and open top N hits in separate tabs.
+    The default web browser is used.
+    The multi word search terms do not need to be enclosed in quotes. 
+    Takes one search term but multiple commands can be submitted at once (see below).
+
+    USAGE
+    PM search term
+
+    EXAMPLES
+    single
+    PM molecular graphics
+
+    Multiple search:
+    PM molecular graphics;  PM molecular representation; PM ambient occlusion
+    '''
+    print 'Searching PubMed.'  # display text while downloading the Google page
+    url = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching PubMed.'  # display text while downloading the Google page
+cmd.extend('PMN',PMN)
 
 
 def IPM(searchTerms = [], *args):
@@ -4444,6 +4606,32 @@ def RG(searchTerm='best molecular graphics program'):
 cmd.extend('RG',RG)
 
 
+def RGN(searchTerm='best molecular graphics program',numHits="5"):
+    '''
+    DESCRIPTION
+    
+    Submit a search query of Research Gate and open the top N hits in sepearte tabs. 
+
+    Usage:
+
+    RG best molecular graphics program
+    '''
+    print 'Searching Github...'  # display text while downloading the Google page
+    url = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching Research Gate.' 
+cmd.extend('RGN',RGN)
+
+
 def SD(searchTerm="pymol"):
     '''
     DESCRIPTION
@@ -4462,6 +4650,37 @@ def SD(searchTerm="pymol"):
     url2 = '&show=100&sortBy=relevance'
     webbrowser.open(url1+searchTerm+url2)
 cmd.extend('SD',SD)
+
+
+def SDN(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Science Direct and open the top N hits in sepearte tabs.
+
+    USAGE:
+
+    Single term search (multi word searches do NOT have to be inside quotes):
+    SD session file
+
+    Multiple term search: 
+    SD text editor; SD 3d pdf; SD black and white cartoon;
+    '''
+    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
+    url2 = '&show=100&sortBy=relevance'
+    print 'Searching Search Direct.'  # display text while downloading the Google page
+    res = requests.get(url1 + ' '.join(searchTerm) + url2)
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href') + url2)
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching Science Direct.' 
+cmd.extend('SDN',SDN)
 
 
 def SF(searchTerm='pymol'):
@@ -4485,6 +4704,39 @@ def SF(searchTerm='pymol'):
 cmd.extend('SF',SF)
 
 
+def SFN(searchTerm='pymol',numHits="5"):
+    '''
+    DESCRIPTION
+    
+    Send search term to sourceforge and open the top N hits in sepearte tabs.
+
+    USAGE
+
+    Single search:
+    
+    SF pymol
+
+    Multiple search: 
+
+    SF pymol; SF jmol; 
+    '''
+    url = "https://stackoverflow.com/search?q="
+    webbrowser.open(url+searchTerm)
+    print 'Searching source forge.'  # display text while downloading the Google page
+    res = requests.get(url + ' '.join(searchTerm))
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href'))
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching Ssource forge.' 
+cmd.extend('SFN',SFN)
+
+
 def SP(searchTerm="pymol"):
     '''
     DESCRIPTION
@@ -4505,6 +4757,33 @@ def SP(searchTerm="pymol"):
 cmd.extend('SP',SP)
 
 
+def SPN(searchTerm="pymol",numHits="5"):
+    '''
+    DESCRIPTION
+    
+    Submit a search term to Springer Books and open the top N hits in sepearte tabs.
+
+    USAGE:
+
+    SPN session file, 10
+
+    '''
+    url1 = 'https://www.springer.com/gp/search?query='
+    url2 = '&submit=Submit+Query'
+    webbrowser.open(url1+searchTerm+url2)
+    print 'Searching source forge.'  # display text while downloading the Google page
+    res = requests.get(url1 + ' '.join(searchTerm) + url2)
+    res.raise_for_status()
+    soup = bs4.BeautifulSoup(res.text)
+    linkElems = soup.select('.r a')
+    numOpen = min(numHits, len(linkElems))
+    for i in range(numOpen):
+        t0 = time.time()
+        webbrowser.open(url + linkElems[i].get('href') + url2)
+        response_delay = time.time() - t0
+        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+    print 'Finished searching Springer Books.' 
+cmd.extend('SPN',SPN)
 
 ################################ Open static web sites  ####################################
 
