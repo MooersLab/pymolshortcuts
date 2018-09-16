@@ -97,86 +97,267 @@ def SC():
 
     Information outside of PyMOL (internet connection need and some customization is required)
 
-    ACA, American Crystallographic Association
-    AX, arXiv search
-    ALS, Advanced Light Source
-    APS, Advanced Photon Source
-    BC, BIOCAT BioSAXS beamline at APS
-    BD, Biological SAXS Database
-    BX, bioarvix search
-    CH, UCSF Chimera
-    CHESS, CHESS
-    EMDB, Electron Microscopy Data Bank
-    EP, EasyPyMOL github site
-    GM, gmail
-    GO, google search
-    GS, google scholar
-    GSM, google scholar multiple search terms
-    JM, JMol
-    LBSF, Laboratory of Molecular Biology at OUHSC
-    MCL, link to Macromolecular Crystallography Laboratory at OU
-    MG, links for OUHSC molecular graphics course 
-    NDB, Nucleic Acid Database 
-    NSLSII, 
-    notPyMOL, list of other molecular graphics programs
-    PM, pubmed search
-    PML, PyMOL Users Mail Service
-    PS, Protein Soceity
-    PW, PyMOL wiki
-    PPC, Protien Production Facility at OU
-    PDB, Protein Data Bank 
-    RS, RNA Society
-    SAXS, SAXS links at OUHSC
-    SSRL, SSRL Structural Molecular Biology
-    SB, BioSAXS at SSRL
-    SSURF, Soceity for Science at User Research Facilities
-    WM, webmail
-    WS, National Weather Service (time to head for the storm shelter?)
+    Print shortcuts and their descriptions:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    SC        Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   
 
+    Show many models (NMR and crystal packing):
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    nmr       Show all of the models in nmr structure.                         
+    nmroff    Hide all but first model in a nmr structure.                     
+    rmsc      Remove supercell and the symmetry mates.                         
+    sc111     Make a lattice of 1 x 1 x 1 unit cells.                          
+    sc221     Make a lattice of 2 x 2 x 1 unit cells.                          
+    sc112     Make a lattice of 1 x 1 x 2 unit cells.                          
+    sc222     Make a lattice of 2 x 2 x 2 unit cells.                          
+    sc333     Make a lattice of 3 x 3 x 3 unit cells.                          
 
-    Molecules in standard orientations (need internet connection): 
+    Save files with date and time in filename:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    saln      Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work.. 
+    scif      Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work.. 
+    sccp4     Save a ccp4 file (CCP4 electron density map file) with a time stamp included in the filename to avoid overwriting work.. 
+    sdae      Save a dae file (Collada File) with a time stamp included in the filename to avoid overwriting work.. 
+    sdat      Save dat file (output data file) with a time stamp included in the filename to avoid overwriting work. 
+    sfasta    Save a fasta file (sequence file) with a time stamp included in the filename to avoid overwriting work.. 
+    sidtf     Save a idtf file (Intermediate Data Text Format) with a time stamp included in the filename to avoid overwriting work.. 
+    smae      Save mae file (Maestro file) with a time stamp included in the filename to avoid overwriting work. 
+    smmd      Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work. 
+    smmod     Save mmd file (Macromodel file) with a time stamp included in the filename to avoid overwriting work. 
+    spmo      Save pmo file (XYZ, binary format file) with a time stamp included in the filename to avoid overwriting work. 
+    smoe      Save moe file (Molecular Operating Environment) with a time stamp included in the filename to avoid overwriting work. 
+    smol      Save mol file with a time stamp included in the filename to avoid overwriting work. 
+    smol2     Save mol2 (Sybyl file format) file with a time stamp included in the filename to avoid overwriting work. 
+    smtl      Save mtl (Wavefront Material file format) file with a time stamp included in the filename to avoid overwriting work. 
+    sobj      Save obj file (Wavefront mesh file) with a time stamp included in the filename to avoid overwriting work. 
+    sout      Save out file (output data file) with a time stamp included in the filename to avoid overwriting work. 
+    spdb      Save pdb file with a time stamp included in the filename to avoid overwriting work.. 
+    spkl      Save a pkl file (Python pickle file) with a time stamp included in the filename to avoid overwriting work.. 
+    spkla     Save a pkla file (Python pickle file) with a time stamp included in the filename to avoid overwriting work.. 
+    spng      Save png file with a time stamp included in the filename to avoid overwriting work. 
+    spov      Save pov (POV-ray tracing file format) file with a time stamp included in the filename to avoid overwriting work. 
+    spqr      Save pqr file with a time stamp included in the filename to avoid overwriting work. 
+    spse      Read as a commandline argument, a string as the filename stem or  
+    ssdf      Save sdf file with a time stamp included in the filename to avoid overwriting work. 
+    swrl      Save wrl (VRML 2 file format) file with a time stamp included in the filename to avoid overwriting work. 
 
-    GGT, gamma glutamyl transpeptidase as cartoon (1.67 ang): 4gdx.
-    GU, 10-mer RNA with eight GU base pairs (1.32 ang): 4pco.
-    N9, neuraminidase as cartoon, biological unit (1.55 ang): 4dgr.
-    T4L, WT T4 lysozyme (1.09 ang) as a ribbon diagram: 3fa0. 
-    U8, 16-mer dsRNA with 8 contiguous Us. U-helix RaNA (1.37 ang): 3nd3.
-    WC8, 16-mer RNA with all Watson-Crick base pairs (1.52 ang): 3nd4.
+    Make molecular representations that are not available in PyMOL:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    AO        Commands to make ambient occlusion image like those in Qutemole.  
+    AOD       Make ambient occlusion image of any with dark carbon atoms.      
+    BW        Commands to make black-and white-ribbon cartoon on a white background. 
+    BU        Commands to make biological unit. Requires a pdb file. There are 
+    CB        Loads Jared Sampson's script "colorblindfriendly.py" from the    
+    CR        Commands to make colored filled-ring cartoon of nucleic acids. May 
+    CSS       Commands to color ribbon or cartoon representations of proteins by 
+    CBSS      Apply colorblind-friendly coloring to ribbon or cartoon representations. 
+    DU        Make dumbbell (ribbons with rolled edges) cartoon of the main chains of nucleic acids and proteins.  
+    FR        Make filled-ring cartoon of nucleic acids. May need to enter 'hide everything' first.  
+    HH        Hide hydrogen atoms of currently visible molecular objects.      
+    PE        Apply pearl effect about cations. Must supply selection.         
+    PU        Make putty cartoon of main chain of nucleic acids and proteins.  
+    SE        Commands to make SAXS envelope from a bead model.                
+    getchem   Create selections based on the biophysical properties of each residue. 
+    timcolor  Use Tim Mather's coloring scheme applied to the selections defined in getchem().  
 
+    Launch a full-featured text editor from PyMOL:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    atom      Open file with the text editor Atom from within PyMOL.           
+    bbedit    Open file with the text editor bbedit from within PyMOL.         
+    code      Open file with Visual Studio Code from within PyMOL.             
+    emacs     Open file with emacs from within PyMOL.                          
+    gedit     Open file with gedit from within PyMOL.                          
+    jedit     Open file with jedit from within PyMOL.                          
+    mate      Open file with Textmate (Mac OS only) from within PyMOL.         
+    notepadpp Open file with notepadpp (Mac OS only) from within PyMOL.        
+    nv        Open file with neovim from within PyMOL.                         
+    oni       Open the editor Oni from within PyMOL.                           
+    pdbed     Open PDBEditor.jar from within PyMOL.                            
+    st3       Open sublime text 3 from within PyMOL.                           
+    vim       Open vim from within PyMOL.                                      
 
-    Complex figures to serve as templates: 
-    
-    BST, Base-stacking figure, (1.32 ang): 4pco. 
-    LG, Electron density map of nine sugar glycan (1.55 ang): 4dgr. 
-    NA, Sodium cation in major groove of 16-mer RNA (1.52 ang): 3nd4.
+    Open word processord:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    word      Open word from within PyMOL.                                     
 
-    Shortcuts defined with L append in the front of the above shortcuts 
-    load files from the directory ~/mgOU18. (e.g., LT4L for T4L). There are
-    for leading workshops where the internet connection is not reliable.
+    Open data analysis programs:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    cranR     Open the Cran R from within PyMOL.                               
+    ddb       Open the DBBrowserSQLite.                                        
+    excel     Open the excel from within PyMOL.                                
+    JASP      Open the JASP from within PyMOL.                                 
+    JMP       Open the JMP from within PyMOL.                                  
+    jabref    Open the jabref from within PyMOL.                               
+    julia     Open the jabref from within PyMOL.                               
+    oc        Open the jabref from within PyMOL.                               
+    ppt       Open the powerpoint from within PyMOL.                           
 
-    LBST, Base-stacking figure, (1.32 ang): 4pco. 
-    LGGT, gamma glutamyl transpeptidase as cartoon (1.67 ang): 4gdx.
-    LGU, 10-mer RNA with eight GU base pairs (1.32 ang): 4pco.
-    LLG, Electron density map of nine sugar glycan (1.55 ang): 4dgr. 
-    LNA, Sodium cation in major groove of 16-mer RNA (1.52 ang): 3nd4.
-    LN9, neuraminidase as cartoon, biological unit (1.55 ang): 4dgr.
-    LT4L, WT T4 lysozyme (1.09 ang) as a ribbon diagram: 3fa0. 
-    LU8, 16-mer dsRNA with 8 contiguous Us. U-helix RaNA (1.37 ang): 3nd3.
-    LWC8, 16-mer RNA with all Watson-Crick base pairs (1.52 ang): 3nd4.
+    Open terminal windows:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    iterm     Open iTerm2 window on MacOS.                                     
+    term      Open a Terminal window on MacOS.                                 
 
-    Molecular representations that can be applied to any visible molecular object:
-    
-    AO, Make ambient occlusion image. Requires global view of protein.
-    AOD, Make ambient occlusion image with dark carbons.
-    BU, Display biological unit. 
-    BW, Make black and white ribbon cartoon on white background.
-    CB, Define color blind compatible coloring scheme. 
-    CBSS, Color ribbon and cartoons with colorblind friendly colors. 
-    CR, Make colored filled-ring cartoon of nucleic acids..
-    CSS, Color ribbon and cartoons by secondary structure: red, green and yellow. 
-    FR, Make filled-ring cartoon of nucleic acids.
-    SE, Make SAXS envelope from a bead model.
+    Open other molecular graphics programs:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    ccp4mg    Open ccp4mg from within PyMOL.                                   
+    chimera   Open Chimera from within PyMOL.                                  
+    coot      Open coot from within PyMOL.                                     
+    jmol      Open Jmol from within PyMOL.                                     
+    vmd       Open vmd from within PyMOL.                                      
+    yasara    Open the molecular graphics prograom YASASRA from within PyMOL.  
 
+    Image manipulation programs:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    gimp      Open the molecular graphics program with gimp from within PyMOL.  
+    inkscape  Open the molecular graphics program with gimp from within PyMOL.  
+
+    Open certain webapps:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    gcal      Open Google Calendar.                                            
+    GM        Open gmail.                                                      
+    WM        Open Web Mail in defualt browser. Adjust url for your institution. 
+    WS        Open National Weather Service website for locale.                
+
+    Samples:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    GGT       WT human gamma glutamyl transpeptidase at 1.67 Angstrom          
+    GU        10-mer dsRNA with 8 contiguous Us. U-helix RNA.                  
+    N9        Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr. 
+    T4L       WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0.              
+    U8        16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. 
+    WC8       16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom              
+
+    Commands to display complex scenes.:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    BST       G2G3/U9U8 base step , PDB code 4PCO.                             
+    LG        Nine sugar glycan in influenza N9 neuraminidase at               
+    NA        Hydrated sodium cation bound in major groove of a                
+
+    Commands to display complex scenes with pdb files on computer.:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    LGGT      WT human gamma glutamyl transpeptidase at 1.67 Angstrom          
+    LGU       10-mer dsRNA.                                                    
+    LN9       Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 
+    LT4L      Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0.  
+    LU8       16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. 
+    LWC8      16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom              
+    LBST      G2G3/U9U8 base step , PDB code 4PCO.                             
+    LLG       Nine sugar glycan in influenza N9 neuraminidase at               
+    LNA       Hydrated sodium cation bound in major groove of a                
+
+    Re-orient molecule:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    oy        Align long axis of molecule along z-axis.                        
+    omxy      Align long axis of molecule along minus x-y axis.                
+    oxy       Align long axis of molecule along x-y axis.                      
+    oz        Align long axis of molecule along y-axis.                        
+
+    Horizontal scripting:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    cntfiles  Count number of files in current directory.                      
+    cntpdb    Count number of pdb files in current directory.                  
+    rline     Enter "help(rline)" to refresh memory of the readline commands.  
+    rv        Get the view settings in a compact format on one line.           
+
+    Print commands for using git for version control:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    gitAdd    Enter help(gitAdd) to print steps for adding a file to version control. 
+    gitCommit Enter help(gitInit) to print steps for saving updates to a file under version control. 
+    gitInit   Enter help(gitInit) to print steps for creating a git repository. 
+    gitPull   Enter help(gitPush) to print steps to send to updates to a repository on github.com.  
+    gitPush   Enter help(gitPush) to print steps to send to updates to a repository on github.com.  
+
+    Send search term(s) to websites with search boxes.:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    AB        Send search term or phrase to Amazon.com Books in default browser. 
+    def       #     Send search term or phrase to anaconda.com books in default browser. 
+    GB        Send search term or phrase to Amazon.com in default browser.     
+    GH        Send search term or phrase to GitHub in default browser.         
+    GHN       Send search term or phrase to GitHub in default browser.         
+    GO        Send search term or phrase Google in default browser.            
+    GON       Send search term or phrase Google in default browser and opens the top N results in N new tabs. 
+    GS        Send search term or phrase to Google Scholar in default browser. 
+    GSN       Send search term or phrase to Google Scholar in default browser. 
+    GV        Send search term or phrase to Google Videos in default browser.  
+    GVN       Send search term or phrase to Google Videos in default browser.  
+    MA        Send search term to all searchable websites in pymolshortcuts:   
+    MB        Send search term to search multiple sites for term in books:     
+    MC        Send search term to search ten core websites in pymolshortcuts:  
+    MM        Send search term to search for manuscripts in pymolshortcuts:    
+    PDB       Submit a search term to the Protein Data Bank.                   
+    PDBN      Submit a search term to the Protein Data Bank and open the top N hits in separate tabs. 
+    PML       Submit a search term to the PyMOL Users Mail Service.            
+    PMLN      Submit a search term to the PyMOL Users Mail Service.            
+    PM        Send search term or phrase to PubMed.                            
+    PMN       Send search term or phrase to PubMed and open top N hits in separate tabs. 
+    IPM       Read list of search terms and submit each term to PubMed in a separate browser tab. 
+    IPMN      Read list of search terms and submit each term to PubMed in a separate browser tab. 
+    RG        Submit a search query of Research Gate.                          
+    RGN       Submit a search query of Research Gate and open the top N hits in sepearte tabs.  
+    SD        Submit a search term to Science Direct.                          
+    SDN       Submit a search term to Science Direct and open the top N hits in sepearte tabs. 
+    SF        Send search term to sourceforge.                                 
+    SFN       Send search term to sourceforge and open the top N hits in sepearte tabs. 
+    SP        Submit a search term to Springer Books                           
+    SPN       Submit a search term to Springer Books and open the top N hits in sepearte tabs. 
+
+    Open static web sites:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    ACA       Open the American Crystallographic Association Annual Meeting webpage. 
+    ALS       Open website of the Advanced Light Source.                       
+    APS       Open website of the Advanced Photon Source.                      
+    AX        Send search term or phrase to arXiv.                             
+    BC        Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source. 
+    BD        Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB).  
+    BX        Send search term or phrase to bioRxiv                            
+    CH        Open the webste of UCSF Chimera.                                 
+    CHESS     Open the website of CHESS.                                       
+    EMDB      Open the website of the Electron Microscopy Data Bank.           
+    EP        EasyPyMOL github site.                                           
+    JM        Open the Jmol wiki.                                              
+    IUCR      Open website of the IUCr Journals.                               
+    LBSF      Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC. 
+    MCL       Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma.  
+    MG        Open website of the OUHSC molecular graphics course.             
+    NDB       Open website of the Nucleic Acid Database.                       
+    notPyMOL  Open website with list of other molecular graphics programs.     
+    NSLSII    Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory. 
+    PPC       Open the website of the Protein Production Facility at the University of Oklahoma in Norman. 
+    PS        Open the home page of the Protein Soceity.                       
+    PW        Submit search of the PyMOL Wiki.                                 
+    RS        Open the homepage of the RNA Society.                            
+    SAXS      Open the webpage of SAXS links at OUHSC.                         
+    SB        Open the webpage of SSRL Biological SAXS at BL 4-2.              
+    SBGRID    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel. 
+    SciPy18   Open the SciPy 2018 YouTube Channel.                             
+    SSRL      Open the webpage of SSRL Structural Molecular Biology.           
+    SSURF     Open the webpage of the Society for Science at User Research Facilities (SSURF). 
+    SO        Submit a search term to Stackoverflow.                           
+
+    3D-PDFs:
+    Shortcuts Description                                                          
+    --------  ---------------------------------------------------------------
+    ms2pdf    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.    
+    topdf     Send stick models as pse file from PyMOL through Jmol to 3DPDF.  
 
     File management and scripting functions:
 
@@ -1309,6 +1490,26 @@ def HH():
     '''
     cmd.hide('everything', 'name H*') 
 cmd.extend('HH',HH)    
+
+
+def PE(selection):
+    '''
+    DESCRIPTION
+    
+    Apply pearl effect about cations. Must supply selection. 
+    
+    USAGE
+
+    PE selection 
+        
+    '''
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2', 'magnesium1')
+    cmd.show(spheres, 'magnesium1')
+    cmd.show(spheres, 'magnesium2')
+    cmd.set('spehrical transparency, 0.4, magnesium2')
+    cmd.set('spehrescale, 1.05, magnesium2')
+cmd.extend('PE',PE)    
 
 
 def PU():
@@ -3802,19 +4003,19 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     #The extend command makes roundview into a PyMOL command.
 cmd.extend("rv", rv)
 
-#################### Print commands for using git #################### 
+#################### Print commands for using git for version control #################### 
 
-#category: Print commands for using git.
+#category: Print commands for using git for version control
 
 def gitAdd():
-       '''
+    '''
     DESCRIPTION
 
-    Enter help(gitAdd) to print steps for adding updates to a file under version control.
+    Enter help(gitAdd) to print steps for adding a file to version control.
 
-      Step 1: add new file to an existing repository. 
+    Step 1: add new file to an existing repository. 
 
-        git add fileToBeAdded 
+    git add fileToBeAdded 
 
     This command updates the index using the current content found in the working tree, 
     to prepare the content staged for the next commit.
@@ -3823,7 +4024,7 @@ cmd.extend("gitAdd",gitAdd)
 
 
 def gitCommit():
-       '''
+    '''
     DESCRIPTION
 
     Enter help(gitInit) to print steps for saving updates to a file under version control.
