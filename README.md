@@ -1,6 +1,6 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 181 functions mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py*** which contains 182 functions mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
@@ -39,13 +39,13 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Print shortcuts and their descriptions
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |SC        |Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
 
 ## Show many models (NMR and crystal packing)
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |nmr       |Show all of the models in nmr structure.                       |
 |nmroff    |Hide all but first model in a nmr structure.                   |
@@ -58,7 +58,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Save files with date and time in filename
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |saln      |Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work.. |
 |scif      |Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work.. |
@@ -89,7 +89,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Make molecular representations that are not available in PyMOL
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |AO        |Commands to make ambient occlusion image like those in Qutemole.  |
 |AOD       |Make ambient occlusion image of any with dark carbon atoms.    |
@@ -102,6 +102,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |DU        |Make dumbbell (ribbons with rolled edges) cartoon of the main chains of nucleic acids and proteins.  |
 |FR        |Make filled-ring cartoon of nucleic acids. May need to enter 'hide everything' first.  |
 |HH        |Hide hydrogen atoms of currently visible molecular objects.    |
+|PE        |Apply pearl effect about cations. Must supply selection.       |
 |PU        |Make putty cartoon of main chain of nucleic acids and proteins. |
 |SE        |Commands to make SAXS envelope from a bead model.              |
 |getchem   |Create selections based on the biophysical properties of each residue. |
@@ -109,14 +110,16 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Launch a full-featured text editor from PyMOL
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |atom      |Open file with the text editor Atom from within PyMOL.         |
+|bbedit    |Open file with the text editor bbedit from within PyMOL.       |
 |code      |Open file with Visual Studio Code from within PyMOL.           |
 |emacs     |Open file with emacs from within PyMOL.                        |
 |gedit     |Open file with gedit from within PyMOL.                        |
 |jedit     |Open file with jedit from within PyMOL.                        |
 |mate      |Open file with Textmate (Mac OS only) from within PyMOL.       |
+|notepadpp |Open file with notepadpp (Mac OS only) from within PyMOL.      |
 |nv        |Open file with neovim from within PyMOL.                       |
 |oni       |Open the editor Oni from within PyMOL.                         |
 |pdbed     |Open PDBEditor.jar from within PyMOL.                          |
@@ -125,20 +128,34 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Open word processord
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |word      |Open word from within PyMOL.                                   |
 
+## Open data analysis programs
+
+|Shortcuts |Description                                                      |
+|:--------|:---------------------------------------------------------------|
+|cranR     |Open the Cran R from within PyMOL.                             |
+|ddb       |Open the DBBrowserSQLite.                                      |
+|excel     |Open the excel from within PyMOL.                              |
+|JASP      |Open the JASP from within PyMOL.                               |
+|JMP       |Open the JMP from within PyMOL.                                |
+|jabref    |Open the jabref from within PyMOL.                             |
+|julia     |Open the jabref from within PyMOL.                             |
+|oc        |Open the jabref from within PyMOL.                             |
+|ppt       |Open the powerpoint from within PyMOL.                         |
+
 ## Open terminal windows
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |iterm     |Open iTerm2 window on MacOS.                                   |
 |term      |Open a Terminal window on MacOS.                               |
 
 ## Open other molecular graphics programs
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |ccp4mg    |Open ccp4mg from within PyMOL.                                 |
 |chimera   |Open Chimera from within PyMOL.                                |
@@ -149,14 +166,14 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Image manipulation programs
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |gimp      |Open the molecular graphics program with gimp from within PyMOL.  |
 |inkscape  |Open the molecular graphics program with gimp from within PyMOL.  |
 
 ## Open certain webapps
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |gcal      |Open Google Calendar.                                          |
 |GM        |Open gmail.                                                    |
@@ -165,7 +182,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Samples
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |GGT       |WT human gamma glutamyl transpeptidase at 1.67 Angstrom        |
 |GU        |10-mer dsRNA with 8 contiguous Us. U-helix RNA.                |
@@ -176,7 +193,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Commands to display complex scenes.
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |BST       |G2G3/U9U8 base step , PDB code 4PCO.                           |
 |LG        |Nine sugar glycan in influenza N9 neuraminidase at             |
@@ -184,7 +201,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Commands to display complex scenes with pdb files on computer.
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |LGGT      |WT human gamma glutamyl transpeptidase at 1.67 Angstrom        |
 |LGU       |10-mer dsRNA.                                                  |
@@ -196,18 +213,29 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |LLG       |Nine sugar glycan in influenza N9 neuraminidase at             |
 |LNA       |Hydrated sodium cation bound in major groove of a              |
 
+## Re-orient molecule
+
+|Shortcuts |Description                                                      |
+|:--------|:---------------------------------------------------------------|
+|oy        |Align long axis of molecule along z-axis.                      |
+|omxy      |Align long axis of molecule along minus x-y axis.              |
+|oxy       |Align long axis of molecule along x-y axis.                    |
+|oz        |Align long axis of molecule along y-axis.                      |
+
 ## Horizontal scripting
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
+|cntfiles  |Count number of files in current directory.                    |
+|cntpdb    |Count number of pdb files in current directory.                |
 |rline     |Enter "help(rline)" to refresh memory of the readline commands. |
 |rv        |Get the view settings in a compact format on one line.         |
 
-## Print commands for using git.
+## Print commands for using git for version control
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
-|gitAdd    |Enter help(gitAdd) to print steps for adding updates to a file under version control. |
+|gitAdd    |Enter help(gitAdd) to print steps for adding a file to version control. |
 |gitCommit |Enter help(gitInit) to print steps for saving updates to a file under version control. |
 |gitInit   |Enter help(gitInit) to print steps for creating a git repository. |
 |gitPull   |Enter help(gitPush) to print steps to send to updates to a repository on github.com.  |
@@ -215,32 +243,43 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Send search term(s) to websites with search boxes.
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
-|GB        |Send search term or phrase to Google Books in default browser. |
+|AB        |Send search term or phrase to Amazon.com Books in default browser. |
+|def       |#     Send search term or phrase to anaconda.com books in default browser. |
+|GB        |Send search term or phrase to Amazon.com in default browser.   |
 |GH        |Send search term or phrase to GitHub in default browser.       |
 |GHN       |Send search term or phrase to GitHub in default browser.       |
 |GO        |Send search term or phrase Google in default browser.          |
 |GON       |Send search term or phrase Google in default browser and opens the top N results in N new tabs. |
 |GS        |Send search term or phrase to Google Scholar in default browser. |
+|GSN       |Send search term or phrase to Google Scholar in default browser. |
 |GV        |Send search term or phrase to Google Videos in default browser. |
+|GVN       |Send search term or phrase to Google Videos in default browser. |
 |MA        |Send search term to all searchable websites in pymolshortcuts: |
 |MB        |Send search term to search multiple sites for term in books:   |
 |MC        |Send search term to search ten core websites in pymolshortcuts: |
 |MM        |Send search term to search for manuscripts in pymolshortcuts:  |
 |PDB       |Submit a search term to the Protein Data Bank.                 |
+|PDBN      |Submit a search term to the Protein Data Bank and open the top N hits in separate tabs. |
 |PML       |Submit a search term to the PyMOL Users Mail Service.          |
+|PMLN      |Submit a search term to the PyMOL Users Mail Service.          |
 |PM        |Send search term or phrase to PubMed.                          |
+|PMN       |Send search term or phrase to PubMed and open top N hits in separate tabs. |
 |IPM       |Read list of search terms and submit each term to PubMed in a separate browser tab. |
 |IPMN      |Read list of search terms and submit each term to PubMed in a separate browser tab. |
 |RG        |Submit a search query of Research Gate.                        |
+|RGN       |Submit a search query of Research Gate and open the top N hits in sepearte tabs.  |
 |SD        |Submit a search term to Science Direct.                        |
+|SDN       |Submit a search term to Science Direct and open the top N hits in sepearte tabs. |
 |SF        |Send search term to sourceforge.                               |
+|SFN       |Send search term to sourceforge and open the top N hits in sepearte tabs. |
 |SP        |Submit a search term to Springer Books                         |
+|SPN       |Submit a search term to Springer Books and open the top N hits in sepearte tabs. |
 
 ## Open static web sites
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |ACA       |Open the American Crystallographic Association Annual Meeting webpage. |
 |ALS       |Open website of the Advanced Light Source.                     |
@@ -275,8 +314,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## 3D-PDFs
 
-|Shortcuts |Description                                                    |
+|Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |ms2pdf    |Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.  |
 |topdf     |Send stick models as pse file from PyMOL through Jmol to 3DPDF. |
-
