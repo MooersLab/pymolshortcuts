@@ -1,6 +1,6 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 172 functions mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py*** which contains 181 functions mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
@@ -8,7 +8,8 @@ To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py
 In spite of the command *run*, the functions will be loaded into memory but not executed.
 Enter **SC** to get a list of shortcuts printed to the command history window.
 Enter **help PW** to print the documentation for the shortcut **PW** to the command history window.
-While most shortcuts are ready to use, some shortcuts require pasting of path names to the executables on your computer.
+While most shortcuts are ready to use, some shortcuts require the path names to the executables on your computer and some requrie access to Python modules that were not packaged with the incentive version of PyMOL.
+Use help(shortcutname) to learn how to install the required module(s).
 
 For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecule into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
 
