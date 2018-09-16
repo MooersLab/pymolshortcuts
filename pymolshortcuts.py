@@ -732,7 +732,6 @@ def spov(stemName="saved"):
 cmd.extend('spov',spov)
 
 
-
 def spqr(stemName="saved"):
     """
     DESCRIPTION
@@ -958,8 +957,8 @@ def AOD():
     cmd.set('ray_opaque_background','on')
     cmd.ray()
 cmd.extend('AOD',AOD)
-    
-    
+
+
 def BW():
     '''
     DESCRIPTION
@@ -1073,8 +1072,8 @@ def CB():
     '''
     cmd.run('run $HOME/mg18OU/colorBlindFriendly.py')
 cmd.extend('CB',CB)
-    
-    
+
+
 def CR():
     '''
     DESCRIPTION
@@ -1136,8 +1135,8 @@ def CR():
     cmd.show_as('cartoon')
     cmd.disable('rna_U')    
 cmd.extend('CR',CR)
-    
-    
+
+
 def CSS():
     '''
     DESCRIPTION
@@ -1213,8 +1212,8 @@ def CBSS():
     cmd.color('cb_yellow', 'ss S')
     cmd.color('cb_green', 'ss L+')
 cmd.extend('CBSS',CBSS)
-    
-    
+
+
 def DU():
     '''
     DESCRIPTION
@@ -1742,6 +1741,36 @@ def cranR():
 cmd.extend('cranR',cranR)
 
 
+def ddb():
+    '''
+    DESCRIPTION
+
+    Open the DBBrowserSQLite. 
+
+    USAGE
+        ddb
+    '''
+    arg = ("open -a DBBrowserSQLite")
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('ddb',ddb)
+
+
+def excel():
+    '''
+    DESCRIPTION
+
+    Open the excel from within PyMOL. 
+
+    USAGE
+        cranR
+    '''
+    arg = ("excel")
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('excel',excel)
+
+
 def JASP():
     '''
     DESCRIPTION
@@ -1771,6 +1800,72 @@ def JMP():
     subprocess.call(arg,shell=True)
     return
 cmd.extend('JMP',JMP)
+
+
+
+def jabref():
+    '''
+    DESCRIPTION
+
+    Open the jabref from within PyMOL. 
+
+    USAGE
+
+        Jabref
+    '''
+    arg = ('open -a "/Applications/JabRef/JabRef.app"')
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('jabref',jabref)
+
+
+def julia():
+    '''
+    DESCRIPTION
+
+    Open the jabref from within PyMOL. 
+
+    USAGE
+
+        julia
+    '''
+    arg = ('/Applications/Julia-0.6.app/Contents/MacOS/applet')
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('julia',julia)
+
+
+def oc():
+    '''
+    DESCRIPTION
+
+    Open the jabref from within PyMOL. 
+
+    USAGE
+
+        julia
+    '''
+    arg = ('octave --no-gui-lib')
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('oc',oc)
+
+
+def ppt():
+    '''
+    DESCRIPTION
+
+    Open the powerpoint from within PyMOL. 
+
+    USAGE
+
+        julia
+    '''
+    arg = ('open -a /Applications/Microsoft\ PowerPoint.app')
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('ptt',ppt)
+
 
 
 
@@ -1999,12 +2094,8 @@ def WS():
 cmd.extend('WS',WS)
 
 
-
-
-
-
 ############################### Samples ########################################
-    
+
 #category: Samples
 
 def GGT():
@@ -2271,8 +2362,8 @@ def T4L():
     cmd.ray('1500', '1600')
     cmd.png("T4L.png")
 cmd.extend('T4L',T4L)
-    
-    
+
+
 def U8():
     '''
     DESCRIPTION
@@ -2330,8 +2421,8 @@ def U8():
     cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
     cmd.draw()
 cmd.extend('U8',U8)
-    
-    
+
+
 def WC8():
     '''
     DESCRIPTION
@@ -2391,8 +2482,8 @@ def WC8():
     cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
     cmd.rock()
 cmd.extend('WC8',WC8)
-    
-    
+
+
 ####### Commands to display complex scenes. #############
 
 #category: Commands to display complex scenes.
@@ -2594,8 +2685,8 @@ def LG():
     preset.ball_and_stick("all",mode=1);
     cmd.draw()
 cmd.extend('LG',LG)
-    
-    
+
+
 def NA():
     '''
     DESCRIPTION
@@ -2751,15 +2842,12 @@ def NA():
     cmd.disable('carbon');
     cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
 cmd.extend('NA',NA)
-    
-
-
 
 
 ################# VARIANTS OF The ABOVE that are NOT internet dependent  #################
 
 #category: Commands to display complex scenes with pdb files on computer.
-    
+
 def LGGT():
     '''
     DESCRIPTION
@@ -2822,8 +2910,8 @@ def LGGT():
     cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
     cmd.draw()
 cmd.extend('LGGT',LGGT)
-    
-    
+
+
 def LGU():
     '''
     DESCRIPTION
@@ -2908,8 +2996,6 @@ def LGU():
     cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
     cmd.draw()
 cmd.extend('LGU',LGU)
-    
-
 
 
 def LN9():
@@ -2969,8 +3055,7 @@ def LN9():
     cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
     cmd.draw()
 cmd.extend('LN9',LN9)
-    
-    
+
 
 def LT4L():
     '''
@@ -3027,8 +3112,8 @@ def LT4L():
     cmd.ray('1500', '1600')
     cmd.png("T4L.png")
 cmd.extend('LT4L',LT4L)
-    
-    
+
+
 def LU8():
     '''
     DESCRIPTION
@@ -3087,8 +3172,8 @@ def LU8():
     cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
     cmd.draw()
 cmd.extend('LU8',LU8)
-    
-    
+
+
 def LWC8():
     '''
     DESCRIPTION
@@ -3148,8 +3233,8 @@ def LWC8():
     cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
     cmd.rock()
 cmd.extend('LWC8',LWC8)
-    
-        
+
+
 def LBST():
     '''
     DESCRIPTION
@@ -3347,8 +3432,8 @@ def LLG():
     preset.ball_and_stick("all",mode=1);
     cmd.draw()
 cmd.extend('LLG',LLG)
-    
-    
+
+
 def LNA():
     '''
     DESCRIPTION
@@ -3510,16 +3595,6 @@ def LNA():
 cmd.extend('LNA',LNA)
 
 
-
-
-
-
-
-    
-
-
-
-
 ######################## Re-orient molecule ##############################
 
 #category: Re-orient molecule
@@ -3572,6 +3647,39 @@ cmd.extend("oz",oz)
 
 #category: Horizontal scripting
 
+def cntfiles():
+    '''
+    DESCRIPTION
+
+    Count number of files in current directory. 
+
+    USAGE
+        
+        cntpdb
+    '''
+    arg = (echo "Count the files in the directory.";echo "Usage: cntfiles.";find . -type f | wc -l)
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('cntfiles',cntfiles)
+
+
+def cntpdb():
+    '''
+    DESCRIPTION
+
+    Count number of pdb files in current directory. 
+
+    USAGE
+        
+        cntpdb
+    '''
+    arg = ("echo "Count the number of pdb files in subfolders."; echo "Usage: cntpdb"; \
+        find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/*_([1-9999]|****).pdb" ';' -print | wc -l")
+    subprocess.call(arg,shell=True)
+    return
+cmd.extend('cntpdb',cntpdb)
+
+
 def rline():
        '''
     DESCRIPTION
@@ -3593,6 +3701,7 @@ def rline():
       Control-b moves the cursor to the left by one character.
         '''
 cmd.extend("rline",rline)
+
 
 def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     """
@@ -3813,18 +3922,59 @@ def gitPush():
 cmd.extend("gitPush",gitPush)
 
 
-
-
 ############################## Send search tems to websites with search boxes #########################################
 
 #category: Send search term(s) to websites with search boxes.
+
+def AB(searchTerm="pymol"):
+    '''
+    DESCRIPTION
+
+    Send search term or phrase to Amazon.com Books in default browser.
+    The search phrase does not need to be enclosed in quotes. 
+    The second argument is the number of hits to return. 
+    The default web browser is used. 
+
+    USAGE
+
+    AB search term(s), number of hits to returned
+
+    EXAMPLE
+
+    AB pymol
+    '''
+    url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords='
+    webbrowser.open(url+searchTerm)
+cmd.extend('AB',AB)
+
+
+# def AN(searchTerm="pymol"):
+#     '''
+#     DESCRIPTION
+
+#     Send search term or phrase to anaconda.com books in default browser.
+#     The search phrase does not need to be enclosed in quotes. 
+#     The second argument is the number of hits to return. 
+#     The default web browser is used. 
+
+#     USAGE
+
+#     AN search term(s), number of hits to returned
+
+#     EXAMPLE
+
+#     AB pymol
+#     '''
+#     url = ''
+#     webbrowser.open(url+searchTerm)
+# cmd.extend('AN',AN)
 
 
 def GB(searchTerm="pymol"):
     '''
     DESCRIPTION
 
-    Send search term or phrase to Google Books in default browser.
+    Send search term or phrase to Amazon.com in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
     The default web browser is used. 
@@ -3837,7 +3987,8 @@ def GB(searchTerm="pymol"):
 
     GB pymol
     '''
-    webbrowser.open('https://www.google.com/search?tbm=bks&q='+searchTerm)
+    url = 'https://www.google.com/search?tbm=bks&q='
+    webbrowser.open(url+searchTerm)
 cmd.extend('GB',GB)
 
 
@@ -3858,7 +4009,8 @@ def GH(searchTerm="pymol"):
 
     GH pymol
     '''
-    webbrowser.open('https://www.github.com/search?q='+searchTerm)
+    url = 'https://www.github.com/search?q='
+    webbrowser.open(url+searchTerm)
 cmd.extend('GH',GH)
 
 
@@ -4674,8 +4826,7 @@ def SSRL():
     Open the webpage of SSRL Structural Molecular Biology.
     '''
     webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
-cmd.extend('SSRL',SSRL)                                                                                               
-
+cmd.extend('SSRL',SSRL)
 
 def SSURF():
     '''
@@ -4691,16 +4842,6 @@ def SSURF():
     '''
     webbrowser.open('http://www.ssurf.org/')
 cmd.extend('SSURF',SSURF)
-
-
-
-
-
-
-
-
-
-
 
 
 def SO(searchTerm="3d_pdf"):
