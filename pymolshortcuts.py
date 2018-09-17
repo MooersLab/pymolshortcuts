@@ -389,6 +389,15 @@ def SC():
 cmd.extend('SC',SC)
 
 
+def github():
+    '''
+    DESCRIPTION
+    
+    Print the url of the README file for the pymolshortcuts repository.
+    '''
+    print("https://github.com/MooersLab/pymolshortcuts")
+
+cmd.extend('github',github)
 ############################### Show many models (NMR and crystal packing) ##############
 
 #category: Show many models (NMR and crystal packing)
@@ -474,6 +483,48 @@ def sc222():
     cmd.do('run $HOME/mg18OU/supercell.py')
     cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
 cmd.extend("sc222", sc222)
+
+
+def sc331():
+    """
+    Description
+    
+    Make a lattice of 3 x 3 x 1 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 3, 3, 1, , green, supercell331, 1')
+cmd.extend("sc331", sc331)
+
+
+def sc313():
+    """
+    Description
+    
+    Make a lattice of 3 x 1 x 3 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 3, 1, 3, , green, supercell313, 1')
+cmd.extend("sc313", sc313)
+
+
+def sc133():
+    """
+    Description
+    
+    Make a lattice of 1 x 3 x 3 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    
+    """
+    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('supercell 1, 3, 3, , green, supercell133, 1')
+cmd.extend("sc133", sc133)
 
 
 def sc333():
