@@ -3856,7 +3856,7 @@ def cntfiles():
         
         cntpdb
     '''
-    arg = (echo "Count the files in the directory.";echo "Usage: cntfiles.";find . -type f | wc -l)
+    arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l'
     subprocess.call(arg,shell=True)
     return
 cmd.extend('cntfiles',cntfiles)
@@ -3872,8 +3872,7 @@ def cntpdb():
         
         cntpdb
     '''
-    arg = ("echo "Count the number of pdb files in subfolders."; echo "Usage: cntpdb"; \
-        find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/*_([1-9999]|****).pdb" ';' -print | wc -l")
+    arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
     subprocess.call(arg,shell=True)
     return
 cmd.extend('cntpdb',cntpdb)
@@ -4588,7 +4587,7 @@ def PDB(searchTerm="3fa0",numHits="5"):
 cmd.extend('PDB',PDB)
 
 
-def PDBN(searchTerm="3fa0",5):
+def PDBN(searchTerm="3fa0",numHits="5"):
     '''
     DESCRIPTION
     
