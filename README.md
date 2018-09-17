@@ -1,6 +1,6 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 182 functions mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py*** which contains 187 functions in 20 categories mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
@@ -17,7 +17,7 @@ The shortcut **PW** takes one or more search terms and the sends them to the PyM
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
 You can inspect the results of the searches when there is a natural break in your work in PyMOL.
 Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
-See the table below.
+See the tables below.
 
 Another class of shortcuts launch your favorite full-featured text editor from within PyMOL.
 You have to install the text editor and edit the file path to the executable.
@@ -42,6 +42,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |SC        |Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
+|github    |Print the url of the README file for the pymolshortcuts repository. |
 
 ## Show many models (NMR and crystal packing)
 
@@ -54,6 +55,9 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |sc221     |Make a lattice of 2 x 2 x 1 unit cells.                        |
 |sc112     |Make a lattice of 1 x 1 x 2 unit cells.                        |
 |sc222     |Make a lattice of 2 x 2 x 2 unit cells.                        |
+|sc331     |Make a lattice of 3 x 3 x 1 unit cells.                        |
+|sc313     |Make a lattice of 3 x 1 x 3 unit cells.                        |
+|sc133     |Make a lattice of 1 x 3 x 3 unit cells.                        |
 |sc333     |Make a lattice of 3 x 3 x 3 unit cells.                        |
 
 ## Save files with date and time in filename
