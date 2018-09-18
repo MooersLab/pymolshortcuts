@@ -4015,8 +4015,17 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     
     #convert the commandline arguments from strings to integers
 
-    StoredView = int(StoredView)
-    decimal_places = int(decimal_places)
+    try:
+        StoredView = int(StoredView)
+    except ValueError:
+        print("Sorry, that StoredView not available." + "\n" + \
+        "Please enter an integer. 0 is the defualt StoredView (e.g., rv 0,2).")
+
+    try:
+        decimal_places = int(decimal_places)
+    except ValueError:
+        print("Sorry, could not parse decimal_places." + "\n" + \
+        "Please enter an integer, 0 or larger (e.g., rv 0,2).")
 
     #call the get_view function
 
