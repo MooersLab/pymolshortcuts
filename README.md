@@ -1,15 +1,18 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 187 functions in 20 categories mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py***. 
+It contains contains 187 functions in 20 categories mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
-Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
+Some shortcuts save many hours of work during assembly of a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml file in your home directory to load the functions in pymolshortcuts.py on startup of PyMOL.
-In spite of the command *run*, the functions will be loaded into memory but not executed.
+To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml file in your home directory.
+This command loads the functions in pymolshortcuts.py on startup of PyMOL.
+In spite of the funtion execution implied by the command *run*, the functions will be loaded into memory but not executed.
+
 Enter **SC** to get a list of shortcuts printed to the command history window.
 Enter **help PW** to print the documentation for the shortcut **PW** to the command history window.
 While most shortcuts are ready to use, some shortcuts require the path names to the executables on your computer and some requrie access to Python modules that were not packaged with the incentive version of PyMOL.
-Use help(shortcutname) to learn how to install the required module(s).
+Enter **help(<shortcutname>)** to learn how to install the required module(s).
 
 For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecule into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
 
@@ -20,7 +23,7 @@ Other search functions can submit parallel searches of PubMed, Google, bioRxiv, 
 See the tables below.
 
 Another class of shortcuts launch your favorite full-featured text editor from within PyMOL.
-You have to install the text editor and edit the file path to the executable.
+You have to install the text editor and edit the file path to the editor's executable or binary file.
 
 Another class of shortcuts opens the manuscript or grant application that you are working on in Overleaf.
 You have to edit the script by pasting in the appropriate link to the specific document.
@@ -30,24 +33,23 @@ These save function names begin with **s**, (e.g., **spse filename** saves the c
 You can delete the unwanted version(s) at a latter time. 
 These functions are useful if you do not have these files under version control.
 
-The functions are stored in a single file: pymolshortcuts.py
-
-Edit the file paths to outside executables like text editors.
-The shortcuts work best on the command line below the command history window because you can copy and paste text onto this command line.
+The functions are stored in a single file: pymolshortcuts.py.
+To adapt this script to your computer, you will need to edit the file paths to outside executables like text editors.
+The shortcuts work best on the command line below the command history window in the PyMOL GUI because you can copy and paste text onto this command line.
  
 Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Print shortcuts and their descriptions
 
 |Shortcuts |Description                                                      |
-|:--------|:---------------------------------------------------------------|
+|:---------|:---------------------------------------------------------------|
 |SC        |Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.   |
 |github    |Print the url of the README file for the pymolshortcuts repository. |
 
 ## Show many models (NMR and crystal packing)
 
 |Shortcuts |Description                                                      |
-|:--------|:---------------------------------------------------------------|
+|:---------|:---------------------------------------------------------------|
 |nmr       |Show all of the models in nmr structure.                       |
 |nmroff    |Hide all but first model in a nmr structure.                   |
 |rmsc      |Remove supercell and the symmetry mates.                       |
