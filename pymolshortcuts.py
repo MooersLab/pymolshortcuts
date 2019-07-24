@@ -1,35 +1,47 @@
-from __future__ import division
 # -*- coding: utf-8 -*-
 """
     DESCRIPTION
 
-        On the startup of PyMOL, this script defines a number of aliases.
-        The aliases are listed here instead of in the pymolrc file
+        On the startup of PyMOL, this script defines a number of shortcuts or functions.
+        The shortcuts are listed here instead of in the pymolrc file
         to avoid clutter of the command history window. Source this 
         file from your .pymolrc file on the mac or linux or 
         from your pymolrc.pml file on Windows by adding the command:
                            
-        run ~/mg18OU/startupAliases.py  
+        run ~/Scripts/PyMOLScripts/pymolshortcuts.py  
         
-        Requires quat.py from the PyMOL Wiki 
+        Requires quat3.py from the PyMOL Wiki 
         (http://www.pymolwiki.org/index.php/BiologicalUnit/Quat) 
+
+        Requires quat3.py from the PyMOL Wiki
+        https://pymolwiki.org/index.php/Supercell
         
-        Store quat.py in ~/mg18OU/.
+        Store quat3.py in $HOME/Scripts/PyMOLScripts
+        Store supercell.py in $HOME/Scripts/PyMOLScripts
+
+
+        Tested on PyMOL versions 1.5.0.5, 1.8.0.5, 1.8.1.0, 1.8.2.0, 1.8.2.2, 2.1.0,2.2.0,2.2.3
         
-        Tested on PyMOL versions 1.5.0.5, 1.8.0.5, 1.8.1.0, 1.8.2.0, 1.8.2.2, 2.1.0
+        Alternately, launch PyMOL from commandline with shortcut specified. For example:
         
-        Alternately, launch PyMOL from commandline with alias specified. For example:
-        
-        pymol -d 'fetch 1lw9, async=0; AO'
+        pymol -d 'fetch 1lw9, async_=0; AO'
 
         No guarantee is given that this script will work with older
         or newer versions of PyMOL.
 
+        Converted to python3.7 on 11 Feb. 2018:
+                - replaced several print statements with print functions
+                - replace async with async_
+
+        Need to install additional python modules.
+        On the command line at the top PyMOL> prompt, enter
+
+        conda install requests beautifulsoup4 datetime
 
   Copyright Notice
   ================
   
-     Copyright (C) 2016  Blaine Mooers
+    Copyright (C) 2019  University of Oklahoma Board of Regents
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -52,6 +64,7 @@ from __future__ import division
   Oklahoma City, OK, USA 73104
 
 """ 
+
 import webbrowser, datetime, numpy, subprocess, bs4, requests, time
 from pymol import cmd, stored, cgo, xray
 from math import cos, sin, radians, sqrt
@@ -61,12 +74,12 @@ from math import cos, sin, radians, sqrt
 __author__ = "Blaine Mooers"
 __copyright__ = "Blaine Mooers, University of Oklahoma Health Sciences Center, Oklahoma City, OK, USA 73104"
 __license__ = "GPL-3"
-__version__ = "0.1"
+__version__ = "0.3"
 __credits__ = [""] 
 # people who reported bug fixes, made suggestions, etc. 
-__date__ = "22 June 2018"
+__date__ = "23 July 2019"
 __maintainer__ = "Blaine Mooers"
-__email__ = "blaine@ouhsc.edu"
+__email__ = "blaine-mooers@ouhsc.edu"
 __status__ = "Testing" 
 
 cmd.set('ray_opaque_background','on')
@@ -106,9 +119,12 @@ def SC():
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     nmr       Show all of the models in nmr structure.                         
-    nmroff    Hide all but first model in a nmr structure.                     
+    nmroff    Hide all but first model in a nmr structure. 
+    rmd       Remove all measurement objects.                    
     rmsc      Remove supercell and the symmetry mates.                         
-    sc111     Make a lattice of 1 x 1 x 1 unit cells.                          
+    sc111     Make a lattice of 1 x 1 x 1 unit cells.  
+    sc211     Make a lattice of 2 x 1 x 1 unit cells 
+    sc121     Make a lattice of 1 x 2 x 1 unit cells                        
     sc221     Make a lattice of 2 x 2 x 1 unit cells.                          
     sc112     Make a lattice of 1 x 1 x 2 unit cells.                          
     sc222     Make a lattice of 2 x 2 x 2 unit cells.                          
@@ -151,7 +167,7 @@ def SC():
     AOD       Make ambient occlusion image of any with dark carbon atoms.      
     BW        Commands to make black-and white-ribbon cartoon on a white background. 
     BU        Commands to make biological unit. Requires a pdb file. There are 
-    CB        Loads Jared Sampson's script "colorblindfriendly.py" from the    
+    CB        Loads Jared Sampson's script "colorblindfriendly.py"   
     CR        Commands to make colored filled-ring cartoon of nucleic acids. May 
     CSS       Commands to color ribbon or cartoon representations of proteins by 
     CBSS      Apply colorblind-friendly coloring to ribbon or cartoon representations. 
@@ -160,10 +176,11 @@ def SC():
     HH        Hide hydrogen atoms of currently visible molecular objects.      
     PE        Apply pearl effect about cations. Must supply selection.         
     PU        Make putty cartoon of main chain of nucleic acids and proteins.  
-    SE        Commands to make SAXS envelope from a bead model.                
+    SE        Commands to make SAXS envelope from a bead model.    
+    cav       Show buried cavities and pockets as molecular surfaces.            
     getchem   Create selections based on the biophysical properties of each residue. 
     timcolor  Use Tim Mather's coloring scheme applied to the selections defined in getchem().  
-
+    
     Launch a full-featured text editor from PyMOL:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
@@ -179,13 +196,15 @@ def SC():
     oni       Open the editor Oni from within PyMOL.                           
     pdbed     Open PDBEditor.jar from within PyMOL.                            
     st3       Open sublime text 3 from within PyMOL.                           
-    vim       Open vim from within PyMOL.                                      
+    vim       Open vim from within PyMOL. 
+    (You may have to edit the path to the applicaiton.)                                     
 
     Open word processord:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     word      Open word from within PyMOL.                                     
-
+    (You may have to edit the path to the applicaiton in the corresponding function.) 
+    
     Open data analysis programs:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
@@ -197,13 +216,17 @@ def SC():
     jabref    Open the jabref from within PyMOL.                               
     julia     Open the jabref from within PyMOL.                               
     oc        Open the jabref from within PyMOL.                               
-    ppt       Open the powerpoint from within PyMOL.                           
+    ppt       Open the powerpoint from within PyMOL.
+    (You may have to edit the path to the applicaiton in the corresponding function.)  
+    
+                            
 
     Open terminal windows:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     iterm     Open iTerm2 window on MacOS.                                     
-    term      Open a Terminal window on MacOS.                                 
+    term      Open a Terminal window on MacOS. 
+    (You may have to edit the path to the applicaiton in the corresponding function.)                                  
 
     Open other molecular graphics programs:
     Shortcuts Description                                                          
@@ -214,12 +237,14 @@ def SC():
     jmol      Open Jmol from within PyMOL.                                     
     vmd       Open vmd from within PyMOL.                                      
     yasara    Open the molecular graphics prograom YASASRA from within PyMOL.  
+    (You may have to edit the path to the applicaiton in the corresponding function.) 
 
     Image manipulation programs:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     gimp      Open the molecular graphics program with gimp from within PyMOL.  
-    inkscape  Open the molecular graphics program with gimp from within PyMOL.  
+    inkscape  Open the molecular graphics program with gimp from within PyMOL.
+    (You may have to edit the path to the applicaiton in the corresponding function.)    
 
     Open certain webapps:
     Shortcuts Description                                                          
@@ -228,7 +253,8 @@ def SC():
     GM        Open gmail.                                                      
     WM        Open Web Mail in defualt browser. Adjust url for your institution. 
     WS        Open National Weather Service website for locale.                
-
+    (You may have to edit the path to the applicaiton in the corresponding function.)
+    
     Samples:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
@@ -237,13 +263,15 @@ def SC():
     N9        Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr. 
     T4L       WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0.              
     U8        16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. 
-    WC8       16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom              
+    WC8       16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom
+    (You may have to edit the path to the applicaiton in the corresponding function.)
+                 
 
     Commands to display complex scenes.:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     BST       G2G3/U9U8 base step , PDB code 4PCO.                             
-    LG        Nine sugar glycan in influenza N9 neuraminidase at               
+    LG        Nine sugar glycan in influenza N9 neuraminidase at 1.55 Ang.              
     NA        Hydrated sodium cation bound in major groove of a                
 
     Commands to display complex scenes with pdb files on computer.:
@@ -258,7 +286,8 @@ def SC():
     LBST      G2G3/U9U8 base step , PDB code 4PCO.                             
     LLG       Nine sugar glycan in influenza N9 neuraminidase at               
     LNA       Hydrated sodium cation bound in major groove of a                
-
+    (You may have to edit the path to the applicaiton in the corresponding function.)
+    
     Re-orient molecule:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
@@ -351,27 +380,15 @@ def SC():
     SciPy18   Open the SciPy 2018 YouTube Channel.                             
     SSRL      Open the webpage of SSRL Structural Molecular Biology.           
     SSURF     Open the webpage of the Society for Science at User Research Facilities (SSURF). 
-    SO        Submit a search term to Stackoverflow.                           
+    SO        Submit a search term to Stackoverflow. 
+    (You may have to edit the path to your default webbrowser.)                          
 
     3D-PDFs:
     Shortcuts Description                                                          
     --------  ---------------------------------------------------------------
     ms2pdf    Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.    
     topdf     Send stick models as pse file from PyMOL through Jmol to 3DPDF.  
-
-    File management and scripting functions:
-
-    dsc, delete supercell and symmetry mates
-    gitinit, print the steps for making a git repository
-    ms2pdf, make 3D pdfs from current scene of cartoons or molecular surfaces (requires IDTFconverter and LaTeX)
-    nmr, show all of the models in a nmr structure
-    nmroff, hide all but the average model in a nmr structure
-    rv, return the viewport settings on one line
-    sc2, generate supercell and symmetry mates with 2 cells in each direction
-    sc3, generate supercell and symmetry mates with 3 cells in each direction
-    spng, save current scene to png file with time stamp in filename
-    spse, save current scene to session file with time stamp in filename
-    timcolor, color by atomic models by biophysical properties with Tim Mather's color scheme
+    (You may have to edit the path to JMol.) 
 
     Type 'help <ShortCutName>' (e.g., help spng) for a description of the
     function and for two sets of commands. The first set of commands has
@@ -381,7 +398,7 @@ def SC():
     command history window and pasted onto the command line for code
     reuse. Some aliases require additional scripts. 
     
-    Type 'SC' to refresh the list of aliases.
+    Type 'SC' to refresh the list of shortcuts.
     Type 'help rline' to see commands for moving cursor on the command line.
 
     '''
@@ -433,17 +450,107 @@ def rmsc():
 cmd.extend("rmsc", rmsc)
 
 
+def rmd():
+    """
+    Description
+    
+    Remove measurements.
+    There is a Delete all measurements toggle in the internal gui. 
+    """
+    cmd.do('delete measure*;delete m*_*')
+cmd.extend("rmd", rmd)
+
+
+def lat111():
+    """
+    Description
+    
+    Make a lattice of 1 x 1 x 1 unit cells. 
+    Enter 'rmsc' to remove the symmetry mates and unit cell object.
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
+cmd.extend("lat111", lat111)
+
+
 def sc111():
     """
     Description
     
     Make a lattice of 1 x 1 x 1 unit cells. 
     Use 'rmsc' to remove supercell objects.
-    Requires Thomas Holder's supercell.py script.
+    Enter 'rmsc' to remove the symmetry mates and unit cell object.
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
 cmd.extend("sc111", sc111)
+
+
+def sc211():
+    """
+    Description
+    
+    Make a lattice of 2 x 1 x 1 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 2, 1, 1, , orange, supercell211, 1')
+cmd.extend("sc211", sc211)
+
+
+
+def sc121():
+    """
+    Description
+    
+    Make a lattice of 1 x 2 x 1 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 2, 1, 1, , orange, supercell121, 1')
+cmd.extend("sc121", sc121)
+
+
+def sc112():
+    """
+    Description
+    
+    Make a lattice of 1 x 1 x 2 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
+cmd.extend("sc112", sc112)
+
+
+def sc122():
+    """
+    Description
+    
+    Make a lattice of 1 x 2 x 2 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 1, 2, 2, , orange, supercell122, 1')
+cmd.extend("sc122", sc122)
+
+
+def sc212():
+    """
+    Description
+    
+    Make a lattice of 2 x 1 x 2 unit cells. 
+    Use 'rmsc' to remove supercell objects. 
+    Requires Thomas Holder's supercell.py script.
+    """
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
+    cmd.do('supercell 2, 1, 2, , orange, supercell212, 1')
+cmd.extend("sc212", sc212)
 
 
 def sc221():
@@ -454,22 +561,9 @@ def sc221():
     Use 'rmsc' to remove supercell objects. 
     Requires Thomas Holder's supercell.py script.
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
 cmd.extend("sc221", sc221)
-
-
-def sc112():
-    """
-    Description
-    
-    Make a lattice of 1 x 1 x 2 unit cells. 
-    Use 'rmsc' to remove supercell objects.
-    Requires Thomas Holder's supercell.py script.
-    """
-    cmd.do('run $HOME/mg18OU/supercell.py')
-    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
-cmd.extend("sc221", sc112)
 
 
 def sc222():
@@ -480,7 +574,7 @@ def sc222():
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
 cmd.extend("sc222", sc222)
 
@@ -494,7 +588,7 @@ def sc331():
     Requires Thomas Holder's supercell.py script.
     
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 3, 1, , green, supercell331, 1')
 cmd.extend("sc331", sc331)
 
@@ -508,7 +602,7 @@ def sc313():
     Requires Thomas Holder's supercell.py script.
     
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 1, 3, , green, supercell313, 1')
 cmd.extend("sc313", sc313)
 
@@ -522,7 +616,7 @@ def sc133():
     Requires Thomas Holder's supercell.py script.
     
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 3, 3, , green, supercell133, 1')
 cmd.extend("sc133", sc133)
 
@@ -536,7 +630,7 @@ def sc333():
     Requires Thomas Holder's supercell.py script.
     
     """
-    cmd.do('run $HOME/mg18OU/supercell.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 3, 3, , green, supercell333, 1')
 cmd.extend("sc333", sc333)
 
@@ -549,7 +643,7 @@ def saln(stemName="saved"):
     """
     DESCRIPTION
 
-    Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work..
+    Save a aln file (alignment file) with a time stamp included in the filename to avoid overwriting work.
     Read as a commandline argument, a string as the filename stem or 
     use the default filename stem "saved".
 
@@ -558,7 +652,7 @@ def saln(stemName="saved"):
     saln currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".aln") 
 cmd.extend('saln',saln)
@@ -568,7 +662,7 @@ def scif(stemName="saved"):
     """
     DESCRIPTION
 
-    Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work..
+    Save a cif file (Crystallographic Information File) with a time stamp included in the filename to avoid overwriting work.
     Read as a commandline argument, a string as the filename stem or 
     use the default filename stem "saved".
 
@@ -577,7 +671,7 @@ def scif(stemName="saved"):
     scif currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".cif") 
 cmd.extend('scif',scif)
@@ -596,7 +690,7 @@ def sccp4(stemName="saved"):
     sccp4 currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".ccp4") 
 cmd.extend('sccp4',sccp4)
@@ -615,7 +709,7 @@ def sdae(stemName="saved"):
     sdae currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".dae") 
 cmd.extend('sdae',sdae)
@@ -634,7 +728,7 @@ def sdat(stemName="saved"):
     smol currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".dat") 
 cmd.extend('sdat',sdat)
@@ -653,7 +747,7 @@ def sfasta(stemName="saved"):
     sfasta currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".fasta") 
 cmd.extend('sfasta',sfasta)
@@ -672,7 +766,7 @@ def sidtf(stemName="saved"):
     sidtf currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT = datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".idtf") 
 cmd.extend('sidtf',sidtf)
@@ -691,7 +785,7 @@ def smae(stemName="saved"):
     smoe currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mae") 
 cmd.extend('smae',smae)
@@ -710,7 +804,7 @@ def smmd(stemName="saved"):
     smmd currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mmd") 
 cmd.extend('smmd',smmd)
@@ -729,7 +823,7 @@ def smmod(stemName="saved"):
     smmd currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mmod") 
 cmd.extend('smmod',smmod)
@@ -748,7 +842,7 @@ def spmo(stemName="saved"):
     spmo currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pmo") 
 cmd.extend('spmo',spmo)
@@ -767,7 +861,7 @@ def smoe(stemName="saved"):
     smoe currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".moe") 
 cmd.extend('smoe',smoe)
@@ -786,7 +880,7 @@ def smol(stemName="saved"):
     smol currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mol") 
 cmd.extend('smol',smol)
@@ -805,7 +899,7 @@ def smol2(stemName="saved"):
     smol2 currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mol2") 
 cmd.extend('smol2',smol2)
@@ -824,7 +918,7 @@ def smtl(stemName="saved"):
     smtl currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".mtl") 
 cmd.extend('smtl',smtl)
@@ -843,7 +937,7 @@ def sobj(stemName="saved"):
     smol currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".obj") 
 cmd.extend('sobj',sobj)
@@ -862,7 +956,7 @@ def sout(stemName="saved"):
     smol currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".out") 
 cmd.extend('sout',sout)
@@ -881,7 +975,7 @@ def spdb(stemName="saved"):
     spng currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pdb") 
 cmd.extend('spdb',spdb)
@@ -900,7 +994,7 @@ def spkl(stemName="saved"):
     spkl currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pkl") 
 cmd.extend('spkl',spkl)
@@ -919,7 +1013,7 @@ def spkla(stemName="saved"):
     spkl currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pkla") 
 cmd.extend('spkla',spkla)
@@ -939,7 +1033,7 @@ def spng(stemName="saved"):
     spng currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".png") 
 cmd.extend('spng',spng)
@@ -958,7 +1052,7 @@ def spov(stemName="saved"):
     spov currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pov") 
 cmd.extend('spov',spov)
@@ -977,7 +1071,7 @@ def spqr(stemName="saved"):
     spng currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pqr") 
 cmd.extend('spqr',spqr)
@@ -995,7 +1089,7 @@ def spse(stemName="saved"):
     spse currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".pse") 
 cmd.extend('spse',spse)
@@ -1014,7 +1108,7 @@ def ssdf(stemName="saved"):
     smol currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".sdf") 
 cmd.extend('ssdf',ssdf)
@@ -1033,7 +1127,7 @@ def swrl(stemName="saved"):
     swrl currentScene
 
     """
-    DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT) 
     cmd.save(stemName+s+".wrl") 
 cmd.extend('swrl',swrl)
@@ -1248,7 +1342,7 @@ def BU():
     
     Commands to make biological unit. Requires a pdb file. There are
     other ways of displaying the biological unit in PyMOL. Depends on
-    the quat.py script by Thomas Holder.
+    the quat3.py script by Thomas Holder.
     
     USAGE
     
@@ -1262,17 +1356,17 @@ def BU():
         
     The commands with linebreaks:
     
-    run ~/mg18OU/quat.py; 
+    run ~/Scripts/PyMOLScripts/quat3.py; 
     quat 
 
     The commands without linebreaks:
     
-    run ~/mg18OU/quat.py; quat 
+    run ~/Scripts/PyMOLScripts/quat3.py; quat 
 
     '''
-#    cmd.alias('aBU', 'run ~/mg18OU/quat.py; quat') 
-    cmd.do('run $HOME/mg18OU/quat.py')
-#    cmd.run('$HOME/mg18OU/quat.py')
+#    cmd.alias('aBU', 'run ~/Scripts/PyMOLScripts/quat3.py; quat') 
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
+#    cmd.run('$HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat')
 cmd.extend('BU',BU)
 
@@ -1301,7 +1395,7 @@ def CB():
     run ~/Pymol-script-repo/colorblindfriendly.py 
     
     '''
-    cmd.run('run $HOME/mg18OU/colorBlindFriendly.py')
+    cmd.run('run $HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
 cmd.extend('CB',CB)
 
 
@@ -1437,7 +1531,7 @@ def CBSS():
     run $HOME/Pymol-script-repo/colorBlindFriendly.py;as cartoon;color cb_red, ss H;color cb_yellow,ss S;color cb_green, ss L+; 
  
     '''
-    cmd.run('$HOME/mg18OU/colorBlindFriendly.py')
+    cmd.run('$HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
     cmd.show_as('cartoon')
     cmd.color('cb_red', 'ss H')
     cmd.color('cb_yellow', 'ss S')
@@ -1634,6 +1728,22 @@ def SE():
     cmd.show('surface')
 cmd.extend('SE',SE)    
 
+def cav():
+    '''
+    DESCRIPTION
+    
+    Show pockets and buried cavities as molecular surfaces. 
+
+    Usage
+
+    Load a model and then enter
+    
+    cav
+    '''
+    cmd.do('set surface_cavity_mode = 1')
+    cmd.show('show surface')
+cmd.extend('cav',cav)
+
 
 def getchem():
     """
@@ -1672,7 +1782,7 @@ def timcolor(selection='all'):
     
     timcolor <selection>
     '''
-    print selection
+    print(selection)
     code={'acid'    :  'red'    ,
           'basic'   :  'blue'   ,
           'nonpolar':  'orange' ,
@@ -1682,10 +1792,10 @@ def timcolor(selection='all'):
     cmd.select ('none')
     for elem in code:
         line='color '+code[elem]+','+elem+'&'+selection
-        print line
+        print(line)
         cmd.do (line)
     word='color white,backbone &'+selection
-    print word
+    print(word)
     cmd.do (word)                  #Used to be in code, but looks like
                                    #dictionnaries are accessed at random
     cmd.hide ('everything','resn HOH')
@@ -2069,20 +2179,20 @@ def jabref():
 cmd.extend('jabref',jabref)
 
 
-def julia():
-    '''
-    DESCRIPTION
+# def julia():
+#     '''
+#     DESCRIPTION
 
-    Open the jabref from within PyMOL. 
+#     Open the jabref from within PyMOL. 
 
-    USAGE
+#     USAGE
 
-        julia
-    '''
-    arg = ('/Applications/Julia-0.6.app/Contents/MacOS/applet')
-    subprocess.call(arg,shell=True)
-    return
-cmd.extend('julia',julia)
+#         julia
+#     '''
+#     arg = ('/Applications/Julia-0.6.app/Contents/MacOS/applet')
+#     subprocess.call(arg,shell=True)
+#     return
+# cmd.extend('julia',julia)
 
 
 def oc():
@@ -2368,7 +2478,7 @@ def GGT():
     The commands with linebreaks:
     
     delete all;
-    fetch 4gdx, type=pdb, async=0;
+    fetch 4gdx, type=pdb, async_=0;
     remove name H*;
     as cartoon;
     bg_color white; 
@@ -2387,11 +2497,11 @@ def GGT():
     
     The commands without linebreaks:
     
-    delete all;fetch 4gdx, type=pdb, async=0;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
+    delete all;fetch 4gdx, type=pdb, async_ =0;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
     
     '''
     cmd.reinitialize()
-    cmd.fetch('4gdx', type='pdb', async='0')
+    cmd.fetch('4gdx', type='pdb', async_ ='0')
     cmd.remove('name H*')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -2437,7 +2547,7 @@ def GU():
     The commands with linebreaks:
     
     delete all;
-    fetch 4PCO,type=pdb,async=0;
+    fetch 4PCO,type=pdb,async_=0;
     hide everything; 
     bg_color white; 
     cartoon oval; 
@@ -2467,11 +2577,11 @@ def GU():
     
     The commands without linebreaks: 
     
-    delete all;fetch 4PCO,type=pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
+    delete all;fetch 4PCO,type=pdb,async_=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
     
     '''
     cmd.reinitialize();
-    cmd.fetch('4PCO', type='pdb', async='0')
+    cmd.fetch('4PCO', type='pdb', async_='0')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -2505,9 +2615,9 @@ def N9():
     
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
     The biological unit has four copies of the asymmetric unit.
-    View is down the four-fold axis. Requires the quat.py script by
-    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
-    in ~/mg18OU.
+    View is down the four-fold axis. Requires the quat3.py script by
+    Thomas Holder and available at the PyMOL Wiki page. Store quat3.py
+    in ~/Scripts/PyMOLScripts.
 
     USAGE
 
@@ -2522,8 +2632,8 @@ def N9():
     The commands with linebreaks:
 
     delete all;
-    fetch 4dgr, type=pdb, async=0;
-    run $HOME/mg18OU/quat.py;
+    fetch 4dgr, type=pdb, async_=0;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 4dgr;
     as cartoon; 
     bg_color white;
@@ -2538,12 +2648,12 @@ def N9():
 
     The commands without linebreaks:
 
-    delete all;fetch 4dgr, type=pdb, async=0;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
+    delete all;fetch 4dgr, type=pdb, async_=0;run $HOME/Scripts/PyMOLScripts/quat3.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
 
     '''
     cmd.reinitialize()
-    cmd.fetch('4dgr', type='pdb', async='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.fetch('4dgr', type='pdb', async_='0')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -2577,7 +2687,7 @@ def T4L():
     The commands with linebreaks:
         
     delete all;
-    fetch 3fa0,type=pdb,async=0;
+    fetch 3fa0,type=pdb,async_=0;
     orient;
     turn z,-90;
     turn y,-5;
@@ -2593,11 +2703,11 @@ def T4L():
 
     The commands without linebreaks:
     
-    delete all;fetch 3fa0,type=pdb,async=0;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
+    delete all;fetch 3fa0,type=pdb,async_=0;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
     
     '''
     cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async='0')
+    cmd.fetch('3fa0', type='pdb', async_='0')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -2619,7 +2729,7 @@ def U8():
     DESCRIPTION
 
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
-    Has one strand in the asymmetric unit. Uses quat.py to generate
+    Has one strand in the asymmetric unit. Uses quat3.py to generate
     the second strand. Cartoon with filled rings and bases cartoon.
     
     USAGE
@@ -2635,8 +2745,8 @@ def U8():
     The commands with linebreaks:
     
     delete all;
-    fetch 3nd3,type=pdb,async=0;
-    run $HOME/mg18OU/quat.py;
+    fetch 3nd3,type=pdb,async_=0;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 3nd3;
     hide everything;
     bg_color white; 
@@ -2651,13 +2761,13 @@ def U8():
     
     The commands without linebreaks:
     
-    delete all;fetch 3nd3,type=pdb,async=0;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+    delete all;fetch 3nd3,type=pdb,async_=0;run $HOME/Scripts/PyMOLScripts/quat3.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
 
     '''
     
     cmd.reinitialize()
-    cmd.fetch('3nd3', type='pdb', async='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.fetch('3nd3', type='pdb', async_='0')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
@@ -2679,7 +2789,7 @@ def WC8():
 
     16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
     resolution: 3nd4.  Has one strand in the asymmetric unit. 
-    Needs quat.py to generate the second strand. Use the 
+    Needs quat3.py to generate the second strand. Use the 
     BU alias. Cartoon with filled rings and bases cartoon.
     
     
@@ -2696,9 +2806,9 @@ def WC8():
     The commands with linebreaks:
     
     delete all; 
-    fetch 3nd4,type=pdb,async=0;
+    fetch 3nd4,type=pdb,async_=0;
     hide everything;
-    run $HOME/mg18OU/quat.py;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 3nd4;
     bg_color white; 
     show sticks; 
@@ -2713,14 +2823,14 @@ def WC8():
 
     The commands without linebreaks:
     
-    delete all; fetch 3nd4,type=pdb,async=0;hide everything; run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
+    delete all; fetch 3nd4,type=pdb,async_=0;hide everything; run $HOME/Scripts/PyMOLScripts/quat3.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
 
     '''
     cmd.reinitialize()
-    cmd.fetch('3nd4', type='pdb', async='0')
+    cmd.fetch('3nd4', type='pdb', async_='0')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
@@ -2759,7 +2869,7 @@ def BST():
     The commands with linebreaks:
     
     delete all;
-    fetch 4PCO, type=pdb, async=0;
+    fetch 4PCO, type=pdb, async_=0;
     select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
     remove not G2G3;
     bg_color white;
@@ -2794,11 +2904,11 @@ def BST():
     
     Commands without linebreaks: 
     
-    delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
+    delete all;fetch 4PCO, type=pdb, async_=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
 
     '''
     cmd.reinitialize()
-    cmd.fetch('4PCO', type='pdb', async='0')
+    cmd.fetch('4PCO', type='pdb', async_='0')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -2851,8 +2961,8 @@ def LG():
     The commands with linebreaks:
     
     delete all;
-    fetch 4dgr, async=0;
-    fetch 4dgr, type=2fofc,async=0;
+    fetch 4dgr, async_=0;
+    fetch 4dgr, type=2fofc,async_=0;
     select LongGlycan, resi 469:477;
     orient LongGlycan;
     remove not LongGlycan;
@@ -2892,12 +3002,12 @@ def LG():
     
     Commands without linebreaks:
     
-    delete all;fetch 4dgr, async=0;fetch 4dgr, type=2fofc, async=0;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
+    delete all;fetch 4dgr, async_=0;fetch 4dgr, type=2fofc, async_=0;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
  
     '''
     cmd.reinitialize()
-    cmd.fetch('4dgr', async='0')
-    cmd.fetch('4dgr', type='2fofc', async='0')
+    cmd.fetch('4dgr', async_='0')
+    cmd.fetch('4dgr', type='2fofc', async_='0')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -2937,6 +3047,7 @@ def LG():
 cmd.extend('LG',LG)
 
 
+
 def NA():
     '''
     DESCRIPTION
@@ -2969,8 +3080,8 @@ def NA():
     
     delete all;
     viewport 900,600;
-    fetch 3nd4, type=pdb, async=0;
-    run ~/mg18OU/quat.py; 
+    fetch 3nd4, type=pdb, async_=0;
+    run ~/Scripts/PyMOLScripts/quat3.py; 
     quat 3nd4; 
     show sticks;
     set stick_radius=0.125;
@@ -3029,13 +3140,13 @@ def NA():
     
     The commands without linebreaks:
     
-    delete all;viewport 900,600;fetch 3nd4, type=pdb,async=0;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
+    delete all;viewport 900,600;fetch 3nd4, type=pdb,async_=0;run ~/Scripts/PyMOLScripts/quat3.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
 
     '''
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.fetch('3nd4', type='pdb', async='0');
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.fetch('3nd4', type='pdb', async_='0');
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
@@ -3216,7 +3327,7 @@ def LGU():
     
     The commands without linebreaks: 
     
-    delete all;load 4PCO.pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
+    delete all;load 4PCO.pdb,async_=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
     
     '''
     cmd.reinitialize();
@@ -3254,9 +3365,9 @@ def LN9():
     
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
     4dgr. The biological unit has four copies of the asymmetric unit.
-    View is down the four-fold axis. Requires the quat.py script by
-    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
-    in ~/mg18OU.
+    View is down the four-fold axis. Requires the quat3.py script by
+    Thomas Holder and available at the PyMOL Wiki page. Store quat3.py
+    in ~/Scripts/PyMOLScripts.
 
     USAGE
 
@@ -3272,7 +3383,7 @@ def LN9():
 
     delete all;
     load 4dgr.pdb;
-    run $HOME/mg18OU/quat.py;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 4dgr;
     as cartoon; 
     bg_color white;
@@ -3287,12 +3398,12 @@ def LN9():
 
     The commands without linebreaks:
 
-    delete all;load 4dgr.pdb;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
+    delete all;load 4dgr.pdb;run $HOME/Scripts/PyMOLScripts/quat3.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
 
     '''
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -3347,7 +3458,7 @@ def LT4L():
     
     '''
     cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async='0')
+    cmd.fetch('3fa0', type='pdb', async_='0')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -3369,7 +3480,7 @@ def LU8():
     DESCRIPTION
 
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
-    Has one strand in the asymmetric unit. Uses quat.py to generate
+    Has one strand in the asymmetric unit. Uses quat3.py to generate
     the second strand. Cartoon with filled rings and bases cartoon.
     The file 3nd3.pdb needs to be in the current working directory.
 
@@ -3387,7 +3498,7 @@ def LU8():
     
     delete all;
     load 3nd3.pdb;
-    run $HOME/mg18OU/quat.py;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 3nd3;
     hide everything;
     bg_color white; 
@@ -3402,13 +3513,13 @@ def LU8():
     
     The commands without linebreaks:
     
-    delete all;load 3nd3.pdb;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
+    delete all;load 3nd3.pdb;run $HOME/Scripts/PyMOLScripts/quat3.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
 
     '''
     
     cmd.reinitialize()
     cmd.load('3nd3.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
@@ -3430,7 +3541,7 @@ def LWC8():
 
     16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
     resolution: 3nd4.  Has one strand in the asymmetric unit. 
-    Needs quat.py to generate the second strand. 
+    Needs quat3.py to generate the second strand. 
     Cartoon with filled rings and bases cartoon.
     The file 3nd4.pdb must be in the current working directory
     
@@ -3449,7 +3560,7 @@ def LWC8():
     delete all; 
     load 3nd4.pdb;
     hide everything;
-    run $HOME/mg18OU/quat.py;
+    run $HOME/Scripts/PyMOLScripts/quat3.py;
     quat 3nd4;
     bg_color white; 
     show sticks; 
@@ -3464,14 +3575,14 @@ def LWC8():
 
     The commands without linebreaks:
     
-    delete all;load 3nd4.pdb;hide everything;run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
+    delete all;load 3nd4.pdb;hide everything;run $HOME/Scripts/PyMOLScripts/quat3.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
 
     '''
     cmd.reinitialize()
     cmd.load('3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
@@ -3717,7 +3828,7 @@ def LNA():
     delete all;
     viewport 900,600;
     load 3nd4.pdb;
-    run ~/mg18OU/quat.py; 
+    run ~/Scripts/PyMOLScripts/quat3.py; 
     quat 3nd4; 
     show sticks;
     set stick_radius=0.125;
@@ -3777,14 +3888,14 @@ def LNA():
 
     The commands without linebreaks:
     
-    delete all;viewport 900,600;load 3nd4.pdb;hide cartoon;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;rock;AOset_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
+    delete all;viewport 900,600;load 3nd4.pdb;hide cartoon;run ~/Scripts/PyMOLScripts/quat3.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;rock;AOset_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
 
     '''
     cmd.reinitialize();
     cmd.viewport('900','600');
     cmd.load('3nd4.pdb');
     cmd.hide('cartoon');
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
@@ -3981,14 +4092,14 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
             return, and wait 5-10 seconds:
 
         EXAMPLE
-            fetch 1lw9, async=0; rv 0,2
+            fetch 1lw9, async_=0; rv 0,2
 
         The following view setting will be returned without the blackslashes:
 
         set_view (1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,-155.16,\
         35.13,11.48,9.72,122.33,187.99,-20.0);
 
-        fetch 1lw9, async=0; rv 0,1
+        fetch 1lw9, async_=0; rv 0,1
 
         set_view (1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,-155.2,\
         35.1,11.5,9.7,122.3,188.0,-20.0);
@@ -4049,7 +4160,7 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
 {10},{11},{12},{13},{14},{15},{16},{17});'
 
     #print to the external gui.
-    print x.format(*myRoundedList)
+    print(x.format(*myRoundedList))
 
     #print 'set_view ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},\
     #{10},{11},{12},{13},{14},{15},{16},{17})'.format(*myRoundedList)
@@ -4289,7 +4400,7 @@ def GHN(searchTerm="pymol", numHits=5):
 
     GHN pymol, 10
     '''
-    print 'Searching Github...'  # display text while downloading the Google page
+    print('Searching Github...')  # display text while downloading the Google page
     url = 'https://www.github.com/search?q='
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
@@ -4301,7 +4412,7 @@ def GHN(searchTerm="pymol", numHits=5):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching Github.'  # display text while downloading the Google page
+    print('Finished searching Github.')  # display text while downloading the Google page
 cmd.extend('GHN',GHN)
 
 
@@ -4364,7 +4475,7 @@ def GON(searchTerm="pymol",numHits="5"):
     Prints message when the last page has finished loading.
 
     '''
-    print 'Googling', searchTerm, 'and displaying the top', numHits, 'in separate tabs of the default brower.' 
+    print('Googling', searchTerm, 'and displaying the top', numHits, 'in separate tabs of the default brower.') 
     res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -4375,7 +4486,7 @@ def GON(searchTerm="pymol",numHits="5"):
         webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished googling ', searchTerm, '.' # display text while downloading the Google page
+    print('Finished googling ', searchTerm, '.') # display text while downloading the Google page
 cmd.extend('GON',GON)
 
 
@@ -4429,7 +4540,7 @@ def GSN(searchTerm="pymol",numHits="5"):
     GS Linus Pauling; GS Francis Crick; GS Alexander Rich
     '''
     url = 'https://scholar.google.se/scholar?hl=en&q='
-    print 'Searching Google Scholar...' 
+    print('Searching Google Scholar...') 
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -4440,7 +4551,7 @@ def GSN(searchTerm="pymol",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching with Google Scholar.'  # display text while downloading the Google page
+    print('Finished searching with Google Scholar.')  # display text while downloading the Google page
 cmd.extend('GSN',GSN)
 
 
@@ -4491,7 +4602,7 @@ def GVN(searchTerm="pymol",numHits="5"):
 
     '''
     url = 'https://www.google.com/search?q=video+'
-    print 'Searching Google Video...' 
+    print('Searching Google Video...') 
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -4502,7 +4613,7 @@ def GVN(searchTerm="pymol",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching with Google Videos.'  
+    print('Finished searching with Google Videos.')  
 cmd.extend('GVN',GVN)
 
 
@@ -4657,7 +4768,7 @@ def PDBN(searchTerm="3fa0",numHits="5"):
     search = ["","",]
     PBBN 3fa0
     '''
-    print 'Searching PDB'  # display text while downloading the Google page
+    print('Searching PDB')  # display text while downloading the Google page
     url = 'https://www.rcsb.org/structure/'
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
@@ -4669,7 +4780,7 @@ def PDBN(searchTerm="3fa0",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching PBD.'  # display text while downloading the Google page
+    print('Finished searching PBD.')  # display text while downloading the Google page
 cmd.extend('PDBN',PDBN)
 
 
@@ -4695,7 +4806,7 @@ def PMLN(searchTerm="3d_pdf",numHits="5"):
     '''
     DESCRIPTION
     
-    Submit a search term to the PyMOL Users Mail Service.
+    Submit a search term to the PyMOL Users Mail Service and open the top N hits in separate tabs..
 
     USAGE:
 
@@ -4705,7 +4816,7 @@ def PMLN(searchTerm="3d_pdf",numHits="5"):
     Multiple term search: 
     PML text editor; PML 3d pdf; PML black and white cartoon;
     '''
-    print 'Searching PyMOL mailing list.'  # display text while downloading the Google page
+    print('Searching PyMOL mailing list.')  # display text while downloading the Google page
     url = 'https://sourceforge.net/p/pymol/mailman/search/?q='
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
@@ -4717,31 +4828,31 @@ def PMLN(searchTerm="3d_pdf",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching PyMOL mailing list.'  # display text while downloading the Google page
-cmd.extend('PML',PML)
+    print('Finished searching PyMOL mailing list.')  # display text while downloading the Google page
+cmd.extend('PMLN',PMLN)
 
 
-def PM(searchTerm="pymol"):
+def PMS(searchTerm="pymol"):
     '''
     DESCRIPTION
 
-    Send search term or phrase to PubMed.
+    Send a single search term or phrase to PubMed.
     The default web browser is used.
     The multi word search terms do not need to be enclosed in quotes. 
     Takes one search term but multiple commands can be submitted at once (see below).
 
     USAGE
-    PM search term
+    PMS search term
 
     EXAMPLES
     single
-    PM molecular graphics
+    PMS molecular graphics
 
     Multiple search:
-    PM molecular graphics;  PM molecular representation; PM ambient occlusion
+    PMS molecular graphics;  PMS molecular representation; PMS ambient occlusion
     '''
     webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
-cmd.extend('PMLN',PMLN)
+cmd.extend('PMLN',PMS)
 
 
 def PMN(searchTerm="pymol",numHits="5"):
@@ -4763,7 +4874,7 @@ def PMN(searchTerm="pymol",numHits="5"):
     Multiple search:
     PM molecular graphics;  PM molecular representation; PM ambient occlusion
     '''
-    print 'Searching PubMed.'  # display text while downloading the Google page
+    print('Searching PubMed.')  # display text while downloading the Google page
     url = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
@@ -4775,7 +4886,7 @@ def PMN(searchTerm="pymol",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching PubMed.'  # display text while downloading the Google page
+    print('Finished searching PubMed.')  # display text while downloading the Google page
 cmd.extend('PMN',PMN)
 
 
@@ -4783,7 +4894,7 @@ def IPM(searchTerms = [], *args):
     '''
     DESCRIPTION
 
-    Read list of search terms and submit each term to PubMed in a separate browser tab.
+    Read list of search terms and submit each term to PubMed in separate browser tabs.
     There a time delay based on the response time of the site to which the request is made.
     The default web browser is used.
     Must enclose each search term (can be of multiple words) in single or double quotes.
@@ -4800,15 +4911,15 @@ def IPM(searchTerms = [], *args):
     search=["pymol","vmd","jmol"]; IPM(search)
     '''
     #termList = searchTerms.split(",")
-    print 'Sending', searchTerms, 'to Pubmed and display list of search results in separate tabs of the default brower.'
+    print('Sending', searchTerms, 'to Pubmed and display list of search results in separate tabs of the default brower.')
     for term in searchTerms:
         t0 = time.time()
         sterm = str(term)
         webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+sterm)
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print 'Finished searching PubMed for', sterm, '.'
-    print 'Finished searching PubMed for', searchTerms, '.' 
+        print('Finished searching PubMed for', sterm, '.')
+    print('Finished searching PubMed for', searchTerms, '.') 
 cmd.extend('IPM',IPM)
 
 
@@ -4834,7 +4945,7 @@ def IPMN(searchTerms = [], *args):
     '''
     #termList = searchTerms.split(",")
     numHits="5"
-    print 'Sending', searchTerms, 'to PubMed and display top N search results for each term in separate tabs of the default browser.' 
+    print('Sending', searchTerms, 'to PubMed and display top N search results for each term in separate tabs of the default browser.') 
     for term in searchTerms:
         sterm = str(term)
         res = requests.get('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + ' '.join(sterm))
@@ -4847,8 +4958,8 @@ def IPMN(searchTerms = [], *args):
             webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + linkElems[i].get('href'))
             response_delay = time.time() - t0
             time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print 'Finished searching PubMed for', sterm, '.'
-    print 'Finished searching PubMed for', searchTerms, '.' 
+        print('Finished searching PubMed for', sterm, '.')
+    print('Finished searching PubMed for', searchTerms, '.') 
 cmd.extend('IPMN',IPMN)
 
 
@@ -4876,7 +4987,7 @@ def RGN(searchTerm='best molecular graphics program',numHits="5"):
 
     RG best molecular graphics program
     '''
-    print 'Searching Github...'  # display text while downloading the Google page
+    print('Searching Github...')  # display text while downloading the Google page
     url = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
@@ -4888,7 +4999,7 @@ def RGN(searchTerm='best molecular graphics program',numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching Research Gate.' 
+    print('Finished searching Research Gate.') 
 cmd.extend('RGN',RGN)
 
 
@@ -4928,7 +5039,7 @@ def SDN(searchTerm="pymol",numHits="5"):
     '''
     url1 = 'https://www.sciencedirect.com/search/advanced?qs='
     url2 = '&show=100&sortBy=relevance'
-    print 'Searching Search Direct.'  # display text while downloading the Google page
+    print('Searching Search Direct.')  # display text while downloading the Google page
     res = requests.get(url1 + ' '.join(searchTerm) + url2)
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -4939,7 +5050,7 @@ def SDN(searchTerm="pymol",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href') + url2)
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching Science Direct.' 
+    print('Finished searching Science Direct.') 
 cmd.extend('SDN',SDN)
 
 
@@ -4982,7 +5093,7 @@ def SFN(searchTerm='pymol',numHits="5"):
     '''
     url = "https://stackoverflow.com/search?q="
     webbrowser.open(url+searchTerm)
-    print 'Searching source forge.'  # display text while downloading the Google page
+    print('Searching source forge.')  # display text while downloading the Google page
     res = requests.get(url + ' '.join(searchTerm))
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -4993,7 +5104,7 @@ def SFN(searchTerm='pymol',numHits="5"):
         webbrowser.open(url + linkElems[i].get('href'))
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching Ssource forge.' 
+    print('Finished searching Ssource forge.') 
 cmd.extend('SFN',SFN)
 
 
@@ -5031,7 +5142,7 @@ def SPN(searchTerm="pymol",numHits="5"):
     url1 = 'https://www.springer.com/gp/search?query='
     url2 = '&submit=Submit+Query'
     webbrowser.open(url1+searchTerm+url2)
-    print 'Searching source forge.'  # display text while downloading the Google page
+    print('Searching source forge.')  # display text while downloading the Google page
     res = requests.get(url1 + ' '.join(searchTerm) + url2)
     res.raise_for_status()
     soup = bs4.BeautifulSoup(res.text)
@@ -5042,7 +5153,7 @@ def SPN(searchTerm="pymol",numHits="5"):
         webbrowser.open(url + linkElems[i].get('href') + url2)
         response_delay = time.time() - t0
         time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print 'Finished searching Springer Books.' 
+    print('Finished searching Springer Books.') 
 cmd.extend('SPN',SPN)
 
 ################################ Open static web sites  ####################################
@@ -5425,7 +5536,10 @@ def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click
         ms2pdf [,<fileNameStem> (do not include any file extensions)], [,caption]]
 
     Reads in an optional filename stem. The default is "pymol".
+
     Also reads in an optional caption.
+    Enclose the caption in single or double quotes.
+    These will be stripped from the caption before printing to the pdf. 
     Saves an idtf file.
     Passes the idtf file to IDTFConverter, a u3d file to pdflatex,
             and opens the pdf with Adobe Acrobat Reader DC. 
@@ -5439,16 +5553,19 @@ def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click
         You can run in pymol "save inFile.idtf" to get new 3Droo and 3Dcoo parameters
         and then edit the corresponding lines below. 
 
-    June 10, 2018
+    June 10, 2018; 
+    University of Oklahoma Boad of Regents
     Blaine Mooers
+
+    updated docstring Dec. 7, 2018; 
 
 
     """
 
     x = '''\documentclass[12pt,letter]{article}
-\usepackage{hyperref}
-\usepackage{media9}
-\usepackage{verbatim}
+\\usepackage{hyperref}
+\\usepackage{media9}
+\\usepackage{verbatim}
 \pagestyle{empty}
 \\begin{document}
 \\begin{figure}[!htb]
@@ -5475,7 +5592,7 @@ def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click
             3Dpartsattrs=restore,
         ]{}{'''+ InFile +'''.u3d}
 \\end{center}
-\caption{''' + caption + '''.}
+\caption{''' + caption[1:-1] + '''.}
 \\end{figure}
 \\end{document}'''
 
@@ -5485,11 +5602,11 @@ def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click
     FileU3D = str(InFile+".u3d")
     FileTEX = str(InFile+".tex")
     FilePDF = str(InFile+".pdf")
-    print "InFile = ", InFile
-    print "FileIDTF: ", FileIDTF
-    print "FileU3D: ", FileU3D
-    print "FileTEX: ", FileTEX
-    print "FilePDF: ", FilePDF
+    print("InFile = ", InFile)
+    print("FileIDTF: ", FileIDTF)
+    print("FileU3D: ", FileU3D)
+    print("FileTEX: ", FileTEX)
+    print("FilePDF: ", FilePDF)
     myFile = open(FileTEX, "a")
     myFile.write(x+"\n")
     myFile.close()
@@ -5499,7 +5616,7 @@ def ms2pdf(InFile="pymol", caption="Wild-type T4 lysozyme, 3fa0, 1.09 Ang, Click
         FileU3D + "; /opt/local/bin/pdflatex " +
         InFile + "; open -a 'Adobe Acrobat Reader DC.app' " + FilePDF)
     subprocess.call(arg,shell=True)
-    print "Argument for call: ", arg
+    print("Argument for call: ", arg)
     return
 cmd.extend("ms2pdf", ms2pdf)
 
@@ -5552,20 +5669,16 @@ def topdf(InFile="pymol3"):
     FileU3D = str(InFile+".u3d")
     FileTEX = str(InFile+".tex")
     FilePDF = str(InFile+".pdf")
-    print "InFile = ", InFile
-    print "FilePSE: ", FilePSE
-    print "FileIDTF: ", FileIDTF
-    print "FileU3D: ", FileU3D
-    print "FileTEX: ", FileTEX
-    print "FilePDF: ", FilePDF
+    print("InFile = ", InFile)
+    print("FilePSE: ", FilePSE)
+    print("FileIDTF: ", FileIDTF)
+    print("FileU3D: ", FileU3D)
+    print("FileTEX: ", FileTEX)
+    print("FilePDF: ", FilePDF)
 # Line continuation in python is done by wrapping the code in parentheses
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmoldata.sh -nj" +
-        " 'load " + FilePSE + ";write " + FileIDTF +
-        "';/usr/local/bin/IDTFConverter -i " + FileIDTF + " -o " +
-        FileU3D + "; /opt/local/bin/pdflatex " +
-        FileTEX + "; open -a 'Adobe Acrobat Reader DC.app' " + FilePDF)
+    arg = ("sh /Applications/jars/jmol-14.29.42/jmoldata.sh -nj" + " 'load " + FilePSE + "; write "+ FileIDTF +"' && /usr/local/bin/IDTFConverter -i " + FileIDTF + " -o " + FileU3D + " && /opt/local/bin/pdflatex " + FileTEX + " && open -a 'Adobe Acrobat Reader DC.app' " + FilePDF)
     subprocess.call(arg,shell=True)
-    print "Argument for call: ", arg
+    print("Argument for call: ", arg)
     return
 cmd.extend("topdf", topdf)
 
