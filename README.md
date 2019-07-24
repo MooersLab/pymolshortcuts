@@ -4,14 +4,18 @@ This repository for ***pymolschortucts.py*** which contains 187 functions in 20 
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml file in your home directory to load the functions in pymolshortcuts.py on startup of PyMOL.
-In spite of the command *run*, the functions will be loaded into memory but not executed.
-Enter **SC** to get a list of shortcuts printed to the command history window.
-Enter **help PW** to print the documentation for the shortcut **PW** to the command history window.
-While most shortcuts are ready to use, some shortcuts require the path names to the executables on your computer and some requrie access to Python modules that were not packaged with the incentive version of PyMOL.
-Use help(shortcutname) to learn how to install the required module(s).
+To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*.
 
-For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecule into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+In spite of the name *run*, the functions will be loaded into memory but will not be executed.
+
+Enter **SC** at the upper **PyMOL>** prompt the to get a list of shortcuts printed to the command history window.
+Use the **help** function to see the documentation for each shortcut. 
+For examples, enter **help PW** to print the documentation for the shortcut **PW** to the command history window. The documentation has four sections: a description of what the shortcut does, an example of running the shortcut, 
+the corresponding pml code with one command per line for easy reuse in a script file, and all of the commands on a single line for re-use on the command line as hortizontal script. 
+
+While most shortcuts are ready to use, some shortcuts require the file paths to the executables on your computer and some require access to Python modules that were not packaged with the incentive version of PyMOL.
+Enter **help(shortcutname)** to learn how to install the required module(s).
 
 The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
