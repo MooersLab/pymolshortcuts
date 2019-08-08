@@ -1,21 +1,42 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 187 functions in 20 categories mapped to short-names that work like aliases (the table below is incomplete).
+This repository for ***pymolschortucts.py*** which contains 192 functions in 20 categories mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
 To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*.
 
 To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+The pymolrc file is an optional file.
+You may have to creat it with a text editor if you have done so already.
+If you do not have text editor, you can use PyMOL's built-in text editor.
+Go to File --> Edit pymolrc.
 In spite of the name *run*, the functions will be loaded into memory but will not be executed.
+You may want to store the script **pymolshortcut.py** in a safer place than your home directory.
+I store mine in */Users/blaine/Scripts/PyMOLScripts/*
 
 Enter **SC** at the upper **PyMOL>** prompt the to get a list of shortcuts printed to the command history window.
 Use the **help** function to see the documentation for each shortcut. 
 For examples, enter **help PW** to print the documentation for the shortcut **PW** to the command history window. The documentation has four sections: a description of what the shortcut does, an example of running the shortcut, 
 the corresponding pml code with one command per line for easy reuse in a script file, and all of the commands on a single line for re-use on the command line as hortizontal script. 
 
-While most shortcuts are ready to use, some shortcuts require the file paths to the executables on your computer and some require access to Python modules that were not packaged with the incentive version of PyMOL.
-Enter **help(shortcutname)** to learn how to install the required module(s).
+While most shortcuts are ready to use, some shortcuts require the file paths to the executables on your computer.
+The sites where edits are required are marked with ** >>> ** in the script.
+You can search for ** >>> ** in a good text editor like Microsoft's free Visual Studio Code (avialable for Mac, Windows, and Linux).
+
+Some shortcuts require additional scripts that available on the PyMOL Wiki.
+Error messages will indicate the missing scripts. 
+Otherwise, search **pymolshortcut.py** for ** .py ** to find the names of the missing scripts.
+
+A few shortcuts require access to Python modules that were not packaged with the incentive version of PyMOL.
+Paste the following command at the upper PyMOL> prompt.
+
+```bash
+conda install requests beautifulsoup4 datetime
+```
+
+Be patient. The prompt can appear to hang for five to ten minutes while the installation occurs. 
+
 
 The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
@@ -34,12 +55,6 @@ These save function names begin with **s**, (e.g., **spse filename** saves the c
 You can delete the unwanted version(s) at a latter time. 
 These functions are useful if you do not have these files under version control.
 
-The functions are stored in a single file: pymolshortcuts.py
-
-Edit the file paths to outside executables like text editors.
-The shortcuts work best on the command line below the command history window because you can copy and paste text onto this command line.
- 
-Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Print shortcuts and their descriptions
 
