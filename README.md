@@ -6,6 +6,12 @@ Some shortcuts save the many hours of work required to assemble a new script fil
 You do not need to understand Python to be able run the script.
 To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*.
 
+To download the *pymolshortcuts.py* file, git clone the repository. 
+Otherwise, left-click on  **pymolshortcuts.py** above and left-click "Raw".
+The raw file will be displayed in your browser.
+Select save under the file pull-down of your browser
+Then save the file **pymolshortcuts.py** to your home direcotry.
+
 To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
 The pymolrc file is an optional file.
 You may have to creat it with a text editor if you have done so already.
