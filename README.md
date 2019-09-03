@@ -4,7 +4,12 @@ This repository for ***pymolschortucts.py*** which contains 192 functions in 20 
 These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*.
+To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*. 
+The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
+This shortcut excutes 16 lines of code.
+
+![Ambient occlusion shortcut](https://media.giphy.com/media/VHeiY192SHWV2AObvl/giphy.gif)
+
 
 To download the *pymolshortcuts.py* file, git clone the repository. 
 Otherwise, left-click on  **pymolshortcuts.py** above and left-click "Raw".
