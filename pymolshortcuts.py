@@ -1,77 +1,230 @@
-from __future__ import division
 # -*- coding: utf-8 -*-
 '''
-    DESCRIPTION
+DESCRIPTION
 
-        On the startup of PyMOL, this script defines a number of aliases.
-        The aliases are listed here instead of in the pymolrc file
-        to avoid clutter of the command history window. Source this 
-        file from your .pymolrc file on the mac or linux or 
-        from your pymolrc.pml file on Windows by adding the command:
+    Loads functions that enable faster work in PyMOL.
+
+    When sourced in the pymolrc file by including the line 'run pymolshortcuts.py,
+    this script defines a number of Python functions upon the startup of PyMOL.
+    These functions are called shortcuts becasue they are invoked with
+    shortnames in analogy to keyborad shortcuts. Unlike keyboard shortcuts, 
+    their names consist only of the home keys for faster entry.
+    The shortcuts are designed to save time and address some shortcommings
+    of PyMOL that are annoying like no version control for output files.
+    
+    The variant of this file called pymolshortcutsNobs4.py does not depend 
+    on Python module beuafitulsoup4 which does not come with PyMOL.
+    
+
+
+INSTALLATION 
+    
+    Source this file from your .pymolrc file on the mac or linux or 
+    from your pymolrc.pml file on Windows by adding the command 
+    below (adjust the file path as appropriate) on a separate line:
                            
-        run ~/mg18OU/startupAliases.py  
-        
-        Requires quat.py from the PyMOL Wiki 
-        (http://www.pymolwiki.org/index.php/BiologicalUnit/Quat) 
-        
-        Store quat.py in ~/mg18OU/.
-        
-        Tested on PyMOL versions 1.5.0.5, 1.8.0.5, 1.8.1.0, 1.8.2.0, 1.8.2.2, 2.1.0
-        
-        Alternately, launch PyMOL from commandline with alias specified. For example:
-        
-        pymol -d 'fetch 1lw9, async=0; AO'
+    run ~/Scripts/PyMOLscripts/pymolshortcuts.py 
 
-        No guarantee is given that this script will work with older
-        or newer versions of PyMOL.
+    Enter "SC" to print to the command history window a list of shortcuts. 
+    
+    You will need to edit the paths to your installation of several external applications.
+    See the section "PATHS to Applications" below.
+    
+    
+REQUIREMENTS 
+    
+    Should work for PyMOL running with Python 2.7 and 3.7 interpreters.
+    Incentive PyMOL built with Anaconda Python3.7 is ideal but not essential. 
+    
+    
+    To use the functions that submit searches to multiple websites from within PyMOL.
+    install the following packages: 
 
 
-  Copyright Notice
-  ================
+    bs4>=4.8.0
+    requests>=2.22.0
+
+    Note that bs4 == beautifulsoup4
+    
+    With the incentive PyMOL that uses the Anaconda Python as its Python interpreter, 
+    enter the following command on the upper command line in PyMOL:
+    
+    conda install beautifulsoup4 requests
+    
+    
+    For the Open Source PyMOL, use the software manager for the Python used to 
+    build PyMOL. E.g., with macports, use "sudo port install py37-bs4 &&
+    sudo port install py37-requests"
+    
+    Alternatively, use pip with the python used to install PyMOL:
+    
+    /opt/local/bin/python3.7 -m pip install --upgrade bs4
+    /opt/local/bin/python3.7 -m pip install --upgrade requests
+    
+    
+    The above procedure should work for older versions of Open Source PyMOL.
+    
+
+    PLAN B -- BS4FREE VERSION
+
+    For older incentrive versions of PyMOL, the installation of external modules is not easy
+    and it may simpler to forgo the functions that depend on beautiful soup. 
+    For these versions of PyMOL, download pymolshortcutsnobs4.py. 
+    This script lacks the bs4 and request dependent functions. 
+
+    Source this file from your .pymolrc file on the mac or linux or 
+    from your pymolrc.pml file on Windows by adding the command 
+    below (adjust the file path as appropriate) on a separate line:
+    
+    
+    run ~/Scripts/PyMOLscripts/pymolshortcutsNobs4.py 
+    
+    
+HELP
+    
+    To see the documentation for shortcut, enter at the PyMOL prompt:
+    
+    
+    help <ShortCutName>
+    
+    e.g.,
+    
+    help AO
+
+    The documentation for a shortcut includes a 1) description of the shortcut, 
+    2) one or more examples of its usage, 3) the corresponding PyMOL Macro 
+    Language codeas vertical script, 4) the same as a horizontal script to ease 
+    copying and pasting the code on the command line, 
+    and 5) the corresponding Python code. 
+ 
+
+ Copyright Notice
+ ================
   
-     Copyright (C) 2016  Blaine Mooers
+ Copyright (c) 2019 Board of Regents for the University of Oklahoma
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License.
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
-    See the GNU General Public License for more details:
-    http://www.gnu.org/licenses/.
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
 
-  The source code in this file is copyrighted, but you can
-  freely use and copy it as long as you don't change or remove any of
-  the copyright notices.
-  
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ 
+   
   Blaine Mooers , PhD 
   blaine@ouhsc.edu
   975 NE 10th St, BRC 466
+  Department of Biochemistry and Molecular Biology
+  College of Medicine
+  Stephenson Cancer Center
   University of Oklahoma Health Sciences Center, 
   Oklahoma City, OK, USA 73104
 
 ''' 
-import webbrowser, datetime, numpy, subprocess, bs4, requests, time
-from pymol import cmd, stored, cgo, xray
+from __future__ import division, print_function
+
+import subprocess
 from math import cos, sin, radians, sqrt
-# from subprocess import *
+import datetime, time, webbrowser, random
+
+from pymol import cmd, stored, cgo, xray
+import numpy
 
 
 __author__ = "Blaine Mooers"
-__copyright__ = "Blaine Mooers, University of Oklahoma Health Sciences Center, Oklahoma City, OK, USA 73104"
-__license__ = "GPL-3"
-__version__ = "0.1"
-__credits__ = [""] 
-# people who reported bug fixes, made suggestions, etc. 
-__date__ = "22 June 2018"
+__copyright__ = "2019 Board of Regents for the University of Oklahoma"
+__license__ = "MIT Licencse"
+__version__ = "1.0.0" 
+# Versioning follows follows MAJOR.MINOR[.PATCH] where major releases are not backward compatable. 
+__credits__ = ["Miriam Shakir", "Safra Shakir"] 
+# Credits are for people who tested the code, reported bug fixes, made suggestions, etc. 
+__date__ = "10 Septermber 2019"
 __maintainer__ = "Blaine Mooers"
-__email__ = "blaine@ouhsc.edu"
-__status__ = "Testing" 
+__email__ = "blaine-mooers@ouhsc.edu"
+__status__ = "Production" 
 
 cmd.set('ray_opaque_background','on')
 
-#################################################################################
+AppPaths='''You may have to edit the file paths to your applications around line XXX in pymolshortcut.py.'''
+print(AppPaths)
+
+##################################  PATHS to Applications ###############################################
+#
+# Set the file paths to the applications on your computer.
+# Comment out the paths to the applications that you lack. 
+#
+# The paths are for my Mac OS 10.14 wiht some applications stored in /usr/local 
+# and some in /opt/local/bin thanks to macports.
+# Some paths can be found by entering "which <programname>" in a terminal window.
+#
+# You can replace the file path with a command to open the application.
+# For example, you can use the command "open -a bbedit" on the Mac. 
+#
+##################################  PATHS to Applications ###############################################
+
+# Data analysis
+DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.app/Contents/MacOS/DB\ Browser\ for\ SQLite'
+excelPath = '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
+jabrefPath = '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+jaspPath = 'Applications/JASP.app/Contents/MacOS/JASP'
+jmpPath = '/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
+juliaPath = '/Applications/Julia-1.2.app/Contents/MacOS/applet'
+jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+RstudioPath = '/Applications/RStudio.app/Contents/MacOS/Rstudio'
+
+
+# Local files 
+localPDBfilePath = '$HOME/pdbFiles/'
+localEMAPfilePath = '$HOME/emapFiles/'
+localHKLfilePath = '$HOME/hklFiles/'
+
+# Image manipulation programs
+gimp = '/usr/local/bin/gimp'
+inkscape = '/opt/local/bin/inkscape'
+pptPath =  '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
+
+
+# Molecular graphics programs
+ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
+chimeraPath = '/Applications/Chimera.app/Contents/MacOS/chimera'
+cootPath = '/usr/local/bin/coot'
+jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
+yasaraPath = '/Applications/YASARA.app/Contents/MacOS/yasara.app'
+vmdPath = '/Applications/VMD194.app/Contents/MacOS/startup.command'
+
+# Text editors
+atomPath = '/usr/local/bin/atom'
+bbeditPath = '/usr/local/bin/bbedit'
+codePath = '/usr/local/bin/code'
+emacsPath = '/opt/local/bin/emacs'
+geditPath = '/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
+jeditPath = '/Applications/jEdit.app/Contents/MacOS/jedit'
+notepadppPath = '/Applications/Notepad++.app/Contents/MacOS/startwine'
+neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
+oniPath = '/Applications/Oni.app/Contents/MacOS/Oni'
+pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+sublimeText3Path = '/usr/local/bin/subl'
+textmatePath  = '/usr/local/bin/mate'
+vimPath = '/opt/local/bin/vim'
+
+# Web sites 
+gcalPath = 'open -a Safari.app https://calendar.google.com/calendar/r'
+gmailPath = 'open -a Safari.app https://mail.google.com/mail/u/0/#inbox'
+webmailPath = 'open -a Safari.app https://webmail.ouhsc.edu'
+weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'   
+ 
+########################################################################################################
 def AB(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -383,44 +536,46 @@ def AOD():
 
     PYTHON CODE:
 
-    cmd.set_color(oxygen, [1.0,0.4,0.4])
-    cmd.set_color(nitrogen, [0.5,0.5,1.0])
-    cmd.remove(solvent)
-    cmd.show_as(spheres)
+    cmd.set_color("oxygen", "[1.0,0.4,0.4]")
+    cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
+    cmd.remove("solvent")
+    cmd.show_as("spheres")
     cmd.util.cbaw()
-    cmd.bg_color(white)
-    cmd.set(light_count, 8)
-    cmd.set(spec_count, 1)
-    cmd.set(shininess, 10)
-    cmd.set(specular, 0.25)
-    cmd.set(ambient, 0)
-    cmd.set(direct, 0)
-    cmd.set(reflect, 1.5)
-    cmd.set(ray_shadow_decay_factor, 0.1)
-    cmd.set(ray_shadow_decay_range, 2)
-    cmd.set(depth_cue,0)
-    cmd.color(gray20, symbol)
-
+    cmd.set_color("carbon", "[0.00 , 0.00 , 0.0]")
+    cmd.bg_color("white")
+    cmd.set("light_count","8")
+    cmd.set("spec_count", "1")
+    cmd.set("shininess", "10")
+    cmd.set("specular", "0.25")
+    cmd.set("ambient", "0")
+    cmd.set("direct", "0")
+    cmd.set("reflect", "1.5")
+    cmd.set("ray_shadow_decay_factor", "0.1")
+    cmd.set("ray_shadow_decay_range", "2")
+    cmd.set("depth_cue","0")
+    cmd.set("ray_opaque_background","on")
+    cmd.ray()
     '''
 
-    cmd.set_color(oxygen, [1.0,0.4,0.4])
-    cmd.set_color(nitrogen, [0.5,0.5,1.0])
-    cmd.remove(solvent)
-    cmd.show_as(spheres)
+    cmd.set_color("oxygen", "[1.0,0.4,0.4]")
+    cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
+    cmd.remove("solvent")
+    cmd.show_as("spheres")
     cmd.util.cbaw()
-    cmd.bg_color(white)
-    cmd.set(light_count, 8)
-    cmd.set(spec_count, 1)
-    cmd.set(shininess, 10)
-    cmd.set(specular, 0.25)
-    cmd.set(ambient, 0)
-    cmd.set(direct, 0)
-    cmd.set(reflect, 1.5)
-    cmd.set(ray_shadow_decay_factor, 0.1)
-    cmd.set(ray_shadow_decay_range, 2)
-    cmd.set(depth_cue,0)
-    cmd.color(gray20, symbol)
-
+    cmd.set_color("carbon", "[0.00 , 0.00 , 0.0]")
+    cmd.bg_color("white")
+    cmd.set("light_count","8")
+    cmd.set("spec_count", "1")
+    cmd.set("shininess", "10")
+    cmd.set("specular", "0.25")
+    cmd.set("ambient", "0")
+    cmd.set("direct", "0")
+    cmd.set("reflect", "1.5")
+    cmd.set("ray_shadow_decay_factor", "0.1")
+    cmd.set("ray_shadow_decay_range", "2")
+    cmd.set("depth_cue","0")
+    cmd.set("ray_opaque_background","on")
+    cmd.ray()
 cmd.extend("AOD",AOD)
 
 
@@ -690,7 +845,7 @@ def BST():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('4PCO', type='pdb', async_='0')
+    cmd.fetch('4PCO', type='pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -722,7 +877,7 @@ def BST():
     '''
 
     cmd.reinitialize()
-    cmd.fetch('4PCO', type='pdb', async_='0')
+    cmd.fetch('4PCO', type='pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -816,6 +971,89 @@ def BU():
 cmd.extend('BU',BU)
 
 
+def BW():
+    ''' 
+    DESCRIPTION:
+
+    Make black-and white-ribbon cartoon on a white background.
+
+
+    USAGE:
+
+    Orient struture as desired. Then type 'BW' to execute the function. Type
+    'help BW' to see this documentation printed to the command history window.
+    Select from the command history individual lines of code to build a new 
+    script. Select the hortizontal script at the bottom if retaining most of 
+    the commands in your new script. Copy and paste onto the command line below.
+    Works only with the command line immediately under the command
+    history window at the top of the gui.
+
+
+
+    Arguments:
+
+    NA
+
+
+    EXAMPLE:
+
+    BW
+
+
+    MORE DETAILS:
+
+    Commands to make black-and white-ribbon cartoon on a white background.
+
+
+    VERTICAL PML SCRIPT:
+
+    show cartoon; 
+    hide lines; 
+    hide nonbonded; 
+    # black and white cartoon;
+    # note how the dcomment is on a separate line and not to the right of a command; 
+    set ray_trace_mode, 2; 
+    bg_color white; 
+    set opaque_background, on
+    # change to off if you are making cover artwork
+    set antialias, 2; 
+    ray 1600,1600; 
+    png test.png
+
+
+
+    HORIZONTAL PML SCRIPT:
+
+    show cartoon; hide lines; hide nonbonded; set ray_trace_mode, 2; # black and white cartoon; bg_color white; set antialias, 2; ray 1600,1600; png test.png
+
+
+    PYTHON CODE:
+
+    cmd.show_as("cartoon", "all"); 
+    cmd.hide('lines'); 
+    cmd.hide('nonbonded'); 
+    # black and white cartoon; 
+    cms.set("opaque_background", "on")
+    cmd.set('ray_trace_mode', '2'); 
+    cmd.bg_color('white'); 
+    cmd.set('antialias', '2'); 
+    cmd.ray('600','600'); 
+    cmd.png('test.png')
+    '''
+
+    cmd.show_as("cartoon", "all"); 
+    cmd.hide('lines'); 
+    cmd.hide('nonbonded'); 
+    # black and white cartoon; 
+    cms.set("opaque_background", "on")
+    cmd.set('ray_trace_mode', '2'); 
+    cmd.bg_color('white'); 
+    cmd.set('antialias', '2'); 
+    cmd.ray('600','600'); 
+    cmd.png('test.png')
+cmd.extend('BW', BW)
+
+
 def BX(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -874,7 +1112,7 @@ def CB():
     ''' 
     DESCRIPTION:
 
-    Loads Jared Sampson's script "colorblindfriendly.py". 
+    Runs Jared Sampson's script "colorblindfriendly.py". 
 
 
     USAGE:
@@ -890,18 +1128,84 @@ def CB():
     EXAMPLE:
 
     CB
+color cb_sky_blue, 3fa0
 
 
     MORE DETAILS:
 
-    Loads Jared Sampson's script "colorblindfriendly.py" from the
-    ~/Pymol-script-repo directory. The colorblind-friendly color
-    names are printed to the command history window and are available
-    for use like standard colors in PyMOL.
+    Runs Jared Sampson's script "colorblindfriendly.py" which defines colorblind 8 friendly colors.
+	
+    This shortcut only loads the colors. 
+    You still need to apply the colors.
+    See the example below. 
 
-   >>>  Edit file path in python code below
+    More information and examples can be found at:
+    http://www.pymolwiki.org/index.php/color_blind_friendly
 
-    Read the header of colorblindfriendly.py for more information. 
+    DESCRIPTION
+
+        Certain colors are indistinguishable to people with the various forms of
+        color blindness, and therefore are better not used in figures intended for
+        public viewing.
+
+        This script generates a palette of named colors for PyMOL that are
+        unambiguous both to colorblind and non-colorblind people.
+
+        The colors listed here are defined according to recommendations found at
+        http://jfly.iam.u-tokyo.ac.jp/html/color_blind/.  This website is a good
+        reference to consult when making all kinds of figures, not just those made
+        using PyMOL.
+
+        The colors are:
+
+        * cb_black
+        * cb_orange
+        * cb_sky_blue (also: cb_skyblue, cb_light_blue, cb_lightblue)
+        * cb_bluish_green (also: cb_bluishgreen, cb_green)
+        * cb_yellow
+        * cb_blue
+        * cb_vermillion (also: cb_red, cb_redorange, cb_red_orange)
+        * cb_reddish_purple (also: cb_rose, cb_violet, cb_magenta)
+
+    USAGE
+
+        CB
+        color myObject, cb_red
+        color mySel, cb_yellow
+
+    REQUIREMENTS
+
+        None.
+
+    AUTHOR
+
+        Jared Sampson, NYU Langone Medical Center, 2014
+
+    LICENSE
+
+    Copyright (c) 2014 Jared Sampson
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+
+    __author__ = 'Jared Sampson'
+    __version__ = '0.1'
+
 
 
     VERTICAL PML SCRIPT:
@@ -916,10 +1220,74 @@ def CB():
 
     PYTHON CODE:
 
-    cmd.run('run $HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
+    # Color blind friendly color list based on information found at:
+    # http://jfly.iam.u-tokyo.ac.jp/html/color_blind/#pallet
+    # The RGB percentage values given on that page are less precise than the 0-255
+    # values, so the 0-255 values are converted here (e.g. 230/255 = 0.902).
+    cb_colors = (
+        ("black", (0.000, 0.000, 0.000),                   # (  0,   0,   0)
+                ()),
+        ("orange", (0.902, 0.624, 0.000),                   # (230, 159,   0)
+         ()),
+        ("sky_blue", (0.337, 0.706, 0.914),                   # ( 86, 180, 233)
+         ("skyblue", "light_blue", "lightblue")),
+        ("bluish_green", (0.000, 0.620, 0.451),                   # (  0, 158, 115)
+         ("bluishgreen", "green")),
+        ("yellow", (0.941, 0.894, 0.259),                   # (240, 228,  66)
+         ()),
+        ("blue", (0.000, 0.447, 0.698),                   # (  0, 114, 178)
+         ()),
+        ("vermillion", (0.835, 0.369, 0.000),                   # (213,  94,   0)
+         ("red", "red_orange", "redorange")),
+        ("reddish_purple", (0.800, 0.475, 0.655),                   # (204, 121, 167)
+         ("reddishpurple", "rose", "violet", "magenta")),  
+    )
+
+    for c in cb_colors:
+        # main name
+        cmd.set_color("cb_%s" % c[0], c[1])
+        print("Set color: cb_%s" % c[0])
+
+        # alternate names
+        for alt in c[2]:
+            cmd.set_color("cb_%s" % alt, c[1])
+            print("           cb_%s" % alt)
+
     '''
 
-    cmd.run('run $HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
+    # Color blind friendly color list based on information found at:
+    # http://jfly.iam.u-tokyo.ac.jp/html/color_blind/#pallet
+    # The RGB percentage values given on that page are less precise than the 0-255
+    # values, so the 0-255 values are converted here (e.g. 230/255 = 0.902).
+    cb_colors = (
+        ("black", (0.000, 0.000, 0.000),                   # (  0,   0,   0)
+                ()),
+        ("orange", (0.902, 0.624, 0.000),                   # (230, 159,   0)
+         ()),
+        ("sky_blue", (0.337, 0.706, 0.914),                   # ( 86, 180, 233)
+         ("skyblue", "light_blue", "lightblue")),
+        ("bluish_green", (0.000, 0.620, 0.451),                   # (  0, 158, 115)
+         ("bluishgreen", "green")),
+        ("yellow", (0.941, 0.894, 0.259),                   # (240, 228,  66)
+         ()),
+        ("blue", (0.000, 0.447, 0.698),                   # (  0, 114, 178)
+         ()),
+        ("vermillion", (0.835, 0.369, 0.000),                   # (213,  94,   0)
+         ("red", "red_orange", "redorange")),
+        ("reddish_purple", (0.800, 0.475, 0.655),                   # (204, 121, 167)
+         ("reddishpurple", "rose", "violet", "magenta")),  
+    )
+
+    for c in cb_colors:
+        # main name
+        cmd.set_color("cb_%s" % c[0], c[1])
+        print("Set color: cb_%s" % c[0])
+
+        # alternate names
+        for alt in c[2]:
+            cmd.set_color("cb_%s" % alt, c[1])
+            print("           cb_%s" % alt)
+
 cmd.extend('CB',CB)
 
 
@@ -948,26 +1316,15 @@ def CBSS():
     MORE DETAILS:
 
     Apply colorblind-friendly coloring to ribbon or cartoon representations.
-    Depends on colorblindfriendly.py. 
+    Uses Jared Sampson's colorblind friendly colors. 
+    See the function CB.
     
-    >>> edit file path
 
-    Script is assumed to be stored in $HOME/Pymol-script-repo/.
-    Adjust the path as needed.
-    Script can be attained via the PyMOL wiki or the plugin manager or the git repo.
-
-    Type 'help CBSS' to print the
-    documentation in the command history window. Select from the command 
-    history individual lines of code to build a new 
-    script. Select the hortizontal script at the bottom if retaining most of 
-    the commands in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
 
 
     VERTICAL PML SCRIPT:
 
-    run ~/Pymol-script-repo/colorblindfriendly.py;
+    CB;
     as cartoon;
     color cb_red, ss H;
     color cb_yellow,ss S;
@@ -977,12 +1334,12 @@ def CBSS():
 
     HORIZONTAL PML SCRIPT:
 
-    run $HOME/Pymol-script-repo/colorBlindFriendly.py;as cartoon;color cb_red, ss H;color cb_yellow,ss S;color cb_green, ss L+; 
+    CB;as cartoon;color cb_red, ss H;color cb_yellow,ss S;color cb_green, ss L+; 
 
 
     PYTHON CODE:
 
-    cmd.run('$HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
+    cmd.do('CB')
     cmd.show_as('cartoon')
     cmd.color('cb_red', 'ss H')
     cmd.color('cb_yellow', 'ss S')
@@ -990,7 +1347,7 @@ def CBSS():
 
     '''
 
-    cmd.run('$HOME/Scripts/PyMOLScripts/colorBlindFriendly.py')
+    cmd.do('CB')
     cmd.show_as('cartoon')
     cmd.color('cb_red', 'ss H')
     cmd.color('cb_yellow', 'ss S')
@@ -1329,7 +1686,7 @@ def EMDB():
     ''' 
     DESCRIPTION:
 
-     Open the website of the Electron Microscopy Data Bank.
+    Open the website of the Electron Microscopy Data Bank.
 
 
     USAGE:
@@ -1715,104 +2072,6 @@ def GH(searchTerm="pymol"):
 cmd.extend('GH',GH)
 
 
-def GHN(searchTerm="pymol", numHits=5):
-    ''' 
-    DESCRIPTION:
-
-    Send search term or phrase to GitHub in default browser.
-
-
-    USAGE:
-
-    GHN
-
-
-    Arguments:
-
-    searchTerm
-
-
-    EXAMPLE:
-
-    GHN
-
-
-    MORE DETAILS:
-
-    Send search term or phrase to GitHub in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Searching Github...')  
-    # display text while downloading the Google page
-    url = 'https://www.github.com/search?q='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-        # wait 10x longer than it took them to respond
-    print('Finished searching Github.')  
-    # display text while downloading the Google page
-
-    '''
-
-    print('Searching Github...')  
-    # display text while downloading the Google page
-    url = 'https://www.github.com/search?q='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-        # wait 10x longer than it took them to respond
-    print('Finished searching Github.')  
-    # display text while downloading the Google page
-
-cmd.extend('GHN',GHN)
-
-
 def GO(searchTerm="pymol",numHits="200"):
     ''' 
     DESCRIPTION:
@@ -1861,98 +2120,6 @@ def GO(searchTerm="pymol",numHits="200"):
 
     webbrowser.open('https://www.google.com/searchq='+searchTerm+'&num='+str(numHits))
 cmd.extend('GO',GO)
-
-
-def GON(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Send search term or phrase Google in default browser and opens the top N results in N new tabs.
-
-
-    USAGE:
-
-    GON
-
-
-    Arguments:
-
-    search term(s), number of hits to returned
-
-
-    EXAMPLE:
-
-    GON
-
-
-    MORE DETAILS:
-
-    Send search term or phrase Google in default browser and opens the top N results in N new tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Googling', searchTerm, 'and displaying the top', numHits, 'in separate tabs of the default brower.' )
-    res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished googling ', searchTerm, '.') 
-    # display text while downloading the Google page
-
-    '''
-
-    print('Googling', searchTerm, 'and displaying the top', numHits, 'in separate tabs of the default brower.' )
-    res = requests.get('http://google.com/search?q=' + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open('https://www.google.com' + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished googling ', searchTerm, '.') 
-    # display text while downloading the Google page
-
-cmd.extend('GON',GON)
 
 
 def GS(searchTerm="pymol"):
@@ -2010,109 +2177,11 @@ def GS(searchTerm="pymol"):
 cmd.extend('GS',GS)
 
 
-def GSN(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Send search term or phrase to Google Scholar in default browser.
-
-
-    USAGE:
-
-    GSN
-
-
-    Arguments:
-
-    GS Linus Pauling; GS Francis Crick; GS Alexander Rich
-
-
-    EXAMPLE:
-
-    GSN
-
-
-    MORE DETAILS:
-
-    Send search term or phrase to Google Scholar in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    url = 'https://scholar.google.se/scholar?hl=en&q='
-    print('Searching Google Scholar...') 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching with Google Scholar.')  
-    # display text while downloading the Google page
-
-    '''
-
-    url = 'https://scholar.google.se/scholar?hl=en&q='
-    print('Searching Google Scholar...') 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching with Google Scholar.')  
-    # display text while downloading the Google page
-
-cmd.extend('GSN',GSN)
-
-
 def GU():
     ''' 
     DESCRIPTION:
 
-    10-mer dsRNA with 8 contiguous Us. U-helix RNA. 
-    1.32 Angstrom resolution: 4PCO. Has five strands in 
-    the asymmetric unit. Deleted chain E and cobalt 
-    hexammine 102. Cartoon with filled rings and
-    bases cartoon.
+    10-mer dsRNA with 8 GU wobble base pairs.
 
 
 
@@ -2133,7 +2202,14 @@ def GU():
 
     MORE DETAILS:
 
-    Type 'help GU' to see this documentation
+    10-mer dsRNA with 8 GU wobble base pairs.
+    1.32 Angstrom resolution: 4PCO. Has five strands in 
+    the asymmetric unit. Deleted chain E and cobalt 
+    hexammine 102. Cartoon with filled rings and
+    bases cartoon.
+
+
+Type 'help GU' to see this documentation
     printed to the command history window. Select from the command
     history individual lines of code to build a new script. Select the
     hortizontal script at the bottom if retaining most of the commands
@@ -2184,7 +2260,7 @@ def GU():
     PYTHON CODE:
 
     cmd.reinitialize();
-    cmd.fetch('4PCO', type='pdb', async_='0')
+    cmd.fetch('4PCO', type='pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -2213,7 +2289,7 @@ def GU():
     '''
 
     cmd.reinitialize();
-    cmd.fetch('4PCO', type='pdb', async_='0')
+    cmd.fetch('4PCO', type='pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -2294,98 +2370,6 @@ def GV(searchTerm="pymol"):
     webbrowser.open(url+searchTerm)
 
 cmd.extend('GV',GV)
-
-
-def GVN(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Send search term or phrase to Google Videos in default browser.
-
-
-    USAGE:
-
-    GVN
-
-
-    Arguments:
-
-    search term(s), N
-
-
-    EXAMPLE:
-
-    GVN
-
-
-    MORE DETAILS:
-
-    Send search term or phrase to Google Videos in default browser.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    url = 'https://www.google.com/search?q=video+'
-    print('Searching Google Video...') 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching with Google Videos.')  
-
-    '''
-
-    url = 'https://www.google.com/search?q=video+'
-    print('Searching Google Video...') 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching with Google Videos.')  
-
-cmd.extend('GVN',GVN)
 
 
 def HH():
@@ -2503,104 +2487,6 @@ def IPM(searchTerms = [], *args):
 cmd.extend('IPM',IPM)
 
 
-def IPMN(searchTerms = [], *args):
-    ''' 
-    DESCRIPTION:
-
-    Read list of search terms and submit each term to PubMed in a separate browser tab.
-
-
-    USAGE:
-
-    IPMN
-
-
-    Arguments:
-
-    search=[string,string]; IPM(int,search)
-
-
-    EXAMPLE:
-
-    search=["pymol","vmd","jmol"]; IPMN(10,search)
-
-
-    MORE DETAILS:
-
-    Read list of search terms and submit each term to PubMed in a separate browser tab.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    numHits="5"
-    print('Sending', searchTerms, 'to PubMed and display top N search results for each term in separate tabs of the default browser.' )
-    for term in searchTerms:
-        sterm = str(term)
-        res = requests.get('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + ' '.join(sterm))
-        res.raise_for_status()
-        soup = bs4.BeautifulSoup(res.text)
-        linkElems = soup.select('.r a')
-        numOpen = min(numHits, len(linkElems))
-        for i in range(numOpen):
-            t0 = time.time()
-            webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + linkElems[i].get('href'))
-            response_delay = time.time() - t0
-            time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print('Finished searching PubMed for', sterm, '.')
-    print('Finished searching PubMed for', searchTerms, '.') 
-
-    '''
-
-    numHits="5"
-    print('Sending', searchTerms, 'to PubMed and display top N search results for each term in separate tabs of the default browser.' )
-    for term in searchTerms:
-        sterm = str(term)
-        res = requests.get('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + ' '.join(sterm))
-        res.raise_for_status()
-        soup = bs4.BeautifulSoup(res.text)
-        linkElems = soup.select('.r a')
-        numOpen = min(numHits, len(linkElems))
-        for i in range(numOpen):
-            t0 = time.time()
-            webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term=' + linkElems[i].get('href'))
-            response_delay = time.time() - t0
-            time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print('Finished searching PubMed for', sterm, '.')
-    print('Finished searching PubMed for', searchTerms, '.') 
-
-cmd.extend('IPMN',IPMN)
-
-
 def IUCR(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -2666,7 +2552,7 @@ def JASP():
 
     EXAMPLE:
 
-    JASP scri
+    JASP
 
 
     MORE DETAILS:
@@ -2679,7 +2565,7 @@ def JASP():
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/Jasp.app/Contents/MacOS/JASP " + fileName);
+    arg = jaspPath;
     subprocess.call(arg,shell=True);
     return
 
@@ -2687,19 +2573,19 @@ def JASP():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/Jasp.app/Contents/MacOS/JASP " + fileName);subprocess.call(arg,shell=True);return
+    arg =jaspPath;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/Jasp.app/Contents/MacOS/JASP " + fileName)
+    arg = jaspPath
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/Jasp.app/Contents/MacOS/JASP " + fileName)
+    arg = jaspPath
     subprocess.call(arg,shell=True)
     return
 
@@ -2745,11 +2631,11 @@ def JM():
 
     PYTHON CODE:
 
-    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
+    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
 
     '''
 
-    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
+    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
 
 cmd.extend('JM',JM)
 
@@ -2785,7 +2671,7 @@ def JMP():
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP");
+    arg = jmpPath;
     subprocess.call(arg,shell=True);
     return
 
@@ -2793,19 +2679,19 @@ def JMP():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP");subprocess.call(arg,shell=True);return
+    arg = jmpPath;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP")
+    arg = jmpPath
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP")
+    arg = jmpPath
     subprocess.call(arg,shell=True)
     return
 
@@ -3012,8 +2898,7 @@ def LG():
     ''' 
     DESCRIPTION:
 
-    Nine sugar glycan in influenza N9 neuraminidase at 
-    1.55 Angstrom  resolution, PDB code 4dgr. 
+    Nine sugar glycan in influenza N9 neuraminidase, PDB code 4dgr.
 
 
 
@@ -3034,8 +2919,7 @@ def LG():
 
     MORE DETAILS:
 
-    Nine sugar glycan in influenza N9 neuraminidase at 
-    1.55 Angstrom  resolution, PDB code 4dgr. 
+    Nine sugar glycan in influenza N9 neuraminidase at 1.55 Angstrom  resolution, PDB code 4dgr. 
     The electron density map is contoured at 1.0 sigma. 
     39 commands were used to make this figure.  
     Type 'LG' to execute. Type 'help LG' to see this documentation
@@ -3099,8 +2983,8 @@ def LG():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('4dgr', async_='0')
-    cmd.fetch('4dgr', type='2fofc', async_='0')
+    cmd.fetch('4dgr')
+    cmd.fetch('4dgr', type='2fofc')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3141,8 +3025,8 @@ def LG():
     '''
 
     cmd.reinitialize()
-    cmd.fetch('4dgr', async_='0')
-    cmd.fetch('4dgr', type='2fofc', async_='0')
+    cmd.fetch('4dgr')
+    cmd.fetch('4dgr', type='2fofc')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3187,9 +3071,8 @@ def LGGT():
     ''' 
     DESCRIPTION:
 
-    WT human gamma glutamyl transpeptidase at 1.67 Angstrom
-    resolution as cartoon. PDB code 4gdx. 
-    4gdx.pdb must be in the current working directory. 
+    WT human gamma glutamyl transpeptidase as cartoon. PDB code 4gdx. 
+
 
 
 
@@ -3432,9 +3315,7 @@ def LLG():
     ''' 
     DESCRIPTION:
 
-    Nine sugar glycan in influenza N9 neuraminidase at 
-    1.55 Angstrom  resolution, PDB code 4dgr. 
-    The electron density map is contoured at 1.0 sigma. 
+    Nine sugar glycan in influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
 
 
 
@@ -3610,8 +3491,7 @@ def LN9():
     ''' 
     DESCRIPTION:
 
-    Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
-    4dgr. The biological unit has four copies of the asymmetric unit.
+    Influenza N9 neuraminidase, PDB code 4dgr.
 
 
     USAGE:
@@ -3676,7 +3556,7 @@ def LN9():
 
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -3693,7 +3573,7 @@ def LN9():
 
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -3713,11 +3593,7 @@ def LNA():
     ''' 
     DESCRIPTION:
 
-    Hydrated sodium cation bound in major groove of a 
-    16-mer RNA of Watson-Crick base pairs.
-    The sodium is bound to the N7 nitrogen atom of 
-    Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
-    57 commands were used to make this figure. 
+    Hydrated sodium cation bound in major groove of RNA with 16 Watson-Crick base pairs.
 
 
 
@@ -3738,8 +3614,7 @@ def LNA():
 
     MORE DETAILS:
 
-    Hydrated sodium cation bound in major groove of a 
-    16-mer RNA of Watson-Crick base pairs.
+    Hydrated sodium cation bound in major groove of RNA with 16 Watson-Crick base pairs.
     The sodium is bound to the N7 nitrogen atom of 
     Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
     57 commands were used to make this figure. 
@@ -3969,7 +3844,6 @@ def LT4L():
     DESCRIPTION:
 
     Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
-    The file 3FA0 must be in the current working directory. 
 
 
 
@@ -4064,9 +3938,6 @@ def LU8():
     DESCRIPTION:
 
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
-    Has one strand in the asymmetric unit. Uses quat.py to generate
-    the second strand. Cartoon with filled rings and bases cartoon.
-    The file 3nd3.pdb needs to be in the current working directory.
 
 
 
@@ -4122,7 +3993,7 @@ def LU8():
 
     cmd.reinitialize()
     cmd.load('3nd3.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
@@ -4140,7 +4011,7 @@ def LU8():
 
     cmd.reinitialize()
     cmd.load('3nd3.pdb')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
@@ -4161,12 +4032,7 @@ def LWC8():
     ''' 
     DESCRIPTION:
 
-    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
-    resolution: 3nd4.  Has one strand in the asymmetric unit. 
-    Needs quat.py to generate the second strand. 
-    Cartoon with filled rings and bases cartoon.
-    The file 3nd4.pdb must be in the current working directory.
-
+    16-mer dsRNA, Watson-Crick helix RNA, 3nd4.
 
 
     USAGE:
@@ -4261,7 +4127,7 @@ def MA(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
 
-    Send search term to all searchable websites in pymolshortcuts:
+    Send search term to all searchable websites in pymolshortcuts.
 
 
     USAGE:
@@ -4281,7 +4147,7 @@ def MA(searchTerm='pymol'):
 
     MORE DETAILS:
 
-    Send search term to all searchable websites in pymolshortcuts:
+    Send search term to all searchable websites in pymolshortcuts.
 
 
     VERTICAL PML SCRIPT:
@@ -4339,7 +4205,7 @@ def MB(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
 
-    Send search term to search multiple sites that contain book content.
+    Send search term to multiple sites that contain book content.
 
 
     USAGE:
@@ -4561,7 +4427,7 @@ def MM(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
 
-    Send search term to search for manuscripts in pymolshortcuts:
+    Send search term to search for manuscripts in pymolshortcuts.
 
 
     USAGE:
@@ -4631,10 +4497,6 @@ def N9():
     DESCRIPTION:
 
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
-    The biological unit has four copies of the asymmetric unit.
-    View is down the four-fold axis. Requires the quat.py script by
-    Thomas Holder and available at the PyMOL Wiki page. Store quat.py
-    in ~/mg18OU.
 
 
 
@@ -4659,9 +4521,6 @@ def N9():
     The biological unit has four copies of the asymmetric unit.
     View is down the four-fold axis. Requires the quat.py script by
     Thomas Holder that is available at the PyMOL Wiki page. 
-
-   >>>  Edit filepath to quant.py in Python code below.
-
 
     Type 'N9' to activate. Type 'help N9' to see this documentation
     printed to the command history window. Select from the command
@@ -4701,34 +4560,32 @@ def N9():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('4dgr', type='pdb', async_='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 4dgr')
+    cmd.fetch('4dgr', type='pdb1')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
-    cmd.color('red', '4dgr_1 and ss H')
-    cmd.color('yellow', '4dgr_1 and ss S')
-    cmd.color('green', '4dgr_1 and ss L+')
-    cmd.color('cyan', '(not 4dgr_1 and ss H)')
-    cmd.color('magenta', '(not 4dgr_1 and ss S)')
-    cmd.color('orange', '(not 4dgr_1 and ss L+)')
+    cmd.do('split_state 4dgr')	
+    cmd.color('red', '4dgr_0002 and ss H')
+    cmd.color('yellow', '4dgr_0002 and ss S')
+    cmd.color('green', '4dgr_0002 and ss L+')
+    cmd.color('cyan', '(not 4dgr_0002 and ss H)')
+    cmd.color('magenta', '(not 4dgr_0002 and ss S)')
+    cmd.color('orange', '(not 4dgr_0002 and ss L+)')
     cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
     cmd.draw()
 
     '''
 
     cmd.reinitialize()
-    cmd.fetch('4dgr', type='pdb', async_='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 4dgr')
+    cmd.fetch('4dgr', type='pdb1')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
-    cmd.color('red', '4dgr_1 and ss H')
-    cmd.color('yellow', '4dgr_1 and ss S')
-    cmd.color('green', '4dgr_1 and ss L+')
-    cmd.color('cyan', '(not 4dgr_1 and ss H)')
-    cmd.color('magenta', '(not 4dgr_1 and ss S)')
-    cmd.color('orange', '(not 4dgr_1 and ss L+)')
+    cmd.do('split_state 4dgr')	
+    cmd.color('red', '4dgr_0002 and ss H')
+    cmd.color('yellow', '4dgr_0002 and ss S')
+    cmd.color('green', '4dgr_0002 and ss L+')
+    cmd.color('cyan', '(not 4dgr_0002 and ss H)')
+    cmd.color('magenta', '(not 4dgr_0002 and ss S)')
+    cmd.color('orange', '(not 4dgr_0002 and ss L+)')
     cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
     cmd.draw()
 
@@ -4739,8 +4596,7 @@ def NA():
     ''' 
     DESCRIPTION:
 
-    Hydrated sodium cation bound in major groove of a 
-    16-mer RNA of Watson-Crick base pairs.
+    Hydrated sodium cation bound in major groove of a 16-mer RNA of Watson-Crick base pairs.
 
 
 
@@ -4851,45 +4707,44 @@ def NA():
 
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.fetch('3nd4', type='pdb', async_='0');
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4');
+    cmd.fetch('3nd4', type='pdb1');
+    cmd.do('split_states 3nd4')
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
     cmd.hide('everything', 'name H*');
     cmd.bg_color('white');
-    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
+    cmd.create('coorCov', '(3nd4_0001 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 519)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 419)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 119)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 319)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 219)');
     cmd.show('nb_spheres');
     cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
-    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
-    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
-    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
-    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
-    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
-    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
-    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
-    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
-    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
-    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
-    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
-    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
-    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
-    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.distance('hbond1', '/3nd4_0001/1/A/HOH`119/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond2', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond3', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/HOH`119/O');
+    cmd.distance('hbond4', '/3nd4_0001/1/A/G`4/N7', '/3nd4_0001/1/A/HOH`91/O');
+    cmd.distance('hbond5', '/3nd4_0001/1/A/G`4/O6', '/3nd4_0001/1/A/HOH`419/O');
+    cmd.distance('hbond6', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/G`4/OP2');
+    cmd.distance('hbond7', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/G`2/OP2');
+    cmd.distance('hbond9', '/3nd4_0001/1/A/HOH`419/O', '/3nd4_0002/2/A/HOH`74/O');
+    cmd.distance('hbond10', '/3nd4_0002/2/A/C`15/O2', '/3nd4_0001/1/A/G`2/N2');
+    cmd.distance('hbond11', '/3nd4_0002/2/A/C`15/N3', '/3nd4_0001/1/A/G`2/N1');
+    cmd.distance('hbond12', '/3nd4_0002/2/A/C`15/N4', '/3nd4_0001/1/A/G`2/O6');
+    cmd.distance('hbond13', '/3nd4_0002/2/A/U`14/N3', '/3nd4_0001/1/A/A`3/N1');
+    cmd.distance('hbond14', '/3nd4_0002/2/A/U`14/O4', '/3nd4_0001/1/A/A`3/N6');
+    cmd.distance('hbond15', '/3nd4_0002/2/A/C`13/N4', '/3nd4_0001/1/A/G`4/O6');
+    cmd.distance('hbond16', '/3nd4_0002/2/A/C`13/N3', '/3nd4_0001/1/A/G`4/N1');
+    cmd.distance('hbond17', '/3nd4_0001/1/A/G`4/N2', '/3nd4_0002/2/A/C`13/O2');
+    cmd.distance('hbond18', '/3nd4_0001/1/A/G`2/N2', '/3nd4_0002/2/A/C`15/O2');
+    cmd.distance('hbond19', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/G`4/OP2');
     cmd.set('depth_cue', '0');
     cmd.set('ray_trace_fog', '0');
     cmd.set('dash_color', 'black');
@@ -4913,45 +4768,44 @@ def NA():
 
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.fetch('3nd4', type='pdb', async_='0');
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4');
+    cmd.fetch('3nd4', type='pdb1');
+    cmd.do('split_states 3nd4')
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
     cmd.hide('everything', 'name H*');
     cmd.bg_color('white');
-    cmd.create('coorCov', '(3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
+    cmd.create('coorCov', '(3nd4_0001 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`119/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`219/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`319/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`419/O)');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/HOH`519/O)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 519)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 419)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 119)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 319)');
-    cmd.distance('(3nd4_1 and chain A and resi 19 and name NA)','(3nd4_1 and chain A and resi 219)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 519)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 419)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 119)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 319)');
+    cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 219)');
     cmd.show('nb_spheres');
     cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_1/1/A/HOH`119/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond2', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/A`3/OP2');
-    cmd.distance('hbond3', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/HOH`119/O');
-    cmd.distance('hbond4', '/3nd4_1/1/A/G`4/N7', '/3nd4_1/1/A/HOH`91/O');
-    cmd.distance('hbond5', '/3nd4_1/1/A/G`4/O6', '/3nd4_1/1/A/HOH`419/O');
-    cmd.distance('hbond6', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
-    cmd.distance('hbond7', '/3nd4_1/1/A/HOH`319/O', '/3nd4_1/1/A/G`2/OP2');
-    cmd.distance('hbond9', '/3nd4_1/1/A/HOH`419/O', '/3nd4_2/2/A/HOH`74/O');
-    cmd.distance('hbond10', '/3nd4_2/2/A/C`15/O2', '/3nd4_1/1/A/G`2/N2');
-    cmd.distance('hbond11', '/3nd4_2/2/A/C`15/N3', '/3nd4_1/1/A/G`2/N1');
-    cmd.distance('hbond12', '/3nd4_2/2/A/C`15/N4', '/3nd4_1/1/A/G`2/O6');
-    cmd.distance('hbond13', '/3nd4_2/2/A/U`14/N3', '/3nd4_1/1/A/A`3/N1');
-    cmd.distance('hbond14', '/3nd4_2/2/A/U`14/O4', '/3nd4_1/1/A/A`3/N6');
-    cmd.distance('hbond15', '/3nd4_2/2/A/C`13/N4', '/3nd4_1/1/A/G`4/O6');
-    cmd.distance('hbond16', '/3nd4_2/2/A/C`13/N3', '/3nd4_1/1/A/G`4/N1');
-    cmd.distance('hbond17', '/3nd4_1/1/A/G`4/N2', '/3nd4_2/2/A/C`13/O2');
-    cmd.distance('hbond18', '/3nd4_1/1/A/G`2/N2', '/3nd4_2/2/A/C`15/O2');
-    cmd.distance('hbond19', '/3nd4_1/1/A/HOH`91/O', '/3nd4_1/1/A/G`4/OP2');
+    cmd.distance('hbond1', '/3nd4_0001/1/A/HOH`119/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond2', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond3', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/HOH`119/O');
+    cmd.distance('hbond4', '/3nd4_0001/1/A/G`4/N7', '/3nd4_0001/1/A/HOH`91/O');
+    cmd.distance('hbond5', '/3nd4_0001/1/A/G`4/O6', '/3nd4_0001/1/A/HOH`419/O');
+    cmd.distance('hbond6', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/G`4/OP2');
+    cmd.distance('hbond7', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/G`2/OP2');
+    cmd.distance('hbond9', '/3nd4_0001/1/A/HOH`419/O', '/3nd4_0002/2/A/HOH`74/O');
+    cmd.distance('hbond10', '/3nd4_0002/2/A/C`15/O2', '/3nd4_0001/1/A/G`2/N2');
+    cmd.distance('hbond11', '/3nd4_0002/2/A/C`15/N3', '/3nd4_0001/1/A/G`2/N1');
+    cmd.distance('hbond12', '/3nd4_0002/2/A/C`15/N4', '/3nd4_0001/1/A/G`2/O6');
+    cmd.distance('hbond13', '/3nd4_0002/2/A/U`14/N3', '/3nd4_0001/1/A/A`3/N1');
+    cmd.distance('hbond14', '/3nd4_0002/2/A/U`14/O4', '/3nd4_0001/1/A/A`3/N6');
+    cmd.distance('hbond15', '/3nd4_0002/2/A/C`13/N4', '/3nd4_0001/1/A/G`4/O6');
+    cmd.distance('hbond16', '/3nd4_0002/2/A/C`13/N3', '/3nd4_0001/1/A/G`4/N1');
+    cmd.distance('hbond17', '/3nd4_0001/1/A/G`4/N2', '/3nd4_0002/2/A/C`13/O2');
+    cmd.distance('hbond18', '/3nd4_0001/1/A/G`2/N2', '/3nd4_0002/2/A/C`15/O2');
+    cmd.distance('hbond19', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/G`4/OP2');
     cmd.set('depth_cue', '0');
     cmd.set('ray_trace_fog', '0');
     cmd.set('dash_color', 'black');
@@ -5110,102 +4964,6 @@ def PDB(searchTerm="3fa0",numHits="5"):
 
     webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
 cmd.extend('PDB',PDB)
-
-
-def PDBN(searchTerm="3fa0",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Submit a search term to the Protein Data Bank and open the top N hits in separate tabs.
-
-
-    USAGE:
-
-    PDBN
-
-
-    Arguments:
-
-    search term(s), number of hits to returned
-
-
-    EXAMPLE:
-
-    PDBN glycoprotein,5 
-
-
-    MORE DETAILS:
-
-    Submit a search term to the Protein Data Bank and open the top N hits in separate tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Searching PDB')  
-    # display text while downloading the Google page
-    url = 'https://www.rcsb.org/structure/'
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching PBD.')  
-    # display text while downloading the Google page
-
-    '''
-
-    print('Searching PDB')  
-    # display text while downloading the Google page
-    url = 'https://www.rcsb.org/structure/'
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching PBD.')  
-    # display text while downloading the Google page
-
-cmd.extend('PDBN',PDBN)
 
 
 def PE(selection):
@@ -5378,201 +5136,6 @@ def PML(searchTerm="3d_pdf"):
     webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
 
 cmd.extend('PML',PML)
-
-
-def PMLN(searchTerm="3d_pdf",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Submit a search term to the PyMOL Users Mail Service.
-
-
-    USAGE:
-
-    PMLN
-
-
-    Arguments:
-
-    searchTerm
-
-
-    EXAMPLE:
-
-    PMLN session file, 5
-
-
-    MORE DETAILS:
-
-    Submit a search term to the PyMOL Users Mail Service.
-
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Searching PyMOL mailing list.')
-    # display text while downloading the Google page
-    url = 'https://sourceforge.net/p/pymol/mailman/search/?q='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-    # wait 10x longer than it took them to respond
-    print('Finished searching PyMOL mailing list.')  
-    # display text while downloading the Google page
-
-    '''
-
-    print('Searching PyMOL mailing list.')
-    # display text while downloading the Google page
-    url = 'https://sourceforge.net/p/pymol/mailman/search/?q='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-    # wait 10x longer than it took them to respond
-    print('Finished searching PyMOL mailing list.')  
-    # display text while downloading the Google page
-
-cmd.extend('PMLN',PMLN)
-
-
-def PMN(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Send search term or phrase to PubMed and open top N hits in separate tabs.
-
-
-    USAGE:
-
-    PMN
-
-
-    Arguments:
-
-    searchTerm
-
-
-    EXAMPLE:
-
-    PMN
-
-
-    MORE DETAILS:
-
-    Send search term or phrase to PubMed and open top N hits in separate tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Searching PubMed.')  
-    # display text while downloading the Google page
-    url = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching PubMed.')  
-    # display text while downloading the Google page
-
-    '''
-
-    print('Searching PubMed.')  
-    # display text while downloading the Google page
-    url = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching PubMed.')  
-    # display text while downloading the Google page
-
-cmd.extend('PMN',PMN)
 
 
 def PPC():
@@ -5759,101 +5322,6 @@ def RG(searchTerm='best molecular graphics program'):
 
     webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
 cmd.extend('RG',RG)
-
-
-def RGN(searchTerm='best molecular graphics program',numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Submit a search query of Research Gate and open the top N hits in sepearte tabs. 
-
-
-
-    USAGE:
-
-    RGN
-
-
-    Arguments:
-
-    searchTerm
-
-
-    EXAMPLE:
-
-    RGN best molecular graphics program, 5
-
-
-    MORE DETAILS:
-
-    Submit a search query of Research Gate and open the top N hits in sepearte tabs. 
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    print('Searching Github...')  
-    # display text while downloading the Google page
-    url = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching Research Gate.') 
-
-    '''
-
-    print('Searching Github...')  
-    # display text while downloading the Google page
-    url = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching Research Gate.') 
-
-cmd.extend('RGN',RGN)
 
 
 def RS():
@@ -6476,103 +5944,6 @@ def SD(searchTerm="pymol"):
 cmd.extend('SD',SD)
 
 
-def SDN(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Submit a search term to Science Direct and open the top N hits in sepearte tabs.
-
-
-
-    USAGE:
-
-    SDN
-
-
-    Arguments:
-
-    searchTerm
-
-
-    EXAMPLE:
-
-    SDN session file,3
-
-
-    MORE DETAILS:
-
-    Submit a search term to Science Direct and open the top N hits in sepearte tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
-    url2 = '&show=100&sortBy=relevance'
-    print('Searching Search Direct.')  
-    # display text while downloading the Google page
-    res = requests.get(url1 + ' '.join(searchTerm) + url2)
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href') + url2)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching Science Direct.')
-
-    '''
-
-    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
-    url2 = '&show=100&sortBy=relevance'
-    print('Searching Search Direct.')  
-    # display text while downloading the Google page
-    res = requests.get(url1 + ' '.join(searchTerm) + url2)
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href') + url2)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-    print('Finished searching Science Direct.')
-
-cmd.extend('SDN',SDN)
-
-
 def SF(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
@@ -6621,104 +5992,6 @@ def SF(searchTerm='pymol'):
     webbrowser.open(url+searchTerm)
 
 cmd.extend('SF',SF)
-
-
-def SFN(searchTerm='pymol',numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Send search term to sourceforge and open the top N hits in sepearte tabs.
-
-
-    USAGE:
-
-    SFN
-
-
-    Arguments:
-
-    searchTerm, N
-
-
-    EXAMPLE:
-
-    SFN pymol, 10
-
-
-    MORE DETAILS:
-
-    Send search term to sourceforge and open the top N hits in sepearte tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-    print('Searching stackoverflow.')  
-    # display text while downloading 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-    # wait 10x longer than it took them to respond
-    print('Finished searching stackoverflow.') 
-
-    '''
-
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-    print('Searching stackoverflow.')  
-    # display text while downloading 
-    res = requests.get(url + ' '.join(searchTerm))
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href'))
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  
-    # wait 10x longer than it took them to respond
-    print('Finished searching stackoverflow.') 
-
-cmd.extend('SFN',SFN)
 
 
 def SO(searchTerm="3d_pdf"):
@@ -6821,106 +6094,6 @@ def SP(searchTerm="pymol"):
     webbrowser.open(url1+searchTerm+url2)
 
 cmd.extend('SP',SP)
-
-
-def SPN(searchTerm="pymol",numHits="5"):
-    ''' 
-    DESCRIPTION:
-
-    Submit a search term to Springer Books and open the top N hits in sepearte tabs.
-
-
-    USAGE:
-
-    SPN
-
-
-    Arguments:
-
-    searchTerm, N
-
-
-    EXAMPLE:
-
-    SPN
-
-
-    MORE DETAILS:
-
-    Submit a search term to Springer Books and open the top N hits in sepearte tabs.
-    The search phrase does not need to be enclosed in quotes. 
-    The second argument is the number of hits to return. 
-    The second parameter is optional; its defult value is 5. 
-    Each hit will be opened in a separate tab thereby saving a time consuming step.
-    If the number of results is fewer than the number requested,
-    all of the results will be shown.
-
-    The default web browser is used. 
-
-    Requires the Python modules requests and beautifulsoup4 (bs4).
-    They may already be available to open source PyMOL, but they
-    must be installed for the proprietary PyMOL. Use the following command
-    from a terminal window outside of PyMOL:
-
-    conda install requests beautifulsoup4
-
-    You can launch this command from the commandline in PyMOL, but 
-    the execution of the install can be slow and will tie up your
-    PyMOL session for up to 10-20 minutes. 
-
-
-
-    VERTICAL PML SCRIPT:
-
-    NA
-
-
-    HORIZONTAL PML SCRIPT:
-
-    NA
-
-
-    PYTHON CODE:
-
-    url1 = 'https://www.springer.com/gp/search?query='
-    url2 = '&submit=Submit+Query'
-    webbrowser.open(url1+searchTerm+url2)
-    print('Searching source forge.')  
-    # display text while downloading the Google page
-    res = requests.get(url1 + ' '.join(searchTerm) + url2)
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href') + url2)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay) 
-    # wait 10x longer than it took them to respond
-    print('Finished searching Springer Books.') 
-
-    '''
-
-    url1 = 'https://www.springer.com/gp/search?query='
-    url2 = '&submit=Submit+Query'
-    webbrowser.open(url1+searchTerm+url2)
-    print('Searching source forge.')  
-    # display text while downloading the Google page
-    res = requests.get(url1 + ' '.join(searchTerm) + url2)
-    res.raise_for_status()
-    soup = bs4.BeautifulSoup(res.text)
-    linkElems = soup.select('.r a')
-    numOpen = min(numHits, len(linkElems))
-    for i in range(numOpen):
-        t0 = time.time()
-        webbrowser.open(url + linkElems[i].get('href') + url2)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay) 
-    # wait 10x longer than it took them to respond
-    print('Finished searching Springer Books.') 
-
-cmd.extend('SPN',SPN)
 
 
 def SSRL():
@@ -7049,7 +6222,7 @@ def SciPy19():
 
     MORE DETAILS:
 
-    Open the SciPy 2018 YouTube Channel.
+    Open the SciPy 2019 YouTube Channel.
 
 
     VERTICAL PML SCRIPT:
@@ -7104,7 +6277,6 @@ def T4L():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-   >>>  Edit file path to quat.py in Python code below.
 
 
     VERTICAL PML SCRIPT:
@@ -7135,7 +6307,7 @@ def T4L():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async_='0')
+    cmd.fetch('3fa0', type='pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -7153,7 +6325,7 @@ def T4L():
     '''
 
     cmd.reinitialize()
-    cmd.fetch('3fa0', type='pdb', async_='0')
+    cmd.fetch('3fa0', type='pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -7239,9 +6411,8 @@ def U8():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('3nd3', type='pdb', async_='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd3')
+    cmd.fetch('3nd3', type='pdb1')
+    cmd.do('split_states 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.show('sticks')
@@ -7257,9 +6428,8 @@ def U8():
     '''
 
     cmd.reinitialize()
-    cmd.fetch('3nd3', type='pdb', async_='0')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd3')
+    cmd.fetch('3nd3', type='pdb1')
+    cmd.do('split_states 3nd3')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.show('sticks')
@@ -7279,8 +6449,7 @@ def WC8():
     ''' 
     DESCRIPTION:
 
-    16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
-    resolution: 3nd4.
+    16-mer dsRNA, Watson-Crick helix RNA: 3nd4.
 
 
     USAGE:
@@ -7344,11 +6513,10 @@ def WC8():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.fetch('3nd4', type='pdb', async_='0')
+    cmd.fetch('3nd4', type='pdb1')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4')
+    cmd.do('split_states 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
     cmd.do('set stick_radius, 0.12') 
@@ -7356,17 +6524,16 @@ def WC8():
     cmd.do('show nb_spheres')
     cmd.do('set stick_ball, on')
     cmd.do('set stick_ball_ratio, 1.8')
-    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
+    cmd.set_view('(-0.98,-0.03,0.22,-0.23,0.02,-0.97,0.03,-1.0,-0.03,0.0,0.0,-175.3,8.16,15.68,-1.66,144.53,206.07,-20.0)')
     cmd.rock()
 
     '''
 
     cmd.reinitialize()
-    cmd.fetch('3nd4', type='pdb', async_='0')
+    cmd.fetch('3nd4', type='pdb1')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
-    cmd.do('quat 3nd4')
+    cmd.do('split_states 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
     cmd.do('set stick_radius, 0.12') 
@@ -7374,7 +6541,7 @@ def WC8():
     cmd.do('show nb_spheres')
     cmd.do('set stick_ball, on')
     cmd.do('set stick_ball_ratio, 1.8')
-    cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
+    cmd.set_view('(-0.98,-0.03,0.22,-0.23,0.02,-0.97,0.03,-1.0,-0.03,0.0,0.0,-175.3,8.16,15.68,-1.66,144.53,206.07,-20.0)')
     cmd.rock()
 
 cmd.extend('WC8',WC8)
@@ -7466,28 +6633,368 @@ def bbedit(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/bbedit " + fileName)
+    arg = (bbeditPath + fileName)
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/bbedit " + fileName);    subprocess.call(arg,shell=True)
+    arg = (bbeditPath + fileName); subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("/usr/local/bin/bbedit " + fileName)
+    arg = (bbeditPath + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("/usr/local/bin/bbedit " + fileName)
+    arg = (bbeditPath + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('bbedit',bbedit)
+
+
+def bs(selection='all'):
+    ''' 
+    DESCRIPTION:
+
+    BallnStick
+
+
+    USAGE:
+
+    bs selection
+
+
+    Arguments:
+
+    selection
+
+
+
+    EXAMPLE:
+
+    bs 3nd3
+
+
+    MORE DETAILS:
+
+    # BallnStick creates a ball and stick representation of an object 
+# Bondi VDW values added below to override default Pymol settings
+# From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+
+
+
+    VERTICAL PML SCRIPT:
+
+    NA
+
+
+    HORIZONTAL PML SCRIPT:
+
+    NA
+
+
+    PYTHON CODE:
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+    '''
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+cmd.extend('bs', bs)
 
 
 def ccp4mg(fileName="test.pdb"):
@@ -7523,7 +7030,7 @@ def ccp4mg(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("ccp4mg " + fileName);
+    arg = ( ccp4mgCommand + fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -7531,19 +7038,19 @@ def ccp4mg(fileName="test.pdb"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("ccp4mg " + fileName);subprocess.call(arg,shell=True);return
+    arg = (ccp4mgCommand + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("ccp4mg " + fileName)
+    arg = (ccp4mgCommand + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("ccp4mg " + fileName)
+    arg = (ccp4mgCommand + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -7583,7 +7090,7 @@ def chimera(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName);
+    arg = (chimeriaPath + fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -7591,19 +7098,19 @@ def chimera(fileName="test.pdb"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName);subprocess.call(arg,shell=True);return
+    arg = (chimeriaPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName)
+    arg = (chimeriaPath+ fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/Chimera.app/Contents/MacOS/chimera " + fileName)
+    arg = (chimeriaPath+ fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -7755,25 +7262,25 @@ def code(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/code " + fileName);
+    arg = (codePath + fileName);
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/code " + fileName);subprocess.call(arg,shell=True)
+    arg = {codePath + fileName);subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("/usr/local/bin/code " + fileName)
+    arg = (codePath + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("/usr/local/bin/code " + fileName)
+    arg = (codePath + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('code',code)
@@ -7812,7 +7319,7 @@ def coot(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/ccp4-7.0/bin/coot " + fileName)
+    arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -7820,19 +7327,19 @@ def coot(fileName="test.pdb"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/ccp4-7.0/bin/coot " + fileName);subprocess.call(arg,shell=True);return
+    arg = (cootPath  + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/ccp4-7.0/bin/coot " + fileName)
+    arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/ccp4-7.0/bin/coot " + fileName)
+    arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -7870,7 +7377,7 @@ def cranR():
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/R");
+    arg = (RPath);
     subprocess.call(arg,shell=True);
     return
 
@@ -7878,19 +7385,19 @@ def cranR():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/R");subprocess.call(arg,shell=True);return
+    arg = (RPath);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/usr/local/bin/R")
+    arg = (RPath)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/usr/local/bin/R")
+    arg = (RPath)
     subprocess.call(arg,shell=True)
     return
 
@@ -7928,7 +7435,7 @@ def ddb():
 
     VERTICAL PML SCRIPT:
 
-    arg = ("open -a DBBrowserSQLite");
+    arg = dbbrowserPath;
     subprocess.call(arg,shell=True);
     return
 
@@ -7936,17 +7443,17 @@ def ddb():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("open -a DBBrowserSQLite");subprocess.call(arg,shell=True);return
+    arg = dbbrowserPath;subprocess.call(arg,shell=True);return
 
 
     PYTHON CODE:
 
-    arg = ("open -a DBBrowserSQLite");
+    arg = dbbrowserPath;
     subprocess.call(arg,shell=True);
     return
     '''
 
-    arg = ("open -a DBBrowserSQLite");
+    arg = dbbrowserPath;
     subprocess.call(arg,shell=True);
     return
 cmd.extend('ddb',ddb)
@@ -7984,29 +7491,27 @@ def emacs(fileName="testme.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/emacs " + fileName);
     arg2 = ('--file ' + fileName);
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
+    subprocess.call(emacsCommand)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/emacs " + fileName);arg2 = ('--file ' + fileName);subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
-
+    arg2 = ('--file ' + fileName);subprocess.call(emacsCommand)
 
 
     PYTHON CODE:
 
-    arg = ("/opt/local/bin/emacs " + fileName)
+    arg = (emacsPath+ fileName)
     arg2 = ('--file ' + fileName)
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
+    subprocess.call(emacsCommand)
     return
     '''
 
-    arg = ("/opt/local/bin/emacs " + fileName)
+    arg = (emacsPath+ fileName)
     arg2 = ('--file ' + fileName)
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/emacs', '--args', arg2])
+    subprocess.call(emacsCommand)
     return
 cmd.extend('emacs',emacs)
 
@@ -8042,7 +7547,7 @@ def excel():
 
     VERTICAL PML SCRIPT:
 
-    arg = ("open -a /Applications/Microsoft\ Excel.app")
+    arg = excelCommand
     subprocess.call(arg,shell=True)
     return
 
@@ -8050,19 +7555,19 @@ def excel():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("open -a /Applications/Microsoft\ Excel.app");subprocess.call(arg,shell=True);return
+    arg = excelCommand;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("open -a /Applications/Microsoft\ Excel.app")
+    arg = excelCommand
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("open -a /Applications/Microsoft\ Excel.app")
+    arg = excelCommand
     subprocess.call(arg,shell=True)
     return
 
@@ -8150,25 +7655,25 @@ def gedit(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/gedit -w " + fileName);
+    arg = (geditPath +" -w " + fileName);
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/gedit -w " + fileName);    subprocess.call(arg,shell=True)
+    arg = ( geditPath + " -w " + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("/opt/local/bin/gedit -w " + fileName)
+    arg = (geditPath + " -w " + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("/opt/local/bin/gedit -w " + fileName)
+    arg = (geditPath + " -w " + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('gedit',gedit)
@@ -8224,7 +7729,8 @@ def gitCommit():
     ''' 
     DESCRIPTION:
 
-    Enter help(gitInit) to print steps for saving updates to a file under version control.
+    Enter help(gitCommit) to print steps for saving updates to a file under version control.
+
 
 
     USAGE:
@@ -8245,6 +7751,10 @@ def gitCommit():
     MORE DETAILS:
 
     Enter help(gitInit) to print steps for saving updates to a file under version control.
+
+    git add filename
+    git commit -m "Message about changes"
+
 
 
     VERTICAL PML SCRIPT:
@@ -8297,11 +7807,31 @@ def gitInit():
       Step 1: initialize repository in current directory
         git init 
 
-      Step 2: make list of binary file types to be ignored (e.g. *pse, *ccp4 *mtz, *png,
-        *.dmg, *.pdf, *.tiff, *.jpeg, *.jpg, *.zip, *.tar, *.rar, *jar, *.iso, *.7z, *.o, 
-        *.so, *.pyc, *.doc, *.docx, *.idtf, *.u3d, *.aux ...)
-
-
+      Step 2: make list of binary file types to be ignored (e.g. 
+    *.pse
+    *.ccp4
+    *.mtz
+    *.png
+    *.dmg
+    *.pdf
+    *.tiff
+    *.jpeg
+    *.jpg
+    *.zip
+    *.tar
+    *.rar
+    *.jar
+    *.iso
+    *.7z
+    *.o
+    *.so
+    *.pyc
+    *.doc
+    *.docx
+    *.idtf
+    *.u3d
+    *.aux
+     )
         touch .gitignore
         git add .gitignore
         git commit -m "message" .gitignore
@@ -8312,9 +7842,9 @@ def gitInit():
         git add new.pml
 
       Step 4: commit new files or changes with message
-        git commit -m "Edited new.pml." new.pml
+        git commit -m "Edited new.pml."
 
-        or to commit changes to a groupd of changed files
+        or to commit changes to a group of changed files
         git commit -a -m "Changed all *.pml files"
 
         To automate the process, add the following function to a .bashAliases file in
@@ -8340,7 +7870,7 @@ def gitInit():
         fi
 
         git add "$1".pml
-        git commit -m "Added new text in $1.tex" "$1".pml
+        git commit -m "Added new text in $1.pml" 
         }
 
 
@@ -8357,10 +7887,10 @@ def gitInit():
 
     PYTHON CODE:
 
-    #NA
+    print(gitInit.__doc__)
     '''
 
-    #NA
+    print(gitInit.__doc__)
 cmd.extend("gitInit",gitInit)
 
 
@@ -8368,7 +7898,7 @@ def gitPull():
     ''' 
     DESCRIPTION:
 
-    Enter help(gitPush) to print steps to send to updates to a repository on github.com.
+    Enter help(gitPush) to print steps to supdate a repository on github.com.
 
 
     USAGE:
@@ -8418,11 +7948,7 @@ def gitPush():
     ''' 
     DESCRIPTION:
 
-    Enter help(gitPush) to print steps to send to updates to a repository on github.com. 
-
-      Step 1: push updated file to an existing repository. 
-
-        git push 
+    Enter help(gitPush) to print steps update a repository on github.com. 
 
 
 
@@ -8494,8 +8020,7 @@ def GM():
 
     MORE DETAILS:
 
-    Open gmail. 
-   >>>  Edit url in python code below
+    Open gmail. Edit url in python code below
 
 
     VERTICAL PML SCRIPT:
@@ -8548,25 +8073,25 @@ def iterm():
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(['open', '-a', 'iTerm']);
+    subprocess.call(itermCommand);
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(['open', '-a', 'iTerm']);return
+    subprocess.call(itermPath);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(['open', '-a', 'iTerm'])
+    subprocess.call(itermPath)
     return
 
     '''
 
-    subprocess.call(['open', '-a', 'iTerm'])
+    subprocess.call(itermPath)
     return
 
 cmd.extend('iterm',iterm)
@@ -8591,7 +8116,7 @@ def jabref():
 
     EXAMPLE:
 
-    jebref
+    jabref
 
 
     MORE DETAILS:
@@ -8603,7 +8128,7 @@ def jabref():
 
     VERTICAL PML SCRIPT:
 
-    arg = ('open -a "/Applications/JabRef/JabRef.app"');
+    arg = (jabrefPath);
     subprocess.call(arg,shell=True);
     return;
 
@@ -8611,19 +8136,19 @@ def jabref():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ('open -a "/Applications/JabRef/JabRef.app"');subprocess.call(arg,shell=True);return
+    arg = jabrefCommand; subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ('open -a "/Applications/JabRef/JabRef.app"');
+    arg = jabrefCommand;
     subprocess.call(arg,shell=True);
     return
 
     '''
 
-    arg = ('open -a "/Applications/JabRef/JabRef.app"');
+    arg = jabrefCommand;
     subprocess.call(arg,shell=True);
     return
 
@@ -8663,25 +8188,25 @@ def jedit(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("open -a jedit " + fileName);
+    arg = (jeditCommand+ fileName);
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("open -a jedit " + fileName);    subprocess.call(arg,shell=True)
+    arg = (jeditCommand + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("open -a jedit " + fileName)
+    arg = (jeditCommand + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("open -a jedit " + fileName)
+    arg = (jeditCommand + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('jedit',jedit)
@@ -8719,7 +8244,7 @@ def jmol(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName)
+    arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -8727,19 +8252,19 @@ def jmol(fileName="test.pdb"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName);subprocess.call(arg,shell=True);return
+    arg = (jmolPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName)
+    arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("sh /Applications/jars/jmol-14.29.16/jmol.sh " + fileName)
+    arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -8777,7 +8302,7 @@ def julia():
 
     VERTICAL PML SCRIPT:
 
-    arg = ('/Applications/Julia-1.2.app/Contents/MacOS/applet');
+    arg = juliaPath;
     subprocess.call(arg,shell=True);
     return
 
@@ -8785,20 +8310,20 @@ def julia():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ('/Applications/Julia-1.2.app/Contents/MacOS/applet');subprocess.call(arg,shell=True);return
+    arg =juliaPath;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ('/Applications/Julia-1.2.app/Contents/MacOS/applet')
-    subprocess.call(arg,shell=True)
+    arg = juliaPath;
+    subprocess.call(arg,shell=True);
     return
 
     '''
 
-    arg = ('/Applications/Julia-1.2.app/Contents/MacOS/applet')
-    subprocess.call(arg,shell=True)
+    arg = juliaPath;
+    subprocess.call(arg,shell=True);
     return
 
 cmd.extend('julia',julia)
@@ -8836,25 +8361,25 @@ def mate(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/mate.app " + fileName);
+    arg = (matePath + fileName);
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/mate.app " + fileName);    subprocess.call(arg,shell=True)
+    arg = (matePath + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/mate.app " + fileName)
+    arg = (matePath + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("/Applications/mate.app " + fileName)
+    arg = (matePath + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('mate',mate)
@@ -9034,25 +8559,25 @@ def notepadpp(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/Notepad++7.app " + fileName);
+    arg = (notepadppPath + fileName);
     subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/Notepad++7.app " + fileName);    subprocess.call(arg,shell=True)
+    arg = (notepadppPath + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/Notepad++7.app " + fileName)
+    arg = (notepadppPath + fileName)
     subprocess.call(arg,shell=True)
     return
     '''
 
-    arg = ("/Applications/Notepad++7.app " + fileName)
+    arg = (notepadppPath + fileName)
     subprocess.call(arg,shell=True)
     return
 cmd.extend('notepadpp',notepadpp)
@@ -9090,26 +8615,23 @@ def nv(fileName="testme.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/nvim " + fileName);
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+    subprocess.call(nvimCommand)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/nvim " + fileName);subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+        subprocess.call(nvimCommand)
 
 
 
     PYTHON CODE:
 
-    arg = ("/opt/local/bin/nvim " + fileName);
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+    subprocess.call(nvimCommand)
 
     '''
 
-    arg = ("/opt/local/bin/nvim " + fileName);
-    subprocess.call(['open', '-W', '-a', 'iTerm.app', '/opt/local/bin/nvim', '--args', fileName])
+    subprocess.call(nvimCommand)
 
 cmd.extend('nv',nv)
 
@@ -9145,7 +8667,7 @@ def oc():
 
     VERTICAL PML SCRIPT:
 
-    arg = ('octave --no-gui');
+    arg = octaveCommand;
     subprocess.call(arg,shell=True);
     return
 
@@ -9153,19 +8675,19 @@ def oc():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ('octave --no-gui');subprocess.call(arg,shell=True);return
+    arg = octaveCommand;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ('octave --no-gui')
+    arg = octaveCommand
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ('octave --no-gui')
+    arg = octaveCommand
     subprocess.call(arg,shell=True)
     return
 
@@ -9204,7 +8726,7 @@ def oni(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName);
+    arg = (oniPath + fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -9212,19 +8734,19 @@ def oni(fileName="test.pml"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName);subprocess.call(arg,shell=True);return
+    arg = (oniPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName)
+    arg = (oniPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/Oni.app/Contents/MacOS/Oni " + fileName)
+    arg = (oniPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -9262,7 +8784,7 @@ def ppt():
 
     VERTICAL PML SCRIPT:
 
-    arg = ('open -a /Applications/Microsoft\ PowerPoint.app')
+    arg = powerpointCommand
     subprocess.call(arg,shell=True)
     return
 
@@ -9270,19 +8792,19 @@ def ppt():
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ('open -a /Applications/Microsoft\ PowerPoint.app');subprocess.call(arg,shell=True);return
+    arg = powerpointCommand;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ('open -a /Applications/Microsoft\ PowerPoint.app')
+    arg =powerpointCommand
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ('open -a /Applications/Microsoft\ PowerPoint.app')
+    arg =powerpointCommand
     subprocess.call(arg,shell=True)
     return
 
@@ -9293,11 +8815,7 @@ def rline():
     ''' 
     DESCRIPTION:
 
-    These commands are sufficient for most editing tasks:  
-      To edit code, positon cursor on command line with left mouse button.  
-      Control-e moves the cursor to the end of the line, even when it is out of view.
-      Control-a moves the cursor to the beginning of the line, even when it is out of view.    
-      Up arrow key recalls last line of commands for editing.
+    Prints cheat sheet for the readline commands. 
 
 
 
@@ -9318,7 +8836,9 @@ def rline():
 
     MORE DETAILS:
 
-    These commands are sufficient for most editing tasks:  
+    Prints cheat sheet for the readline commands.
+
+These commands are sufficient for most editing tasks:  
       To edit code, positon cursor on command line with left mouse button.  
       Control-e moves the cursor to the end of the line, even when it is out of view.
       Control-a moves the cursor to the beginning of the line, even when it is out of view.    
@@ -9346,10 +8866,10 @@ def rline():
 
     PYTHON CODE:
 
-    #NA
+    print(readline.__doc__)
     '''
 
-    #NA
+    print(readline.__doc__)
 cmd.extend("rline",rline)
 
 
@@ -11939,7 +11459,7 @@ def spqr(stemName="saved"):
     ''' 
     DESCRIPTION:
 
-    Save pqr (PDB file with the temperature and occupancy columns replaced by columns containing the per-atom charge (Q) and radius (R)) file with a time stamp.
+    Save pqr with file with timestamp.
 
 
     USAGE:
@@ -11959,7 +11479,9 @@ def spqr(stemName="saved"):
 
     MORE DETAILS:
 
-    Save pqr (PDB file with the temperature and occupancy columns replaced
+    Save pqr with file with timestamp.
+
+A pqr (PDB file with the temperature and occupancy columns replaced
     by columns containing the per-atom charge (Q) and radius (R)) file with 
     a time stamp included in the filename to avoid overwriting an existing 
     out file. Read as a commandline argument, a string as the filename stem, 
@@ -12131,7 +11653,7 @@ def st3(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/subl -w " + fileName);
+    arg = (sublimetext3Path  + "-w " + fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -12139,19 +11661,19 @@ def st3(fileName="test.pml"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/usr/local/bin/subl -w " + fileName);subprocess.call(arg,shell=True);return
+    arg = (sublimetext3Path  + "-w " + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/usr/local/bin/subl -w " + fileName)
+    arg = (sublimetext3Path  + "-w " + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/usr/local/bin/subl -w " + fileName)
+    arg = (sublimetext3Path  + "-w " + fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -12243,28 +11765,370 @@ def term():
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(['open', '-a', 'Terminal'])
+    subprocess.call(terminalCommand)
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(['open', '-a', 'Terminal']);return
+    subprocess.call(terminalCommand);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(['open', '-a', 'Terminal'])
+    subprocess.call(terminalCommand)
     return
 
     '''
 
-    subprocess.call(['open', '-a', 'Terminal'])
+    subprocess.call(terminalCommand)
     return
 
 cmd.extend('term',term)
+
+
+def vdw(selection='all'):
+    ''' 
+    DESCRIPTION:
+
+    Transparent vdw surface
+
+
+    USAGE:
+
+    vdw selection
+
+
+    Arguments:
+
+    selection
+
+
+
+    EXAMPLE:
+
+    vdw 3nd3
+
+
+    MORE DETAILS:
+
+    # vdw creates a copy of an object with full-sized, transparent spheres
+# Bondi VDW values added below to override default Pymol settings
+# From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+
+
+
+    VERTICAL PML SCRIPT:
+
+    NA
+
+
+    HORIZONTAL PML SCRIPT:
+
+    NA
+
+
+    PYTHON CODE:
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+   
+    # ball and stick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+
+    '''
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+   
+    # ball and stick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+
+cmd.extend('vdw', vdw)
 
 
 def vim(fileName="test.pml"):
@@ -12299,28 +12163,25 @@ def vim(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/vim " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
+    subprocess.call(vimCommand)
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/opt/local/bin/vim " + fileName);subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName]);return
+    subprocess.call(vimCommand);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/opt/local/bin/vim " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
+    subprocess.call(vimCommand)
     return
 
     '''
 
-    arg = ("/opt/local/bin/vim " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Terminal.app', '/opt/local/bin/vim', '--args', fileName])
+    subprocess.call(vimCommand)
     return
 
 cmd.extend('vim',vim)
@@ -12358,7 +12219,7 @@ def vmd(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName);
+    arg = (vmdCommand+ fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -12366,19 +12227,19 @@ def vmd(fileName="test.pdb"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName);subprocess.call(arg,shell=True);return
+    arg = (vmdCommand + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName)
+    arg = (vmdCommand+ fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/VMD194.app/Contents/MacOS/startup.command " + fileName)
+    arg = (vmdCommand+ fileName)
     subprocess.call(arg,shell=True)
     return
 
@@ -12412,7 +12273,6 @@ def weather():
     Open National Weather Service website for locale. 
     Adjust url for your location.
 
-   >>>  Edit url in Python code below.
 
 
     VERTICAL PML SCRIPT:
@@ -12460,7 +12320,6 @@ def webmail():
 
     Open Web Mail in defualt browser. Adjust url for your institution.
 
-   >>>  Edit url in python code below
 
 
     VERTICAL PML SCRIPT:
@@ -12514,28 +12373,25 @@ def word(fileName="Script.docx"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("open " + fileName);
-    subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName]);
+    subprocess.call(wordCommand, '--args', fileName);
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("open " + fileName);subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName]);return
+    subprocess.call(wordCommand, '--args', fileName);return
 
 
 
     PYTHON CODE:
 
-    arg = ("open " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName])
+    subprocess.call(wordCommand, '--args', fileName)
     return
 
     '''
 
-    arg = ("open " + fileName)
-    subprocess.call(['open', '-W', '-a', 'Microsoft Word.app', '--args', fileName])
+    subprocess.call(wordCommand, '--args', fileName)
     return
 
 cmd.extend('word',word)
@@ -12572,7 +12428,7 @@ def yasara(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    arg = ("/Applications/YASARA.app/Contents/MacOS/yasara.app " + fileName);
+    arg = (yasaraPath + fileName);
     subprocess.call(arg,shell=True);
     return
 
@@ -12580,19 +12436,19 @@ def yasara(fileName="test.pml"):
 
     HORIZONTAL PML SCRIPT:
 
-    arg = ("/Applications/YASARA.app/Contents/MacOS/yasara.app " + fileName);subprocess.call(arg,shell=True);return
+    arg = (yasaraPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    arg = ("/Applications/YASARA.app/Contents/MacOS/yasara.app " + fileName)
+    arg = (yasaraPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
     '''
 
-    arg = ("/Applications/YASARA.app/Contents/MacOS/yasara.app " + fileName)
+    arg = (yasaraPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
