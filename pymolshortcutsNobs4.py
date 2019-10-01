@@ -138,7 +138,7 @@ import subprocess
 from math import cos, sin, radians, sqrt
 import datetime, time, webbrowser, random
 
-from pymol import cmd, stored, cgo, xray
+from pymol import cmd, stored, math, cgo, xray
 import numpy
 
 
@@ -149,121 +149,151 @@ __version__ = "1.0.0"
 # Versioning follows follows MAJOR.MINOR[.PATCH] where major releases are not backward compatable. 
 __credits__ = ["Miriam Shakir", "Safra Shakir"] 
 # Credits are for people who tested the code, reported bug fixes, made suggestions, etc. 
-__date__ = "10 Septermber 2019"
+__date__ = "30 Septermber 2019"
 __maintainer__ = "Blaine Mooers"
 __email__ = "blaine-mooers@ouhsc.edu"
 __status__ = "Production" 
 
 cmd.set('ray_opaque_background','on')
 
-AppPaths='''You may have to edit the file paths to your applications around line XXX in pymolshortcut.py.'''
+
+##################################  Edit PATHS to local directories of files ###############################################
+# $HOME/ is the user's main directory: /Users/username or /home/username. r'$HOME' is equivalent to ~. 
+localPDBfilePath = r'$HOME/pdbFiles/'
+localEMAPfilePath = r'$HOME/emapFiles/'
+localHKLfilePath = r'$HOME/hklFiles/'
+
+
+AppPaths='''You may have to edit the file paths to your applications around line 477 in pymolshortcut.py.'''
 print(AppPaths)
 
-##################################  PATHS to Applications ###############################################
+##################################  Edit PATHS to Applications ###############################################
 #
-# Set the file paths to the applications on your computer.
+# Find your operating system from the three sets of paths or commands below.
+# The default OS is Mac.
+# If your computer is not a Mac, comment out the Mac set and uncomment the set for your operating system.
 # Comment out the paths to the applications that you lack. 
 #
-# The paths are for my Mac OS 10.14 wiht some applications stored in /usr/local 
+# The paths are for my Mac OS 10.14 with some applications stored in /usr/local 
 # and some in /opt/local/bin thanks to macports.
-# Some paths can be found by entering "which <programname>" in a terminal window.
+# Some paths can be found by entering "which <program>" in a terminal window.
 #
 # You can replace the file path with a command to open the application.
 # For example, you can use the command "open -a bbedit" on the Mac. 
+# This approach is the preferred one: it avoids the spinning ball.
+# The analogous command is "start" on Windows.
 #
-##################################  PATHS to Applications ###############################################
+##################################  Mac Open Commands and PATHS to Applications ###############################################
 
 # Data analysis
+DBBrowserSQLiteOpen = ['open','-a','DBBrowserForSQLite']
 DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.app/Contents/MacOS/DB\ Browser\ for\ SQLite'
-excelPath = '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
-jabrefPath = '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
-jaspPath = 'Applications/JASP.app/Contents/MacOS/JASP'
-jmpPath = '/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
-juliaPath = '/Applications/Julia-1.2.app/Contents/MacOS/applet'
-jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
-RstudioPath = '/Applications/RStudio.app/Contents/MacOS/Rstudio'
+excelOpen = ['open','-a','Microsoft Excel']
+excelPath = r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
+jabrefOpen = ['open','-a','JabRef.app'] '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+jabrefPath = r'/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+jaspOpen = ['open','-a','JASP.app']
+jaspPath = r'Applications/JASP.app/Contents/MacOS/JASP'
+jmpOpen = ['open','-a','JMP Pro 14.app']
+jmpPath = r'/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
+juliaOpen = ['open','-a','Julia-1.2.app']
+juliaPath = r'/Applications/Julia-1.2.app/Contents/MacOS/applet'
+jupyterPath = r'/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+Rpath = r'/usr/local/bin/R'
+ROpen = ['open','-a','R'] 
+RstudioOpen = ['open','-a','RStudio'] 
+RstudioPath = r'/Applications/RStudio.app/Contents/MacOS/Rstudio'
 
-
-# Local files 
-localPDBfilePath = '$HOME/pdbFiles/'
-localEMAPfilePath = '$HOME/emapFiles/'
-localHKLfilePath = '$HOME/hklFiles/'
 
 # Image manipulation programs
-gimp = '/usr/local/bin/gimp'
-inkscape = '/opt/local/bin/inkscape'
-pptPath =  '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
+gimp = r'/usr/local/bin/gimp'
+inkscapePath = r'/opt/local/bin/inkscape'
+pptOpen = ['open','-a','Microsoft PowerPoint']
+pptPath =  r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
 
 
 # Molecular graphics programs
-ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
-chimeraPath = '/Applications/Chimera.app/Contents/MacOS/chimera'
+ccp4mgPath = r'/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
+chimeraOpen = ['open','-a','Chimera.app']
+chimeraPath = r'/Applications/Chimera.app/Contents/MacOS/chimera'
 cootPath = '/usr/local/bin/coot'
 jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
-yasaraPath = '/Applications/YASARA.app/Contents/MacOS/yasara.app'
-vmdPath = '/Applications/VMD194.app/Contents/MacOS/startup.command'
+yasaraOpen = ['open','-a','YASARA.app']
+yasaraPath = r'/Applications/YASARA.app/Contents/MacOS/yasara.app'
+vmdOpen = ['open','-a','VMD194.app']
+vmdPath = r'/Applications/VMD194.app/Contents/MacOS/startup.command'
 
 # Text editors
-atomPath = '/usr/local/bin/atom'
-bbeditPath = '/usr/local/bin/bbedit'
-codePath = '/usr/local/bin/code'
-emacsPath = '/opt/local/bin/emacs'
-geditPath = '/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
-jeditPath = '/Applications/jEdit.app/Contents/MacOS/jedit'
-notepadppPath = '/Applications/Notepad++.app/Contents/MacOS/startwine'
-neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
-oniPath = '/Applications/Oni.app/Contents/MacOS/Oni'
-pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
-sublimeText3Path = '/usr/local/bin/subl'
-textmatePath  = '/usr/local/bin/mate'
-vimPath = '/opt/local/bin/vim'
+atomOpen = ['open','-a','atom']
+atomPath = r'/usr/local/bin/atom'
+atomStart = ['start','atom']
+bbeditOpen = ['open','-a','bbedit']
+bbeditPath = r'/usr/local/bin/bbedit'
+codeOpen = ['open','-a','code']
+codePath = r'/usr/local/bin/code'
+codeStart = ['start','code']
+emacsOpen = ['open','-a','emacs']
+emacsPath = r'/opt/local/bin/emacs'
+geditOpen = ['open','-a','gedit2.30.2.app']
+geditPath = r'/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
+jeditOpen = ['open','-a','jEdit.app']
+jeditPath = r'/Applications/jEdit.app/Contents/MacOS/jedit'
+neovimPath = r'/Users/blaine/software/nvim-osx64/bin/nvim'
+nppOpen = ['open','-a','Notepad++.app']
+nppPath = r'/Applications/Notepad++.app/Contents/MacOS/startwine'
+oniOpen = ['open','-a','Oni.app']
+oniPath = r'/Applications/Oni.app/Contents/MacOS/Oni'
+pdbedPath = r'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+sublOpen = ['open','-a','subl']
+sublimeText3Path = r'/usr/local/bin/subl'
+textmatePath  = r'/usr/local/bin/mate'
+textmateOpen = ['open','-a','mate']
+vimPath = r'/opt/local/bin/vim'
+
+
+#Terminals
+itermOpen = ['open','-a','iTerm.app','-n','"`pwd`"']
+terminalOpen = ['open','-a','Terminal','-n','"`pwd`"']
+x11Open = ['open','-a','XQuartz','-n','"`pwd`"']
 
 # Web sites 
 gcalPath = 'open -a Safari.app https://calendar.google.com/calendar/r'
 gmailPath = 'open -a Safari.app https://mail.google.com/mail/u/0/#inbox'
 webmailPath = 'open -a Safari.app https://webmail.ouhsc.edu'
-weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'   
- 
+weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'
+
+#wordProcessor
+wordOpen = ['open','-a','Microsoft Word.app']
+
+
 ########################################################################################################
 def AB(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to Amazon.com Books in default browser.
 
     USAGE:
-
     AB
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     AB
 
     MORE DETAILS:
-
     Send search term or phrase to Amazon.com Books in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
     The default web browser is used. 
 
-
     VERTICAL PML SCRIPT:
-
     url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords=';
     webbrowser.open(url+searchTerm)
 
-
     HORIZONTAL PML SCRIPT:
-
     url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords=';webbrowser.open(url+searchTerm)
 
-
     PYTHON CODE:
-
 def AB(searchTerm="pymol"):
     url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords='
     webbrowser.open(url+searchTerm)
@@ -278,35 +308,23 @@ cmd.extend('AB',AB)
 def ACA():
     ''' 
     DESCRIPTION:
-
     Open the American Crystallographic Association Annual Meeting webpage.
 
     USAGE:
-
     ACA
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     ACA
 
     MORE DETAILS:
-
     Open the American Crystallographic Association Annual Meeting webpage.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def ACA():
     webbrowser.open_new_tab('http://www.amercrystalassn.org/2018-meeting-homepage')
 
@@ -319,35 +337,23 @@ cmd.extend('ACA',ACA)
 def ALS():
     ''' 
     DESCRIPTION:
-
     Open website of the Advanced Light Source.
 
     USAGE:
-
     ALS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     ALS
 
     MORE DETAILS:
-
     Open website of the Advanced Light Source.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def ALS():
     webbrowser.open('https://als.lbl.gov/')
     '''
@@ -358,29 +364,21 @@ cmd.extend('ALS',ALS)
 def AO():
     ''' 
     DESCRIPTION:
-
     Commands to make ambient occlusion image like those in Qutemole.
 
     USAGE:
-
     AO
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     AO
 
     MORE DETAILS:
-
     Commands to make ambient occlusion image like those in Qutemole.
     Works only with the command line immediately under the command 
     history window at the top of the gui.
-
     VERTICAL PML SCRIPT:
-
     set_color oxygen, [1.0,0.4,0.4];
     set_color nitrogen, [0.5,0.5,1.0];
     remove solvent;
@@ -398,13 +396,9 @@ def AO():
     set ray_shadow_decay_range, 2;
     set depth_cue, 0;
     ray
-
     HORIZONTAL PML SCRIPT:
-
     set_color oxygen, [1.0,0.4,0.4];set_color nitrogen, [0.5,0.5,1.0];remove solvent;as spheres;util.cbaw;bg white;set light_count,8;set spec_count,1;set shininess, 10;set specular,0.25;set ambient,0;set direct,0;set reflect,1.5;set ray_shadow_decay_factor, 0.1;set ray_shadow_decay_range, 2;set depth_cue,0;color gray20, symbol c;ray
-
     PYTHON CODE:
-
 def AO():
     cmd.set_color("oxygen", "[1.0,0.4,0.4]")
     cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
@@ -449,32 +443,24 @@ cmd.extend('AO',AO)
 def AOD():
     ''' 
     DESCRIPTION:
-
     Make ambient occlusion image of any with dark carbon atoms.
 
     USAGE:
-
     AOD
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     AOD
 
     MORE DETAILS:
-
     Type "help AOD" to see this documentation printed to the command history window. 
     Select from the command history individual lines of code to build a new script. 
     Select the hortizontal script at the bottom if retaining most of the commands 
     in your new script. Copy and paste onto the comand line below. Works only 
     with the command line immediately under the command history window at 
     the top of the gui.
-
     VERTICAL PML SCRIPT:
-
     set_color oxygen, [1.0,0.4,0.4];
      set_color nitrogen, [0.5,0.5,1.0];
      remove solvent;
@@ -494,13 +480,9 @@ def AOD():
      color gray20, symbol c
      color gray90, symbol h
      ray
-
     HORIZONTAL PML SCRIPT:
-
     set_color oxygen, [1.0,0.4,0.4];set_color nitrogen, [0.5,0.5,1.0];remove solvent;as spheres;util.cbaw;bg white;set light_count,8;set spec_count,1;set shininess, 10;set specular,0.25;set ambient,0;set direct,0;set reflect,1.5;set ray_shadow_decay_factor, 0.1;set ray_shadow_decay_range, 2;set depth_cue,0;color gray20, symbol c;color gray70, symbol h;ray
-
     PYTHON CODE:
-
 def AOD():
     cmd.set_color("oxygen", "[1.0,0.4,0.4]")
     cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
@@ -547,35 +529,23 @@ cmd.extend("AOD",AOD)
 def APS():
     ''' 
     DESCRIPTION:
-
     Open website of the Advanced Photon Source.
 
     USAGE:
-
     APS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     APS
 
     MORE DETAILS:
-
     Open website of the Advanced Photon Source.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def APS():
     webbrowser.open('https://www.aps.anl.gov/')
     '''
@@ -586,38 +556,26 @@ cmd.extend('APS',APS)
 def AX(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to arXiv.
 
     USAGE:
-
     AX
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     AX
 
     MORE DETAILS:
-
     Send search term or phrase to arXiv.
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def AX(searchTerm="pymol"):
     webbrowser.open('https://arxiv.org/search/?query='+searchTerm+'&searchtype=all&order=-announced_date_first&size=50')
 
@@ -630,36 +588,24 @@ cmd.extend('AX',AX)
 def BC():
     ''' 
     DESCRIPTION:
-
     Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
 
 
     USAGE:
-
     BC
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     BC
 
     MORE DETAILS:
-
     Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def BC():
     webbrowser.open('http://www.bio.aps.anl.gov/')
     '''
@@ -670,35 +616,23 @@ cmd.extend('BC',BC)
 def BD():
     ''' 
     DESCRIPTION:
-
     Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
 
     USAGE:
-
     BD
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     BD
 
     MORE DETAILS:
-
     Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def BD():
     webbrowser.open('https://www.sasbdb.org/')
     '''
@@ -709,30 +643,22 @@ cmd.extend('BD',BD)
 def BST():
     ''' 
     DESCRIPTION:
-
     G2G3/U9U8 base step , PDB code 4PCO. 
 
     USAGE:
-
     BST
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     BST
 
     MORE DETAILS:
-
     G2G3/U9U8 base step , PDB code 4PCO. 
     From the 1.32 Angstrom resolution structure 
     of the RNA decamer with 8 GU base pairs.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 4PCO, type=pdb, async=0;
     select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
@@ -767,13 +693,9 @@ def BST():
     ray 1600,1000;
     png 4PCO.png
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
-
     PYTHON CODE:
-
 def BST():
     cmd.reinitialize()
     cmd.fetch('4PCO', type='pdb')
@@ -842,23 +764,17 @@ cmd.extend('BST',BST)
 def BU():
     ''' 
     DESCRIPTION:
-
     Commands to make biological unit.
 
     USAGE:
-
     BU
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     BU
 
     MORE DETAILS:
-
     Commands to make biological unit. Requires a pdb file. There are
     other ways of displaying the biological unit in PyMOL. Depends on
     the quat3.py script by Thomas Holder.
@@ -872,19 +788,13 @@ def BU():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
-
     VERTICAL PML SCRIPT:
-
     run ~/Scripts/PyMOLScripts/quat3.py; 
     quat 
 
-
     HORIZONTAL PML SCRIPT:
-
     run ~/Scripts/PyMOLScripts/quat3.py; quat 
-
     PYTHON CODE:
-
 def BU():
     cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat')
@@ -897,11 +807,9 @@ cmd.extend('BU',BU)
 def BW():
     ''' 
     DESCRIPTION:
-
     Make black-and white-ribbon cartoon on a white background.
 
     USAGE:
-
     Orient struture as desired. Then type 'BW' to execute the function. Type
     'help BW' to see this documentation printed to the command history window.
     Select from the command history individual lines of code to build a new 
@@ -912,19 +820,13 @@ def BW():
 
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     BW
 
     MORE DETAILS:
-
     Commands to make black-and white-ribbon cartoon on a white background.
-
     VERTICAL PML SCRIPT:
-
     show cartoon; 
     hide lines; 
     hide nonbonded; 
@@ -938,13 +840,9 @@ def BW():
     ray 1600,1600; 
     png test.png
 
-
     HORIZONTAL PML SCRIPT:
-
     show cartoon; hide lines; hide nonbonded; set ray_trace_mode, 2; # black and white cartoon; bg_color white; set antialias, 2; ray 1600,1600; png test.png
-
     PYTHON CODE:
-
 def BW():
     cmd.show_as("cartoon", "all"); 
     cmd.hide('lines'); 
@@ -973,39 +871,27 @@ cmd.extend('BW', BW)
 def BX(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to bioRxiv 
 
     USAGE:
-
     BX
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     BX
 
     MORE DETAILS:
-
     Send search term or phrase to bioRxiv 
     which is maintained by Cold Spring Harbor Laboratory.
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def BX(searchTerm="pymol"):
     url = 'https://www.biorxiv.org/search/'
     webbrowser.open(url+searchTerm)
@@ -1020,24 +906,18 @@ cmd.extend('BX',BX)
 def CB():
     ''' 
     DESCRIPTION:
-
     Runs Jared Sampson's script "colorblindfriendly.py". 
 
     USAGE:
-
     CB
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     CB
 color cb_sky_blue, 3fa0
 
     MORE DETAILS:
-
     Runs Jared Sampson's script "colorblindfriendly.py" which defines colorblind 8 friendly colors.
 	
     This shortcut only loads the colors. 
@@ -1111,17 +991,11 @@ color cb_sky_blue, 3fa0
     __author__ = 'Jared Sampson'
     __version__ = '0.1'
 
-
     VERTICAL PML SCRIPT:
-
     run ~/Pymol-script-repo/colorblindfriendly.py
-
     HORIZONTAL PML SCRIPT:
-
     run ~/Pymol-script-repo/colorblindfriendly.py 
-
     PYTHON CODE:
-
 def CB():
     # Color blind friendly color list based on information found at:
     # http://jfly.iam.u-tokyo.ac.jp/html/color_blind/#pallet
@@ -1196,44 +1070,32 @@ cmd.extend('CB',CB)
 def CBSS():
     ''' 
     DESCRIPTION:
-
     Apply colorblind-friendly coloring to ribbon or cartoon representations.
 
     USAGE:
-
     CBSS
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     CBSS
 
     MORE DETAILS:
-
     Apply colorblind-friendly coloring to ribbon or cartoon representations.
     Uses Jared Sampson's colorblind friendly colors. 
     See the function CB.
     
 
-
     VERTICAL PML SCRIPT:
-
     CB;
     as cartoon;
     color cb_red, ss H;
     color cb_yellow,ss S;
     color cb_green, ss L+; 
 
-
     HORIZONTAL PML SCRIPT:
-
     CB;as cartoon;color cb_red, ss H;color cb_yellow,ss S;color cb_green, ss L+; 
-
     PYTHON CODE:
-
 def CBSS():
     cmd.do('CB')
     cmd.show_as('cartoon')
@@ -1254,35 +1116,23 @@ cmd.extend('CBSS',CBSS)
 def CH():
     ''' 
     DESCRIPTION:
-
     Open the webste of UCSF Chimera.
 
     USAGE:
-
     CH
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     CH
 
     MORE DETAILS:
-
     Open the webste of UCSF Chimera.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def CH():
     webbrowser.open('https://www.cgl.ucsf.edu/chimera/')
     '''
@@ -1293,35 +1143,23 @@ cmd.extend('CH',CH)
 def CHESS():
     ''' 
     DESCRIPTION:
-
     Open the website of CHESS.
 
     USAGE:
-
     CHESS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     CHESS
 
     MORE DETAILS:
-
     Open the website of CHESS.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def CHESS():
     webbrowser.open('https://www.chess.cornell.edu/')
 
@@ -1334,23 +1172,17 @@ cmd.extend('CHESS',CHESS)
 def CR():
     ''' 
     DESCRIPTION:
-
     Commands to make colored filled-ring cartoon of nucleic acids.
 
     USAGE:
-
     CR
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     CR
 
     MORE DETAILS:
-
     Commands to make colored filled-ring cartoon of nucleic acids. May
     need to 'hide everything' first. If asymmetric unit has one strand
     of a dsRNA or dsDNA, remember to apply the BU shortcut to display the
@@ -1360,9 +1192,7 @@ def CR():
     https://kpwu.wordpress.com/2012/05/24/pymol-different-colors-of-
     nucleic-acid-rings/
 
-
     VERTICAL PML SCRIPT:
-
     hide everything;
     bg_color white;
     cartoon oval;
@@ -1378,13 +1208,9 @@ def CR():
     color palecyan, rna_U;
     as cartoon 
 
-
     HORIZONTAL PML SCRIPT:
-
     hide everything;bg_color white;cartoon oval;set cartoon_ring_mode,3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C, resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A;color red, rna_C;color gray40, rna_G;color palecyan, rna_U;as cartoon 
-
     PYTHON CODE:
-
 def CR():
     cmd.hide('everything')
     cmd.bg_color('white')
@@ -1425,23 +1251,17 @@ cmd.extend('CR',CR)
 def CSS():
     ''' 
     DESCRIPTION:
-
     Commands to color ribbon or cartoon representations of proteins by
 
     USAGE:
-
     CSS
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     CSS
 
     MORE DETAILS:
-
     Commands to color ribbon or cartoon representations of proteins by
     secondary structures. Type 'help CSS' to see this documentation
     printed to the command history window. Select from the command 
@@ -1450,21 +1270,15 @@ def CSS():
     the commands in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
-
     VERTICAL PML SCRIPT:
-
     as cartoon;
     color red, ss H;
     color yellow,ss S;
     color green, ss L+;
 
-
     HORIZONTAL PML SCRIPT:
-
     as cartoon; color red, ss H; color yellow,ss S; color green, ss L+;
-
     PYTHON CODE:
-
 def CSS():
     cmd.show_as('cartoon')
     cmd.color('red', 'ss H')
@@ -1483,23 +1297,17 @@ cmd.extend('CSS',CSS)
 def DU():
     ''' 
     DESCRIPTION:
-
     Make dumbbell (ribbons with rolled edges) cartoon of the main chains of nucleic acids and proteins. 
 
     USAGE:
-
     DU
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     DU
 
     MORE DETAILS:
-
     Make dumbbell (ribbons with rolled edges) cartoon of the main chains of nucleic acids and proteins. 
     Set 50% transparent cartoon so it can be combined with lines, sticks, and ball-and-sticks (try BS shortcut).
     
@@ -1511,22 +1319,16 @@ def DU():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     cartoon dumbbell;
     set cartoon_dumbbell_width, 0.2;
     set cartoon_dumbbell_radius, 0.4;
     show cartoon; 
 
-
     HORIZONTAL PML SCRIPT:
-
     cartoon dumbbell;set cartoon_dumbbell_width, 0.2;set cartoon_dumbbell_radius, 0.4;show cartoon; 
 
-
     PYTHON CODE:
-
 def DU():
     cmd.cartoon('dumbbell')
     cmd.set('cartoon_dumbbell_width', '0.2')
@@ -1545,35 +1347,23 @@ cmd.extend('DU',DU)
 def EMDB():
     ''' 
     DESCRIPTION:
-
     Open the website of the Electron Microscopy Data Bank.
 
     USAGE:
-
     EMDB
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     EMDB
 
     MORE DETAILS:
-
     Open the website of the Electron Microscopy Data Bank.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def EMDB():
     webbrowser.open('https://www.ebi.ac.uk/pdbe/emdb/')
 
@@ -1586,35 +1376,23 @@ cmd.extend('EMDB',EMDB)
 def EP():
     ''' 
     DESCRIPTION:
-
     EasyPyMOL github site.
 
     USAGE:
-
     EP
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     EP
 
     MORE DETAILS:
-
     EasyPyMOL github site.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def EP():
     webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
     '''
@@ -1625,23 +1403,17 @@ cmd.extend('EP',EP)
 def FR():
     ''' 
     DESCRIPTION:
-
     Make filled-ring cartoon of nucleic acids.
 
     USAGE:
-
     FR
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     FR
 
     MORE DETAILS:
-
     Make filled-ring cartoon of nucleic acids. May need to enter 'hide everything' first. 
     Adapted from the script on http://www-cryst.bioc.cam.ac.uk/members/zbyszek/figures_pymol. 
     Type 'FR' to execute. Type 'help FR' to see this documentation
@@ -1652,9 +1424,7 @@ def FR():
     Works only with the command line immediately under the command
     history window at the top of the PyMOL gui.
 
-
     VERTICAL PML SCRIPT:
-
     show sticks;
     set cartoon_ring_mode, 3;
     set cartoon_ring_finder, 1;
@@ -1663,13 +1433,9 @@ def FR():
     set cartoon_ring_transparency, 0.5;
     as cartoon;
 
-
     HORIZONTAL PML SCRIPT:
-
     show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon; 
-
     PYTHON CODE:
-
 def FR():
     cmd.show('sticks')
     cmd.set('cartoon_ring_mode', '3')
@@ -1694,38 +1460,26 @@ cmd.extend('FR',FR)
 def GB(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to Google Books in default browser.
 
     USAGE:
-
     GB
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     GB
 
     MORE DETAILS:
-
     Send search term or phrase to Google Books in default browser.
-
     VERTICAL PML SCRIPT:
-
     url = 'https://www.google.com/search?tbm=bks&q='
     webbrowser.open(url+searchTerm)
 
-
     HORIZONTAL PML SCRIPT:
-
     url = 'https://www.google.com/search?tbm=bks&q=';webbrowser.open(url+searchTerm)
 
-
     PYTHON CODE:
-
 def GB(searchTerm="pymol"):
     url = 'https://www.google.com/search?tbm=bks&q='
     webbrowser.open(url+searchTerm)
@@ -1740,24 +1494,18 @@ cmd.extend('GB',GB)
 def GGT():
     ''' 
     DESCRIPTION:
-
     WT human gamma glutamyl transpeptidase at 1.67 Angstrom resolution as cartoon. PDB Code 4gdx.
 
 
     USAGE:
-
     GGT
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     GGT
 
     MORE DETAILS:
-
     WT human gamma glutamyl transpeptidase at 1.67 Angstrom
     resolution as cartoon. PDB Code 4gdx.
 
@@ -1769,9 +1517,7 @@ def GGT():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 4gdx, type=pdb, async=0;
     remove name H*;
@@ -1790,13 +1536,9 @@ def GGT():
     set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
     draw 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 4gdx, type=pdb, async=0;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
-
     PYTHON CODE:
-
 def GGT():
     cmd.reinitialize()
     cmd.fetch('4gdx', type='pdb', async_='0')
@@ -1843,42 +1585,30 @@ cmd.extend('GGT',GGT)
 def GH(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to GitHub in default browser.
 
     USAGE:
-
     GH
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     GH
 
     MORE DETAILS:
-
     Send search term or phrase to GitHub in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
     The default web browser is used. 
 
-
     VERTICAL PML SCRIPT:
-
     url = 'https://www.github.com/search?q='
     webbrowser.open(url+searchTerm)
 
-
     HORIZONTAL PML SCRIPT:
-
     url = 'https://www.github.com/search?q=';webbrowser.open(url+searchTerm)
 
-
     PYTHON CODE:
-
 def GH(searchTerm="pymol"):
     url = 'https://www.github.com/search?q='
     webbrowser.open(url+searchTerm)
@@ -1893,39 +1623,27 @@ cmd.extend('GH',GH)
 def GO(searchTerm="pymol",numHits="200"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase Google in default browser.
 
     USAGE:
-
     GO
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     GO
 
     MORE DETAILS:
-
     Send search term or phrase Google in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
     The default web browser is used. 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def GO(searchTerm="pymol",numHits="200"):
     webbrowser.open('https://www.google.com/searchq='+searchTerm+'&num='+str(numHits))
     '''
@@ -1936,40 +1654,28 @@ cmd.extend('GO',GO)
 def GS(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to Google Scholar in default browser.
 
     USAGE:
-
     GS
 
     Arguments:
-
     searchTerm, searchTerm, searchTerm,
-
     EXAMPLE:
-
     GS
 
     MORE DETAILS:
-
     Send search term or phrase to Google Scholar in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
     The default search term is pymol.
 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def GS(searchTerm="pymol"):
     url = 'https://scholar.google.se/scholar?hl=en&q='
     webbrowser.open(url+searchTerm)
@@ -1984,24 +1690,18 @@ cmd.extend('GS',GS)
 def GU():
     ''' 
     DESCRIPTION:
-
     10-mer dsRNA with 8 GU wobble base pairs.
 
 
     USAGE:
-
     GU
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     GU
 
     MORE DETAILS:
-
     10-mer dsRNA with 8 GU wobble base pairs.
     1.32 Angstrom resolution: 4PCO. Has five strands in 
     the asymmetric unit. Deleted chain E and cobalt 
@@ -2017,9 +1717,7 @@ Type 'help GU' to see this documentation
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 4PCO,type=pdb,async=0;
     hide everything; 
@@ -2049,13 +1747,9 @@ Type 'help GU' to see this documentation
     233.71,-20.0);
     draw 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 4PCO,type=pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
-
     PYTHON CODE:
-
 def GU():
     cmd.reinitialize();
     cmd.fetch('4PCO', type='pdb')
@@ -2118,39 +1812,27 @@ cmd.extend('GU',GU)
 def GV(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to Google Videos in default browser.
 
     USAGE:
-
     GV
 
     Arguments:
-
     GV Linus Pauling; GS Francis Crick; GS Alexander Rich
-
     EXAMPLE:
-
     GV
 
     MORE DETAILS:
-
     Send search term or phrase to Google Videos in default browser.
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
     The default search term is pymol.
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def GV(searchTerm="pymol"):
     url = 'https://www.google.com/search?q=video+';
     webbrowser.open(url+searchTerm)
@@ -2165,35 +1847,23 @@ cmd.extend('GV',GV)
 def HH():
     ''' 
     DESCRIPTION:
-
     Hide hydrogen atoms of currently visible molecular objects.
 
     USAGE:
-
     HH
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     HH
 
     MORE DETAILS:
-
     Hide hydrogen atoms of currently visible molecular objects.
-
     VERTICAL PML SCRIPT:
-
     hide everything, name H* 
-
     HORIZONTAL PML SCRIPT:
-
     hide everything, name H* 
-
     PYTHON CODE:
-
 def HH():
     cmd.hide('everything', 'name H*')
     '''
@@ -2204,40 +1874,28 @@ cmd.extend('HH',HH)
 def IPM(searchTerms = [], *args):
     ''' 
     DESCRIPTION:
-
     Read list of search terms and submit each term to PubMed in a separate browser tab.
 
     USAGE:
-
     IPM
 
     Arguments:
-
     search=[string,string]; IPM(search)
-
     EXAMPLE:
-
     search=["pymol","vmd","jmol"]; IPM(search)
 
     MORE DETAILS:
-
     Read list of search terms and submit each term to PubMed in a separate browser tab.
     There a time delay based on the response time of the site to which the request is made.
     The default web browser is used.
     Must enclose each search term (can be of multiple words) in single or double quotes.
     Has a time delay to avoid overwhelming the webserver.
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def IPM(searchTerms = [], *args):
     print('Sending '+ searchTerms + ' to Pubmed and display list of search results in separate tabs of the default brower.')
     for term in searchTerms:
@@ -2266,35 +1924,23 @@ cmd.extend('IPM',IPM)
 def IUCR(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Open website of the IUCr Journals.
 
     USAGE:
-
     IUCR
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     IUCR
 
     MORE DETAILS:
-
     Open website of the IUCr Journals.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def IUCR(searchTerm="pymol"):
     webbrowser.open('https://journals.iucr.org/')
     '''
@@ -2305,51 +1951,37 @@ cmd.extend('IUCR',IUCR)
 def JASP():
     ''' 
     DESCRIPTION:
-
     Open JASP from within PyMOL.
 
     USAGE:
-
     JASP
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     JASP
 
     MORE DETAILS:
-
     Open JASP from within PyMOL.
     The is a data analysis program that can do Bayesian and frequentist statistics in parallel.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = jaspPath;
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg =jaspPath;subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def JASP():
-    arg = jaspPath
-    subprocess.call(arg,shell=True)
+    subprocess.call(jaspOpen)
     return
 
     '''
 
-    arg = jaspPath
-    subprocess.call(arg,shell=True)
+    subprocess.call(jaspOpen)
     return
 
 cmd.extend('JASP',JASP)
@@ -2357,35 +1989,23 @@ cmd.extend('JASP',JASP)
 def JM():
     ''' 
     DESCRIPTION:
-
     Open the Jmol wiki.
 
     USAGE:
-
     JM
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     JM
 
     MORE DETAILS:
-
     Open the Jmol wiki.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def JM():
     webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
 
@@ -2398,50 +2018,36 @@ cmd.extend('JM',JM)
 def JMP():
     ''' 
     DESCRIPTION:
-
     Open the JMP from within PyMOL. 
 
     USAGE:
-
     JMP
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     JMP
 
     MORE DETAILS:
-
     Open the JMP from within PyMOL. 
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = jmpPath;
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = jmpPath;subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def JMP():
-    arg = jmpPath
-    subprocess.call(arg,shell=True)
+    subprocess.call(jmpOpen)
     return
 
     '''
 
-    arg = jmpPath
-    subprocess.call(arg,shell=True)
+    subprocess.call(jmpOpen)
     return
 
 cmd.extend('JMP',JMP)
@@ -2449,35 +2055,23 @@ cmd.extend('JMP',JMP)
 def LBSF():
     ''' 
     DESCRIPTION:
-
     Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.
 
     USAGE:
-
     LBSF
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LBSF
 
     MORE DETAILS:
-
     Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def LBSF():
     webbrowser.open('https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx')
 
@@ -2490,23 +2084,17 @@ cmd.extend('LBSF',LBSF)
 def LBST():
     ''' 
     DESCRIPTION:
-
     G2G3/U9U8 base step , PDB code 4PCO. 
 
     USAGE:
-
     LBST
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LBST
 
     MORE DETAILS:
-
     G2G3/U9U8 base step, PDB code 4PCO. 
     From the 1.32 Angstrom resolution structure 
     of an RNA decamer with 8 GU base pairs.
@@ -2519,9 +2107,7 @@ def LBST():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 4pco.pdb;
     select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
@@ -2556,16 +2142,12 @@ def LBST():
     ray 1600,1000;
     png 4pco.png
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 4PCO.pdb;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
-
     PYTHON CODE:
-
 def LBST():
     cmd.reinitialize()
-    cmd.load('4pco.pdb')
+    cmd.load(localPDBfilePath + '4pco.pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -2597,7 +2179,7 @@ def LBST():
     '''
 
     cmd.reinitialize()
-    cmd.load('4pco.pdb')
+    cmd.load(localPDBfilePath + '4pco.pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -2631,24 +2213,18 @@ cmd.extend('LBST',LBST)
 def LG():
     ''' 
     DESCRIPTION:
-
     Nine sugar glycan in influenza N9 neuraminidase, PDB code 4dgr.
 
 
     USAGE:
-
     LG
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     LG
 
     MORE DETAILS:
-
     Nine sugar glycan in influenza N9 neuraminidase at 1.55 Angstrom  resolution, PDB code 4dgr. 
     The electron density map is contoured at 1.0 sigma. 
     39 commands were used to make this figure.  
@@ -2659,9 +2235,7 @@ def LG():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 4dgr, async=0;
     fetch 4dgr, type=2fofc,async=0;
@@ -2701,14 +2275,10 @@ def LG():
     set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);
     preset.ball_and_stick("all",mode=1);
     draw 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 4dgr, async=0;fetch 4dgr, type=2fofc, async=0;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
 
-
     PYTHON CODE:
-
 def LG():
     cmd.reinitialize()
     cmd.fetch('4dgr')
@@ -2797,25 +2367,19 @@ cmd.extend('LG',LG)
 def LGGT():
     ''' 
     DESCRIPTION:
-
     WT human gamma glutamyl transpeptidase as cartoon. PDB code 4gdx. 
 
 
 
     USAGE:
-
     LGGT
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LGGT
 
     MORE DETAILS:
-
     WT human gamma glutamyl transpeptidase at 1.67 Angstrom
     resolution as cartoon. PDB code 4gdx. 
     4gdx.pdb must be in the current working directory. 
@@ -2828,9 +2392,7 @@ def LGGT():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 4gdx.pdb;
     remove name H*;
@@ -2848,17 +2410,13 @@ def LGGT():
     disable ASNNAG;
     set_view (0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); 
     draw 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 4gdx.pdb;remove name H*;as cartoon;bg_color white; hide (name c+o+n);set cartoon_side_chain_helper,  on;color red, 4gdx and ss H; color yellow,4gdx and ss S;color green,4gdx and ss L+; select ASNNAG,resn NAG or resi 95 or i. 120  or i. 230 or i. 266 or i. 344 ori. 511 or i. 381; color red, elem o and ASNNAG; color blue, elem n and ASNNAG;color yellow, elem c  and ASNNAG;show sticks,ASNNAG;disable ASNNAG; set_view(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0); draw 
 
-
     PYTHON CODE:
-
 def LGGT():
     cmd.reinitialize()
-    cmd.load('4gdx.pdb')
+    cmd.load(localPDBfilePath + '4gdx.pdb')
     cmd.remove('name H*')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -2879,7 +2437,7 @@ def LGGT():
     '''
 
     cmd.reinitialize()
-    cmd.load('4gdx.pdb')
+    cmd.load(localPDBfilePath + '4gdx.pdb')
     cmd.remove('name H*')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -2902,33 +2460,25 @@ cmd.extend('LGGT',LGGT)
 def LGU():
     ''' 
     DESCRIPTION:
-
     10-mer dsRNA. 
 
 
     USAGE:
-
     LGU
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LGU
 
     MORE DETAILS:
-
     10-mer dsRNA. 
     1.32 Angstrom resolution: 4PCO. Has five strands in 
     the asymmetric unit. Deleted chain E and cobalt 
     hexammine 102. Cartoon with filled rings and
     bases cartoon.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 4PCO.pdb;
     hide everything; 
@@ -2957,17 +2507,13 @@ def LGU():
     -0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,
     233.71,-20.0);
     draw 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 4PCO.pdb,async=0;hide everything;bg_color white; cartoon oval;set cartoon_ring_mode, 3;set cartoon_nucleic_acid_color, blue;select rna_A, resn A;select rna_C,resn C;select rna_G, resn G;select rna_U, resn U;color yellow, rna_A; color red, rna_C;color gray40, rna_G; color palecyan, rna_U;as cartoon;disable rna_U; set stick_radius, 0.12;set nb_spheres_size, 0.3; show nb_spheres; set stick_ball, on;set stick_ball_ratio, 1.8; show sticks, resn NCO;show spheres, name Cl; set_view (0.34,-0.81,0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0);draw 
 
-
     PYTHON CODE:
-
 def LGU():
     cmd.reinitialize();
-    cmd.load('4PCO.pdb')
+    cmd.load(localPDBfilePath + '4PCO.pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -2996,7 +2542,7 @@ def LGU():
     '''
 
     cmd.reinitialize();
-    cmd.load('4PCO.pdb')
+    cmd.load(localPDBfilePath + '4PCO.pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -3027,24 +2573,18 @@ cmd.extend('LGU',LGU)
 def LLG():
     ''' 
     DESCRIPTION:
-
     Nine sugar glycan in influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
 
 
     USAGE:
-
     LLG
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LLG
 
     MORE DETAILS:
-
     Nine sugar glycan in influenza N9 neuraminidase at 
     1.55 Angstrom  resolution, PDB code 4dgr. 
     The electron density map is contoured at 1.0 sigma. 
@@ -3058,9 +2598,7 @@ def LLG():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 4dgr.pdb;
     load 4dgr2FoFc.ccp4;
@@ -3101,17 +2639,13 @@ def LLG():
     preset.ball_and_stick("all",mode=1);
     draw 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 4dgr.pdb;fetch 4dgr2FoFc.mtz;select LongGlycan, resi 469:477;orient LongGlycan;remove not LongGlycan;remove name H*;isomesh 2fofcmap, 4dgr_2fofc, 1, LongGlycan, carve = 1.8;color density, 2fofcmap; show sticks;show spheres;set stick_radius, .07;set sphere_scale, .19;set sphere_scale, .13, elem H;set bg_rgb=[1, 1, 1];set stick_quality, 50;set sphere_quality, 4;color gray85, elem C;color red, elem O;color slate, elem N;color gray98, elem H;set stick_color, gray50;set ray_trace_mode, 1;set ray_texture, 2;set antialias, 3;set ambient, 0.5;set spec_count, 5;set shininess, 50;set specular, 1;set reflect, .1;set dash_gap, 0;set dash_color, black;set dash_gap, .15;set dash_length, .05;set dash_round_ends, 0;set dash_radius, .05;set_view (0.34,-0.72,0.61,0.8,0.56,0.22,-0.51,0.4,0.77,0.0,0.0,-81.31,44.64,-9.02,58.62,65.34,97.28,-20.0);preset.ball_and_stick("all",mode=1);draw 
-
     PYTHON CODE:
-
 def LLG():
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.load('4dgr2FoFc.ccp4')
+    cmd.load(localEMAPfilePath + '4dgr2FoFc.ccp4')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3153,7 +2687,7 @@ def LLG():
 
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.load('4dgr2FoFc.ccp4')
+    cmd.load(localEMAPfilePath + '4dgr2FoFc.ccp4')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3196,23 +2730,17 @@ cmd.extend('LLG',LLG)
 def LN9():
     ''' 
     DESCRIPTION:
-
     Influenza N9 neuraminidase, PDB code 4dgr.
 
     USAGE:
-
     LN9
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LN9
 
     MORE DETAILS:
-
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code
     4dgr. The biological unit has four copies of the asymmetric unit.
     View is down the four-fold axis. Requires the quat.py script by
@@ -3227,9 +2755,7 @@ def LN9():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 4dgr.pdb;
     run $HOME/mg18OU/quat.py;
@@ -3245,17 +2771,13 @@ def LN9():
     set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
     draw 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 4dgr.pdb;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
 
-
     PYTHON CODE:
-
 def LN9():
     cmd.reinitialize()
-    cmd.load('4dgr.pdb')
+    cmd.load(localPDBfilePath + '4dgr.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
@@ -3272,7 +2794,7 @@ def LN9():
     '''
 
     cmd.reinitialize()
-    cmd.load('4dgr.pdb')
+    cmd.load(localPDBfilePath + '4dgr.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
@@ -3291,24 +2813,18 @@ cmd.extend('LN9',LN9)
 def LNA():
     ''' 
     DESCRIPTION:
-
     Hydrated sodium cation bound in major groove of RNA with 16 Watson-Crick base pairs.
 
 
     USAGE:
-
     LNA
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LNA
 
     MORE DETAILS:
-
     Hydrated sodium cation bound in major groove of RNA with 16 Watson-Crick base pairs.
     The sodium is bound to the N7 nitrogen atom of 
     Adenine 3 at 1.55 Angstrom resolution, PDB code 3nd4. 
@@ -3330,9 +2846,7 @@ def LNA():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     viewport 900,600;
     load 3nd4.pdb;
@@ -3393,17 +2907,13 @@ def LNA():
     disable carbon;
     set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0);
     rock
-
     HORIZONTAL PML SCRIPT:
-
     delete all;viewport 900,600;load 3nd4.pdb;hide cartoon;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;rock;AOset_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
-
     PYTHON CODE:
-
 def LNA():
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.load('3nd4.pdb');
+    cmd.load(localPDBfilePath + '3nd4.pdb');
     cmd.hide('cartoon');
     cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4');
@@ -3468,7 +2978,7 @@ def LNA():
 
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.load('3nd4.pdb');
+    cmd.load(localPDBfilePath + '3nd4.pdb');
     cmd.hide('cartoon');
     cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4');
@@ -3534,30 +3044,22 @@ cmd.extend('LNA',LNA)
 def LT4L():
     ''' 
     DESCRIPTION:
-
     Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
 
 
     USAGE:
-
     LT4L
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LT4L
 
     MORE DETAILS:
-
     Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
     The file 3FA0 must be in the current working directory. 
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 3fa0.pdb;
     orient;
@@ -3573,17 +3075,13 @@ def LT4L():
     set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
     ray 1500,1600;
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 3fa0.pdb;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
 
-
     PYTHON CODE:
-
 def LT4L():
     cmd.reinitialize()
-    cmd.load('3fa0.pdb')
+    cmd.load(localPDBfilePath + '3fa0.pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -3601,7 +3099,7 @@ def LT4L():
     '''
 
     cmd.reinitialize()
-    cmd.load('3fa0.pdb')
+    cmd.load(localPDBfilePath + '3fa0.pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -3621,32 +3119,24 @@ cmd.extend('LT4L',LT4L)
 def LU8():
     ''' 
     DESCRIPTION:
-
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
 
 
     USAGE:
-
     LU8
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LU8
 
     MORE DETAILS:
-
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
     Has one strand in the asymmetric unit. Uses quat.py to generate
     the second strand. Cartoon with filled rings and bases cartoon.
     The file 3nd3.pdb needs to be in the current working directory.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     load 3nd3.pdb;
     run $HOME/mg18OU/quat.py;
@@ -3662,16 +3152,12 @@ def LU8():
     as cartoon;
     set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 3nd3.pdb;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
-
     PYTHON CODE:
-
 def LU8():
     cmd.reinitialize()
-    cmd.load('3nd3.pdb')
+    cmd.load(localPDBfilePath + '3nd3.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
@@ -3689,7 +3175,7 @@ def LU8():
     '''
 
     cmd.reinitialize()
-    cmd.load('3nd3.pdb')
+    cmd.load(localPDBfilePath + '3nd3.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
@@ -3709,31 +3195,23 @@ cmd.extend('LU8',LU8)
 def LWC8():
     ''' 
     DESCRIPTION:
-
     16-mer dsRNA, Watson-Crick helix RNA, 3nd4.
 
     USAGE:
-
     LWC8
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     LWC8
 
     MORE DETAILS:
-
     16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
     resolution: 3nd4.  Has one strand in the asymmetric unit. 
     Needs quat.py to generate the second strand. 
     Cartoon with filled rings and bases cartoon.
     The file 3nd4.pdb must be in the current working directory.
-
     VERTICAL PML SCRIPT:
-
     delete all; 
     load 3nd4.pdb;
     hide everything;
@@ -3750,16 +3228,12 @@ def LWC8():
     hide everything,name H*;
     rock
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;load 3nd4.pdb;hide everything;run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
-
     PYTHON CODE:
-
 def LWC8():
     cmd.reinitialize()
-    cmd.load('3nd4.pdb')
+    cmd.load(localPDBfilePath + '3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
     cmd.do('run $HOME/mg18OU/quat.py')
@@ -3777,7 +3251,7 @@ def LWC8():
     '''
 
     cmd.reinitialize()
-    cmd.load('3nd4.pdb')
+    cmd.load(localPDBfilePath + '3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
     cmd.do('run $HOME/mg18OU/quat.py')
@@ -3797,35 +3271,23 @@ cmd.extend('LWC8',LWC8)
 def MA(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
-
     Send search term to all searchable websites in pymolshortcuts.
 
     USAGE:
-
     MA
 
     Arguments:
-
     search term(s), N
-
     EXAMPLE:
-
     MA pymol plugin
 
     MORE DETAILS:
-
     Send search term to all searchable websites in pymolshortcuts.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MA(searchTerm='pymol'):
     AX(searchTerm)
     BX(searchTerm)
@@ -3868,35 +3330,23 @@ cmd.extend('MA',MA)
 def MB(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
-
     Send search term to multiple sites that contain book content.
 
     USAGE:
-
     MB
 
     Arguments:
-
     search term(s)
-
     EXAMPLE:
-
     MB pymol plugin
 
     MORE DETAILS:
-
     Send search term to search multiple sites that contain book content.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MB(searchTerm='pymol'):
     GB(searchTerm)
     SD(searchTerm)
@@ -3913,23 +3363,17 @@ cmd.extend('MB',MB)
 def MC(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
-
     Send search term to search ten core websites in pymolshortcuts:
 
     USAGE:
-
     MC
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     MC pymol
 
     MORE DETAILS:
-
     Send search term to search ten core websites in pymolshortcuts:
 
     bioRxiv
@@ -3943,17 +3387,11 @@ def MC(searchTerm='pymol'):
     Science Direct
     Stackoverflow
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MC(searchTerm='pymol'):
     BX(searchTerm)
     GH(searchTerm)
@@ -3984,35 +3422,23 @@ cmd.extend('MC',MC)
 def MCL():
     ''' 
     DESCRIPTION:
-
     Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma.
 
     USAGE:
-
     MCL
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     MCL
 
     MORE DETAILS:
-
     Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MCL():
     webbrowser.open('http://structuralbiology.ou.edu/mcl')
     '''
@@ -4023,35 +3449,23 @@ cmd.extend('MCL',MCL)
 def MG():
     ''' 
     DESCRIPTION:
-
     Open website of the OUHSC molecular graphics course.
 
     USAGE:
-
     MG
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     MG
 
     MORE DETAILS:
-
     Open website of the OUHSC molecular graphics course.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MG():
     webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
     '''
@@ -4062,23 +3476,17 @@ cmd.extend('MG',MG)
 def MM(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
-
     Send search term to search for manuscripts in pymolshortcuts.
 
     USAGE:
-
     MM
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     MM pymol
 
     MORE DETAILS:
-
     Send search term to search for manuscripts in pymolshortcuts:
 
     arXiv
@@ -4089,17 +3497,11 @@ def MM(searchTerm='pymol'):
     Science Direct
     Springer
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def MM(searchTerm='pymol'):
     AX(searchTerm)
     BX(searchTerm)
@@ -4124,24 +3526,18 @@ cmd.extend('MM',MM)
 def N9():
     ''' 
     DESCRIPTION:
-
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
 
 
     USAGE:
-
     N9
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     N9
 
     MORE DETAILS:
-
     Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code 4dgr.
     The biological unit has four copies of the asymmetric unit.
     View is down the four-fold axis. Requires the quat.py script by
@@ -4155,9 +3551,7 @@ def N9():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 4dgr, type=pdb, async=0;
     run $HOME/mg18OU/quat.py;
@@ -4173,14 +3567,10 @@ def N9():
     set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0);
     draw 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 4dgr, type=pdb, async=0;run $HOME/mg18OU/quat.py; quat 4dgr;as cartoon; bg_color white;color red, 4dgr_1 and ss H;color yellow,4dgr_1 and ss S;color green, 4dgr_1 and ss L+;color cyan, (not 4dgr_1 and ss H);color magenta, (not 4dgr_1 and ss S);color orange, (not 4dgr_1 and ss L+);set_view (0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0); draw 
 
-
     PYTHON CODE:
-
 def N9():
     cmd.reinitialize()
     cmd.fetch('4dgr', type='pdb1')
@@ -4217,24 +3607,18 @@ cmd.extend('N9',N9)
 def NA():
     ''' 
     DESCRIPTION:
-
     Hydrated sodium cation bound in major groove of a 16-mer RNA of Watson-Crick base pairs.
 
 
     USAGE:
-
     NA
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     NA
 
     MORE DETAILS:
-
     Hydrated sodium cation bound in major groove of a 
     16-mer RNA of Watson-Crick base pairs.
     The sodium is bound to the N7 nitrogen atom of 
@@ -4249,9 +3633,7 @@ def NA():
     Include the path to the file if the labels file is not 
     in the current working directory of PyMOL. 
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     viewport 900,600;
     fetch 3nd4, type=pdb, async=0;
@@ -4312,14 +3694,10 @@ def NA():
     disable carbon;
     set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0)
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;viewport 900,600;fetch 3nd4, type=pdb,async=0;run ~/mg18OU/quat.py;quat 3nd4; show sticks;set stick_radius=0.125;hide everything, name H*;bg_color white;create coorCov, (3nd4_1 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)));bond (coorCov//A/NA`19/NA),(coorCov//A/A`3/N7); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`119/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`219/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`319/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`419/O); bond (coorCov//A/NA`19/NA),(coorCov//A/HOH`519/O);distance (3nd4_1 and chain Aand resi 19 and name NA), (3nd4_1 and chain A and resi 519);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 419);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 119);distance (3nd4_1 and chain A and resi 19 and name NA),(3nd4_1 and chain A and resi 319);distance (3nd4_1 and chain A and resi 19 and name NA), (3nd4_1 and chain A and resi 219);show nb_spheres; set nb_spheres_size, .35;distance hbond1,/3nd4_1/1/A/HOH`119/O, /3nd4_1/1/A/A`3/OP2;distance hbond2,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/A`3/OP2;distance hbond3,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/HOH`119/O;distance hbond4,/3nd4_1/1/A/G`4/N7,/3nd4_1/1/A/HOH`91/O;distance hbond5,/3nd4_1/1/A/G`4/O6, /3nd4_1/1/A/HOH`419/O;distance hbond6,/3nd4_1/1/A/HOH`91/O, /3nd4_1/1/A/G`4/OP2;distance hbond7,/3nd4_1/1/A/HOH`319/O, /3nd4_1/1/A/G`2/OP2;distance  hbond9,/3nd4_1/1/A/HOH`419/O,/3nd4_2/2/A/HOH`74/O;distance hbond10,/3nd4_2/2/A/C`15/O2,/3nd4_1/1/A/G`2/N2;distance hbond11, /3nd4_2/2/A/C`15/N3,/3nd4_1/1/A/G`2/N1;distance hbond12,/3nd4_2/2/A/C`15/N4,/3nd4_1/1/A/G`2/O6;distance hbond13, /3nd4_2/2/A/U`14/N3,/3nd4_1/1/A/A`3/N1;distance hbond14,3nd4_2/2/A/U`14/O4,/3nd4_1/1/A/A`3/N6;distance hbond15, /3nd4_2/2/A/C`13/N4,/3nd4_1/1/A/G`4/O6;distance hbond16,/3nd4_2/2/A/C`13/N3, /3nd4_1/1/A/G`4/N1;distance hbond17, /3nd4_1/1/A/G`4/N2,/3nd4_2/2/A/C`13/O2;distance hbond18,/3nd4_1/1/A/G`2/N2,/3nd4_2/2/A/C`15/O2;distance hbond19,/3nd4_1/1/A/HOH`91/O,/3nd4_1/1/A/G`4/OP2;set depth_cue=0;set ray_trace_fog=0;set dash_color, black;set label_font_id, 5;set label_size, 36;set label_position, (0.5, 1.0, 2.0);set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;set label_color, black;set dash_gap, 0.2;set dash_width, 2.0;set dash_length, 0.2;select carbon, element C; color yellow, carbon;disable carbon;set_view (-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0); 
 
-
     PYTHON CODE:
-
 def NA():
     cmd.reinitialize();
     cmd.viewport('900','600');
@@ -4446,35 +3824,23 @@ cmd.extend('NA',NA)
 def NDB():
     ''' 
     DESCRIPTION:
-
     Open website of the Nucleic Acid Database.
 
     USAGE:
-
     NDB
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     NDB
 
     MORE DETAILS:
-
     Open website of the Nucleic Acid Database.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def NDB():
     webbrowser.open('https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems')
     '''
@@ -4485,35 +3851,23 @@ cmd.extend('NDB',NDB)
 def NSLSII():
     ''' 
     DESCRIPTION:
-
     Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
 
     USAGE:
-
     NSLSII
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     NSLSII
 
     MORE DETAILS:
-
     Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def NSLSII():
     webbrowser.open('https://www.bnl.gov/ps/')
     '''
@@ -4524,35 +3878,23 @@ cmd.extend('NSLSII',NSLSII)
 def PDB(searchTerm="3fa0",numHits="5"):
     ''' 
     DESCRIPTION:
-
     Submit a search term to the Protein Data Bank.
 
     USAGE:
-
     PDB
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     PBB 3fa0
 
     MORE DETAILS:
-
     Submit a search term to the Protein Data Bank.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PDB(searchTerm="3fa0",numHits="5"):
     webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
     '''
@@ -4563,42 +3905,30 @@ cmd.extend('PDB',PDB)
 def PE(selection):
     ''' 
     DESCRIPTION:
-
     Apply pearl effect about cations.
 
     USAGE:
-
     PE
 
     Arguments:
-
     selection
-
     EXAMPLE:
-
     PE selection
 
     MORE DETAILS:
-
     Apply pearl effect about cations. 
     This effect shows a transparent sphere around an inner opaque sphere.
     Must supply the <selection> of a cation or anion. 
-
     VERTICAL PML SCRIPT:
-
     select magnesium1, <selection>
     create magnesium2, magnesium1
     show spheres, magnesium1
     show spheres, magnesium2
     set spehrical transparency, 0.4, magnesium2
     set spehrescale, 1.05, magnesium2
-
     HORIZONTAL PML SCRIPT:
-
     select magnesium1, <selection>;create magnesium2, magnesium1;show spheres, magnesium1;show spheres, magnesium2;set spehrical transparency, 0.4, magnesium2;set spehrescale, 1.05, magnesium2
-
     PYTHON CODE:
-
 def PE(selection):
     cmd.select('magnesium1',selection)
     cmd.create('magnesium2', 'magnesium1')
@@ -4621,39 +3951,27 @@ cmd.extend('PE',PE)
 def PM(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Send search term or phrase to PubMed.
 
     USAGE:
-
     PM
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     PM
 
     MORE DETAILS:
-
     Send search term or phrase to PubMed.
     The default web browser is used.
     The multi word search terms do not need to be enclosed in quotes. 
     Takes one search term but multiple commands can be submitted at once (see below).
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PM(searchTerm="pymol"):
     webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
 
@@ -4666,23 +3984,17 @@ cmd.extend('PM',PM)
 def PML(searchTerm="3d_pdf"):
     ''' 
     DESCRIPTION:
-
     Submit a search term to the PyMOL Users Mail Service.
 
     USAGE:
-
     PML
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     PML session file
 
     MORE DETAILS:
-
     Submit a search term to the PyMOL Users Mail Service.
 
     Single term search (multi word searches do NOT have to be inside quotes):
@@ -4691,17 +4003,11 @@ def PML(searchTerm="3d_pdf"):
     Multiple term search: 
     PML text editor; PML 3d pdf; PML black and white cartoon;
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PML(searchTerm="3d_pdf"):
     webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
 
@@ -4714,35 +4020,23 @@ cmd.extend('PML',PML)
 def PPC():
     ''' 
     DESCRIPTION:
-
     Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
 
     USAGE:
-
     PPC
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     PPC
 
     MORE DETAILS:
-
     Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PPC():
     webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
 
@@ -4755,35 +4049,23 @@ cmd.extend('PPC',PPC)
 def PS():
     ''' 
     DESCRIPTION:
-
     Open the home page of the Protein Soceity.
 
     USAGE:
-
     PS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     PS
 
     MORE DETAILS:
-
     Open the home page of the Protein Soceity.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PS():
     webbrowser.open('https://www.proteinsociety.org/')
     '''
@@ -4794,35 +4076,23 @@ cmd.extend('PS',PS)
 def PW(searchTerm="3d_pdf"):
     ''' 
     DESCRIPTION:
-
     Submit search of the PyMOL Wiki. 
 
     USAGE:
-
     PW
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     PW
 
     MORE DETAILS:
-
     Submit search of the PyMOL Wiki.    
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def PW(searchTerm="3d_pdf"):
     webbrowser.open('https://pymolwiki.org/index.php/'+searchTerm)
     '''
@@ -4833,35 +4103,23 @@ cmd.extend('PW',PW)
 def RG(searchTerm='best molecular graphics program'):
     ''' 
     DESCRIPTION:
-
     Submit a search query of Research Gate. 
 
     USAGE:
-
     RG
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     RG best molecular graphics program
 
     MORE DETAILS:
-
     Submit a search query of Research Gate. 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def RG(searchTerm='best molecular graphics program'):
     webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
     '''
@@ -4872,35 +4130,23 @@ cmd.extend('RG',RG)
 def RS():
     ''' 
     DESCRIPTION:
-
     Open the homepage of the RNA Society.
 
     USAGE:
-
     RS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     RS
 
     MORE DETAILS:
-
      Open the homepage of the RNA Society.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def RS():
     webbrowser.open('https://www.rnasociety.org/')
 
@@ -4910,38 +4156,60 @@ def RS():
 
 cmd.extend('RS',RS)
 
+def RStudio():
+    ''' 
+    DESCRIPTION:
+    Open Rstudio GUI.
+
+    USAGE:
+    RStudio
+
+    Arguments:
+    None
+    EXAMPLE:
+    subprocess.call(RStudioOpen); return      
+
+    MORE DETAILS:
+    Open RStudio from within PyMOL.
+
+    VERTICAL PML SCRIPT:
+    subprocess.call(RStudioOpen); 
+return   
+
+    HORIZONTAL PML SCRIPT:
+    subprocess.call(RStudioOpen); return
+    PYTHON CODE:
+def RStudio():
+    subprocess.call(RStudioOpen)
+    return
+
+    '''
+
+    subprocess.call(RStudioOpen)
+    return
+
+cmd.extend('RStudio',RStudio)
+
 def SAXS():
     ''' 
     DESCRIPTION:
-
     Open the webpage of SAXS links at OUHSC. 
 
     USAGE:
-
     SAXS
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SAXS
 
     MORE DETAILS:
-
     Open the webpage of SAXS links at OUHSC. 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SAXS():
     webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0')
     '''
@@ -4952,35 +4220,23 @@ cmd.extend('SAXS',SAXS)
 def SB():
     ''' 
     DESCRIPTION:
-
     Open the webpage of SSRL Biological SAXS at BL 4-2.
 
     USAGE:
-
     SB
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SB
 
     MORE DETAILS:
-
     Open the webpage of SSRL Biological SAXS at BL 4-2.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SB():
     webbrowser.open('https://www-ssrl.slac.stanford.edu/~saxs/')
     '''
@@ -4991,35 +4247,23 @@ cmd.extend('SB',SB)
 def SBGRID():
     ''' 
     DESCRIPTION:
-
     Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
 
     USAGE:
-
     SBGRID
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SBGRID
 
     MORE DETAILS:
-
     Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SBGRID():
     webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
     '''
@@ -5030,23 +4274,17 @@ cmd.extend('SBGRID',SBGRID)
 def SC():
     ''' 
     DESCRIPTION:
-
     Print to screen list of the shortcuts that are available in the script pymolshortcuts.py. 
 
     USAGE:
-
     SC
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SC
 
     MORE DETAILS:
-
     Print to screen list of the shortcuts that are available in the script pymolshortcuts.py.  
     Copyright (C) 2018  Blaine Mooers. 
     This script comes with ABSOLUTELY NO WARRANTY; for details, 
@@ -5374,18 +4612,12 @@ def SC():
     Type 'help rline' to see commands for moving cursor on the command line.
 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
     Scroll up to see the list of shortcuts and their descriptions.
-
     PYTHON CODE:
-
 def SC():
     print(SC.__doc__)
 
@@ -5398,23 +4630,17 @@ cmd.extend('SC',SC)
 def SD(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Submit a search term to Science Direct.
 
     USAGE:
-
     SD
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     SD session file
 
     MORE DETAILS:
-
     Submit a search term to Science Direct.
 
     Single term search (multi word searches do NOT have to be inside quotes):
@@ -5423,17 +4649,11 @@ def SD(searchTerm="pymol"):
     Multiple term search: 
     SD text editor; SD 3d pdf; SD black and white cartoon;
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SD(searchTerm="pymol"):
     url1 = 'https://www.sciencedirect.com/search/advanced?qs='
     url2 = '&show=100&sortBy=relevance'
@@ -5450,35 +4670,23 @@ cmd.extend('SD',SD)
 def SF(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
-
     Send search term to sourceforge.
 
     USAGE:
-
     SF
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     SF pymol
 
     MORE DETAILS:
-
     Send search term to sourceforge.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SF(searchTerm='pymol'):
     url = "https://stackoverflow.com/search?q="
     webbrowser.open(url+searchTerm)
@@ -5493,35 +4701,23 @@ cmd.extend('SF',SF)
 def SO(searchTerm="3d_pdf"):
     ''' 
     DESCRIPTION:
-
     Submit a search term to Stackoverflow.
 
     USAGE:
-
     SO
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SO
 
     MORE DETAILS:
-
     Submit a search term to Stackoverflow.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SO(searchTerm="3d_pdf"):
     url = "https://stackoverflow.com/search?q="
     webbrowser.open(url+searchTerm)
@@ -5536,35 +4732,23 @@ cmd.extend('SO',SO)
 def SP(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
-
     Submit a search term to Springer Books
 
     USAGE:
-
     SP
 
     Arguments:
-
     searchTerm
-
     EXAMPLE:
-
     SP
 
     MORE DETAILS:
-
     Submit a search term to Springer Books.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SP(searchTerm="pymol"):
     url1 = 'https://www.springer.com/gp/search?query='
     url2 = '&submit=Submit+Query'
@@ -5581,35 +4765,23 @@ cmd.extend('SP',SP)
 def SSRL():
     ''' 
     DESCRIPTION:
-
     Open the webpage of SSRL Structural Molecular Biology.
 
     USAGE:
-
     SSRL
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SSRL
 
     MORE DETAILS:
-
     Open the webpage of SSRL Structural Molecular Biology.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SSRL():
     webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
 
@@ -5622,24 +4794,18 @@ cmd.extend('SSRL',SSRL)
 def SSURF():
     ''' 
     DESCRIPTION:
-
     Open the webpage of the Society for Science at User Research Facilities (SSURF).
 
 
     USAGE:
-
     SSURF
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SSURF
 
     MORE DETAILS:
-
     Open the webpage of the Society for Science at User Research Facilities (SSURF).
     SSURF is nonprofit organization in the US that serves as the
     nexus for users and user executive committees at
@@ -5648,17 +4814,11 @@ def SSURF():
     the importance of national laboratories in science. Membership
     is free of students. The annual fee is nominal for PIs. 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SSURF():
     webbrowser.open('http://www.ssurf.org/')
     '''
@@ -5669,35 +4829,23 @@ cmd.extend('SSURF',SSURF)
 def SciPy19():
     ''' 
     DESCRIPTION:
-
     Open the SciPy 2019 YouTube Channel.
 
     USAGE:
-
     SciPy19
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     SciPy19
 
     MORE DETAILS:
-
     Open the SciPy 2019 YouTube Channel.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def SciPy19():
     webbrowser.open('https://www.scipy2019.scipy.org')
     '''
@@ -5708,23 +4856,17 @@ cmd.extend('SciPy19',SciPy19)
 def T4L():
     ''' 
     DESCRIPTION:
-
     WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0. 
 
     USAGE:
-
     T4L
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     T4L
 
     MORE DETAILS:
-
     WT T4 lysozyme as ribbon diagram (1.08 Ang):  3FA0. 
     Type 'T4L' to activate. Type 'help T4L' to see this documentation
     printed to the command history window. Select from the command
@@ -5734,9 +4876,7 @@ def T4L():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 3fa0,type=pdb,async=0;
     orient;
@@ -5752,14 +4892,10 @@ def T4L():
     set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); 
     ray 1500,1600;
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 3fa0,type=pdb,async=0;orient;turn z,-90;turn y,-5;turn x,10; hide everything; bg_color white;show cartoon;color red, ss H;color yellow, ss S;color green, ss L+;set_view (-0.18,-0.69,-0.7,0.98,-0.17,-0.09,-0.06,-0.7,0.71,0.0,0.0,-165.67,34.77,11.27,9.52,132.07,199.27,-20.0); ray 1500,1600; 
 
-
     PYTHON CODE:
-
 def T4L():
     cmd.reinitialize()
     cmd.fetch('3fa0', type='pdb')
@@ -5800,24 +4936,18 @@ cmd.extend('T4L',T4L)
 def U8():
     ''' 
     DESCRIPTION:
-
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
 
 
     USAGE:
-
     U8
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     U8
 
     MORE DETAILS:
-
     16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3.
     Has one strand in the asymmetric unit. Uses quat.py to generate
     the second strand. Cartoon with filled rings and bases cartoon.
@@ -5831,9 +4961,7 @@ def U8():
 
 
    >>>  Edit file path to quat.py in Python code below.
-
     VERTICAL PML SCRIPT:
-
     delete all;
     fetch 3nd3,type=pdb,async=0;
     run $HOME/mg18OU/quat.py;
@@ -5849,14 +4977,10 @@ def U8():
     as cartoon;
     set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all;fetch 3nd3,type=pdb,async=0;run $HOME/mg18OU/quat.py;quat 3nd3;hide everything;bg_color white; show sticks;set cartoon_ring_mode, 3;set cartoon_ring_finder, 1;set cartoon_ladder_mode, 1;set cartoon_nucleic_acid_mode, 4;set cartoon_ring_transparency, 0.5;as cartoon;set_view (-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0);draw; 
 
-
     PYTHON CODE:
-
 def U8():
     cmd.reinitialize()
     cmd.fetch('3nd3', type='pdb1')
@@ -5895,23 +5019,17 @@ cmd.extend('U8',U8)
 def WC8():
     ''' 
     DESCRIPTION:
-
     16-mer dsRNA, Watson-Crick helix RNA: 3nd4.
 
     USAGE:
-
     WC8
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     WC8
 
     MORE DETAILS:
-
     16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom 
     resolution: 3nd4.  Has one strand in the asymmetric unit. 
     Needs quat.py to generate the second strand. Use the 
@@ -5926,9 +5044,7 @@ def WC8():
     history window at the top of the gui.
 
    >>>  Edit file path to quat.py in Python code below.
-
     VERTICAL PML SCRIPT:
-
     delete all; 
     fetch 3nd4,type=pdb,async=0;
     hide everything;
@@ -5945,13 +5061,9 @@ def WC8():
     hide everything,name H*;
     rock
 
-
     HORIZONTAL PML SCRIPT:
-
     delete all; fetch 3nd4,type=pdb,async=0;hide everything; run $HOME/mg18OU/quat.py; quat 3nd4;bg_color white; show sticks; set stick_radius, 0.12; set nb_spheres_size, 0.25; show nb_spheres; set stick_ball, on; set stick_ball_ratio, 1.8;set_view (-0.99,-0.03,0.17,-0.18,0.02,-0.98,0.03,-1.0,-0.03,0.0,0.0,-169.97,8.1,15.62,-1.69,139.24,200.7,-20.0);hide everything, name H*;rock 
-
     PYTHON CODE:
-
 def WC8():
     cmd.reinitialize()
     cmd.fetch('3nd4', type='pdb1')
@@ -5990,135 +5102,93 @@ cmd.extend('WC8',WC8)
 def atom(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open the text editor Atom from within PyMOL. 
 
     USAGE:
-
     atom
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    atom script.pml
+    atom
 
     MORE DETAILS:
-
-    Open the text editor Atom from within PyMOL. Adjust the path to Atom as needed for your system.
-     
-    >>>  Edit file path in python code below
-
+    Open the text editor Atom from within PyMOL. 
     VERTICAL PML SCRIPT:
-
-     Open file with the text editor Atom from within PyMOL. Adjust the path as needed for your system.
+    subprocess.call(atomOpen);
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = ("/usr/local/bin/atom " + fileName)
-
+    subprocess.call(atomOpen);return
 
     PYTHON CODE:
-
 def atom(fileName="test.pml"):
-    arg = ("/usr/local/bin/atom " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(atomOpen)
     return
     '''
 
-    arg = ("/usr/local/bin/atom " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(atomOpen)
     return
 cmd.extend('atom',atom)
 
 def bbedit(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open file with the text editor bbedit from within PyMOL. 
 
     USAGE:
-
     bbedit
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    bbedit script.pml
+    bbedit
 
     MORE DETAILS:
-
     Open file with the text editor bbedit from within PyMOL. 
     Adjust the path as needed for your system.
-    Only available for the Mac OS.
-
-    >>>  Edit file path in python code below
+    Only available for Mac OS.
 
     VERTICAL PML SCRIPT:
-
-    arg = (bbeditPath + fileName)
-    subprocess.call(arg,shell=True)
-
-
+    subprocess.call(bbeditOpen);
+return
     HORIZONTAL PML SCRIPT:
-
-    arg = (bbeditPath + fileName); subprocess.call(arg,shell=True)
-
+    subprocess.call(bbeditOpen);return
 
     PYTHON CODE:
-
 def bbedit(fileName="test.pml"):
-    arg = (bbeditPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(bbeditOpen)
     return
     '''
 
-    arg = (bbeditPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(bbeditOpen)
     return
 cmd.extend('bbedit',bbedit)
 
 def bs(selection='all'):
     ''' 
     DESCRIPTION:
-
     BallnStick
 
     USAGE:
-
     bs selection
 
     Arguments:
-
     selection
 
-
     EXAMPLE:
-
     bs 3nd3
 
     MORE DETAILS:
-
     # BallnStick creates a ball and stick representation of an object 
 # Bondi VDW values added below to override default Pymol settings
 # From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def bs(selection='all'):
     # Bondi VDW values 
     cmd.alter("elem Ac", "vdw=2.00")
@@ -6416,46 +5486,127 @@ def bs(selection='all'):
     cmd.hide("labels")
 cmd.extend('bs', bs)
 
+def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
+    ''' 
+    DESCRIPTION:
+    Return a selection of buried waters. 
+
+    USAGE:
+    buriedW
+
+    Arguments:
+    sele = string: atom selection {default: all}
+cutoff = float: threshold on what one considers an "exposed"
+atom (in A**2) {default: surface_residue_cutoff}
+state = int: object state {default: 1}
+
+    EXAMPLE:
+    buried 1lw9
+
+
+    MORE DETAILS:
+    Return a selection of buried waters. 
+
+Source: https://pymolwiki.org/index.php/Find_buried_waters
+
+Author:  Unknown
+
+License: GNU Free Documentation License 1.2
+License Link: http://www.gnu.org/licenses/fdl-1.2.html
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
+    cutoff, state, quiet = float(cutoff), int(state), int(quiet)
+
+    tmpObj=_self.get_unused_name("__tmp")
+    _self.create(tmpObj, sele, state, 1, zoom=0)
+
+    _self.set("dot_solvent", 1, tmpObj);
+    _self.get_area(tmpObj, state=1, load_b=1)
+
+    if cutoff < 0:
+        cutoff = _self.get("surface_residue_cutoff")
+    _self.remove(tmpObj + " and not solvent")
+    _self.remove(tmpObj + " and b > %s" % cutoff)
+
+    exposed = set()
+    _self.iterate(tmpObj, "exposed.add((chain,resv))", space=locals())
+
+    selName = _self.get_unused_name("buried")
+    _self.select(selName, "(%s) in %s" % (sele, tmpObj))
+
+    # clean up
+    _self.delete(tmpObj)
+
+    if not quiet:
+        print('Found %d buried water atoms' % (len(exposed)))
+
+    return sorted(exposed)
+
+
+    '''
+
+    cutoff, state, quiet = float(cutoff), int(state), int(quiet)
+
+    tmpObj=_self.get_unused_name("__tmp")
+    _self.create(tmpObj, sele, state, 1, zoom=0)
+
+    _self.set("dot_solvent", 1, tmpObj);
+    _self.get_area(tmpObj, state=1, load_b=1)
+
+    if cutoff < 0:
+        cutoff = _self.get("surface_residue_cutoff")
+    _self.remove(tmpObj + " and not solvent")
+    _self.remove(tmpObj + " and b > %s" % cutoff)
+
+    exposed = set()
+    _self.iterate(tmpObj, "exposed.add((chain,resv))", space=locals())
+
+    selName = _self.get_unused_name("buried")
+    _self.select(selName, "(%s) in %s" % (sele, tmpObj))
+
+    # clean up
+    _self.delete(tmpObj)
+
+    if not quiet:
+        print('Found %d buried water atoms' % (len(exposed)))
+
+    return sorted(exposed)
+
+
+cmd.extend('buriedW', buriedW)
+
 def ccp4mg(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
-
     Open ccp4mg from within PyMOL. 
 
 
 
     USAGE:
-
     ccp4mg
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     ccp4mg
 
     MORE DETAILS:
-
     Open ccp4mg from within PyMOL. 
     Adjust url for your location.
 
-
     VERTICAL PML SCRIPT:
-
     arg = ( ccp4mgCommand + fileName);
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = (ccp4mgCommand + fileName);subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def ccp4mg(fileName="test.pdb"):
     arg = (ccp4mgCommand + fileName)
     subprocess.call(arg,shell=True)
@@ -6469,55 +5620,140 @@ def ccp4mg(fileName="test.pdb"):
 
 cmd.extend('ccp4mg',ccp4mg)
 
+def checkParams(needle, haystack, selName, het, firstOnly):
+    ''' 
+    DESCRIPTION:
+    Checks user params for the findSeq function.
+
+    USAGE:
+    NA
+
+    Arguments:
+    NA
+    EXAMPLE:
+    NA
+
+    MORE DETAILS:
+    Checks user params for the findSeq function.
+
+Source: https://pymolwiki.org/index.php/Findseq
+Author: Jason Vertrees
+Modificaiton: rewrote furnction name in camelcase
+License:  GNU Free Documentation License 1.2
+License Link: 
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def checkParams(needle, haystack, selName, het, firstOnly):
+    """
+    This is just a helper function for checking the user input
+    """
+    # check Needle
+    if len(needle) == 0 or not cmd.is_string(needle):
+        print("Error: Please provide a string 'needle' to search for.")
+        print("Error: For help type 'help motifFinder'.")
+    return False
+
+    # check Haystack
+    if len(haystack) == 0 or not cmd.is_string(haystack):
+        print("Error: Please provide valid PyMOL object or selection name")
+        print("Error: in which to search.")
+        print("Error: For help type 'help motifFinder'.")
+    return False
+
+    # check het
+    try:
+        het = bool(int(het))
+    except ValueError:
+        print("Error: The 'het' parameter was not 0 or 1.")
+    return False
+
+    # check first Only
+    try:
+        firstOnly = bool(int(het))
+    except ValueError:
+        print("Error: The 'firstOnly' parameter was not 0 or 1.")
+    return False
+
+    # check selName
+    if not cmd.is_string(selName):
+        print("Error: selName was not a string.")
+        return False
+    return True
+    '''
+
+    """
+    This is just a helper function for checking the user input
+    """
+    # check Needle
+    if len(needle) == 0 or not cmd.is_string(needle):
+        print("Error: Please provide a string 'needle' to search for.")
+        print("Error: For help type 'help motifFinder'.")
+    return False
+
+    # check Haystack
+    if len(haystack) == 0 or not cmd.is_string(haystack):
+        print("Error: Please provide valid PyMOL object or selection name")
+        print("Error: in which to search.")
+        print("Error: For help type 'help motifFinder'.")
+    return False
+
+    # check het
+    try:
+        het = bool(int(het))
+    except ValueError:
+        print("Error: The 'het' parameter was not 0 or 1.")
+    return False
+
+    # check first Only
+    try:
+        firstOnly = bool(int(het))
+    except ValueError:
+        print("Error: The 'firstOnly' parameter was not 0 or 1.")
+    return False
+
+    # check selName
+    if not cmd.is_string(selName):
+        print("Error: selName was not a string.")
+        return False
+    return True
+
+
 def chimera(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
-
     Open Chimera from within PyMOL. 
  
 
     USAGE:
-
     chimera
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     chimera
 
     MORE DETAILS:
-
     Open Chimera from within PyMOL. 
     Adjust url for your location.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (chimeriaPath + fileName);
-    subprocess.call(arg,shell=True);
+        subprocess.call(chimeraOpen)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
-    arg = (chimeriaPath + fileName);subprocess.call(arg,shell=True);return
-
-
+    subprocess.call(chimeraOpen);return
     PYTHON CODE:
-
 def chimera(fileName="test.pdb"):
-    arg = (chimeriaPath+ fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(chimeraOpen)
     return
 
     '''
 
-    arg = (chimeriaPath+ fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(chimeraOpen)
     return
 
 cmd.extend('chimera',chimera)
@@ -6525,37 +5761,25 @@ cmd.extend('chimera',chimera)
 def cntfiles():
     ''' 
     DESCRIPTION:
-
     Count number of files in current directory.
 
     USAGE:
-
     cntfiles
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     cntfiles
 
     MORE DETAILS:
-
     Count number of files in current directory.
-
     VERTICAL PML SCRIPT:
-
     arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l'
     subprocess.call(arg,shell=True)
     return
-
     HORIZONTAL PML SCRIPT:
-
     arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l';subprocess.call(arg,shell=True);return
-
     PYTHON CODE:
-
 def cntfiles():
     arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l';
     subprocess.call(arg,shell=True);
@@ -6570,40 +5794,28 @@ cmd.extend('cntfiles',cntfiles)
 def cntpdb():
     ''' 
     DESCRIPTION:
-
     Count number of pdb files in current directory.
 
     USAGE:
-
     cntpdb
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     cntpdb
 
     MORE DETAILS:
-
     Count number of pdb files in current directory.
-
     VERTICAL PML SCRIPT:
-
     arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
     subprocess.call(arg,shell=True)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
 subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def cntpdb():
     arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
     subprocess.call(arg,shell=True)
@@ -6620,23 +5832,17 @@ cmd.extend('cntpdb',cntpdb)
 def code(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open file with Visual Studio Code from within PyMOL.
 
     USAGE:
-
     code
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     code script.pml
 
     MORE DETAILS:
-
     Open file with Visual Studio Code from within PyMOL. 
     Install the bioSyntax extension (free) from the Visual Studio Marketplace
     to get color syntax highlighting of pml files along with Fasta and other
@@ -6645,20 +5851,14 @@ def code(fileName="test.pml"):
     https://marketplace.visualstudio.com/items?itemName=reageyao.biosyntax
 
     >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = (codePath + fileName);
     subprocess.call(arg,shell=True)
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = {codePath + fileName);subprocess.call(arg,shell=True)
 
-
     PYTHON CODE:
-
 def code(fileName="test.pml"):
     arg = (codePath + fileName)
     subprocess.call(arg,shell=True)
@@ -6670,46 +5870,258 @@ def code(fileName="test.pml"):
     return
 cmd.extend('code',code)
 
+def colorh1(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 1.
+
+    USAGE:
+    colorh1
+
+    Arguments:
+     <selection>
+    EXAMPLE:
+    colorh1
+colorh1 1lw9
+
+    MORE DETAILS:
+    Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 1 according to https://pymolwiki.org/index.php/Color_h.
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def colorh1(selection='all'):
+    s = str(selection)
+    print(s)
+    cmd.set_color('color_ile',[0.996,0.062,0.062])
+    cmd.set_color('color_phe',[0.996,0.109,0.109])
+    cmd.set_color('color_val',[0.992,0.156,0.156])
+    cmd.set_color('color_leu',[0.992,0.207,0.207])
+    cmd.set_color('color_trp',[0.992,0.254,0.254])
+    cmd.set_color('color_met',[0.988,0.301,0.301])
+    cmd.set_color('color_ala',[0.988,0.348,0.348])
+    cmd.set_color('color_gly',[0.984,0.394,0.394])
+    cmd.set_color('color_cys',[0.984,0.445,0.445])
+    cmd.set_color('color_tyr',[0.984,0.492,0.492])
+    cmd.set_color('color_pro',[0.980,0.539,0.539])
+    cmd.set_color('color_thr',[0.980,0.586,0.586])
+    cmd.set_color('color_ser',[0.980,0.637,0.637])
+    cmd.set_color('color_his',[0.977,0.684,0.684])
+    cmd.set_color('color_glu',[0.977,0.730,0.730])
+    cmd.set_color('color_asn',[0.973,0.777,0.777])
+    cmd.set_color('color_gln',[0.973,0.824,0.824])
+    cmd.set_color('color_asp',[0.973,0.875,0.875])
+    cmd.set_color('color_lys',[0.899,0.922,0.922])
+    cmd.set_color('color_arg',[0.899,0.969,0.969])
+    cmd.color("color_ile","("+s+" and resn ile)")
+    cmd.color("color_phe","("+s+" and resn phe)")
+    cmd.color("color_val","("+s+" and resn val)")
+    cmd.color("color_leu","("+s+" and resn leu)")
+    cmd.color("color_trp","("+s+" and resn trp)")
+    cmd.color("color_met","("+s+" and resn met)")
+    cmd.color("color_ala","("+s+" and resn ala)")
+    cmd.color("color_gly","("+s+" and resn gly)")
+    cmd.color("color_cys","("+s+" and resn cys)")
+    cmd.color("color_tyr","("+s+" and resn tyr)")
+    cmd.color("color_pro","("+s+" and resn pro)")
+    cmd.color("color_thr","("+s+" and resn thr)")
+    cmd.color("color_ser","("+s+" and resn ser)")
+    cmd.color("color_his","("+s+" and resn his)")
+    cmd.color("color_glu","("+s+" and resn glu)")
+    cmd.color("color_asn","("+s+" and resn asn)")
+    cmd.color("color_gln","("+s+" and resn gln)")
+    cmd.color("color_asp","("+s+" and resn asp)")
+    cmd.color("color_lys","("+s+" and resn lys)")
+    cmd.color("color_arg","("+s+" and resn arg)")
+
+    '''
+
+    s = str(selection)
+    print(s)
+    cmd.set_color('color_ile',[0.996,0.062,0.062])
+    cmd.set_color('color_phe',[0.996,0.109,0.109])
+    cmd.set_color('color_val',[0.992,0.156,0.156])
+    cmd.set_color('color_leu',[0.992,0.207,0.207])
+    cmd.set_color('color_trp',[0.992,0.254,0.254])
+    cmd.set_color('color_met',[0.988,0.301,0.301])
+    cmd.set_color('color_ala',[0.988,0.348,0.348])
+    cmd.set_color('color_gly',[0.984,0.394,0.394])
+    cmd.set_color('color_cys',[0.984,0.445,0.445])
+    cmd.set_color('color_tyr',[0.984,0.492,0.492])
+    cmd.set_color('color_pro',[0.980,0.539,0.539])
+    cmd.set_color('color_thr',[0.980,0.586,0.586])
+    cmd.set_color('color_ser',[0.980,0.637,0.637])
+    cmd.set_color('color_his',[0.977,0.684,0.684])
+    cmd.set_color('color_glu',[0.977,0.730,0.730])
+    cmd.set_color('color_asn',[0.973,0.777,0.777])
+    cmd.set_color('color_gln',[0.973,0.824,0.824])
+    cmd.set_color('color_asp',[0.973,0.875,0.875])
+    cmd.set_color('color_lys',[0.899,0.922,0.922])
+    cmd.set_color('color_arg',[0.899,0.969,0.969])
+    cmd.color("color_ile","("+s+" and resn ile)")
+    cmd.color("color_phe","("+s+" and resn phe)")
+    cmd.color("color_val","("+s+" and resn val)")
+    cmd.color("color_leu","("+s+" and resn leu)")
+    cmd.color("color_trp","("+s+" and resn trp)")
+    cmd.color("color_met","("+s+" and resn met)")
+    cmd.color("color_ala","("+s+" and resn ala)")
+    cmd.color("color_gly","("+s+" and resn gly)")
+    cmd.color("color_cys","("+s+" and resn cys)")
+    cmd.color("color_tyr","("+s+" and resn tyr)")
+    cmd.color("color_pro","("+s+" and resn pro)")
+    cmd.color("color_thr","("+s+" and resn thr)")
+    cmd.color("color_ser","("+s+" and resn ser)")
+    cmd.color("color_his","("+s+" and resn his)")
+    cmd.color("color_glu","("+s+" and resn glu)")
+    cmd.color("color_asn","("+s+" and resn asn)")
+    cmd.color("color_gln","("+s+" and resn gln)")
+    cmd.color("color_asp","("+s+" and resn asp)")
+    cmd.color("color_lys","("+s+" and resn lys)")
+    cmd.color("color_arg","("+s+" and resn arg)")
+
+cmd.extend('colorh1',colorh1)
+
+def colorh2(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 2.
+
+    USAGE:
+    colorh2
+
+    Arguments:
+     <selection>
+    EXAMPLE:
+    colorh2
+colorh2 1lw9
+
+    MORE DETAILS:
+    Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 2 according to  https://pymolwiki.org/index.php/Color_h.
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def colorh2(selection='all'):
+    s = str(selection)
+    print(s)
+    cmd.set_color("color_ile2",[0.938,1,0.938])
+    cmd.set_color("color_phe2",[0.891,1,0.891])
+    cmd.set_color("color_val2",[0.844,1,0.844])
+    cmd.set_color("color_leu2",[0.793,1,0.793])
+    cmd.set_color("color_trp2",[0.746,1,0.746])
+    cmd.set_color("color_met2",[0.699,1,0.699])
+    cmd.set_color("color_ala2",[0.652,1,0.652])
+    cmd.set_color("color_gly2",[0.606,1,0.606])
+    cmd.set_color("color_cys2",[0.555,1,0.555])
+    cmd.set_color("color_tyr2",[0.508,1,0.508])
+    cmd.set_color("color_pro2",[0.461,1,0.461])
+    cmd.set_color("color_thr2",[0.414,1,0.414])
+    cmd.set_color("color_ser2",[0.363,1,0.363])
+    cmd.set_color("color_his2",[0.316,1,0.316])
+    cmd.set_color("color_glu2",[0.27,1,0.27])
+    cmd.set_color("color_asn2",[0.223,1,0.223])
+    cmd.set_color("color_gln2",[0.176,1,0.176])
+    cmd.set_color("color_asp2",[0.125,1,0.125])
+    cmd.set_color("color_lys2",[0.078,1,0.078])
+    cmd.set_color("color_arg2",[0.031,1,0.031])   
+    cmd.color("color_ile2","("+s+" and resn ile)")
+    cmd.color("color_phe2","("+s+" and resn phe)")
+    cmd.color("color_val2","("+s+" and resn val)")
+    cmd.color("color_leu2","("+s+" and resn leu)")
+    cmd.color("color_trp2","("+s+" and resn trp)")
+    cmd.color("color_met2","("+s+" and resn met)")
+    cmd.color("color_ala2","("+s+" and resn ala)")
+    cmd.color("color_gly2","("+s+" and resn gly)")
+    cmd.color("color_cys2","("+s+" and resn cys)")
+    cmd.color("color_tyr2","("+s+" and resn tyr)")
+    cmd.color("color_pro2","("+s+" and resn pro)")
+    cmd.color("color_thr2","("+s+" and resn thr)")
+    cmd.color("color_ser2","("+s+" and resn ser)")
+    cmd.color("color_his2","("+s+" and resn his)")
+    cmd.color("color_glu2","("+s+" and resn glu)")
+    cmd.color("color_asn2","("+s+" and resn asn)")
+    cmd.color("color_gln2","("+s+" and resn gln)")
+    cmd.color("color_asp2","("+s+" and resn asp)")
+    cmd.color("color_lys2","("+s+" and resn lys)")
+    cmd.color("color_arg2","("+s+" and resn arg)")
+
+    '''
+
+    s = str(selection)
+    print(s)
+    cmd.set_color("color_ile2",[0.938,1,0.938])
+    cmd.set_color("color_phe2",[0.891,1,0.891])
+    cmd.set_color("color_val2",[0.844,1,0.844])
+    cmd.set_color("color_leu2",[0.793,1,0.793])
+    cmd.set_color("color_trp2",[0.746,1,0.746])
+    cmd.set_color("color_met2",[0.699,1,0.699])
+    cmd.set_color("color_ala2",[0.652,1,0.652])
+    cmd.set_color("color_gly2",[0.606,1,0.606])
+    cmd.set_color("color_cys2",[0.555,1,0.555])
+    cmd.set_color("color_tyr2",[0.508,1,0.508])
+    cmd.set_color("color_pro2",[0.461,1,0.461])
+    cmd.set_color("color_thr2",[0.414,1,0.414])
+    cmd.set_color("color_ser2",[0.363,1,0.363])
+    cmd.set_color("color_his2",[0.316,1,0.316])
+    cmd.set_color("color_glu2",[0.27,1,0.27])
+    cmd.set_color("color_asn2",[0.223,1,0.223])
+    cmd.set_color("color_gln2",[0.176,1,0.176])
+    cmd.set_color("color_asp2",[0.125,1,0.125])
+    cmd.set_color("color_lys2",[0.078,1,0.078])
+    cmd.set_color("color_arg2",[0.031,1,0.031])   
+    cmd.color("color_ile2","("+s+" and resn ile)")
+    cmd.color("color_phe2","("+s+" and resn phe)")
+    cmd.color("color_val2","("+s+" and resn val)")
+    cmd.color("color_leu2","("+s+" and resn leu)")
+    cmd.color("color_trp2","("+s+" and resn trp)")
+    cmd.color("color_met2","("+s+" and resn met)")
+    cmd.color("color_ala2","("+s+" and resn ala)")
+    cmd.color("color_gly2","("+s+" and resn gly)")
+    cmd.color("color_cys2","("+s+" and resn cys)")
+    cmd.color("color_tyr2","("+s+" and resn tyr)")
+    cmd.color("color_pro2","("+s+" and resn pro)")
+    cmd.color("color_thr2","("+s+" and resn thr)")
+    cmd.color("color_ser2","("+s+" and resn ser)")
+    cmd.color("color_his2","("+s+" and resn his)")
+    cmd.color("color_glu2","("+s+" and resn glu)")
+    cmd.color("color_asn2","("+s+" and resn asn)")
+    cmd.color("color_gln2","("+s+" and resn gln)")
+    cmd.color("color_asp2","("+s+" and resn asp)")
+    cmd.color("color_lys2","("+s+" and resn lys)")
+    cmd.color("color_arg2","("+s+" and resn arg)")
+
+cmd.extend('colorh2',colorh2)
+
 def coot(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
-
     Open coot from within PyMOL. 
 
 
 
     USAGE:
-
     coot
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     coot
 
     MORE DETAILS:
-
     Open coot from within PyMOL. 
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = (cootPath  + fileName);subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def coot(fileName="test.pdb"):
     arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
@@ -6726,237 +6138,851 @@ cmd.extend('coot',coot)
 def cranR():
     ''' 
     DESCRIPTION:
-
     Open Cran R from within PyMOL.
 
     USAGE:
-
     cranR
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    cranR script.R
+    ROpen   
 
     MORE DETAILS:
-
     Open Cran R from within PyMOL.
 
-   >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (RPath);
-    subprocess.call(arg,shell=True);
-    return
-
-
+    subprocess.call(ROpen); 
+return      
     HORIZONTAL PML SCRIPT:
-
-    arg = (RPath);subprocess.call(arg,shell=True);return
-
+    subprocess.call(ROpen); return      
 
     PYTHON CODE:
-
 def cranR():
-    arg = (RPath)
-    subprocess.call(arg,shell=True)
+    subprocess.call(ROpen)
     return
+
 
     '''
 
-    arg = (RPath)
-    subprocess.call(arg,shell=True)
+    subprocess.call(ROpen)
     return
+
 
 cmd.extend('cranR',cranR)
 
 def ddb():
     ''' 
     DESCRIPTION:
-
     Open DBBrowserSQLite. 
 
     USAGE:
-
     ddb
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     ddb database.db
 
     MORE DETAILS:
-
     Open DBBrowserSQLite. 
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = dbbrowserPath;
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = dbbrowserPath;subprocess.call(arg,shell=True);return
-
     PYTHON CODE:
-
 def ddb():
-    arg = dbbrowserPath;
-    subprocess.call(arg,shell=True);
+    subprocess.call(DBBrowserSQLiteOpen);
     return
     '''
 
-    arg = dbbrowserPath;
-    subprocess.call(arg,shell=True);
+    subprocess.call(DBBrowserSQLiteOpen);
     return
 cmd.extend('ddb',ddb)
 
-def emacs(fileName="testme.pml"):
+def emacs():
     ''' 
     DESCRIPTION:
-
     Open file with emacs from within PyMOL.
 
     USAGE:
-
     emacs
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    emacs script.pml
+    emacs
 
     MORE DETAILS:
-
     Open file with emacs from within PyMOL. 
     Adjust path to emacs on your computer as needed.
 
-   >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg2 = ('--file ' + fileName);
-    subprocess.call(emacsCommand)
-
-
+    subprocess.call(emacsOpen);
+return
     HORIZONTAL PML SCRIPT:
-
-    arg2 = ('--file ' + fileName);subprocess.call(emacsCommand)
-
+    subprocess.call(emacsOpen);return
     PYTHON CODE:
-
-def emacs(fileName="testme.pml"):
-    arg = (emacsPath+ fileName)
-    arg2 = ('--file ' + fileName)
-    subprocess.call(emacsCommand)
+def emacs():
+    subprocess.call(emacsOpen)
     return
     '''
 
-    arg = (emacsPath+ fileName)
-    arg2 = ('--file ' + fileName)
-    subprocess.call(emacsCommand)
+    subprocess.call(emacsOpen)
     return
 cmd.extend('emacs',emacs)
 
 def excel():
     ''' 
     DESCRIPTION:
-
     Open excel from within PyMOL. 
 
     USAGE:
-
     excel
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     excel
 
     MORE DETAILS:
-
     Open excel from within PyMOL. 
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = excelCommand
     subprocess.call(arg,shell=True)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = excelCommand;subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def excel():
-    arg = excelCommand
-    subprocess.call(arg,shell=True)
+    subprocess.call(excelOpen)
     return
 
     '''
 
-    arg = excelCommand
-    subprocess.call(arg,shell=True)
+    subprocess.call(excelOpen)
     return
 
 cmd.extend('excel',excel)
 
+def findSeq(needle, haystack, selName=None, het=0, firstOnly=0):
+    ''' 
+    DESCRIPTION:
+    Returns as selection matching a sequence fragment.
+
+    USAGE:
+    findSeq
+
+    Arguments:
+    singleLetterSequence
+    EXAMPLE:
+    findSeq CGHT
+
+    MORE DETAILS:
+    Returns as selection matching a sequence fragment.
+
+DESCRIPTION:
+Given a sequence/regex to find, select those
+matching amino acids in the protein.
+
+USAGE:
+findseq needle, haystack[, selName[, het[, firstOnly]]]
+
+PARAMS:
+needle (string)
+		the sequence of amino acids to match and select
+		in the haystack.  This can be a sequence of amino
+		acids, or a string-style regular expression.  See
+		examples.
+
+hastack (string or PyMOL selection)
+		name of the PyMOL object/selection in which
+		to find the needle.
+
+selName (string; defaults to None)
+		This is the name of the selection to return.  If selName
+		is left blank (None), then the selection name will be
+		foundSeqXYZ where XYZ is some random number; if selName is
+		"sele" the usual PyMOL "(sele)" will be used; and, lastly,
+		if selName is anything else, that name will be used verbatim.
+
+het (0 or 1; defaults to 0)
+		This boolean flag allows (1) or disallows (0) heteroatoms
+		from being considered.
+
+firstOnly (0 or 1; defaults to 0)
+		Subsequences or motifs might be repeated, this controls how we
+		consider multiple matches.  If firstOnly is False (0) then we return
+		all found subsequences; if firstOnly is True (1), then we just return
+		the first found sequence.
+
+RETURNS:
+a newly created selection with the atoms you sought.  If there are
+more than two contiguous regions, then a newly created group is
+returned with each contiguous segment its own selection.
+
+EXAMPLE:
+# find SPVI in 1h12, foundSeqXYZ as return name
+findseq SPVI, 1h12
+
+# find FATEW and make it (sele).
+findseq FATEW, 1g01, sele
+
+# find the regular expression GMS.*QWY in 1a3h
+# and put the return value in (sele).
+fetch 1a3h
+# this ends up finding the sequence, GMSSHGLQWY
+findseq GMS.*QWY, 1a3h, sele
+
+NOTES:
+Assumes we're using the ONE LETTER amino acid abbreviations.
+
+AUTHOR:
+Jason Vertrees, 2009.
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def findSeq(needle, haystack, selName=None, het=0, firstOnly=0):
+    # set the name of the selection to return.
+    if selName == None:
+        rSelName = "foundSeq" + str(random.randint(0, 32000))
+        selName = rSelName
+    elif selName == "sele":
+        rSelName = "sele"
+    else:
+        rSelName = selName
+
+    # input checking
+    if not checkParams(needle, haystack, selName, het, firstOnly):
+        print("There was an error with a parameter.  Please see")
+        print("the above error message for how to fix it.")
+        return None
+
+    one_letter = {
+        '00C': 'C', '01W': 'X', '0A0': 'D', '0A1': 'Y', '0A2': 'K',
+        '0A8': 'C', '0AA': 'V', '0AB': 'V', '0AC': 'G', '0AD': 'G',
+        '0AF': 'W', '0AG': 'L', '0AH': 'S', '0AK': 'D', '0AM': 'A',
+        '0AP': 'C', '0AU': 'U', '0AV': 'A', '0AZ': 'P', '0BN': 'F',
+        '0C ': 'C', '0CS': 'A', '0DC': 'C', '0DG': 'G', '0DT': 'T',
+        '0G ': 'G', '0NC': 'A', '0SP': 'A', '0U ': 'U', '0YG': 'YG',
+        '10C': 'C', '125': 'U', '126': 'U', '127': 'U', '128': 'N',
+        '12A': 'A', '143': 'C', '175': 'ASG', '193': 'X', '1AP': 'A',
+        '1MA': 'A', '1MG': 'G', '1PA': 'F', '1PI': 'A', '1PR': 'N',
+        '1SC': 'C', '1TQ': 'W', '1TY': 'Y', '200': 'F', '23F': 'F',
+        '23S': 'X', '26B': 'T', '2AD': 'X', '2AG': 'G', '2AO': 'X',
+        '2AR': 'A', '2AS': 'X', '2AT': 'T', '2AU': 'U', '2BD': 'I',
+        '2BT': 'T', '2BU': 'A', '2CO': 'C', '2DA': 'A', '2DF': 'N',
+        '2DM': 'N', '2DO': 'X', '2DT': 'T', '2EG': 'G', '2FE': 'N',
+        '2FI': 'N', '2FM': 'M', '2GT': 'T', '2HF': 'H', '2LU': 'L',
+        '2MA': 'A', '2MG': 'G', '2ML': 'L', '2MR': 'R', '2MT': 'P',
+        '2MU': 'U', '2NT': 'T', '2OM': 'U', '2OT': 'T', '2PI': 'X',
+        '2PR': 'G', '2SA': 'N', '2SI': 'X', '2ST': 'T', '2TL': 'T',
+        '2TY': 'Y', '2VA': 'V', '32S': 'X', '32T': 'X', '3AH': 'H',
+        '3AR': 'X', '3CF': 'F', '3DA': 'A', '3DR': 'N', '3GA': 'A',
+        '3MD': 'D', '3ME': 'U', '3NF': 'Y', '3TY': 'X', '3XH': 'G',
+        '4AC': 'N', '4BF': 'Y', '4CF': 'F', '4CY': 'M', '4DP': 'W',
+        '4F3': 'GYG', '4FB': 'P', '4FW': 'W', '4HT': 'W', '4IN': 'X',
+        '4MF': 'N', '4MM': 'X', '4OC': 'C', '4PC': 'C', '4PD': 'C',
+        '4PE': 'C', '4PH': 'F', '4SC': 'C', '4SU': 'U', '4TA': 'N',
+        '5AA': 'A', '5AT': 'T', '5BU': 'U', '5CG': 'G', '5CM': 'C',
+        '5CS': 'C', '5FA': 'A', '5FC': 'C', '5FU': 'U', '5HP': 'E',
+        '5HT': 'T', '5HU': 'U', '5IC': 'C', '5IT': 'T', '5IU': 'U',
+        '5MC': 'C', '5MD': 'N', '5MU': 'U', '5NC': 'C', '5PC': 'C',
+        '5PY': 'T', '5SE': 'U', '5ZA': 'TWG', '64T': 'T', '6CL': 'K',
+        '6CT': 'T', '6CW': 'W', '6HA': 'A', '6HC': 'C', '6HG': 'G',
+        '6HN': 'K', '6HT': 'T', '6IA': 'A', '6MA': 'A', '6MC': 'A',
+        '6MI': 'N', '6MT': 'A', '6MZ': 'N', '6OG': 'G', '70U': 'U',
+        '7DA': 'A', '7GU': 'G', '7JA': 'I', '7MG': 'G', '8AN': 'A',
+        '8FG': 'G', '8MG': 'G', '8OG': 'G', '9NE': 'E', '9NF': 'F',
+        '9NR': 'R', '9NV': 'V', 'A  ': 'A', 'A1P': 'N', 'A23': 'A',
+        'A2L': 'A', 'A2M': 'A', 'A34': 'A', 'A35': 'A', 'A38': 'A',
+        'A39': 'A', 'A3A': 'A', 'A3P': 'A', 'A40': 'A', 'A43': 'A',
+        'A44': 'A', 'A47': 'A', 'A5L': 'A', 'A5M': 'C', 'A5O': 'A',
+        'A66': 'X', 'AA3': 'A', 'AA4': 'A', 'AAR': 'R', 'AB7': 'X',
+        'ABA': 'A', 'ABR': 'A', 'ABS': 'A', 'ABT': 'N', 'ACB': 'D',
+        'ACL': 'R', 'AD2': 'A', 'ADD': 'X', 'ADX': 'N', 'AEA': 'X',
+        'AEI': 'D', 'AET': 'A', 'AFA': 'N', 'AFF': 'N', 'AFG': 'G',
+        'AGM': 'R', 'AGT': 'X', 'AHB': 'N', 'AHH': 'X', 'AHO': 'A',
+        'AHP': 'A', 'AHS': 'X', 'AHT': 'X', 'AIB': 'A', 'AKL': 'D',
+        'ALA': 'A', 'ALC': 'A', 'ALG': 'R', 'ALM': 'A', 'ALN': 'A',
+        'ALO': 'T', 'ALQ': 'X', 'ALS': 'A', 'ALT': 'A', 'ALY': 'K',
+        'AP7': 'A', 'APE': 'X', 'APH': 'A', 'API': 'K', 'APK': 'K',
+        'APM': 'X', 'APP': 'X', 'AR2': 'R', 'AR4': 'E', 'ARG': 'R',
+        'ARM': 'R', 'ARO': 'R', 'ARV': 'X', 'AS ': 'A', 'AS2': 'D',
+        'AS9': 'X', 'ASA': 'D', 'ASB': 'D', 'ASI': 'D', 'ASK': 'D',
+        'ASL': 'D', 'ASM': 'X', 'ASN': 'N', 'ASP': 'D', 'ASQ': 'D',
+        'ASU': 'N', 'ASX': 'B', 'ATD': 'T', 'ATL': 'T', 'ATM': 'T',
+        'AVC': 'A', 'AVN': 'X', 'AYA': 'A', 'AYG': 'AYG', 'AZK': 'K',
+        'AZS': 'S', 'AZY': 'Y', 'B1F': 'F', 'B1P': 'N', 'B2A': 'A',
+        'B2F': 'F', 'B2I': 'I', 'B2V': 'V', 'B3A': 'A', 'B3D': 'D',
+        'B3E': 'E', 'B3K': 'K', 'B3L': 'X', 'B3M': 'X', 'B3Q': 'X',
+        'B3S': 'S', 'B3T': 'X', 'B3U': 'H', 'B3X': 'N', 'B3Y': 'Y',
+        'BB6': 'C', 'BB7': 'C', 'BB9': 'C', 'BBC': 'C', 'BCS': 'C',
+        'BCX': 'C', 'BE2': 'X', 'BFD': 'D', 'BG1': 'S', 'BGM': 'G',
+        'BHD': 'D', 'BIF': 'F', 'BIL': 'X', 'BIU': 'I', 'BJH': 'X',
+        'BLE': 'L', 'BLY': 'K', 'BMP': 'N', 'BMT': 'T', 'BNN': 'A',
+        'BNO': 'X', 'BOE': 'T', 'BOR': 'R', 'BPE': 'C', 'BRU': 'U',
+        'BSE': 'S', 'BT5': 'N', 'BTA': 'L', 'BTC': 'C', 'BTR': 'W',
+        'BUC': 'C', 'BUG': 'V', 'BVP': 'U', 'BZG': 'N', 'C  ': 'C',
+        'C12': 'TYG', 'C1X': 'K', 'C25': 'C', 'C2L': 'C', 'C2S': 'C',
+        'C31': 'C', 'C32': 'C', 'C34': 'C', 'C36': 'C', 'C37': 'C',
+        'C38': 'C', 'C3Y': 'C', 'C42': 'C', 'C43': 'C', 'C45': 'C',
+        'C46': 'C', 'C49': 'C', 'C4R': 'C', 'C4S': 'C', 'C5C': 'C',
+        'C66': 'X', 'C6C': 'C', 'C99': 'TFG', 'CAF': 'C', 'CAL': 'X',
+        'CAR': 'C', 'CAS': 'C', 'CAV': 'X', 'CAY': 'C', 'CB2': 'C',
+        'CBR': 'C', 'CBV': 'C', 'CCC': 'C', 'CCL': 'K', 'CCS': 'C',
+        'CCY': 'CYG', 'CDE': 'X', 'CDV': 'X', 'CDW': 'C', 'CEA': 'C',
+        'CFL': 'C', 'CFY': 'FCYG', 'CG1': 'G', 'CGA': 'E', 'CGU': 'E',
+        'CH ': 'C', 'CH6': 'MYG', 'CH7': 'KYG', 'CHF': 'X', 'CHG': 'X',
+        'CHP': 'G', 'CHS': 'X', 'CIR': 'R', 'CJO': 'GYG', 'CLE': 'L',
+        'CLG': 'K', 'CLH': 'K', 'CLV': 'AFG', 'CM0': 'N', 'CME': 'C',
+        'CMH': 'C', 'CML': 'C', 'CMR': 'C', 'CMT': 'C', 'CNU': 'U',
+        'CP1': 'C', 'CPC': 'X', 'CPI': 'X', 'CQR': 'GYG', 'CR0': 'TLG',
+        'CR2': 'GYG', 'CR5': 'G', 'CR7': 'KYG', 'CR8': 'HYG', 'CRF': 'TWG',
+        'CRG': 'THG', 'CRK': 'MYG', 'CRO': 'GYG', 'CRQ': 'QYG', 'CRU': 'E',
+        'CRW': 'ASG', 'CRX': 'ASG', 'CS0': 'C', 'CS1': 'C', 'CS3': 'C',
+        'CS4': 'C', 'CS8': 'N', 'CSA': 'C', 'CSB': 'C', 'CSD': 'C',
+        'CSE': 'C', 'CSF': 'C', 'CSH': 'SHG', 'CSI': 'G', 'CSJ': 'C',
+        'CSL': 'C', 'CSO': 'C', 'CSP': 'C', 'CSR': 'C', 'CSS': 'C',
+        'CSU': 'C', 'CSW': 'C', 'CSX': 'C', 'CSY': 'SYG', 'CSZ': 'C',
+        'CTE': 'W', 'CTG': 'T', 'CTH': 'T', 'CUC': 'X', 'CWR': 'S',
+        'CXM': 'M', 'CY0': 'C', 'CY1': 'C', 'CY3': 'C', 'CY4': 'C',
+        'CYA': 'C', 'CYD': 'C', 'CYF': 'C', 'CYG': 'C', 'CYJ': 'X',
+        'CYM': 'C', 'CYQ': 'C', 'CYR': 'C', 'CYS': 'C', 'CZ2': 'C',
+        'CZO': 'GYG', 'CZZ': 'C', 'D11': 'T', 'D1P': 'N', 'D3 ': 'N',
+        'D33': 'N', 'D3P': 'G', 'D3T': 'T', 'D4M': 'T', 'D4P': 'X',
+        'DA ': 'A', 'DA2': 'X', 'DAB': 'A', 'DAH': 'F', 'DAL': 'A',
+        'DAR': 'R', 'DAS': 'D', 'DBB': 'T', 'DBM': 'N', 'DBS': 'S',
+        'DBU': 'T', 'DBY': 'Y', 'DBZ': 'A', 'DC ': 'C', 'DC2': 'C',
+        'DCG': 'G', 'DCI': 'X', 'DCL': 'X', 'DCT': 'C', 'DCY': 'C',
+        'DDE': 'H', 'DDG': 'G', 'DDN': 'U', 'DDX': 'N', 'DFC': 'C',
+        'DFG': 'G', 'DFI': 'X', 'DFO': 'X', 'DFT': 'N', 'DG ': 'G',
+        'DGH': 'G', 'DGI': 'G', 'DGL': 'E', 'DGN': 'Q', 'DHA': 'A',
+        'DHI': 'H', 'DHL': 'X', 'DHN': 'V', 'DHP': 'X', 'DHU': 'U',
+        'DHV': 'V', 'DI ': 'I', 'DIL': 'I', 'DIR': 'R', 'DIV': 'V',
+        'DLE': 'L', 'DLS': 'K', 'DLY': 'K', 'DM0': 'K', 'DMH': 'N',
+        'DMK': 'D', 'DMT': 'X', 'DN ': 'N', 'DNE': 'L', 'DNG': 'L',
+        'DNL': 'K', 'DNM': 'L', 'DNP': 'A', 'DNR': 'C', 'DNS': 'K',
+        'DOA': 'X', 'DOC': 'C', 'DOH': 'D', 'DON': 'L', 'DPB': 'T',
+        'DPH': 'F', 'DPL': 'P', 'DPP': 'A', 'DPQ': 'Y', 'DPR': 'P',
+        'DPY': 'N', 'DRM': 'U', 'DRP': 'N', 'DRT': 'T', 'DRZ': 'N',
+        'DSE': 'S', 'DSG': 'N', 'DSN': 'S', 'DSP': 'D', 'DT ': 'T',
+        'DTH': 'T', 'DTR': 'W', 'DTY': 'Y', 'DU ': 'U', 'DVA': 'V',
+        'DXD': 'N', 'DXN': 'N', 'DYG': 'DYG', 'DYS': 'C', 'DZM': 'A',
+        'E  ': 'A', 'E1X': 'A', 'EDA': 'A', 'EDC': 'G', 'EFC': 'C',
+        'EHP': 'F', 'EIT': 'T', 'ENP': 'N', 'ESB': 'Y', 'ESC': 'M',
+        'EXY': 'L', 'EY5': 'N', 'EYS': 'X', 'F2F': 'F', 'FA2': 'A',
+        'FA5': 'N', 'FAG': 'N', 'FAI': 'N', 'FCL': 'F', 'FFD': 'N',
+        'FGL': 'G', 'FGP': 'S', 'FHL': 'X', 'FHO': 'K', 'FHU': 'U',
+        'FLA': 'A', 'FLE': 'L', 'FLT': 'Y', 'FME': 'M', 'FMG': 'G',
+        'FMU': 'N', 'FOE': 'C', 'FOX': 'G', 'FP9': 'P', 'FPA': 'F',
+        'FRD': 'X', 'FT6': 'W', 'FTR': 'W', 'FTY': 'Y', 'FZN': 'K',
+        'G  ': 'G', 'G25': 'G', 'G2L': 'G', 'G2S': 'G', 'G31': 'G',
+        'G32': 'G', 'G33': 'G', 'G36': 'G', 'G38': 'G', 'G42': 'G',
+        'G46': 'G', 'G47': 'G', 'G48': 'G', 'G49': 'G', 'G4P': 'N',
+        'G7M': 'G', 'GAO': 'G', 'GAU': 'E', 'GCK': 'C', 'GCM': 'X',
+        'GDP': 'G', 'GDR': 'G', 'GFL': 'G', 'GGL': 'E', 'GH3': 'G',
+        'GHG': 'Q', 'GHP': 'G', 'GL3': 'G', 'GLH': 'Q', 'GLM': 'X',
+        'GLN': 'Q', 'GLQ': 'E', 'GLU': 'E', 'GLX': 'Z', 'GLY': 'G',
+        'GLZ': 'G', 'GMA': 'E', 'GMS': 'G', 'GMU': 'U', 'GN7': 'G',
+        'GND': 'X', 'GNE': 'N', 'GOM': 'G', 'GPL': 'K', 'GS ': 'G',
+        'GSC': 'G', 'GSR': 'G', 'GSS': 'G', 'GSU': 'E', 'GT9': 'C',
+        'GTP': 'G', 'GVL': 'X', 'GYC': 'CYG', 'GYS': 'SYG', 'H2U': 'U',
+        'H5M': 'P', 'HAC': 'A', 'HAR': 'R', 'HBN': 'H', 'HCS': 'X',
+        'HDP': 'U', 'HEU': 'U', 'HFA': 'X', 'HGL': 'X', 'HHI': 'H',
+        'HHK': 'AK', 'HIA': 'H', 'HIC': 'H', 'HIP': 'H', 'HIQ': 'H',
+        'HIS': 'H', 'HL2': 'L', 'HLU': 'L', 'HMF': 'A', 'HMR': 'R',
+        'HOL': 'N', 'HPC': 'F', 'HPE': 'F', 'HPQ': 'F', 'HQA': 'A',
+        'HRG': 'R', 'HRP': 'W', 'HS8': 'H', 'HS9': 'H', 'HSE': 'S',
+        'HSL': 'S', 'HSO': 'H', 'HTI': 'C', 'HTN': 'N', 'HTR': 'W',
+        'HV5': 'A', 'HVA': 'V', 'HY3': 'P', 'HYP': 'P', 'HZP': 'P',
+        'I  ': 'I', 'I2M': 'I', 'I58': 'K', 'I5C': 'C', 'IAM': 'A',
+        'IAR': 'R', 'IAS': 'D', 'IC ': 'C', 'IEL': 'K', 'IEY': 'HYG',
+        'IG ': 'G', 'IGL': 'G', 'IGU': 'G', 'IIC': 'SHG', 'IIL': 'I',
+        'ILE': 'I', 'ILG': 'E', 'ILX': 'I', 'IMC': 'C', 'IML': 'I',
+        'IOY': 'F', 'IPG': 'G', 'IPN': 'N', 'IRN': 'N', 'IT1': 'K',
+        'IU ': 'U', 'IYR': 'Y', 'IYT': 'T', 'JJJ': 'C', 'JJK': 'C',
+        'JJL': 'C', 'JW5': 'N', 'K1R': 'C', 'KAG': 'G', 'KCX': 'K',
+        'KGC': 'K', 'KOR': 'M', 'KPI': 'K', 'KST': 'K', 'KYQ': 'K',
+        'L2A': 'X', 'LA2': 'K', 'LAA': 'D', 'LAL': 'A', 'LBY': 'K',
+        'LC ': 'C', 'LCA': 'A', 'LCC': 'N', 'LCG': 'G', 'LCH': 'N',
+        'LCK': 'K', 'LCX': 'K', 'LDH': 'K', 'LED': 'L', 'LEF': 'L',
+        'LEH': 'L', 'LEI': 'V', 'LEM': 'L', 'LEN': 'L', 'LET': 'X',
+        'LEU': 'L', 'LG ': 'G', 'LGP': 'G', 'LHC': 'X', 'LHU': 'U',
+        'LKC': 'N', 'LLP': 'K', 'LLY': 'K', 'LME': 'E', 'LMQ': 'Q',
+        'LMS': 'N', 'LP6': 'K', 'LPD': 'P', 'LPG': 'G', 'LPL': 'X',
+        'LPS': 'S', 'LSO': 'X', 'LTA': 'X', 'LTR': 'W', 'LVG': 'G',
+        'LVN': 'V', 'LYM': 'K', 'LYN': 'K', 'LYR': 'K', 'LYS': 'K',
+        'LYX': 'K', 'LYZ': 'K', 'M0H': 'C', 'M1G': 'G', 'M2G': 'G',
+        'M2L': 'K', 'M2S': 'M', 'M3L': 'K', 'M5M': 'C', 'MA ': 'A',
+        'MA6': 'A', 'MA7': 'A', 'MAA': 'A', 'MAD': 'A', 'MAI': 'R',
+        'MBQ': 'Y', 'MBZ': 'N', 'MC1': 'S', 'MCG': 'X', 'MCL': 'K',
+        'MCS': 'C', 'MCY': 'C', 'MDH': 'X', 'MDO': 'ASG', 'MDR': 'N',
+        'MEA': 'F', 'MED': 'M', 'MEG': 'E', 'MEN': 'N', 'MEP': 'U',
+        'MEQ': 'Q', 'MET': 'M', 'MEU': 'G', 'MF3': 'X', 'MFC': 'GYG',
+        'MG1': 'G', 'MGG': 'R', 'MGN': 'Q', 'MGQ': 'A', 'MGV': 'G',
+        'MGY': 'G', 'MHL': 'L', 'MHO': 'M', 'MHS': 'H', 'MIA': 'A',
+        'MIS': 'S', 'MK8': 'L', 'ML3': 'K', 'MLE': 'L', 'MLL': 'L',
+        'MLY': 'K', 'MLZ': 'K', 'MME': 'M', 'MMT': 'T', 'MND': 'N',
+        'MNL': 'L', 'MNU': 'U', 'MNV': 'V', 'MOD': 'X', 'MP8': 'P',
+        'MPH': 'X', 'MPJ': 'X', 'MPQ': 'G', 'MRG': 'G', 'MSA': 'G',
+        'MSE': 'M', 'MSL': 'M', 'MSO': 'M', 'MSP': 'X', 'MT2': 'M',
+        'MTR': 'T', 'MTU': 'A', 'MTY': 'Y', 'MVA': 'V', 'N  ': 'N',
+        'N10': 'S', 'N2C': 'X', 'N5I': 'N', 'N5M': 'C', 'N6G': 'G',
+        'N7P': 'P', 'NA8': 'A', 'NAL': 'A', 'NAM': 'A', 'NB8': 'N',
+        'NBQ': 'Y', 'NC1': 'S', 'NCB': 'A', 'NCX': 'N', 'NCY': 'X',
+        'NDF': 'F', 'NDN': 'U', 'NEM': 'H', 'NEP': 'H', 'NF2': 'N',
+        'NFA': 'F', 'NHL': 'E', 'NIT': 'X', 'NIY': 'Y', 'NLE': 'L',
+        'NLN': 'L', 'NLO': 'L', 'NLP': 'L', 'NLQ': 'Q', 'NMC': 'G',
+        'NMM': 'R', 'NMS': 'T', 'NMT': 'T', 'NNH': 'R', 'NP3': 'N',
+        'NPH': 'C', 'NRP': 'LYG', 'NRQ': 'MYG', 'NSK': 'X', 'NTY': 'Y',
+        'NVA': 'V', 'NYC': 'TWG', 'NYG': 'NYG', 'NYM': 'N', 'NYS': 'C',
+        'NZH': 'H', 'O12': 'X', 'O2C': 'N', 'O2G': 'G', 'OAD': 'N',
+        'OAS': 'S', 'OBF': 'X', 'OBS': 'X', 'OCS': 'C', 'OCY': 'C',
+        'ODP': 'N', 'OHI': 'H', 'OHS': 'D', 'OIC': 'X', 'OIP': 'I',
+        'OLE': 'X', 'OLT': 'T', 'OLZ': 'S', 'OMC': 'C', 'OMG': 'G',
+        'OMT': 'M', 'OMU': 'U', 'ONE': 'U', 'ONL': 'X', 'OPR': 'R',
+        'ORN': 'A', 'ORQ': 'R', 'OSE': 'S', 'OTB': 'X', 'OTH': 'T',
+        'OTY': 'Y', 'OXX': 'D', 'P  ': 'G', 'P1L': 'C', 'P1P': 'N',
+        'P2T': 'T', 'P2U': 'U', 'P2Y': 'P', 'P5P': 'A', 'PAQ': 'Y',
+        'PAS': 'D', 'PAT': 'W', 'PAU': 'A', 'PBB': 'C', 'PBF': 'F',
+        'PBT': 'N', 'PCA': 'E', 'PCC': 'P', 'PCE': 'X', 'PCS': 'F',
+        'PDL': 'X', 'PDU': 'U', 'PEC': 'C', 'PF5': 'F', 'PFF': 'F',
+        'PFX': 'X', 'PG1': 'S', 'PG7': 'G', 'PG9': 'G', 'PGL': 'X',
+        'PGN': 'G', 'PGP': 'G', 'PGY': 'G', 'PHA': 'F', 'PHD': 'D',
+        'PHE': 'F', 'PHI': 'F', 'PHL': 'F', 'PHM': 'F', 'PIV': 'X',
+        'PLE': 'L', 'PM3': 'F', 'PMT': 'C', 'POM': 'P', 'PPN': 'F',
+        'PPU': 'A', 'PPW': 'G', 'PQ1': 'N', 'PR3': 'C', 'PR5': 'A',
+        'PR9': 'P', 'PRN': 'A', 'PRO': 'P', 'PRS': 'P', 'PSA': 'F',
+        'PSH': 'H', 'PST': 'T', 'PSU': 'U', 'PSW': 'C', 'PTA': 'X',
+        'PTH': 'Y', 'PTM': 'Y', 'PTR': 'Y', 'PU ': 'A', 'PUY': 'N',
+        'PVH': 'H', 'PVL': 'X', 'PYA': 'A', 'PYO': 'U', 'PYX': 'C',
+        'PYY': 'N', 'QLG': 'QLG', 'QUO': 'G', 'R  ': 'A', 'R1A': 'C',
+        'R1B': 'C', 'R1F': 'C', 'R7A': 'C', 'RC7': 'HYG', 'RCY': 'C',
+        'RIA': 'A', 'RMP': 'A', 'RON': 'X', 'RT ': 'T', 'RTP': 'N',
+        'S1H': 'S', 'S2C': 'C', 'S2D': 'A', 'S2M': 'T', 'S2P': 'A',
+        'S4A': 'A', 'S4C': 'C', 'S4G': 'G', 'S4U': 'U', 'S6G': 'G',
+        'SAC': 'S', 'SAH': 'C', 'SAR': 'G', 'SBL': 'S', 'SC ': 'C',
+        'SCH': 'C', 'SCS': 'C', 'SCY': 'C', 'SD2': 'X', 'SDG': 'G',
+        'SDP': 'S', 'SEB': 'S', 'SEC': 'A', 'SEG': 'A', 'SEL': 'S',
+        'SEM': 'X', 'SEN': 'S', 'SEP': 'S', 'SER': 'S', 'SET': 'S',
+        'SGB': 'S', 'SHC': 'C', 'SHP': 'G', 'SHR': 'K', 'SIB': 'C',
+        'SIC': 'DC', 'SLA': 'P', 'SLR': 'P', 'SLZ': 'K', 'SMC': 'C',
+        'SME': 'M', 'SMF': 'F', 'SMP': 'A', 'SMT': 'T', 'SNC': 'C',
+        'SNN': 'N', 'SOC': 'C', 'SOS': 'N', 'SOY': 'S', 'SPT': 'T',
+        'SRA': 'A', 'SSU': 'U', 'STY': 'Y', 'SUB': 'X', 'SUI': 'DG',
+        'SUN': 'S', 'SUR': 'U', 'SVA': 'S', 'SVX': 'S', 'SVZ': 'X',
+        'SYS': 'C', 'T  ': 'T', 'T11': 'F', 'T23': 'T', 'T2S': 'T',
+        'T2T': 'N', 'T31': 'U', 'T32': 'T', 'T36': 'T', 'T37': 'T',
+        'T38': 'T', 'T39': 'T', 'T3P': 'T', 'T41': 'T', 'T48': 'T',
+        'T49': 'T', 'T4S': 'T', 'T5O': 'U', 'T5S': 'T', 'T66': 'X',
+        'T6A': 'A', 'TA3': 'T', 'TA4': 'X', 'TAF': 'T', 'TAL': 'N',
+        'TAV': 'D', 'TBG': 'V', 'TBM': 'T', 'TC1': 'C', 'TCP': 'T',
+        'TCQ': 'X', 'TCR': 'W', 'TCY': 'A', 'TDD': 'L', 'TDY': 'T',
+        'TFE': 'T', 'TFO': 'A', 'TFQ': 'F', 'TFT': 'T', 'TGP': 'G',
+        'TH6': 'T', 'THC': 'T', 'THO': 'X', 'THR': 'T', 'THX': 'N',
+        'THZ': 'R', 'TIH': 'A', 'TLB': 'N', 'TLC': 'T', 'TLN': 'U',
+        'TMB': 'T', 'TMD': 'T', 'TNB': 'C', 'TNR': 'S', 'TOX': 'W',
+        'TP1': 'T', 'TPC': 'C', 'TPG': 'G', 'TPH': 'X', 'TPL': 'W',
+        'TPO': 'T', 'TPQ': 'Y', 'TQQ': 'W', 'TRF': 'W', 'TRG': 'K',
+        'TRN': 'W', 'TRO': 'W', 'TRP': 'W', 'TRQ': 'W', 'TRW': 'W',
+        'TRX': 'W', 'TS ': 'N', 'TST': 'X', 'TT ': 'N', 'TTD': 'T',
+        'TTI': 'U', 'TTM': 'T', 'TTQ': 'W', 'TTS': 'Y', 'TY2': 'Y',
+        'TY3': 'Y', 'TYB': 'Y', 'TYI': 'Y', 'TYN': 'Y', 'TYO': 'Y',
+        'TYQ': 'Y', 'TYR': 'Y', 'TYS': 'Y', 'TYT': 'Y', 'TYU': 'N',
+        'TYX': 'X', 'TYY': 'Y', 'TZB': 'X', 'TZO': 'X', 'U  ': 'U',
+        'U25': 'U', 'U2L': 'U', 'U2N': 'U', 'U2P': 'U', 'U31': 'U',
+        'U33': 'U', 'U34': 'U', 'U36': 'U', 'U37': 'U', 'U8U': 'U',
+        'UAR': 'U', 'UCL': 'U', 'UD5': 'U', 'UDP': 'N', 'UFP': 'N',
+        'UFR': 'U', 'UFT': 'U', 'UMA': 'A', 'UMP': 'U', 'UMS': 'U',
+        'UN1': 'X', 'UN2': 'X', 'UNK': 'X', 'UR3': 'U', 'URD': 'U',
+        'US1': 'U', 'US2': 'U', 'US3': 'T', 'US5': 'U', 'USM': 'U',
+        'V1A': 'C', 'VAD': 'V', 'VAF': 'V', 'VAL': 'V', 'VB1': 'K',
+        'VDL': 'X', 'VLL': 'X', 'VLM': 'X', 'VMS': 'X', 'VOL': 'X',
+        'X  ': 'G', 'X2W': 'E', 'X4A': 'N', 'X9Q': 'AFG', 'XAD': 'A',
+        'XAE': 'N', 'XAL': 'A', 'XAR': 'N', 'XCL': 'C', 'XCP': 'X',
+        'XCR': 'C', 'XCS': 'N', 'XCT': 'C', 'XCY': 'C', 'XGA': 'N',
+        'XGL': 'G', 'XGR': 'G', 'XGU': 'G', 'XTH': 'T', 'XTL': 'T',
+        'XTR': 'T', 'XTS': 'G', 'XTY': 'N', 'XUA': 'A', 'XUG': 'G',
+        'XX1': 'K', 'XXY': 'THG', 'XYG': 'DYG', 'Y  ': 'A', 'YCM': 'C',
+        'YG ': 'G', 'YOF': 'Y', 'YRR': 'N', 'YYG': 'G', 'Z  ': 'C',
+        'ZAD': 'A', 'ZAL': 'A', 'ZBC': 'C', 'ZCY': 'C', 'ZDU': 'U',
+        'ZFB': 'X', 'ZGU': 'G', 'ZHP': 'N', 'ZTH': 'T', 'ZZJ': 'A'}
+
+    # remove hetero atoms (waters/ligands/etc) from consideration?
+    if het:
+        cmd.select("__h", "br. " + haystack)
+    else:
+        cmd.select("__h", "br. " + haystack + " and not het")
+
+    # get the AAs in the haystack
+    aaDict = {'aaList': []}
+    cmd.iterate("(name ca) and __h", "aaList.append((resi,resn,chain))", space=aaDict)
+
+    IDs = [int(x[0]) for x in aaDict['aaList']]
+    AAs = ''.join([one_letter[x[1]] for x in aaDict['aaList']])
+    chains = [x[2] for x in aaDict['aaList']]
+
+    reNeedle = re.compile(needle.upper())
+    it = reNeedle.finditer(AAs)
+
+    # make an empty selection to which we add residues
+    cmd.select(rSelName, 'None')
+
+    for i in it:
+        (start, stop) = i.span()
+        # we found some residues, which chains are they from?
+        i_chains = chains[start:stop]
+        # are all residues from one chain?
+        if len(set(i_chains)) != 1:
+            # now they are not, this match is not really a match, skip it
+            continue
+        chain = i_chains[0]
+        cmd.select(rSelName, rSelName + " or (__h and i. " + str(IDs[start]) + "-" + str(IDs[stop - 1]) + " and c. " + chain + " )")
+        if int(firstOnly):
+            break
+    cmd.delete("__h")
+    return rSelName
+
+    '''
+
+    # set the name of the selection to return.
+    if selName == None:
+        rSelName = "foundSeq" + str(random.randint(0, 32000))
+        selName = rSelName
+    elif selName == "sele":
+        rSelName = "sele"
+    else:
+        rSelName = selName
+
+    # input checking
+    if not checkParams(needle, haystack, selName, het, firstOnly):
+        print("There was an error with a parameter.  Please see")
+        print("the above error message for how to fix it.")
+        return None
+
+    one_letter = {
+        '00C': 'C', '01W': 'X', '0A0': 'D', '0A1': 'Y', '0A2': 'K',
+        '0A8': 'C', '0AA': 'V', '0AB': 'V', '0AC': 'G', '0AD': 'G',
+        '0AF': 'W', '0AG': 'L', '0AH': 'S', '0AK': 'D', '0AM': 'A',
+        '0AP': 'C', '0AU': 'U', '0AV': 'A', '0AZ': 'P', '0BN': 'F',
+        '0C ': 'C', '0CS': 'A', '0DC': 'C', '0DG': 'G', '0DT': 'T',
+        '0G ': 'G', '0NC': 'A', '0SP': 'A', '0U ': 'U', '0YG': 'YG',
+        '10C': 'C', '125': 'U', '126': 'U', '127': 'U', '128': 'N',
+        '12A': 'A', '143': 'C', '175': 'ASG', '193': 'X', '1AP': 'A',
+        '1MA': 'A', '1MG': 'G', '1PA': 'F', '1PI': 'A', '1PR': 'N',
+        '1SC': 'C', '1TQ': 'W', '1TY': 'Y', '200': 'F', '23F': 'F',
+        '23S': 'X', '26B': 'T', '2AD': 'X', '2AG': 'G', '2AO': 'X',
+        '2AR': 'A', '2AS': 'X', '2AT': 'T', '2AU': 'U', '2BD': 'I',
+        '2BT': 'T', '2BU': 'A', '2CO': 'C', '2DA': 'A', '2DF': 'N',
+        '2DM': 'N', '2DO': 'X', '2DT': 'T', '2EG': 'G', '2FE': 'N',
+        '2FI': 'N', '2FM': 'M', '2GT': 'T', '2HF': 'H', '2LU': 'L',
+        '2MA': 'A', '2MG': 'G', '2ML': 'L', '2MR': 'R', '2MT': 'P',
+        '2MU': 'U', '2NT': 'T', '2OM': 'U', '2OT': 'T', '2PI': 'X',
+        '2PR': 'G', '2SA': 'N', '2SI': 'X', '2ST': 'T', '2TL': 'T',
+        '2TY': 'Y', '2VA': 'V', '32S': 'X', '32T': 'X', '3AH': 'H',
+        '3AR': 'X', '3CF': 'F', '3DA': 'A', '3DR': 'N', '3GA': 'A',
+        '3MD': 'D', '3ME': 'U', '3NF': 'Y', '3TY': 'X', '3XH': 'G',
+        '4AC': 'N', '4BF': 'Y', '4CF': 'F', '4CY': 'M', '4DP': 'W',
+        '4F3': 'GYG', '4FB': 'P', '4FW': 'W', '4HT': 'W', '4IN': 'X',
+        '4MF': 'N', '4MM': 'X', '4OC': 'C', '4PC': 'C', '4PD': 'C',
+        '4PE': 'C', '4PH': 'F', '4SC': 'C', '4SU': 'U', '4TA': 'N',
+        '5AA': 'A', '5AT': 'T', '5BU': 'U', '5CG': 'G', '5CM': 'C',
+        '5CS': 'C', '5FA': 'A', '5FC': 'C', '5FU': 'U', '5HP': 'E',
+        '5HT': 'T', '5HU': 'U', '5IC': 'C', '5IT': 'T', '5IU': 'U',
+        '5MC': 'C', '5MD': 'N', '5MU': 'U', '5NC': 'C', '5PC': 'C',
+        '5PY': 'T', '5SE': 'U', '5ZA': 'TWG', '64T': 'T', '6CL': 'K',
+        '6CT': 'T', '6CW': 'W', '6HA': 'A', '6HC': 'C', '6HG': 'G',
+        '6HN': 'K', '6HT': 'T', '6IA': 'A', '6MA': 'A', '6MC': 'A',
+        '6MI': 'N', '6MT': 'A', '6MZ': 'N', '6OG': 'G', '70U': 'U',
+        '7DA': 'A', '7GU': 'G', '7JA': 'I', '7MG': 'G', '8AN': 'A',
+        '8FG': 'G', '8MG': 'G', '8OG': 'G', '9NE': 'E', '9NF': 'F',
+        '9NR': 'R', '9NV': 'V', 'A  ': 'A', 'A1P': 'N', 'A23': 'A',
+        'A2L': 'A', 'A2M': 'A', 'A34': 'A', 'A35': 'A', 'A38': 'A',
+        'A39': 'A', 'A3A': 'A', 'A3P': 'A', 'A40': 'A', 'A43': 'A',
+        'A44': 'A', 'A47': 'A', 'A5L': 'A', 'A5M': 'C', 'A5O': 'A',
+        'A66': 'X', 'AA3': 'A', 'AA4': 'A', 'AAR': 'R', 'AB7': 'X',
+        'ABA': 'A', 'ABR': 'A', 'ABS': 'A', 'ABT': 'N', 'ACB': 'D',
+        'ACL': 'R', 'AD2': 'A', 'ADD': 'X', 'ADX': 'N', 'AEA': 'X',
+        'AEI': 'D', 'AET': 'A', 'AFA': 'N', 'AFF': 'N', 'AFG': 'G',
+        'AGM': 'R', 'AGT': 'X', 'AHB': 'N', 'AHH': 'X', 'AHO': 'A',
+        'AHP': 'A', 'AHS': 'X', 'AHT': 'X', 'AIB': 'A', 'AKL': 'D',
+        'ALA': 'A', 'ALC': 'A', 'ALG': 'R', 'ALM': 'A', 'ALN': 'A',
+        'ALO': 'T', 'ALQ': 'X', 'ALS': 'A', 'ALT': 'A', 'ALY': 'K',
+        'AP7': 'A', 'APE': 'X', 'APH': 'A', 'API': 'K', 'APK': 'K',
+        'APM': 'X', 'APP': 'X', 'AR2': 'R', 'AR4': 'E', 'ARG': 'R',
+        'ARM': 'R', 'ARO': 'R', 'ARV': 'X', 'AS ': 'A', 'AS2': 'D',
+        'AS9': 'X', 'ASA': 'D', 'ASB': 'D', 'ASI': 'D', 'ASK': 'D',
+        'ASL': 'D', 'ASM': 'X', 'ASN': 'N', 'ASP': 'D', 'ASQ': 'D',
+        'ASU': 'N', 'ASX': 'B', 'ATD': 'T', 'ATL': 'T', 'ATM': 'T',
+        'AVC': 'A', 'AVN': 'X', 'AYA': 'A', 'AYG': 'AYG', 'AZK': 'K',
+        'AZS': 'S', 'AZY': 'Y', 'B1F': 'F', 'B1P': 'N', 'B2A': 'A',
+        'B2F': 'F', 'B2I': 'I', 'B2V': 'V', 'B3A': 'A', 'B3D': 'D',
+        'B3E': 'E', 'B3K': 'K', 'B3L': 'X', 'B3M': 'X', 'B3Q': 'X',
+        'B3S': 'S', 'B3T': 'X', 'B3U': 'H', 'B3X': 'N', 'B3Y': 'Y',
+        'BB6': 'C', 'BB7': 'C', 'BB9': 'C', 'BBC': 'C', 'BCS': 'C',
+        'BCX': 'C', 'BE2': 'X', 'BFD': 'D', 'BG1': 'S', 'BGM': 'G',
+        'BHD': 'D', 'BIF': 'F', 'BIL': 'X', 'BIU': 'I', 'BJH': 'X',
+        'BLE': 'L', 'BLY': 'K', 'BMP': 'N', 'BMT': 'T', 'BNN': 'A',
+        'BNO': 'X', 'BOE': 'T', 'BOR': 'R', 'BPE': 'C', 'BRU': 'U',
+        'BSE': 'S', 'BT5': 'N', 'BTA': 'L', 'BTC': 'C', 'BTR': 'W',
+        'BUC': 'C', 'BUG': 'V', 'BVP': 'U', 'BZG': 'N', 'C  ': 'C',
+        'C12': 'TYG', 'C1X': 'K', 'C25': 'C', 'C2L': 'C', 'C2S': 'C',
+        'C31': 'C', 'C32': 'C', 'C34': 'C', 'C36': 'C', 'C37': 'C',
+        'C38': 'C', 'C3Y': 'C', 'C42': 'C', 'C43': 'C', 'C45': 'C',
+        'C46': 'C', 'C49': 'C', 'C4R': 'C', 'C4S': 'C', 'C5C': 'C',
+        'C66': 'X', 'C6C': 'C', 'C99': 'TFG', 'CAF': 'C', 'CAL': 'X',
+        'CAR': 'C', 'CAS': 'C', 'CAV': 'X', 'CAY': 'C', 'CB2': 'C',
+        'CBR': 'C', 'CBV': 'C', 'CCC': 'C', 'CCL': 'K', 'CCS': 'C',
+        'CCY': 'CYG', 'CDE': 'X', 'CDV': 'X', 'CDW': 'C', 'CEA': 'C',
+        'CFL': 'C', 'CFY': 'FCYG', 'CG1': 'G', 'CGA': 'E', 'CGU': 'E',
+        'CH ': 'C', 'CH6': 'MYG', 'CH7': 'KYG', 'CHF': 'X', 'CHG': 'X',
+        'CHP': 'G', 'CHS': 'X', 'CIR': 'R', 'CJO': 'GYG', 'CLE': 'L',
+        'CLG': 'K', 'CLH': 'K', 'CLV': 'AFG', 'CM0': 'N', 'CME': 'C',
+        'CMH': 'C', 'CML': 'C', 'CMR': 'C', 'CMT': 'C', 'CNU': 'U',
+        'CP1': 'C', 'CPC': 'X', 'CPI': 'X', 'CQR': 'GYG', 'CR0': 'TLG',
+        'CR2': 'GYG', 'CR5': 'G', 'CR7': 'KYG', 'CR8': 'HYG', 'CRF': 'TWG',
+        'CRG': 'THG', 'CRK': 'MYG', 'CRO': 'GYG', 'CRQ': 'QYG', 'CRU': 'E',
+        'CRW': 'ASG', 'CRX': 'ASG', 'CS0': 'C', 'CS1': 'C', 'CS3': 'C',
+        'CS4': 'C', 'CS8': 'N', 'CSA': 'C', 'CSB': 'C', 'CSD': 'C',
+        'CSE': 'C', 'CSF': 'C', 'CSH': 'SHG', 'CSI': 'G', 'CSJ': 'C',
+        'CSL': 'C', 'CSO': 'C', 'CSP': 'C', 'CSR': 'C', 'CSS': 'C',
+        'CSU': 'C', 'CSW': 'C', 'CSX': 'C', 'CSY': 'SYG', 'CSZ': 'C',
+        'CTE': 'W', 'CTG': 'T', 'CTH': 'T', 'CUC': 'X', 'CWR': 'S',
+        'CXM': 'M', 'CY0': 'C', 'CY1': 'C', 'CY3': 'C', 'CY4': 'C',
+        'CYA': 'C', 'CYD': 'C', 'CYF': 'C', 'CYG': 'C', 'CYJ': 'X',
+        'CYM': 'C', 'CYQ': 'C', 'CYR': 'C', 'CYS': 'C', 'CZ2': 'C',
+        'CZO': 'GYG', 'CZZ': 'C', 'D11': 'T', 'D1P': 'N', 'D3 ': 'N',
+        'D33': 'N', 'D3P': 'G', 'D3T': 'T', 'D4M': 'T', 'D4P': 'X',
+        'DA ': 'A', 'DA2': 'X', 'DAB': 'A', 'DAH': 'F', 'DAL': 'A',
+        'DAR': 'R', 'DAS': 'D', 'DBB': 'T', 'DBM': 'N', 'DBS': 'S',
+        'DBU': 'T', 'DBY': 'Y', 'DBZ': 'A', 'DC ': 'C', 'DC2': 'C',
+        'DCG': 'G', 'DCI': 'X', 'DCL': 'X', 'DCT': 'C', 'DCY': 'C',
+        'DDE': 'H', 'DDG': 'G', 'DDN': 'U', 'DDX': 'N', 'DFC': 'C',
+        'DFG': 'G', 'DFI': 'X', 'DFO': 'X', 'DFT': 'N', 'DG ': 'G',
+        'DGH': 'G', 'DGI': 'G', 'DGL': 'E', 'DGN': 'Q', 'DHA': 'A',
+        'DHI': 'H', 'DHL': 'X', 'DHN': 'V', 'DHP': 'X', 'DHU': 'U',
+        'DHV': 'V', 'DI ': 'I', 'DIL': 'I', 'DIR': 'R', 'DIV': 'V',
+        'DLE': 'L', 'DLS': 'K', 'DLY': 'K', 'DM0': 'K', 'DMH': 'N',
+        'DMK': 'D', 'DMT': 'X', 'DN ': 'N', 'DNE': 'L', 'DNG': 'L',
+        'DNL': 'K', 'DNM': 'L', 'DNP': 'A', 'DNR': 'C', 'DNS': 'K',
+        'DOA': 'X', 'DOC': 'C', 'DOH': 'D', 'DON': 'L', 'DPB': 'T',
+        'DPH': 'F', 'DPL': 'P', 'DPP': 'A', 'DPQ': 'Y', 'DPR': 'P',
+        'DPY': 'N', 'DRM': 'U', 'DRP': 'N', 'DRT': 'T', 'DRZ': 'N',
+        'DSE': 'S', 'DSG': 'N', 'DSN': 'S', 'DSP': 'D', 'DT ': 'T',
+        'DTH': 'T', 'DTR': 'W', 'DTY': 'Y', 'DU ': 'U', 'DVA': 'V',
+        'DXD': 'N', 'DXN': 'N', 'DYG': 'DYG', 'DYS': 'C', 'DZM': 'A',
+        'E  ': 'A', 'E1X': 'A', 'EDA': 'A', 'EDC': 'G', 'EFC': 'C',
+        'EHP': 'F', 'EIT': 'T', 'ENP': 'N', 'ESB': 'Y', 'ESC': 'M',
+        'EXY': 'L', 'EY5': 'N', 'EYS': 'X', 'F2F': 'F', 'FA2': 'A',
+        'FA5': 'N', 'FAG': 'N', 'FAI': 'N', 'FCL': 'F', 'FFD': 'N',
+        'FGL': 'G', 'FGP': 'S', 'FHL': 'X', 'FHO': 'K', 'FHU': 'U',
+        'FLA': 'A', 'FLE': 'L', 'FLT': 'Y', 'FME': 'M', 'FMG': 'G',
+        'FMU': 'N', 'FOE': 'C', 'FOX': 'G', 'FP9': 'P', 'FPA': 'F',
+        'FRD': 'X', 'FT6': 'W', 'FTR': 'W', 'FTY': 'Y', 'FZN': 'K',
+        'G  ': 'G', 'G25': 'G', 'G2L': 'G', 'G2S': 'G', 'G31': 'G',
+        'G32': 'G', 'G33': 'G', 'G36': 'G', 'G38': 'G', 'G42': 'G',
+        'G46': 'G', 'G47': 'G', 'G48': 'G', 'G49': 'G', 'G4P': 'N',
+        'G7M': 'G', 'GAO': 'G', 'GAU': 'E', 'GCK': 'C', 'GCM': 'X',
+        'GDP': 'G', 'GDR': 'G', 'GFL': 'G', 'GGL': 'E', 'GH3': 'G',
+        'GHG': 'Q', 'GHP': 'G', 'GL3': 'G', 'GLH': 'Q', 'GLM': 'X',
+        'GLN': 'Q', 'GLQ': 'E', 'GLU': 'E', 'GLX': 'Z', 'GLY': 'G',
+        'GLZ': 'G', 'GMA': 'E', 'GMS': 'G', 'GMU': 'U', 'GN7': 'G',
+        'GND': 'X', 'GNE': 'N', 'GOM': 'G', 'GPL': 'K', 'GS ': 'G',
+        'GSC': 'G', 'GSR': 'G', 'GSS': 'G', 'GSU': 'E', 'GT9': 'C',
+        'GTP': 'G', 'GVL': 'X', 'GYC': 'CYG', 'GYS': 'SYG', 'H2U': 'U',
+        'H5M': 'P', 'HAC': 'A', 'HAR': 'R', 'HBN': 'H', 'HCS': 'X',
+        'HDP': 'U', 'HEU': 'U', 'HFA': 'X', 'HGL': 'X', 'HHI': 'H',
+        'HHK': 'AK', 'HIA': 'H', 'HIC': 'H', 'HIP': 'H', 'HIQ': 'H',
+        'HIS': 'H', 'HL2': 'L', 'HLU': 'L', 'HMF': 'A', 'HMR': 'R',
+        'HOL': 'N', 'HPC': 'F', 'HPE': 'F', 'HPQ': 'F', 'HQA': 'A',
+        'HRG': 'R', 'HRP': 'W', 'HS8': 'H', 'HS9': 'H', 'HSE': 'S',
+        'HSL': 'S', 'HSO': 'H', 'HTI': 'C', 'HTN': 'N', 'HTR': 'W',
+        'HV5': 'A', 'HVA': 'V', 'HY3': 'P', 'HYP': 'P', 'HZP': 'P',
+        'I  ': 'I', 'I2M': 'I', 'I58': 'K', 'I5C': 'C', 'IAM': 'A',
+        'IAR': 'R', 'IAS': 'D', 'IC ': 'C', 'IEL': 'K', 'IEY': 'HYG',
+        'IG ': 'G', 'IGL': 'G', 'IGU': 'G', 'IIC': 'SHG', 'IIL': 'I',
+        'ILE': 'I', 'ILG': 'E', 'ILX': 'I', 'IMC': 'C', 'IML': 'I',
+        'IOY': 'F', 'IPG': 'G', 'IPN': 'N', 'IRN': 'N', 'IT1': 'K',
+        'IU ': 'U', 'IYR': 'Y', 'IYT': 'T', 'JJJ': 'C', 'JJK': 'C',
+        'JJL': 'C', 'JW5': 'N', 'K1R': 'C', 'KAG': 'G', 'KCX': 'K',
+        'KGC': 'K', 'KOR': 'M', 'KPI': 'K', 'KST': 'K', 'KYQ': 'K',
+        'L2A': 'X', 'LA2': 'K', 'LAA': 'D', 'LAL': 'A', 'LBY': 'K',
+        'LC ': 'C', 'LCA': 'A', 'LCC': 'N', 'LCG': 'G', 'LCH': 'N',
+        'LCK': 'K', 'LCX': 'K', 'LDH': 'K', 'LED': 'L', 'LEF': 'L',
+        'LEH': 'L', 'LEI': 'V', 'LEM': 'L', 'LEN': 'L', 'LET': 'X',
+        'LEU': 'L', 'LG ': 'G', 'LGP': 'G', 'LHC': 'X', 'LHU': 'U',
+        'LKC': 'N', 'LLP': 'K', 'LLY': 'K', 'LME': 'E', 'LMQ': 'Q',
+        'LMS': 'N', 'LP6': 'K', 'LPD': 'P', 'LPG': 'G', 'LPL': 'X',
+        'LPS': 'S', 'LSO': 'X', 'LTA': 'X', 'LTR': 'W', 'LVG': 'G',
+        'LVN': 'V', 'LYM': 'K', 'LYN': 'K', 'LYR': 'K', 'LYS': 'K',
+        'LYX': 'K', 'LYZ': 'K', 'M0H': 'C', 'M1G': 'G', 'M2G': 'G',
+        'M2L': 'K', 'M2S': 'M', 'M3L': 'K', 'M5M': 'C', 'MA ': 'A',
+        'MA6': 'A', 'MA7': 'A', 'MAA': 'A', 'MAD': 'A', 'MAI': 'R',
+        'MBQ': 'Y', 'MBZ': 'N', 'MC1': 'S', 'MCG': 'X', 'MCL': 'K',
+        'MCS': 'C', 'MCY': 'C', 'MDH': 'X', 'MDO': 'ASG', 'MDR': 'N',
+        'MEA': 'F', 'MED': 'M', 'MEG': 'E', 'MEN': 'N', 'MEP': 'U',
+        'MEQ': 'Q', 'MET': 'M', 'MEU': 'G', 'MF3': 'X', 'MFC': 'GYG',
+        'MG1': 'G', 'MGG': 'R', 'MGN': 'Q', 'MGQ': 'A', 'MGV': 'G',
+        'MGY': 'G', 'MHL': 'L', 'MHO': 'M', 'MHS': 'H', 'MIA': 'A',
+        'MIS': 'S', 'MK8': 'L', 'ML3': 'K', 'MLE': 'L', 'MLL': 'L',
+        'MLY': 'K', 'MLZ': 'K', 'MME': 'M', 'MMT': 'T', 'MND': 'N',
+        'MNL': 'L', 'MNU': 'U', 'MNV': 'V', 'MOD': 'X', 'MP8': 'P',
+        'MPH': 'X', 'MPJ': 'X', 'MPQ': 'G', 'MRG': 'G', 'MSA': 'G',
+        'MSE': 'M', 'MSL': 'M', 'MSO': 'M', 'MSP': 'X', 'MT2': 'M',
+        'MTR': 'T', 'MTU': 'A', 'MTY': 'Y', 'MVA': 'V', 'N  ': 'N',
+        'N10': 'S', 'N2C': 'X', 'N5I': 'N', 'N5M': 'C', 'N6G': 'G',
+        'N7P': 'P', 'NA8': 'A', 'NAL': 'A', 'NAM': 'A', 'NB8': 'N',
+        'NBQ': 'Y', 'NC1': 'S', 'NCB': 'A', 'NCX': 'N', 'NCY': 'X',
+        'NDF': 'F', 'NDN': 'U', 'NEM': 'H', 'NEP': 'H', 'NF2': 'N',
+        'NFA': 'F', 'NHL': 'E', 'NIT': 'X', 'NIY': 'Y', 'NLE': 'L',
+        'NLN': 'L', 'NLO': 'L', 'NLP': 'L', 'NLQ': 'Q', 'NMC': 'G',
+        'NMM': 'R', 'NMS': 'T', 'NMT': 'T', 'NNH': 'R', 'NP3': 'N',
+        'NPH': 'C', 'NRP': 'LYG', 'NRQ': 'MYG', 'NSK': 'X', 'NTY': 'Y',
+        'NVA': 'V', 'NYC': 'TWG', 'NYG': 'NYG', 'NYM': 'N', 'NYS': 'C',
+        'NZH': 'H', 'O12': 'X', 'O2C': 'N', 'O2G': 'G', 'OAD': 'N',
+        'OAS': 'S', 'OBF': 'X', 'OBS': 'X', 'OCS': 'C', 'OCY': 'C',
+        'ODP': 'N', 'OHI': 'H', 'OHS': 'D', 'OIC': 'X', 'OIP': 'I',
+        'OLE': 'X', 'OLT': 'T', 'OLZ': 'S', 'OMC': 'C', 'OMG': 'G',
+        'OMT': 'M', 'OMU': 'U', 'ONE': 'U', 'ONL': 'X', 'OPR': 'R',
+        'ORN': 'A', 'ORQ': 'R', 'OSE': 'S', 'OTB': 'X', 'OTH': 'T',
+        'OTY': 'Y', 'OXX': 'D', 'P  ': 'G', 'P1L': 'C', 'P1P': 'N',
+        'P2T': 'T', 'P2U': 'U', 'P2Y': 'P', 'P5P': 'A', 'PAQ': 'Y',
+        'PAS': 'D', 'PAT': 'W', 'PAU': 'A', 'PBB': 'C', 'PBF': 'F',
+        'PBT': 'N', 'PCA': 'E', 'PCC': 'P', 'PCE': 'X', 'PCS': 'F',
+        'PDL': 'X', 'PDU': 'U', 'PEC': 'C', 'PF5': 'F', 'PFF': 'F',
+        'PFX': 'X', 'PG1': 'S', 'PG7': 'G', 'PG9': 'G', 'PGL': 'X',
+        'PGN': 'G', 'PGP': 'G', 'PGY': 'G', 'PHA': 'F', 'PHD': 'D',
+        'PHE': 'F', 'PHI': 'F', 'PHL': 'F', 'PHM': 'F', 'PIV': 'X',
+        'PLE': 'L', 'PM3': 'F', 'PMT': 'C', 'POM': 'P', 'PPN': 'F',
+        'PPU': 'A', 'PPW': 'G', 'PQ1': 'N', 'PR3': 'C', 'PR5': 'A',
+        'PR9': 'P', 'PRN': 'A', 'PRO': 'P', 'PRS': 'P', 'PSA': 'F',
+        'PSH': 'H', 'PST': 'T', 'PSU': 'U', 'PSW': 'C', 'PTA': 'X',
+        'PTH': 'Y', 'PTM': 'Y', 'PTR': 'Y', 'PU ': 'A', 'PUY': 'N',
+        'PVH': 'H', 'PVL': 'X', 'PYA': 'A', 'PYO': 'U', 'PYX': 'C',
+        'PYY': 'N', 'QLG': 'QLG', 'QUO': 'G', 'R  ': 'A', 'R1A': 'C',
+        'R1B': 'C', 'R1F': 'C', 'R7A': 'C', 'RC7': 'HYG', 'RCY': 'C',
+        'RIA': 'A', 'RMP': 'A', 'RON': 'X', 'RT ': 'T', 'RTP': 'N',
+        'S1H': 'S', 'S2C': 'C', 'S2D': 'A', 'S2M': 'T', 'S2P': 'A',
+        'S4A': 'A', 'S4C': 'C', 'S4G': 'G', 'S4U': 'U', 'S6G': 'G',
+        'SAC': 'S', 'SAH': 'C', 'SAR': 'G', 'SBL': 'S', 'SC ': 'C',
+        'SCH': 'C', 'SCS': 'C', 'SCY': 'C', 'SD2': 'X', 'SDG': 'G',
+        'SDP': 'S', 'SEB': 'S', 'SEC': 'A', 'SEG': 'A', 'SEL': 'S',
+        'SEM': 'X', 'SEN': 'S', 'SEP': 'S', 'SER': 'S', 'SET': 'S',
+        'SGB': 'S', 'SHC': 'C', 'SHP': 'G', 'SHR': 'K', 'SIB': 'C',
+        'SIC': 'DC', 'SLA': 'P', 'SLR': 'P', 'SLZ': 'K', 'SMC': 'C',
+        'SME': 'M', 'SMF': 'F', 'SMP': 'A', 'SMT': 'T', 'SNC': 'C',
+        'SNN': 'N', 'SOC': 'C', 'SOS': 'N', 'SOY': 'S', 'SPT': 'T',
+        'SRA': 'A', 'SSU': 'U', 'STY': 'Y', 'SUB': 'X', 'SUI': 'DG',
+        'SUN': 'S', 'SUR': 'U', 'SVA': 'S', 'SVX': 'S', 'SVZ': 'X',
+        'SYS': 'C', 'T  ': 'T', 'T11': 'F', 'T23': 'T', 'T2S': 'T',
+        'T2T': 'N', 'T31': 'U', 'T32': 'T', 'T36': 'T', 'T37': 'T',
+        'T38': 'T', 'T39': 'T', 'T3P': 'T', 'T41': 'T', 'T48': 'T',
+        'T49': 'T', 'T4S': 'T', 'T5O': 'U', 'T5S': 'T', 'T66': 'X',
+        'T6A': 'A', 'TA3': 'T', 'TA4': 'X', 'TAF': 'T', 'TAL': 'N',
+        'TAV': 'D', 'TBG': 'V', 'TBM': 'T', 'TC1': 'C', 'TCP': 'T',
+        'TCQ': 'X', 'TCR': 'W', 'TCY': 'A', 'TDD': 'L', 'TDY': 'T',
+        'TFE': 'T', 'TFO': 'A', 'TFQ': 'F', 'TFT': 'T', 'TGP': 'G',
+        'TH6': 'T', 'THC': 'T', 'THO': 'X', 'THR': 'T', 'THX': 'N',
+        'THZ': 'R', 'TIH': 'A', 'TLB': 'N', 'TLC': 'T', 'TLN': 'U',
+        'TMB': 'T', 'TMD': 'T', 'TNB': 'C', 'TNR': 'S', 'TOX': 'W',
+        'TP1': 'T', 'TPC': 'C', 'TPG': 'G', 'TPH': 'X', 'TPL': 'W',
+        'TPO': 'T', 'TPQ': 'Y', 'TQQ': 'W', 'TRF': 'W', 'TRG': 'K',
+        'TRN': 'W', 'TRO': 'W', 'TRP': 'W', 'TRQ': 'W', 'TRW': 'W',
+        'TRX': 'W', 'TS ': 'N', 'TST': 'X', 'TT ': 'N', 'TTD': 'T',
+        'TTI': 'U', 'TTM': 'T', 'TTQ': 'W', 'TTS': 'Y', 'TY2': 'Y',
+        'TY3': 'Y', 'TYB': 'Y', 'TYI': 'Y', 'TYN': 'Y', 'TYO': 'Y',
+        'TYQ': 'Y', 'TYR': 'Y', 'TYS': 'Y', 'TYT': 'Y', 'TYU': 'N',
+        'TYX': 'X', 'TYY': 'Y', 'TZB': 'X', 'TZO': 'X', 'U  ': 'U',
+        'U25': 'U', 'U2L': 'U', 'U2N': 'U', 'U2P': 'U', 'U31': 'U',
+        'U33': 'U', 'U34': 'U', 'U36': 'U', 'U37': 'U', 'U8U': 'U',
+        'UAR': 'U', 'UCL': 'U', 'UD5': 'U', 'UDP': 'N', 'UFP': 'N',
+        'UFR': 'U', 'UFT': 'U', 'UMA': 'A', 'UMP': 'U', 'UMS': 'U',
+        'UN1': 'X', 'UN2': 'X', 'UNK': 'X', 'UR3': 'U', 'URD': 'U',
+        'US1': 'U', 'US2': 'U', 'US3': 'T', 'US5': 'U', 'USM': 'U',
+        'V1A': 'C', 'VAD': 'V', 'VAF': 'V', 'VAL': 'V', 'VB1': 'K',
+        'VDL': 'X', 'VLL': 'X', 'VLM': 'X', 'VMS': 'X', 'VOL': 'X',
+        'X  ': 'G', 'X2W': 'E', 'X4A': 'N', 'X9Q': 'AFG', 'XAD': 'A',
+        'XAE': 'N', 'XAL': 'A', 'XAR': 'N', 'XCL': 'C', 'XCP': 'X',
+        'XCR': 'C', 'XCS': 'N', 'XCT': 'C', 'XCY': 'C', 'XGA': 'N',
+        'XGL': 'G', 'XGR': 'G', 'XGU': 'G', 'XTH': 'T', 'XTL': 'T',
+        'XTR': 'T', 'XTS': 'G', 'XTY': 'N', 'XUA': 'A', 'XUG': 'G',
+        'XX1': 'K', 'XXY': 'THG', 'XYG': 'DYG', 'Y  ': 'A', 'YCM': 'C',
+        'YG ': 'G', 'YOF': 'Y', 'YRR': 'N', 'YYG': 'G', 'Z  ': 'C',
+        'ZAD': 'A', 'ZAL': 'A', 'ZBC': 'C', 'ZCY': 'C', 'ZDU': 'U',
+        'ZFB': 'X', 'ZGU': 'G', 'ZHP': 'N', 'ZTH': 'T', 'ZZJ': 'A'}
+
+    # remove hetero atoms (waters/ligands/etc) from consideration?
+    if het:
+        cmd.select("__h", "br. " + haystack)
+    else:
+        cmd.select("__h", "br. " + haystack + " and not het")
+
+    # get the AAs in the haystack
+    aaDict = {'aaList': []}
+    cmd.iterate("(name ca) and __h", "aaList.append((resi,resn,chain))", space=aaDict)
+
+    IDs = [int(x[0]) for x in aaDict['aaList']]
+    AAs = ''.join([one_letter[x[1]] for x in aaDict['aaList']])
+    chains = [x[2] for x in aaDict['aaList']]
+
+    reNeedle = re.compile(needle.upper())
+    it = reNeedle.finditer(AAs)
+
+    # make an empty selection to which we add residues
+    cmd.select(rSelName, 'None')
+
+    for i in it:
+        (start, stop) = i.span()
+        # we found some residues, which chains are they from?
+        i_chains = chains[start:stop]
+        # are all residues from one chain?
+        if len(set(i_chains)) != 1:
+            # now they are not, this match is not really a match, skip it
+            continue
+        chain = i_chains[0]
+        cmd.select(rSelName, rSelName + " or (__h and i. " + str(IDs[start]) + "-" + str(IDs[stop - 1]) + " and c. " + chain + " )")
+        if int(firstOnly):
+            break
+    cmd.delete("__h")
+    return rSelName
+
+cmd.extend('findSeq', findSeq)
+
 def gcal():
     ''' 
     DESCRIPTION:
-
     Open Google Calendar.
 
     USAGE:
-
     gcal
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gcal
 
     MORE DETAILS:
-
     Open Google Calendar.
 
    >>>  Edit url in python code below
-
     VERTICAL PML SCRIPT:
-
     webbrowser.open('https://calendar.google.com/calendar/r')
-
     HORIZONTAL PML SCRIPT:
-
     webbrowser.open('https://calendar.google.com/calendar/r')
-
     PYTHON CODE:
-
 def gcal():
     webbrowser.open('https://calendar.google.com/calendar/r')
     '''
@@ -6967,85 +6993,58 @@ cmd.extend('gcal',gcal)
 def gedit(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open file with gedit from within PyMOL.
 
     USAGE:
-
     gedit
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    gedit script.pml
+    gedit
 
     MORE DETAILS:
-
     Open file with gedit from within PyMOL. 
     Adjust the filepath for location of your executable.
-    Can be installed via macports on the mac.
-
-   >>>  Edit file path in python code below
+    Can be installed via macports on Mac OS.
 
     VERTICAL PML SCRIPT:
-
-    arg = (geditPath +" -w " + fileName);
-    subprocess.call(arg,shell=True)
-
+    subprocess.call(emacsOpen)
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = ( geditPath + " -w " + fileName);    subprocess.call(arg,shell=True)
-
+    subprocess.call(geditOpen);return
 
     PYTHON CODE:
-
 def gedit(fileName="test.pml"):
-    arg = (geditPath + " -w " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(geditOpen)
     return
     '''
 
-    arg = (geditPath + " -w " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(geditOpen)
     return
 cmd.extend('gedit',gedit)
 
 def gitAdd():
     ''' 
     DESCRIPTION:
-
     Enter help(gitAdd) to print steps for adding a file to version control.
 
     USAGE:
-
     gitAdd
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gitAdd
 
     MORE DETAILS:
-
     Enter help(gitAdd) to print steps for adding a file to version control.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def gitAdd():
     #NA
     '''
@@ -7056,40 +7055,28 @@ cmd.extend("gitAdd",gitAdd)
 def gitCommit():
     ''' 
     DESCRIPTION:
-
     Enter help(gitCommit) to print steps for saving updates to a file under version control.
 
 
     USAGE:
-
     gitCommit
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gitCommit
 
     MORE DETAILS:
-
     Enter help(gitInit) to print steps for saving updates to a file under version control.
 
     git add filename
     git commit -m "Message about changes"
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def gitCommit():
     #NA
     '''
@@ -7100,23 +7087,17 @@ cmd.extend("gitCommit",gitCommit)
 def gitInit():
     ''' 
     DESCRIPTION:
-
     Enter help(gitInit) to print steps for creating a git repository.
 
     USAGE:
-
     gitInit
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gitInit
 
     MORE DETAILS:
-
     Enter help(gitInit) to print steps for creating a git repository.
         Plain text files can be put under version control.
         Binary and bitmap files should not be put under version control.
@@ -7190,17 +7171,11 @@ def gitInit():
         git commit -m "Added new text in $1.pml" 
         }
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def gitInit():
     print(gitInit.__doc__)
     '''
@@ -7211,39 +7186,27 @@ cmd.extend("gitInit",gitInit)
 def gitPull():
     ''' 
     DESCRIPTION:
-
     Enter help(gitPush) to print steps to supdate a repository on github.com.
 
     USAGE:
-
     gitPull
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gitPull
 
     MORE DETAILS:
-
     Enter help(gitPull) to print steps to send to updates to a repository on github.com.
       Step 1: pull file from an existing repository. 
 
         git pull 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def gitPull():
     #NA
     '''
@@ -7254,41 +7217,29 @@ cmd.extend("gitPull",gitPull)
 def gitPush():
     ''' 
     DESCRIPTION:
-
     Enter help(gitPush) to print steps update a repository on github.com. 
 
 
     USAGE:
-
     gitPush
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gitPush
 
     MORE DETAILS:
-
     Enter help(gitPush) to print steps to send to updates to a repository on github.com. 
 
       Step 1: push updated file to an existing repository. 
 
         git push 
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def gitPush():
     #NA
     '''
@@ -7299,35 +7250,23 @@ cmd.extend("gitPush",gitPush)
 def GM():
     ''' 
     DESCRIPTION:
-
     Open gmail. 
 
     USAGE:
-
     gmail
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     gmail
 
     MORE DETAILS:
-
     Open gmail. Edit url in python code below
-
     VERTICAL PML SCRIPT:
-
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
-
     HORIZONTAL PML SCRIPT:
-
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
-
     PYTHON CODE:
-
 def GM():
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
     '''
@@ -7335,50 +7274,295 @@ def GM():
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
 cmd.extend('GM',GM)
 
+def hb(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Creates an object of all H-bonds found by PyMOL.
+
+    USAGE:
+    hb <selection>
+
+    Arguments:
+    The selection is optional. It is "all" by default.
+    EXAMPLE:
+    hbond 1lw9
+
+    MORE DETAILS:
+    Creates an object of all polar contacts found by PyMOL. 
+They all may not be H-bonds (e.g., a water cannot partake in 
+five H-bonds at once). User be aware!
+    VERTICAL PML SCRIPT:
+    hbonds, all, all, 3.2, mode=2 
+    HORIZONTAL PML SCRIPT:
+    hbonds, all, all, 3.2, mode=2 
+    PYTHON CODE:
+def hb(selection='all'):
+    cmd.distance("hbonds", "all", "all", "3.2", mode="2")
+    cmd.set("dash_gap","0.4")
+    cmd.set("dash_color","grey30")
+    cmd.set("dash_width","1.5")
+    cmd.set("dash_length",".25")
+    '''
+
+    cmd.distance("hbonds", "all", "all", "3.2", mode="2")
+    cmd.set("dash_gap","0.4")
+    cmd.set("dash_color","grey30")
+    cmd.set("dash_width","1.5")
+    cmd.set("dash_length",".25")
+cmd.extend('hb',hb)
+
+def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
+    ''' 
+    DESCRIPTION:
+    Returns s selection of interface residues named according to what you passed into selName.
+
+    USAGE:
+    objname, selection1, selection2, cutoff=1.0, selectionNameForInterface
+
+
+    Arguments:
+    PARAMS
+    cmpx
+        The complex containing cA and cB
+
+    cA
+        The first chain in which we search for residues at an interface
+        with cB
+
+    cB
+        The second chain in which we search for residues at an interface
+        with cA
+
+    cutoff
+        The difference in area OVER which residues are considered
+        interface residues.  Residues whose dASA from the complex to
+        a single chain is greater than this cutoff are kept.  Zero
+        keeps all residues.
+
+    selName
+        The name of the selection to return.
+
+    EXAMPLE:
+    myComlpex, c. A, c. B
+
+    MORE DETAILS:
+    interfaceResidues -- finds 'interface' residues between two chains in a complex.
+
+PARAMS
+	cmpx
+		The complex containing cA and cB
+
+	cA
+		The first chain in which we search for residues at an interface
+		with cB
+
+	cB
+		The second chain in which we search for residues at an interface
+		with cA
+
+	cutoff
+		The difference in area OVER which residues are considered
+		interface residues.  Residues whose dASA from the complex to
+		a single chain is greater than this cutoff are kept.  Zero
+		keeps all residues.
+
+	selName
+		The name of the selection to return.
+
+RETURNS
+	* A selection of interface residues is created and named
+		depending on what you passed into selName
+	* An array of values is returned where each value is:
+		( modelName, residueNumber, dASA )
+
+NOTES
+	If you have two chains that are not from the same PDB that you want
+	to complex together, use the create command like:
+		create myComplex, pdb1WithChainA or pdb2withChainX
+	then pass myComplex to this script like:
+		interfaceResidues myComlpex, c. A, c. X
+
+	This script calculates the area of the complex as a whole.  Then,
+	it separates the two chains that you pass in through the arguments
+	cA and cB, alone.  Once it has this, it calculates the difference
+	and any residues ABOVE the cutoff are called interface residues.
+
+AUTHOR:
+	Jason Vertrees, 2009.		
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
+    # Save user's settings, before setting dot_solvent
+    oldDS = cmd.get("dot_solvent")
+    cmd.set("dot_solvent", 1)
+
+    # set some string names for temporary objects/selections
+    tempC, selName1 = "tempComplex", selName+"1"
+    chA, chB = "chA", "chB"
+
+    # operate on a new object & turn off the original
+    cmd.create(tempC, cmpx)
+    cmd.disable(cmpx)
+
+    # remove cruft and inrrelevant chains
+    cmd.remove(tempC + " and not (polymer and (%s or %s))" % (cA, cB))
+
+    # get the area of the complete complex
+    cmd.get_area(tempC, load_b=1)
+    # copy the areas from the loaded b to the q, field.
+    cmd.alter(tempC, 'q=b')
+
+    # extract the two chains and calc. the new area
+    # note: the q fields are copied to the new objects
+    # chA and chB
+    cmd.extract(chA, tempC + " and (" + cA + ")")
+    cmd.extract(chB, tempC + " and (" + cB + ")")
+    cmd.get_area(chA, load_b=1)
+    cmd.get_area(chB, load_b=1)
+
+    # update the chain-only objects w/the difference
+    cmd.alter( "%s or %s" % (chA,chB), "b=b-q" )
+
+    # The calculations are done.  Now, all we need to
+    # do is to determine which residues are over the cutoff
+    # and save them.
+    stored.r, rVal, seen = [], [], []
+    cmd.iterate('%s or %s' % (chA, chB), 'stored.r.append((model,resi,b))')
+
+    cmd.enable(cmpx)
+    cmd.select(selName1, None)
+    for (model,resi,diff) in stored.r:
+        key=resi+"-"+model
+        if abs(diff)>=float(cutoff):
+            if key in seen: continue
+            else: seen.append(key)
+            rVal.append( (model,resi,diff) )
+            # expand the selection here; I chose to iterate over stored.r instead of
+            # creating one large selection b/c if there are too many residues PyMOL
+            # might crash on a very large selection.  This is pretty much guaranteed
+            # not to kill PyMOL; but, it might take a little longer to run.
+            cmd.select( selName1, selName1 + " or (%s and i. %s)" % (model,resi))
+
+    # this is how you transfer a selection to another object.
+    cmd.select(selName, cmpx + " in " + selName1)
+    # clean up after ourselves
+    cmd.delete(selName1)
+    cmd.delete(chA)
+    cmd.delete(chB)
+    cmd.delete(tempC)
+    # show the selection
+    cmd.enable(selName)
+
+    # reset users settings
+    cmd.set("dot_solvent", oldDS)
+
+    return rVal
+
+    '''
+
+    # Save user's settings, before setting dot_solvent
+    oldDS = cmd.get("dot_solvent")
+    cmd.set("dot_solvent", 1)
+
+    # set some string names for temporary objects/selections
+    tempC, selName1 = "tempComplex", selName+"1"
+    chA, chB = "chA", "chB"
+
+    # operate on a new object & turn off the original
+    cmd.create(tempC, cmpx)
+    cmd.disable(cmpx)
+
+    # remove cruft and inrrelevant chains
+    cmd.remove(tempC + " and not (polymer and (%s or %s))" % (cA, cB))
+
+    # get the area of the complete complex
+    cmd.get_area(tempC, load_b=1)
+    # copy the areas from the loaded b to the q, field.
+    cmd.alter(tempC, 'q=b')
+
+    # extract the two chains and calc. the new area
+    # note: the q fields are copied to the new objects
+    # chA and chB
+    cmd.extract(chA, tempC + " and (" + cA + ")")
+    cmd.extract(chB, tempC + " and (" + cB + ")")
+    cmd.get_area(chA, load_b=1)
+    cmd.get_area(chB, load_b=1)
+
+    # update the chain-only objects w/the difference
+    cmd.alter( "%s or %s" % (chA,chB), "b=b-q" )
+
+    # The calculations are done.  Now, all we need to
+    # do is to determine which residues are over the cutoff
+    # and save them.
+    stored.r, rVal, seen = [], [], []
+    cmd.iterate('%s or %s' % (chA, chB), 'stored.r.append((model,resi,b))')
+
+    cmd.enable(cmpx)
+    cmd.select(selName1, None)
+    for (model,resi,diff) in stored.r:
+        key=resi+"-"+model
+        if abs(diff)>=float(cutoff):
+            if key in seen: continue
+            else: seen.append(key)
+            rVal.append( (model,resi,diff) )
+            # expand the selection here; I chose to iterate over stored.r instead of
+            # creating one large selection b/c if there are too many residues PyMOL
+            # might crash on a very large selection.  This is pretty much guaranteed
+            # not to kill PyMOL; but, it might take a little longer to run.
+            cmd.select( selName1, selName1 + " or (%s and i. %s)" % (model,resi))
+
+    # this is how you transfer a selection to another object.
+    cmd.select(selName, cmpx + " in " + selName1)
+    # clean up after ourselves
+    cmd.delete(selName1)
+    cmd.delete(chA)
+    cmd.delete(chB)
+    cmd.delete(tempC)
+    # show the selection
+    cmd.enable(selName)
+
+    # reset users settings
+    cmd.set("dot_solvent", oldDS)
+
+    return rVal
+
+cmd.extend('interface', interface)
+
 def iterm():
     ''' 
     DESCRIPTION:
-
     Open iTerm2 window on MacOS. 
 
     USAGE:
-
     iterm
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     iterm
 
     MORE DETAILS:
-
     Open iTerm2 window on MacOS. 
 
-   >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    subprocess.call(itermCommand);
+    subprocess.call(itermOpen);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
-    subprocess.call(itermPath);return
-
+    subprocess.call(itermOpen);return
 
     PYTHON CODE:
-
 def iterm():
-    subprocess.call(itermPath)
+    subprocess.call(itermOpen)
     return
 
     '''
 
-    subprocess.call(itermPath)
+    subprocess.call(itermOpen)
     return
 
 cmd.extend('iterm',iterm)
@@ -7386,50 +7570,36 @@ cmd.extend('iterm',iterm)
 def jabref():
     ''' 
     DESCRIPTION:
-
     Open the jabref from within PyMOL.
 
     USAGE:
-
     jabref
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     jabref
 
     MORE DETAILS:
-
     Open the jabref from within PyMOL.
 
    >>>  Edit file path in python code below.
-
     VERTICAL PML SCRIPT:
-
     arg = (jabrefPath);
     subprocess.call(arg,shell=True);
     return;
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = jabrefCommand; subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def jabref():
-    arg = jabrefCommand;
-    subprocess.call(arg,shell=True);
+    subprocess.call(jabrefOpen);
     return
 
     '''
 
-    arg = jabrefCommand;
-    subprocess.call(arg,shell=True);
+    subprocess.call(jabrefOpen);
     return
 
 cmd.extend('jabref',jabref)
@@ -7437,92 +7607,66 @@ cmd.extend('jabref',jabref)
 def jedit(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open file with jedit from within PyMOL. 
 
     USAGE:
-
     jedit
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     jedit script.pml
 
     MORE DETAILS:
-
     Open file with jedit from within PyMOL. 
     Adjust file path to your executable.
     Can be installed via macports on the Mac.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (jeditCommand+ fileName);
-    subprocess.call(arg,shell=True)
-
+    subprocess.call(jeditOpen)
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (jeditCommand + fileName);    subprocess.call(arg,shell=True)
-
+    subprocess.call(jeditOpen);return
 
     PYTHON CODE:
-
 def jedit(fileName="test.pml"):
-    arg = (jeditCommand + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(jeditOpen)
     return
     '''
 
-    arg = (jeditCommand + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(jeditOpen)
     return
 cmd.extend('jedit',jedit)
 
 def jmol(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
-
     Open Jmol from within PyMOL.
 
     USAGE:
-
     jmol
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     jmol
 
     MORE DETAILS:
-
     Open Jmol from within PyMOL.
     Adjust file path to your location of Jmol.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = (jmolPath + fileName);subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def jmol(fileName="test.pdb"):
     arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
@@ -7539,100 +7683,69 @@ cmd.extend('jmol',jmol)
 def julia():
     ''' 
     DESCRIPTION:
-
     Open the julia from within PyMOL.
 
     USAGE:
-
     julia
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     julia
 
     MORE DETAILS:
-
     Open the julia from within PyMOL.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = juliaPath;
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg =juliaPath;subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def julia():
-    arg = juliaPath;
-    subprocess.call(arg,shell=True);
+    subprocess.call(juliaOpen);
     return
 
     '''
 
-    arg = juliaPath;
-    subprocess.call(arg,shell=True);
+    subprocess.call(juliaOpen);
     return
 
 cmd.extend('julia',julia)
 
-def mate(fileName="test.pml"):
+def mate():
     ''' 
     DESCRIPTION:
-
-    Open file with mate from within PyMOL. 
+    Open textmate from within PyMOL. 
 
     USAGE:
-
     mate
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    mate script.pml
+    mate
 
     MORE DETAILS:
-
-    Open file with Textmate (Mac OS only) from within PyMOL. 
-    Adjust path to Textmate on your computer as needed.
-
-   >>>  Edit file path in python code below
-
+    Open file with Textmate (Mac OS only) from within PyMOL.  Adjust path to Textmate on your computer as needed.
     VERTICAL PML SCRIPT:
-
-    arg = (matePath + fileName);
-    subprocess.call(arg,shell=True)
-
+    subprocess.call(mateOpen)
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (matePath + fileName);    subprocess.call(arg,shell=True)
-
+    subprocess.call(mateOpen);return
 
     PYTHON CODE:
-
-def mate(fileName="test.pml"):
-    arg = (matePath + fileName)
-    subprocess.call(arg,shell=True)
+def mate():
+    subprocess.call(mateOpen)
     return
     '''
 
-    arg = (matePath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(mateOpen)
     return
 cmd.extend('mate',mate)
 
@@ -7640,35 +7753,23 @@ def nmr():
 
     ''' 
     DESCRIPTION:
-
     Show all models in a nmr structure. 
 
     USAGE:
-
     nmr
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     nmr
 
     MORE DETAILS:
-
     Show all models in a nmr structure. 
-
     VERTICAL PML SCRIPT:
-
     set all_states, on
-
     HORIZONTAL PML SCRIPT:
-
     set all_states, on
-
     PYTHON CODE:
-
 def nmr():
 
     cmd.do('set all_states, on')
@@ -7682,35 +7783,23 @@ def nmroff():
 
     ''' 
     DESCRIPTION:
-
     Hide all but first model in a nmr structure. 
 
     USAGE:
-
     nmroff
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     nmroff
 
     MORE DETAILS:
-
     Hide all but first model in a nmr structure. 
-
     VERTICAL PML SCRIPT:
-
     set all_states, off
-
     HORIZONTAL PML SCRIPT:
-
     set all_states, off
-
     PYTHON CODE:
-
 def nmroff():
 
     cmd.do('set all_states, off')
@@ -7723,35 +7812,23 @@ cmd.extend("nmr", nmr)
 def notPyMOL():
     ''' 
     DESCRIPTION:
-
     Open website with list of other molecular graphics programs.
 
     USAGE:
-
     notPyMOL
 
     Arguments:
-
     NA
-
     EXAMPLE:
-
     notPyMOL
 
     MORE DETAILS:
-
     Open website with list of other molecular graphics programs.
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def notPyMOL():
     webbrowser.open('https://www.bnl.gov/ps/')
     '''
@@ -7759,92 +7836,66 @@ def notPyMOL():
     webbrowser.open('https://www.bnl.gov/ps/')
 cmd.extend('notPyMOL',notPyMOL)
 
-def notepadpp(fileName="test.pml"):
+def npp():
     ''' 
     DESCRIPTION:
-
-    Open file with notepadpp from within PyMOL. 
+    Open notepadpp from within PyMOL. 
 
     USAGE:
-
-    notepadpp
+    npp
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    notepadpp script.pml
+    npp
 
     MORE DETAILS:
-
-    Open file with notepadpp from within PyMOL. 
-    Adjust path to notepadpp on your computer as needed.
-
-   >>>  Edit file path in python code below
-
+    Open notepadpp from within PyMOL. 
+Notepadpp can be installed on Mac OS and Linux via wine.
     VERTICAL PML SCRIPT:
-
-    arg = (notepadppPath + fileName);
-    subprocess.call(arg,shell=True)
-
+    subprocess.call(nppOpen)
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (notepadppPath + fileName);    subprocess.call(arg,shell=True)
-
+    subprocess.call(nppOpen);return
 
     PYTHON CODE:
-
-def notepadpp(fileName="test.pml"):
-    arg = (notepadppPath + fileName)
-    subprocess.call(arg,shell=True)
+def npp():
+    subprocess.call(nppOpen)
     return
+
     '''
 
-    arg = (notepadppPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(nppOpen)
     return
-cmd.extend('notepadpp',notepadpp)
+
+cmd.extend('npp',npp)
 
 def nv(fileName="testme.pml"):
     ''' 
     DESCRIPTION:
-
     Open file with neovim from within PyMOL.
 
     USAGE:
-
     nv
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     nv script.pml
 
     MORE DETAILS:
-
     Open file with neovim from within PyMOL. 
     Adjust path to neovim on your computer as needed.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     subprocess.call(nvimCommand)
 
-
     HORIZONTAL PML SCRIPT:
-
         subprocess.call(nvimCommand)
 
-
     PYTHON CODE:
-
 def nv(fileName="testme.pml"):
     subprocess.call(nvimCommand)
 
@@ -7857,41 +7908,29 @@ cmd.extend('nv',nv)
 def oc():
     ''' 
     DESCRIPTION:
-
     Open the octave from within PyMOL.
 
     USAGE:
-
     octave
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     oc
 
     MORE DETAILS:
-
     Open the octave from within PyMOL.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     arg = octaveCommand;
     subprocess.call(arg,shell=True);
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     arg = octaveCommand;subprocess.call(arg,shell=True);return
 
-
     PYTHON CODE:
-
 def oc():
     arg = octaveCommand
     subprocess.call(arg,shell=True)
@@ -7905,105 +7944,221 @@ def oc():
 
 cmd.extend('oc',oc)
 
-def oni(fileName="test.pml"):
+def oni():
     ''' 
     DESCRIPTION:
-
     Open the editor Oni from within PyMOL. 
 
     USAGE:
-
     oni
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    oni script.pml
+    oni
 
     MORE DETAILS:
-
     Open the editor Oni from within PyMOL. 
     The is an editor based on neovim.
 
-   >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (oniPath + fileName);
-    subprocess.call(arg,shell=True);
-    return
-
+    subprocess.call(oniOpen);
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (oniPath + fileName);subprocess.call(arg,shell=True);return
-
+    subprocess.call(oniOpen);return
 
     PYTHON CODE:
-
-def oni(fileName="test.pml"):
-    arg = (oniPath + fileName)
-    subprocess.call(arg,shell=True)
+def oni():
+    subprocess.call(oniOpen)
     return
 
     '''
 
-    arg = (oniPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(oniOpen)
     return
 
 cmd.extend('oni',oni)
 
+def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
+    ''' 
+    DESCRIPTION:
+    Find the pairwise distances between two selections.
+
+    USAGE:
+    pairwise_dist sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
+
+    Arguments:
+    sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
+    EXAMPLE:
+    pairD chA., ch.B, 3.5, output=S, sidechain=Y, show=Y
+
+
+    MORE DETAILS:
+    usage: pairwise_dist sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
+
+sel1 and sel2 can be any to pre-existing or newly defined selections
+
+max_dist: maximum distance in Angstrom between atoms in the two selections
+
+--optional settings:
+    output: accepts Screen/Print/None (default N)
+    sidechain: limits (Y) results to sidechain atoms (default N)
+    show: shows (Y) individual distances in pymol menu (default=N)
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
+    print("")
+    cmd.delete ("dist*")
+    extra=""
+    if sidechain=="Y": extra=" and not name c+o+n"
+
+    #builds models
+    m1=cmd.get_model(sel2+" around "+str(max_dist)+" and "+sel1+extra)
+    m1o=cmd.get_object_list(sel1)
+    m2=cmd.get_model(sel1+" around "+str(max_dist)+" and "+sel2+extra)
+    m2o=cmd.get_object_list(sel2)
+
+    #defines selections
+    cmd.select("__tsel1a", sel1+" around "+str(max_dist)+" and "+sel2+extra)
+    cmd.select("__tsel1", "__tsel1a and "+sel2+extra)
+    cmd.select("__tsel2a", sel2+" around "+str(max_dist)+" and "+sel1+extra)
+    cmd.select("__tsel2", "__tsel2a and "+sel1+extra)
+    cmd.select("IntAtoms_"+max_dist, "__tsel1 or __tsel2")
+    cmd.select("IntRes_"+max_dist, "byres IntAtoms_"+max_dist)
+
+    #controlers-1
+    if len(m1o)==0:
+        print("warning, '"+sel1+extra+"' does not contain any atoms.")
+        return
+    if len(m2o)==0:
+        print("warning, '"+sel2+extra+"' does not contain any atoms.")
+        return
+
+    #measures distances
+    s=""
+    counter=0
+    for c1 in range(len(m1.atom)):
+        for c2 in range(len(m2.atom)):
+            distance=math.sqrt(sum(map(lambda f: (f[0]-f[1])**2, zip(m1.atom[c1].coord,m2.atom[c2].coord))))
+            if distance<float(max_dist):
+                s+="%s/%s/%s/%s/%s to %s/%s/%s/%s/%s: %.3f\n" % (m1o[0],m1.atom[c1].chain,m1.atom[c1].resn,m1.atom[c1].resi,m1.atom[c1].name,m2o[0],m2.atom[c2].chain,m2.atom[c2].resn,m2.atom[c2].resi,m2.atom[c2].name, distance)
+                counter+=1
+                if show=="Y": cmd.distance (m1o[0]+" and "+m1.atom[c1].chain+"/"+m1.atom[c1].resi+"/"+m1.atom[c1].name, m2o[0]+" and "+m2.atom[c2].chain+"/"+m2.atom[c2].resi+"/"+m2.atom[c2].name)
+
+    #controler-2
+    if counter==0:
+        print("warning, no distances were measured! Check your selections/max_dist value")
+        return
+
+    #outputs
+    if output=="S": print(s)
+    if output=="P":
+        f=open('IntAtoms_'+max_dist+'.txt','w')
+        f.write("Number of distances calculated: %s\n" % (counter))
+        f.write(s)
+        f.close()
+        print("Results saved in IntAtoms_%s.txt" % max_dist)
+    print("Number of distances calculated: %s" % (counter))
+    cmd.hide("lines", "IntRes_*")
+    if show=="Y": cmd.show("lines","IntRes_"+max_dist)
+    cmd.deselect()
+    '''
+
+    print("")
+    cmd.delete ("dist*")
+    extra=""
+    if sidechain=="Y": extra=" and not name c+o+n"
+
+    #builds models
+    m1=cmd.get_model(sel2+" around "+str(max_dist)+" and "+sel1+extra)
+    m1o=cmd.get_object_list(sel1)
+    m2=cmd.get_model(sel1+" around "+str(max_dist)+" and "+sel2+extra)
+    m2o=cmd.get_object_list(sel2)
+
+    #defines selections
+    cmd.select("__tsel1a", sel1+" around "+str(max_dist)+" and "+sel2+extra)
+    cmd.select("__tsel1", "__tsel1a and "+sel2+extra)
+    cmd.select("__tsel2a", sel2+" around "+str(max_dist)+" and "+sel1+extra)
+    cmd.select("__tsel2", "__tsel2a and "+sel1+extra)
+    cmd.select("IntAtoms_"+max_dist, "__tsel1 or __tsel2")
+    cmd.select("IntRes_"+max_dist, "byres IntAtoms_"+max_dist)
+
+    #controlers-1
+    if len(m1o)==0:
+        print("warning, '"+sel1+extra+"' does not contain any atoms.")
+        return
+    if len(m2o)==0:
+        print("warning, '"+sel2+extra+"' does not contain any atoms.")
+        return
+
+    #measures distances
+    s=""
+    counter=0
+    for c1 in range(len(m1.atom)):
+        for c2 in range(len(m2.atom)):
+            distance=math.sqrt(sum(map(lambda f: (f[0]-f[1])**2, zip(m1.atom[c1].coord,m2.atom[c2].coord))))
+            if distance<float(max_dist):
+                s+="%s/%s/%s/%s/%s to %s/%s/%s/%s/%s: %.3f\n" % (m1o[0],m1.atom[c1].chain,m1.atom[c1].resn,m1.atom[c1].resi,m1.atom[c1].name,m2o[0],m2.atom[c2].chain,m2.atom[c2].resn,m2.atom[c2].resi,m2.atom[c2].name, distance)
+                counter+=1
+                if show=="Y": cmd.distance (m1o[0]+" and "+m1.atom[c1].chain+"/"+m1.atom[c1].resi+"/"+m1.atom[c1].name, m2o[0]+" and "+m2.atom[c2].chain+"/"+m2.atom[c2].resi+"/"+m2.atom[c2].name)
+
+    #controler-2
+    if counter==0:
+        print("warning, no distances were measured! Check your selections/max_dist value")
+        return
+
+    #outputs
+    if output=="S": print(s)
+    if output=="P":
+        f=open('IntAtoms_'+max_dist+'.txt','w')
+        f.write("Number of distances calculated: %s\n" % (counter))
+        f.write(s)
+        f.close()
+        print("Results saved in IntAtoms_%s.txt" % max_dist)
+    print("Number of distances calculated: %s" % (counter))
+    cmd.hide("lines", "IntRes_*")
+    if show=="Y": cmd.show("lines","IntRes_"+max_dist)
+    cmd.deselect()
+cmd.extend('pairD', pairD)
+
 def ppt():
     ''' 
     DESCRIPTION:
-
     Open the powerpoint from within PyMOL. 
 
     USAGE:
-
     ppt
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     ppt
 
     MORE DETAILS:
-
     Open the powerpoint from within PyMOL. 
 
-   >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = powerpointCommand
-    subprocess.call(arg,shell=True)
+    subprocess.call(pptOpen); 
     return
 
 
     HORIZONTAL PML SCRIPT:
-
-    arg = powerpointCommand;subprocess.call(arg,shell=True);return
+    subprocess.call(pptOpen); return
 
 
     PYTHON CODE:
-
 def ppt():
-    arg =powerpointCommand
-    subprocess.call(arg,shell=True)
+    subprocess.call(pptOpen)
     return
 
     '''
 
-    arg =powerpointCommand
-    subprocess.call(arg,shell=True)
+    subprocess.call(pptOpen)
     return
 
 cmd.extend('ptt',ppt)
@@ -8011,24 +8166,18 @@ cmd.extend('ptt',ppt)
 def rline():
     ''' 
     DESCRIPTION:
-
     Prints cheat sheet for the readline commands. 
 
 
     USAGE:
-
     rline
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     rline
 
     MORE DETAILS:
-
     Prints cheat sheet for the readline commands.
 
 These commands are sufficient for most editing tasks:  
@@ -8045,17 +8194,11 @@ These commands are sufficient for most editing tasks:
       Control-f moves the cursor to the right by one character.   
       Control-b moves the cursor to the left by one character.
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def rline():
     print(readline.__doc__)
     '''
@@ -8066,39 +8209,27 @@ cmd.extend("rline",rline)
 def rmd():
     ''' 
     DESCRIPTION:
-
     Remove all measurement objects in the interal GUI.
 
     USAGE:
-
     rmd
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     rmd
 
     MORE DETAILS:
-
     Remove all measurement objects in the interal GUI.
     Note that there is a "delete all measurements" toggle in the internal gui.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     delete measure*;
     delete m*_*
-
     HORIZONTAL PML SCRIPT:
-
     delete measure*; delete m*_*
-
     PYTHON CODE:
-
 def rmd():
     cmd.do('delete measure*')
     cmd.do('delete m*_*')
@@ -8112,36 +8243,24 @@ def rmsc():
 
     ''' 
     DESCRIPTION:
-
     Remove supercell objects.
 
     USAGE:
-
     rmsc
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     rmsc
 
     MORE DETAILS:
-
     Use 'rmsc' to remove supercell objects.
 
-
     VERTICAL PML SCRIPT:
-
     delete supercell*;delete m*_*
-
     HORIZONTAL PML SCRIPT:
-
     delete supercell*;delete m*_*
-
     PYTHON CODE:
-
 def rmsc():
 
     cmd.do('delete supercell*;delete m*_*')
@@ -8154,26 +8273,20 @@ cmd.extend("rmsc", rmsc)
 def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     ''' 
     DESCRIPTION:
-
     Get the view settings in a compact format on one line.
 
 
     USAGE:
-
     rv
 
     Arguments:
-
     [view, decimal_places, outname]
 Note that the values in the [] are optional.
 
-
     EXAMPLE:
-
     rv
 
     MORE DETAILS:
-
     Get the view settings in a compact format on one line.
     The default StoredView is "0", the current view.
     You can get a stored view assigned to some
@@ -8203,17 +8316,11 @@ Note that the values in the [] are optional.
             17 = orthoscopic flag 
             (not implemented in older versions)
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
 def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     #convert the commandline arguments from strings to integers
 
@@ -8298,39 +8405,27 @@ cmd.extend("rv", rv)
 def saln(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a aln file (alignment file) with a time stamp.
 
     USAGE:
-
     saln
 
     Arguments:
-
     alignmentFileNameStem
-
     EXAMPLE:
-
     saln  testFile
 
     MORE DETAILS:
-
     Save a aln file (alignment file) with a time stamp included in the filename to avoid
     overwriting work. Read as a commandline argument, a string as the filename 
     stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");
     s = str(DT);
     cmd.save(stemName+s+".aln")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".aln")
-
     PYTHON CODE:
-
 def saln(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -8346,39 +8441,27 @@ def sc111():
 
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 1 x 1 unit cells. 
 
     USAGE:
-
     sc111
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc111
 
     MORE DETAILS:
-
     Make a lattice of 1 x 1 x 1 unit cells.
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\nsupercell 1, 1, 1, , orange, supercell111, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;supercell 1, 1, 1, , orange, supercell111, 1
-
     PYTHON CODE:
-
 def sc111():
 
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
@@ -8395,40 +8478,28 @@ cmd.extend("sc111", sc111)
 def sc112():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 1 x 2 unit cells
 
     USAGE:
-
     sc112
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc112
 
     MORE DETAILS:
-
     Make a lattice of 1 x 1 x 2 unit cells.
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
      >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 1, 2, , orange, supercell112, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;supercell 1, 1, 2, , orange, supercell112, 1
-
     PYTHON CODE:
-
 def sc112():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
@@ -8444,40 +8515,28 @@ cmd.extend("sc112", sc112)
 def sc113():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 1 x 3 unit cells.
 
     USAGE:
-
     sc113
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc113
 
     MORE DETAILS:
-
     Make a lattice of 1 x 1 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 1, 3, , orange, supercell113, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 1, 3, , orange, supercell113, 1
-
     PYTHON CODE:
-
 def sc113():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 1, 3, , orange, supercell113, 1')
@@ -8491,40 +8550,28 @@ cmd.extend("sc113", sc113)
 def sc121():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 2 x 1 unit cells. 
 
     USAGE:
-
     sc121
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc121
 
     MORE DETAILS:
-
     Make a lattice of 1 x 2 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 2, 1, , orange, supercell121, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 1, , orange, supercell121, 1
-
     PYTHON CODE:
-
 def sc121():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 2, 1, , orange, supercell121, 1')
@@ -8538,40 +8585,28 @@ cmd.extend("sc121", sc121)
 def sc122():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 2 x 2 unit cells. 
 
     USAGE:
-
     sc122
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc122
 
     MORE DETAILS:
-
     Make a lattice of 1 x 2 x 2 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 2, 2, , orange, supercell122, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 2, , orange, supercell122, 1
-
     PYTHON CODE:
-
 def sc122():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 2, 2, , orange, supercell122, 1')
@@ -8585,39 +8620,27 @@ cmd.extend("sc122", sc122)
 def sc123():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 2 x 3 unit cells. 
 
     USAGE:
-
     sc123
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc123
 
     MORE DETAILS:
-
     Make a lattice of 1 x 2 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 3, , orange, supercell123, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 3, , orange, supercell123, 1
-
     PYTHON CODE:
-
 def sc123():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 2, 3, , orange, supercell123, 1')
@@ -8631,39 +8654,27 @@ cmd.extend("sc123", sc123)
 def sc131():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 3 x 1 unit cells. 
 
     USAGE:
-
     sc131
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc131
 
     MORE DETAILS:
-
     Make a lattice of 1 x 3 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 1, , orange, supercell131, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 1, , orange, supercell131, 1
-
     PYTHON CODE:
-
 def sc131():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 3, 1, , orange, supercell131, 1')
@@ -8677,40 +8688,28 @@ cmd.extend("sc131", sc131)
 def sc132():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 3 x 2 unit cells. 
 
     USAGE:
-
     sc132
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc132
 
     MORE DETAILS:
-
     Make a lattice of 1 x 3 x 2 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 3, 2, , orange, supercell132, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 2, , orange, supercell132, 1
-
     PYTHON CODE:
-
 def sc132():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 3, 2, , orange, supercell132, 1')
@@ -8724,40 +8723,28 @@ cmd.extend("sc132", sc132)
 def sc133():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 1 x 3 x 3 unit cells. 
 
     USAGE:
-
     sc133
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc133
 
     MORE DETAILS:
-
     Make a lattice of 1 x 3 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/mg18OU/supercell.py;
     supercell 1, 3, 3, , orange, supercell133, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 3, , orange, supercell133, 1
-
     PYTHON CODE:
-
 def sc133():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 1, 3, 3, , orange, supercell133, 1')
@@ -8771,40 +8758,28 @@ cmd.extend("sc133", sc133)
 def sc211():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 1 x 1 unit cells.
 
     USAGE:
-
     sc211
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc211
 
     MORE DETAILS:
-
     Make a lattice of 2 x 1 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 1, , orange, supercell211, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 1, , orange, supercell211, 1
-
     PYTHON CODE:
-
 def sc211():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 1, 1, , orange, supercell211, 1')
@@ -8820,40 +8795,28 @@ cmd.extend("sc211", sc211)
 def sc212():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 1 x 2 unit cells.
 
     USAGE:
-
     sc212
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc212
 
     MORE DETAILS:
-
     Make a lattice of 2 x 1 x 2 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 2, , orange, supercell212, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 2, , orange, supercell121, 1
-
     PYTHON CODE:
-
 def sc212():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 1, 2, , orange, supercell212, 1')
@@ -8867,40 +8830,28 @@ cmd.extend("sc212", sc212)
 def sc213():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 1 x 3 unit cells. 
 
     USAGE:
-
     sc213
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc213
 
     MORE DETAILS:
-
     Make a lattice of 2 x 1 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 3, , orange, supercell213, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 3, , orange, supercell213, 1
-
     PYTHON CODE:
-
 def sc213():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     Savecmd.do('supercell 2, 1, 3, , orange, supercell213, 1')
@@ -8914,40 +8865,28 @@ cmd.extend("sc213", sc213)
 def sc221():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 2 x 1 unit cells. 
 
     USAGE:
-
     sc221
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc221
 
     MORE DETAILS:
-
     Make a lattice of 2 x 2 x 1 unit cells. 
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 2, 1, , orange, supercell221, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;supercell 2, 2, 1, , orange, supercell221, 1
-
     PYTHON CODE:
-
 def sc221():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
@@ -8963,40 +8902,28 @@ cmd.extend("sc221", sc221)
 def sc222():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 2 x 2 unit cells
 
     USAGE:
-
     sc222
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc222
 
     MORE DETAILS:
-
     Make a lattice of 2 x 2 x 2 unit cells. 
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 2, 2, , orange, supercell222, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 2, 2, , orange, supercell222, 1
-
     PYTHON CODE:
-
 def sc222():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
@@ -9012,39 +8939,27 @@ cmd.extend("sc222", sc222)
 def sc231():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 2 x 3 x 1 unit cells. 
 
     USAGE:
-
     sc231
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc231
 
     MORE DETAILS:
-
     Make a lattice of 2 x 3 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScriptssupercell.py;\n supercell 2, 3, 1, , orange, supercell231, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 3, 1, , orange, supercell231, 1
-
     PYTHON CODE:
-
 def sc231():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 2, 3, 1, , orange, supercell231, 1')
@@ -9057,39 +8972,27 @@ cmd.extend("sc231", sc231)
 def sc311():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 1 x 1 unit cells. 
 
     USAGE:
-
     sc311
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc311
 
     MORE DETAILS:
-
     Make a lattice of 3 x 1 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 1, , orange, supercell311, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 1, , orange, supercell311, 1
-
     PYTHON CODE:
-
 def sc311():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 1, 1, , orange, supercell311, 1')
@@ -9103,40 +9006,28 @@ cmd.extend("sc311", sc311)
 def sc312():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 1 x 2 unit cells. 
 
     USAGE:
-
     sc312
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc312
 
     MORE DETAILS:
-
     Make a lattice of 3 x 1 x 2 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 1, 2, , orange, supercell312, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 2, , orange, supercell312, 1
-
     PYTHON CODE:
-
 def sc312():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 1, 2, , orange, supercell312, 1')
@@ -9149,40 +9040,28 @@ cmd.extend("sc312", sc312)
 def sc313():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 1 x 3 unit cells.
 
     USAGE:
-
     sc313
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc313
 
     MORE DETAILS:
-
     Make a lattice of 3 x 1 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py
     supercell 3, 1, 3, , orange, supercell313, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 3, , orange, supercell313, 1
-
     PYTHON CODE:
-
 def sc313():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 1, 3, , orange, supercell313, 1')
@@ -9196,40 +9075,28 @@ cmd.extend("sc313", sc313)
 def sc321():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 2 x 1 unit cells. 
 
     USAGE:
-
     sc321
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc321
 
     MORE DETAILS:
-
     Make a lattice of 3 x 2 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 2, 1, , orange, supercell321, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 2, 1, , orange, supercell321, 1
-
     PYTHON CODE:
-
 def sc321():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 2, 1, , orange, supercell321, 1')
@@ -9242,40 +9109,28 @@ cmd.extend("sc321", sc321)
 def sc331():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 3 x 1 unit cells. 
 
     USAGE:
-
     sc331
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc331
 
     MORE DETAILS:
-
     Make a lattice of 3 x 3 x 1 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 3, 1, , orange, supercell331, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 3, 1, , orange, supercell331, 1
-
     PYTHON CODE:
-
 def sc331():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 3, 1, , orange, supercell331, 1')
@@ -9289,40 +9144,28 @@ cmd.extend("sc331", sc331)
 def sc333():
     ''' 
     DESCRIPTION:
-
     Make a lattice of 3 x 3 x 3 unit cells. 
 
     USAGE:
-
     sc333
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     sc333
 
     MORE DETAILS:
-
     Make a lattice of 3 x 3 x 3 unit cells.
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 3, 3, , orange, supercell333, 1
-
     HORIZONTAL PML SCRIPT:
-
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 3, 3, , orange, supercell333, 1
-
     PYTHON CODE:
-
 def sc333():
     cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
     cmd.do('supercell 3, 3, 3, , orange, supercell333, 1')
@@ -9336,39 +9179,27 @@ cmd.extend("sc333", sc333)
 def sccp4(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a ccp4 electron density map with a time stamp.
 
     USAGE:
-
     sccp4
 
     Arguments:
-
     electronDensityMapFileNameStem
-
     EXAMPLE:
-
     sccp4  testFile
 
     MORE DETAILS:
-
     Save a ccp4 electron density map with a time stamp included in the 
     filename to avoid overwriting an existing file.Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".ccp4")
-
     PYTHON CODE:
-
 def sccp4(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9383,40 +9214,28 @@ cmd.extend('sccp4',sccp4)
 def scif(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a cif file (Crystallographic Information File) with a time stamp.
 
     USAGE:
-
     scif
 
     Arguments:
-
     currentModelFileNameStem
-
     EXAMPLE:
-
     scif  testFile
 
     MORE DETAILS:
-
     Save a cif file (Crystallographic Information File) with a time stamp 
     included in the filename to avoid overwriting an existing file.Read 
     as a commandline argument, a string as the filename stem or use 
     the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".cif")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".cif")
-
     PYTHON CODE:
-
 def scif(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9431,39 +9250,27 @@ cmd.extend('scif',scif)
 def sdae(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a dae file (Collada File) with a time stamp.
 
     USAGE:
-
     sdae
 
     Arguments:
-
     ColladaFileNameStem
-
     EXAMPLE:
-
     sdae  testFile
 
     MORE DETAILS:
-
     Save a dae file (Collada File) with a time stamp included in the filename 
     to avoid overwriting an existing file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".ccp4")
-
     PYTHON CODE:
-
 def sdae(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9478,39 +9285,27 @@ cmd.extend('sdae',sdae)
 def sdat(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a dat file (output data file) with a time stamp.
 
     USAGE:
-
     sdat
 
     Arguments:
-
     outputDataFileStemName
-
     EXAMPLE:
-
     sdat  testFile
 
     MORE DETAILS:
-
     Save a dat file (output data file) with a time stamp included in the filename 
     to avoid overwriting an existing dat file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".dat")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".dat")
-
     PYTHON CODE:
-
 def sdat(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9525,39 +9320,27 @@ cmd.extend('sdat',sdat)
 def sfasta(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a fasta file (output data file) with a time stamp.
 
     USAGE:
-
     sfasta
 
     Arguments:
-
     fastaFileStemName
-
     EXAMPLE:
-
     sfasta  testFile
 
     MORE DETAILS:
-
     Save a fasta (sequence) file with a time stamp included in the filename 
     to avoid overwriting an existing dat file.\n Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".fasta")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".fasta")
-
     PYTHON CODE:
-
 def sfasta(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9572,40 +9355,28 @@ cmd.extend('sfasta',sfasta)
 def sidtf(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a idtf file (Intermediate Data Text Format) with a time stamp.
 
     USAGE:
-
     sidtf
 
     Arguments:
-
     idtfFileStemName
-
     EXAMPLE:
-
     sidtf  testFile
 
     MORE DETAILS:
-
     Save a idtf (Intermediate Data Text Format) file with a time stamp 
     included in the filename to avoid overwriting an existing dat file. 
     Read as a commandline argument, a string as the filename stem, 
     or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".idtf")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".idtf")
-
     PYTHON CODE:
-
 def sidtf(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9620,39 +9391,27 @@ cmd.extend('sidtf',sidtf)
 def smae(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a mae (Maestro) file with a time stamp.
 
     USAGE:
-
     smae
 
     Arguments:
-
     maeFileStemName
-
     EXAMPLE:
-
     smae  testFile
 
     MORE DETAILS:
-
     Save a mae (Maestro) file with a time stamp included in the filename 
     to avoid overwriting an existing dat file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".mae")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mae")
-
     PYTHON CODE:
-
 def smae(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9667,39 +9426,27 @@ cmd.extend('smae',smae)
 def smmd(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a mmd (Macromodel) file with a time stamp.
 
     USAGE:
-
     smmd
 
     Arguments:
-
     MacromodelFileStemName
-
     EXAMPLE:
-
     smmd  testFile
 
     MORE DETAILS:
-
     Save a mmd (Macromodel) file with a time stamp included in the filename to avoid
     overwriting an existing Macromodel file. Read as a commandline argument, a string 
     as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".mmd")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mmd")
-
     PYTHON CODE:
-
 def smmd(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9714,39 +9461,27 @@ cmd.extend('smmd',smmd)
 def smmod(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a mmod (Macromodel) file with a time stamp.
 
     USAGE:
-
     smmod
 
     Arguments:
-
     MacromodelFileStemName
-
     EXAMPLE:
-
     smmod  testFile
 
     MORE DETAILS:
-
     Save a mmod (Macromodel) file with a time stamp included in the filename 
     to avoid overwriting an existing Macromodel file.  Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".mmod")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mmod")
-
     PYTHON CODE:
-
 def smmod(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9761,39 +9496,27 @@ cmd.extend('smmod',smmod)
 def smoe(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a moe file (Molecular Operating Environment) with a time stamp.
 
     USAGE:
-
     smoe MOEFileStemName
 
     Arguments:
-
     MOEFileStemName
-
     EXAMPLE:
-
     smoe  testFile
 
     MORE DETAILS:
-
     Save moe file (Molecular Operating Environment) with a time stamp included 
     in the filename to avoid overwriting an existing moe file. Read as a commandline
     argument, a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".moe")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".moe")
-
     PYTHON CODE:
-
 def smoe(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9808,39 +9531,27 @@ cmd.extend('smoe',smoe)
 def smol(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a mol file with a time stamp.
 
     USAGE:
-
     smol MOEFileStemName
 
     Arguments:
-
     MOEFileStemName
-
     EXAMPLE:
-
     smol  testFile
 
     MORE DETAILS:
-
     Save mol file with a time stamp included in the filename to avoid overwriting 
     an existing pmo file. Read as a commandline argument, a string as the 
     filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
    s = str(DT)
    cmd.save(stemName+s+".mol")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mol")
-
     PYTHON CODE:
-
 def smol(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9855,39 +9566,27 @@ cmd.extend('smol',smol)
 def smol2(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a mol2 file with a time stamp.
 
     USAGE:
-
     smol2 mol2FileStemName
 
     Arguments:
-
     mol2FileStemName
-
     EXAMPLE:
-
     smol2  testFile
 
     MORE DETAILS:
-
     Save mol2 (Sybyl file format) file with a time stamp included in the filename 
     to avoid overwriting an existing mol2 file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".mol2")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mol2")
-
     PYTHON CODE:
-
 def smol2(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9902,40 +9601,28 @@ cmd.extend('smol2',smol2)
 def smtl(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save mtl (Wavefront Material) file format with a time stamp.
 
     USAGE:
-
     smtl mtlFileStemName
 
     Arguments:
-
     mtlFileStemName
-
     EXAMPLE:
-
     smtl  testFile
 
     MORE DETAILS:
-
     Save mtl (Wavefront Material) file format with a time stamp included 
     in the filename to avoid overwriting an existing mtl file. Read as a 
     commandline argument, a string as the filename stem, or use the default 
     filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".mtl")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".mtl")
-
     PYTHON CODE:
-
 def smtl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9950,40 +9637,28 @@ cmd.extend('smtl',smtl)
 def sobj(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save obj file (Wavefront mesh file format) with a time stamp.
 
     USAGE:
-
     sobj sobjFileStemName
 
     Arguments:
-
     sobjFileStemName
-
     EXAMPLE:
-
     sobj  testFile
 
     MORE DETAILS:
-
     Save obj (Wavefront mesh file format) file format with a time stamp 
     included in the filename to avoid overwriting an existing obj file. Read 
     as a commandline argument, a string as the filename stem, or use the 
     default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".obj")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".obj")
-
     PYTHON CODE:
-
 def sobj(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -9998,39 +9673,27 @@ cmd.extend('sobj',sobj)
 def sout(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save output data file with a time stamp.
 
     USAGE:
-
     sout outFileStemName
 
     Arguments:
-
     outFileStemName
-
     EXAMPLE:
-
     sout  testFile
 
     MORE DETAILS:
-
     Save output data file format with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".out")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".out")
-
     PYTHON CODE:
-
 def sout(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10045,39 +9708,27 @@ cmd.extend('sout',sout)
 def spdb(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save pdb data file with a time stamp.
 
     USAGE:
-
     spdb pdbFileStemName
 
     Arguments:
-
     pdbFileStemName
-
     EXAMPLE:
-
     spdb testFile
 
     MORE DETAILS:
-
     Save pdb (Protein Data Bank) file format with a time stamp included in the 
     filename to avoid overwriting an existing out file. Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pdb")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pdb")
-
     PYTHON CODE:
-
 def spdb(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10092,39 +9743,27 @@ cmd.extend('spdb',spdb)
 def spkl(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a pkl file (Python pickle file) with a time stamp.
 
     USAGE:
-
     spkl pklFileStemName
 
     Arguments:
-
     pklFileStemName
-
     EXAMPLE:
-
     spkl testFile
 
     MORE DETAILS:
-
     Save a pkl file (Python pickle file) with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)\
     cmd.save(stemName+s+".pkl")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pkl")
-
     PYTHON CODE:
-
 def spkl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10139,40 +9778,28 @@ cmd.extend('spkl',spkl)
 def spkla(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a pkla file (Python pickle file) with a time stamp.
 
     USAGE:
-
     spkla pklaFileStemName
 
     Arguments:
-
     pklaFileStemName
-
     EXAMPLE:
-
     spkla testFile
 
     MORE DETAILS:
-
     Save a pkla file (Python pickle file) with a time stamp included in 
     the filename to avoid overwriting an existing out file. Read as a 
     commandline argument, a string as the filename stem, or use the 
     default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pkla")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pkla")
-
     PYTHON CODE:
-
 def spkla(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10187,39 +9814,27 @@ cmd.extend('spkla',spkla)
 def spmo(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a pmo file (XYZ, binary format file) with a time stamp.
 
     USAGE:
-
     spmo MacromodelFileStemName
 
     Arguments:
-
     MacromodelFileStemName
-
     EXAMPLE:
-
     spmo testFile
 
     MORE DETAILS:
-
     Save pmo file (XYZ, binary format file) with a time stamp included in the filename 
     to avoid overwriting an existing pmo file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pmo")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pmo")
-
     PYTHON CODE:
-
 def spmo(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10234,39 +9849,27 @@ cmd.extend('spmo',spmo)
 def spng(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save a png file (Python pickle file) with a time stamp.
 
     USAGE:
-
     spng pngFileStemName
 
     Arguments:
-
     pngFileStemName
-
     EXAMPLE:
-
     spng testFile
 
     MORE DETAILS:
-
     Save a png file (Python pickle file) with a time stamp included in the filename to avoid     
     overwriting an existing out file.\n Read as a commandline argument, a string as the 
     ilename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".png")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".png")
-
     PYTHON CODE:
-
 def spng(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10281,39 +9884,27 @@ cmd.extend('spng',spng)
 def spov(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save pov (POV-ray tracing file format) file with a time stamp.
 
     USAGE:
-
     spov povFileStemName
 
     Arguments:
-
     povFileStemName
-
     EXAMPLE:
-
     spov testFile
 
     MORE DETAILS:
-
     Save pov (POV-ray tracing file format) file with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, a string 
     as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pov")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pov")
-
     PYTHON CODE:
-
 def spov(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10328,23 +9919,17 @@ cmd.extend('spov',spov)
 def spqr(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save pqr with file with timestamp.
 
     USAGE:
-
     spqr pqrFileStemName
 
     Arguments:
-
     pqrFileStemName
-
     EXAMPLE:
-
     spqr testFile
 
     MORE DETAILS:
-
     Save pqr with file with timestamp.
 
 A pqr (PDB file with the temperature and occupancy columns replaced
@@ -10352,19 +9937,13 @@ A pqr (PDB file with the temperature and occupancy columns replaced
     a time stamp included in the filename to avoid overwriting an existing 
     out file. Read as a commandline argument, a string as the filename stem, 
     or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pqr")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pqr")
-
     PYTHON CODE:
-
 def spqr(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10379,39 +9958,27 @@ cmd.extend('spqr',spqr)
 def spse(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save session file with a time stamp.
 
     USAGE:
-
     spse pseFileStemName
 
     Arguments:
-
     pseFileStemName
-
     EXAMPLE:
-
     spse testFile
 
     MORE DETAILS:
-
     Save session file with a time stamp included in the filename to avoid 
     overwriting an existing pse file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".pse")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".pse")
-
     PYTHON CODE:
-
 def spse(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10426,39 +9993,27 @@ cmd.extend('spse',spse)
 def ssdf(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save session file with a time stamp.
 
     USAGE:
-
     ssdf sdfFileStemName
 
     Arguments:
-
     sdfFileStemName
-
     EXAMPLE:
-
     ssdf testFile
 
     MORE DETAILS:
-
     Save session file with a time stamp included in the filename to avoid 
     overwriting an existing sdf file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".sdf")
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".sdf")
-
     PYTHON CODE:
-
 def ssdf(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10473,91 +10028,66 @@ cmd.extend('ssdf',ssdf)
 def st3(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open Sublime Text 3 from within PyMOL.
 
     USAGE:
-
     st3
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    st3 script.pml
+    st3
 
     MORE DETAILS:
-
     Open Open Sublime Text 3 from within PyMOL.
     Adjust file path to executable.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (sublimetext3Path  + "-w " + fileName);
-    subprocess.call(arg,shell=True);
-    return
-
+    subprocess.call(sublOpen);
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (sublimetext3Path  + "-w " + fileName);subprocess.call(arg,shell=True);return
-
+    subprocess.call(sublOpen);return
 
     PYTHON CODE:
-
 def st3(fileName="test.pml"):
-    arg = (sublimetext3Path  + "-w " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(sublOpen);
     return
+
 
     '''
 
-    arg = (sublimetext3Path  + "-w " + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(sublOpen);
     return
+
 
 cmd.extend('st3',st3)
 
 def swrl(stemName="saved"):
     ''' 
     DESCRIPTION:
-
     Save wrl (VRML 2 file format) file with a time stamp.
 
     USAGE:
-
     swrl wrlFileStemName
 
     Arguments:
-
     wrlFileStemName
-
     EXAMPLE:
-
     swrl testFile
 
     MORE DETAILS:
-
     Save wrl (VRML 2 file format) file with a time stamp included in the filename 
     to avoid overwriting an existing sdf file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
-
     VERTICAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
     cmd.save(stemName+s+".wrl")'
-
     HORIZONTAL PML SCRIPT:
-
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");s = str(DT);cmd.save(stemName+s+".wrl")
-
     PYTHON CODE:
-
 def swrl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
@@ -10572,40 +10102,28 @@ cmd.extend('swrlf',swrl)
 def term():
     ''' 
     DESCRIPTION:
-
     Open a Terminal window on MacOS.
 
     USAGE:
-
     term
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     term
 
     MORE DETAILS:
-
     Open a Terminal window on MacOS.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     subprocess.call(terminalCommand)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     subprocess.call(terminalCommand);return
 
-
     PYTHON CODE:
-
 def term():
     subprocess.call(terminalCommand)
     return
@@ -10617,43 +10135,119 @@ def term():
 
 cmd.extend('term',term)
 
-def vdw(selection='all'):
+def timcolor(selection='all'):
     ''' 
     DESCRIPTION:
+    Tim Mather's biophysical coloring scheme for proteins.
 
+
+    USAGE:
+    timcolor <selection>
+
+    Arguments:
+     <selection>
+    EXAMPLE:
+    timcolor 1lw9
+
+    MORE DETAILS:
+    Tim Mather's biophyscial coloring scheme for proteins.
+The scheme is defined in the dictionary below.
+This scheme applies only to proteins. 
+See the yrb shortcut for an alternate coloring scheme. 
+
+    code={'acid'    :  'red'    ,
+          'basic'   :  'blue'   ,
+          'nonpolar':  'orange' ,
+          'polar'   :  'green'  ,
+          'cys'     :  'yellow'}
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def timcolor(selection='all'):
+    print(selection)
+    code={'acid'    :  'red'    ,
+          'basic'   :  'blue'   ,
+          'nonpolar':  'orange' ,
+          'polar'   :  'green'  ,
+          'cys'     :  'yellow'}
+
+    cmd.select('calcium', 'resn ca or resn cal')
+    cmd.select('acid', 'resn asp or resn glu or resn cgu')
+    cmd.select('basic', 'resn arg or resn lys or resn his')
+    cmd.select('nonpolar', 'resn met or resn phe or resn pro or resn trp or resn val or resn leu or resn ile or resn ala')
+    cmd.select('polar', 'resn ser or resn thr or resn asn or resn gln or resn tyr')
+    cmd.select('cys', 'resn cys or resn cyx')
+    cmd.select('backbone', 'name ca or name n or name c or name o')
+
+    cmd.select ('none')
+    for elem in code:
+        line='color '+code[elem]+','+elem+'&'+selection
+        print(line)
+        cmd.do (line)
+    word='color white,backbone &'+selection
+    print(word)
+    cmd.do (word)  #Used to be in code, but looks like
+                              #dictionnaries are accessed at random
+    cmd.hide ('everything','resn HOH')
+
+    '''
+
+    print(selection)
+    code={'acid'    :  'red'    ,
+          'basic'   :  'blue'   ,
+          'nonpolar':  'orange' ,
+          'polar'   :  'green'  ,
+          'cys'     :  'yellow'}
+
+    cmd.select('calcium', 'resn ca or resn cal')
+    cmd.select('acid', 'resn asp or resn glu or resn cgu')
+    cmd.select('basic', 'resn arg or resn lys or resn his')
+    cmd.select('nonpolar', 'resn met or resn phe or resn pro or resn trp or resn val or resn leu or resn ile or resn ala')
+    cmd.select('polar', 'resn ser or resn thr or resn asn or resn gln or resn tyr')
+    cmd.select('cys', 'resn cys or resn cyx')
+    cmd.select('backbone', 'name ca or name n or name c or name o')
+
+    cmd.select ('none')
+    for elem in code:
+        line='color '+code[elem]+','+elem+'&'+selection
+        print(line)
+        cmd.do (line)
+    word='color white,backbone &'+selection
+    print(word)
+    cmd.do (word)  #Used to be in code, but looks like
+                              #dictionnaries are accessed at random
+    cmd.hide ('everything','resn HOH')
+
+cmd.extend('timcolor',timcolor)
+
+def vdwTrans(selection='all'):
+    ''' 
+    DESCRIPTION:
     Transparent vdw surface
 
     USAGE:
-
-    vdw selection
+    vdwTrans selection
 
     Arguments:
-
     selection
 
-
     EXAMPLE:
-
-    vdw 3nd3
+    vdwTrans 3nd3
 
     MORE DETAILS:
-
     # vdw creates a copy of an object with full-sized, transparent spheres
 # Bondi VDW values added below to override default Pymol settings
 # From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
 
-
     VERTICAL PML SCRIPT:
-
     NA
-
     HORIZONTAL PML SCRIPT:
-
     NA
-
     PYTHON CODE:
-
-def vdw(selection='all'):
+def vdwTrans(selection='all'):
     # Bondi VDW values 
     cmd.alter("elem Ac", "vdw=2.00")
     cmd.alter("elem Al", "vdw=2.00")
@@ -10783,6 +10377,7 @@ def vdw(selection='all'):
     cmd.space("cmyk")
    
     # ball and stick settings
+    arg1 = 'selection="all"'
     cmd.show("sticks", arg1)
     cmd.show("spheres", arg1)
     cmd.color("gray85","elem C and "+arg1)
@@ -10932,6 +10527,7 @@ def vdw(selection='all'):
     cmd.space("cmyk")
    
     # ball and stick settings
+    arg1 = 'selection="all"'
     cmd.show("sticks", arg1)
     cmd.show("spheres", arg1)
     cmd.color("gray85","elem C and "+arg1)
@@ -10950,46 +10546,34 @@ def vdw(selection='all'):
     cmd.zoom(arg1)
     cmd.hide("labels")
 
-cmd.extend('vdw', vdw)
+cmd.extend('vdwTrans', vdwTrans)
 
 def vim(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open vim from within PyMOL.
 
     USAGE:
-
     vim
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     vim script.pml
 
     MORE DETAILS:
-
     Open vim from within PyMOL. 
     Adjust file path to vim on your computer.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
     subprocess.call(vimCommand)
     return
 
-
     HORIZONTAL PML SCRIPT:
-
     subprocess.call(vimCommand);return
 
-
     PYTHON CODE:
-
 def vim(fileName="test.pml"):
     subprocess.call(vimCommand)
     return
@@ -11001,54 +10585,38 @@ def vim(fileName="test.pml"):
 
 cmd.extend('vim',vim)
 
-def vmd(fileName="test.pdb"):
+def vmd():
     ''' 
     DESCRIPTION:
-
     Open vmd from within PyMOL.
 
     USAGE:
-
     vmd
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     vmd
 
     MORE DETAILS:
-
     Open vmd from within PyMOL.
     Adjust file path for your location of vmd.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (vmdCommand+ fileName);
-    subprocess.call(arg,shell=True);
-    return
-
+    subprocess.call(vmdOpen);
+return
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (vmdCommand + fileName);subprocess.call(arg,shell=True);return
-
-
+    subprocess.call(vmdOpen);return
     PYTHON CODE:
-
-def vmd(fileName="test.pdb"):
-    arg = (vmdCommand+ fileName)
-    subprocess.call(arg,shell=True)
+def vmd():
+    subprocess.call(vmdOpen)
     return
 
     '''
 
-    arg = (vmdCommand+ fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(vmdOpen)
     return
 
 cmd.extend('vmd',vmd)
@@ -11056,37 +10624,25 @@ cmd.extend('vmd',vmd)
 def weather():
     ''' 
     DESCRIPTION:
-
     Open National Weather Service website for locale. 
 
     USAGE:
-
     weather
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     weather
 
     MORE DETAILS:
-
     Open National Weather Service website for locale. 
     Adjust url for your location.
 
-
     VERTICAL PML SCRIPT:
-
     webbrowser.open('https://www.weather.gov/oun/')
-
     HORIZONTAL PML SCRIPT:
-
     webbrowser.open('https://www.weather.gov/oun/')
-
     PYTHON CODE:
-
 def weather():
     webbrowser.open('https://www.weather.gov/oun/')
     '''
@@ -11097,36 +10653,24 @@ cmd.extend('weather',weather)
 def webmail():
     ''' 
     DESCRIPTION:
-
     Open Web Mail in defualt browser.
 
     USAGE:
-
     webmail
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     webmail
 
     MORE DETAILS:
-
     Open Web Mail in defualt browser. Adjust url for your institution.
 
-
     VERTICAL PML SCRIPT:
-
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
-
     HORIZONTAL PML SCRIPT:
-
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
-
     PYTHON CODE:
-
 def webmail():
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
     '''
@@ -11134,105 +10678,196 @@ def webmail():
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
 cmd.extend('webmail',webmail)
 
-def word(fileName="Script.docx"):
+def x11():
     ''' 
     DESCRIPTION:
-
-    Open word from within PyMOL.
+    Open x11 or XQuartz terminal.
 
     USAGE:
-
-    word
+    x11
 
     Arguments:
-
     None
-
     EXAMPLE:
-
-    word paper.docx
+    x11
 
     MORE DETAILS:
-
-    Open MS Word from within PyMOL. 
-    Adjust file path to MS Word on your computer.
-
-   >>>  Edit file path in python code below
-
+    Open x11 or XQuartz terminal.
     VERTICAL PML SCRIPT:
-
-    subprocess.call(wordCommand, '--args', fileName);
-    return
-
-
+    subprocess.call(x11Open)
+return
     HORIZONTAL PML SCRIPT:
-
-    subprocess.call(wordCommand, '--args', fileName);return
-
-
+    subprocess.call(x11Open);return
     PYTHON CODE:
-
-def word(fileName="Script.docx"):
-    subprocess.call(wordCommand, '--args', fileName)
+def x11():
+    subprocess.call(x11Open);
     return
-
     '''
 
-    subprocess.call(wordCommand, '--args', fileName)
+    subprocess.call(x11Open);
     return
-
-cmd.extend('word',word)
+cmd.extension('x11',x11)
 
 def yasara(fileName="test.pml"):
     ''' 
     DESCRIPTION:
-
     Open the molecular graphics prograom YASASRA from within PyMOL.
 
     USAGE:
-
     yasara
 
     Arguments:
-
     None
-
     EXAMPLE:
-
     yasara
 
     MORE DETAILS:
-
     Open the molecular graphics prograom YASASRA from within PyMOL.
 
    >>>  Edit file path in python code below
-
     VERTICAL PML SCRIPT:
-
-    arg = (yasaraPath + fileName);
-    subprocess.call(arg,shell=True);
-    return
+    subprocess.call(yasaraOpen);
+return
 
 
     HORIZONTAL PML SCRIPT:
-
-    arg = (yasaraPath + fileName);subprocess.call(arg,shell=True);return
-
+        subprocess.call(yasaraOpen);return
 
     PYTHON CODE:
-
 def yasara(fileName="test.pml"):
-    arg = (yasaraPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(yasaraOpen)
     return
 
     '''
 
-    arg = (yasaraPath + fileName)
-    subprocess.call(arg,shell=True)
+    subprocess.call(yasaraOpen)
     return
 
 cmd.extend('yasara',yasara)
+
+def yrb(selection='all'):
+    ''' 
+    DESCRIPTION:
+    A script to highlight hydrophobicity and charge on protein surfaces (Hagemans et al. 2015).
+
+    USAGE:
+    "yrb" to colour all structures
+"yrb 'selection'" to colour only that specific structure
+
+
+    Arguments:
+    None to apply to all or a selection
+    EXAMPLE:
+    yrb
+yrb 1lw9
+
+    MORE DETAILS:
+    A script to highlight hydrophobicity and charge on protein surfaces.
+
+@Article{Hagemans2015AScriptToHighlightHydrophobicityAndChargeOnProteinSurfaces,
+  author   = {Hagemans, Dominique and van Belzen, Ianthe A. E. M. and Morán Luengo, Tania and Rüdiger, Stefan G. D.},
+  title    = {A script to highlight hydrophobicity and charge on protein surfaces},
+  journal  = {Frontiers in Molecular Biosciences},
+  year     = {2015},
+  volume   = {2},
+  pages    = {56},
+  issn     = {2296-889X},
+  abstract = {The composition of protein surfaces determines both affinity and specificity of protein-protein interactions. Matching of hydrophobic contacts and charged groups on both sites of the interface are crucial to ensure specificity. Here, we propose a highlighting scheme, YRB, which highlights both hydrophobicity and charge in protein structures. YRB highlighting visualizes hydrophobicity by highlighting all carbon atoms that are not bound to nitrogen and oxygen atoms. The charged oxygens of glutamate and aspartate are highlighted red and the charged nitrogens of arginine and lysine are highlighted blue. For a set of representative examples, we demonstrate that YRB highlighting intuitively visualizes segments on protein surfaces that contribute to specificity in protein-protein interfaces, including Hsp90/co-chaperone complexes, the SNARE complex and a transmembrane domain. We provide YRB highlighting in form of a script that runs using the software PyMOL.},
+  doi      = {10.3389/fmolb.2015.00056},
+  url      = {https://www.frontiersin.org/article/10.3389/fmolb.2015.00056},
+}
+
+Created by Dominique Hagemans and Ianthe A.E.M. van Belzen, July 2015
+Rudiger group CPC, Utrecht University
+
+yellow: C, CH, CH2, CH3 groups that are not bound to N or O groups.
+red: negatively charged atoms
+blue: positively charged atoms
+grey: backbone, polar groups and remaining atoms
+
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def yrb(selection='all'):
+    cmd.remove("hydro")
+    cmd.set_color('yellow',[0.950,0.78,0.0])
+    cmd.set_color('grey',[0.95,0.95,0.95])
+    cmd.set_color('red',[1.0,0.4,0.4])  
+    cmd.set_color('blue',[0.2,0.5,0.8]) 
+
+    mapping = {}
+    mapping['arg'] = [ ('NE,NH2,NH1', 'blue'), ('CD,CZ', 'grey'), ('CG', 'yellow') ]
+    mapping['asn'] = [ ('CG,OD1,ND2', 'grey') ]
+    mapping['asp'] = [ ('CG', 'grey'), ('OD2,OD1', 'red')  ]
+    mapping['cys'] = [ ('SG', 'grey') ] 
+    mapping['gln'] = [ ('CG', 'yellow'), ('CD,OE1,NE2', 'grey') ]
+    mapping['glu'] = [ ('CG', 'yellow'), ('CD', 'grey'), ('OE1,OE2', 'red') ]
+    mapping['his'] = [ ('CG,CD2,ND1,NE2,CE1', 'grey') ] 
+    mapping['ile'] = [ ('CG1,CG2,CD1', 'yellow') ]
+    mapping['leu'] = [ ('CG,CD1,CD2', 'yellow') ]
+    mapping['lys'] = [ ('CG,CD', 'yellow'), ('CE', 'grey'), ('NZ', 'blue') ]
+    mapping['met'] = [ ('CG,CE', 'yellow'), ('SD', 'grey') ]
+    mapping['phe'] = [ ('CG,CD1,CE1,CZ,CE2,CD2', 'yellow') ]
+    mapping['pro'] = [ ('CG', 'yellow'), ('CD', 'grey') ]
+    mapping['ser'] = [ ('CB,OG', 'grey') ]
+    mapping['thr'] = [ ('CB,OG1', 'grey'), ('CG2', 'yellow') ]
+    mapping['trp'] = [ ('CG,CD2,CZ2,CH2,CZ3,CE3', 'yellow'), ('CD1,NE1,CE2', 'grey') ]
+    mapping['tyr'] = [ ('CG,CE1,CD1,CE2,CD2', 'yellow'), ('CZ,OH', 'grey') ]
+    mapping['val'] = [ ('CG1,CG2', 'yellow') ]
+
+    obj_list = cmd.get_names('objects')
+    for obj in obj_list:
+        if (obj == selection or selection == 'all'):
+            cmd.color('grey','(n. N,C,CA,O and ' + obj + ')')
+            cmd.color('yellow','(n. CB and ' + obj + ')')
+
+            for key in mapping:
+                for (atom, color) in mapping[key]:
+                    cmd.color(color, '( n. ' + atom + ' and r. ' + key + ' and ' + obj + ' )')
+
+    '''
+
+    cmd.remove("hydro")
+    cmd.set_color('yellow',[0.950,0.78,0.0])
+    cmd.set_color('grey',[0.95,0.95,0.95])
+    cmd.set_color('red',[1.0,0.4,0.4])  
+    cmd.set_color('blue',[0.2,0.5,0.8]) 
+
+    mapping = {}
+    mapping['arg'] = [ ('NE,NH2,NH1', 'blue'), ('CD,CZ', 'grey'), ('CG', 'yellow') ]
+    mapping['asn'] = [ ('CG,OD1,ND2', 'grey') ]
+    mapping['asp'] = [ ('CG', 'grey'), ('OD2,OD1', 'red')  ]
+    mapping['cys'] = [ ('SG', 'grey') ] 
+    mapping['gln'] = [ ('CG', 'yellow'), ('CD,OE1,NE2', 'grey') ]
+    mapping['glu'] = [ ('CG', 'yellow'), ('CD', 'grey'), ('OE1,OE2', 'red') ]
+    mapping['his'] = [ ('CG,CD2,ND1,NE2,CE1', 'grey') ] 
+    mapping['ile'] = [ ('CG1,CG2,CD1', 'yellow') ]
+    mapping['leu'] = [ ('CG,CD1,CD2', 'yellow') ]
+    mapping['lys'] = [ ('CG,CD', 'yellow'), ('CE', 'grey'), ('NZ', 'blue') ]
+    mapping['met'] = [ ('CG,CE', 'yellow'), ('SD', 'grey') ]
+    mapping['phe'] = [ ('CG,CD1,CE1,CZ,CE2,CD2', 'yellow') ]
+    mapping['pro'] = [ ('CG', 'yellow'), ('CD', 'grey') ]
+    mapping['ser'] = [ ('CB,OG', 'grey') ]
+    mapping['thr'] = [ ('CB,OG1', 'grey'), ('CG2', 'yellow') ]
+    mapping['trp'] = [ ('CG,CD2,CZ2,CH2,CZ3,CE3', 'yellow'), ('CD1,NE1,CE2', 'grey') ]
+    mapping['tyr'] = [ ('CG,CE1,CD1,CE2,CD2', 'yellow'), ('CZ,OH', 'grey') ]
+    mapping['val'] = [ ('CG1,CG2', 'yellow') ]
+
+    obj_list = cmd.get_names('objects')
+    for obj in obj_list:
+        if (obj == selection or selection == 'all'):
+            cmd.color('grey','(n. N,C,CA,O and ' + obj + ')')
+            cmd.color('yellow','(n. CB and ' + obj + ')')
+
+            for key in mapping:
+                for (atom, color) in mapping[key]:
+                    cmd.color(color, '( n. ' + atom + ' and r. ' + key + ' and ' + obj + ' )')
+
+cmd.extend('yrb',yrb)
 
 
  
