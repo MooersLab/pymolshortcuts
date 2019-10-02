@@ -5,13 +5,23 @@ These shortcuts include many convenience functions that make working in PyMOL mo
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
 To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*. 
+
 The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
 This shortcut executes 16 lines of code.
 
 ![Ambient occlusion shortcut](https://media.giphy.com/media/VHeiY192SHWV2AObvl/giphy.gif)
 
+The animation below demonstrates the submitting of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
+They generate symmetry mates that fill five unit cells that form a L shape. 
+Each symmetry mate appears as a separate object in the menu on the right panel.
+These can be removed by entering the shortcut **rmsc**. 
+
+![supercell shortcut](https://gph.is/g/ZnxlzA5)
+
 The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 which is shipped with PyMOL.
 Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
+
+
 
 ### Installation
 
