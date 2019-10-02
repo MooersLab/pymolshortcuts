@@ -18,7 +18,7 @@ These can be removed by entering the shortcut **rmsc**.
 
 ![supercell shortcut](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
 
-The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 which is shipped with PyMOL.
+The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 that is ***not*** shipped with PyMOL.
 Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
 
 
