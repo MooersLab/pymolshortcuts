@@ -16,7 +16,7 @@ They generate symmetry mates that fill five unit cells that form a L shape.
 Each symmetry mate appears as a separate object in the menu on the right panel.
 These can be removed by entering the shortcut **rmsc**. 
 
-![supercell shortcut](https://gph.is/g/ZnxlzA5)
+![supercell shortcut](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
 
 The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 which is shipped with PyMOL.
 Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
