@@ -136,11 +136,11 @@ from __future__ import division, print_function
 
 import subprocess
 from math import cos, sin, radians, sqrt
-import datetime, time, webbrowser, random
+import datetime, time, webbrowser, random, glob
+import os, os.path
 
 from pymol import cmd, stored, math, cgo, xray
 import numpy
-
 
 __author__ = "Blaine Mooers"
 __copyright__ = "2019 Board of Regents for the University of Oklahoma"
@@ -149,7 +149,7 @@ __version__ = "1.0.0"
 # Versioning follows follows MAJOR.MINOR[.PATCH] where major releases are not backward compatable. 
 __credits__ = ["Miriam Shakir", "Safra Shakir"] 
 # Credits are for people who tested the code, reported bug fixes, made suggestions, etc. 
-__date__ = "30 Septermber 2019"
+__date__ = "2 October 2019"
 __maintainer__ = "Blaine Mooers"
 __email__ = "blaine-mooers@ouhsc.edu"
 __status__ = "Production" 
@@ -190,7 +190,7 @@ DBBrowserSQLiteOpen = ['open','-a','DBBrowserForSQLite']
 DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.app/Contents/MacOS/DB\ Browser\ for\ SQLite'
 excelOpen = ['open','-a','Microsoft Excel']
 excelPath = r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
-jabrefOpen = ['open','-a','JabRef.app'] '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+jabrefOpen = ['open','-a','JabRef.app']
 jabrefPath = r'/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
 jaspOpen = ['open','-a','JASP.app']
 jaspPath = r'Applications/JASP.app/Contents/MacOS/JASP'
@@ -198,7 +198,11 @@ jmpOpen = ['open','-a','JMP Pro 14.app']
 jmpPath = r'/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
 juliaOpen = ['open','-a','Julia-1.2.app']
 juliaPath = r'/Applications/Julia-1.2.app/Contents/MacOS/applet'
+juliaproOpen = ['open','-a','JuliaPro-1.2.0-1.app']
+juliaproPath = r'/Applications/JuliaPro-1.2.0-1.app/Contents/MacOS/applet'
 jupyterPath = r'/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+octaveOpen = ['open','-a','Octave4.app']
+octavePath = r'/Applications/MacPorts/Octave.app/Contents/MacOS/Octave'
 Rpath = r'/usr/local/bin/R'
 ROpen = ['open','-a','R'] 
 RstudioOpen = ['open','-a','RStudio'] 
@@ -213,6 +217,7 @@ pptPath =  r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerP
 
 
 # Molecular graphics programs
+ccp4mgCommand = ['open','-a','ccp4mg']
 ccp4mgPath = r'/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
 chimeraOpen = ['open','-a','Chimera.app']
 chimeraPath = r'/Applications/Chimera.app/Contents/MacOS/chimera'
@@ -243,7 +248,8 @@ nppOpen = ['open','-a','Notepad++.app']
 nppPath = r'/Applications/Notepad++.app/Contents/MacOS/startwine'
 oniOpen = ['open','-a','Oni.app']
 oniPath = r'/Applications/Oni.app/Contents/MacOS/Oni'
-pdbedPath = r'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+pdbeditorOpen = r'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+pdbeditorPath = r'/Applications/jars/PDB_Editor_FIX090203.jar'
 sublOpen = ['open','-a','subl']
 sublimeText3Path = r'/usr/local/bin/subl'
 textmatePath  = r'/usr/local/bin/mate'
@@ -264,6 +270,179 @@ weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid
 
 #wordProcessor
 wordOpen = ['open','-a','Microsoft Word.app']
+
+# ##################################  Linux run commands and PATHS to Applications ###############################################
+#
+# # Data analysis
+# DBBrowserSQLiteStart = ['DBBrowserForSQLite']
+# DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite/Contents/MacOS/DB\ Browser\ for\ SQLite'
+# excelOpen = ['Microsoft Excel']
+# excelPath = '/Applications/Microsoft\ Excel/Contents/MacOS/Microsoft\ Excel'
+# jabrefOpen = ['JabRef'] '/Applications/JabRef/Contents/MacOS/JavaApplicationStub'
+# jabrefPath = '/Applications/JabRef/Contents/MacOS/JavaApplicationStub'
+# jaspOpen = ['JASP']
+# jaspPath = 'Applications/JASP/Contents/MacOS/JASP'
+# jmpOpen = ['JMP Pro 14']
+# jmpPath = '/Applications/JMP\ Pro\ 14/Contents/MacOS/JMP'
+# juliaOpen = ['Julia-1.2']
+# juliaPath = '/Applications/Julia-1.2/Contents/MacOS/applet'
+# jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+# RstudioPathOpen = ['RStudio']
+# RstudioPath = '/Applications/RStudio/Contents/MacOS/Rstudio'
+#
+#
+# # Local files
+# localPDBfilePath = '$HOME/pdbFiles/'
+# localEMAPfilePath = '$HOME/emapFiles/'
+# localHKLfilePath = '$HOME/hklFiles/'
+#
+# # Image manipulation programs
+# gimp = '/usr/local/bin/gimp'
+# inkscapePath = '/opt/local/bin/inkscape'
+# pptOpen = ['Microsoft PowerPoint']
+# pptPath =  '/Applications/Microsoft\ Excel/Contents/MacOS/Microsoft\ PowerPoint'
+#
+#
+# # Molecular graphics programs
+# ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2/Contents/MacOS/ccp4mg'
+# chimeraOpen = ['Chimera']
+# chimeraPath = '/Applications/Chimera/Contents/MacOS/chimera'
+# cootPath = '/usr/local/bin/coot'
+# jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
+# yasaraOpen = ['YASARA']
+# yasaraPath = '/Applications/YASARA/Contents/MacOS/yasara'
+# vmdOpen = ['VMD194']
+# vmdPath = '/Applications/VMD194/Contents/MacOS/startup.command'
+#
+#
+# # Text editors
+# atomOpen = ['atom']
+# atomPath = '/usr/local/bin/atom'
+# atomStart = ['start','atom']
+# codeOpen = ['code']
+# codePath = '/usr/local/bin/code'
+# emacsOpen = ['emacs']
+# emacsPath = '/opt/local/bin/emacs'
+# geditOpen = ['gedit2.30.2']
+# geditPath = '/Applications/gedit2.30.2/Contents/MacOS/gedit'
+# jeditOpen = ['jEdit']
+# jeditPath = '/usr/local/bin/jEdit'
+# neovimPath = '$HOME/software/nvim-osx64/bin/nvim'
+# nppOpen = ['Notepad++']
+# nppPath = '/usr/local//Notepad++/Contents/MacOS/startwine'
+# oniOpen = ['Oni']
+# oniPath = '/Applications/Oni/Contents/MacOS/Oni'
+# pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+# sublOpen = ['subl']
+# sublimeText3Path = '/usr/local/bin/subl'
+# textmatePath  = '/usr/local/bin/mate'
+# textmateOpen = ['mate']
+# vimPath = '/usr/local/bin/vim'
+#
+#
+# #Terminals
+# itermOpen = ['iTerm','-n','"`pwd`"']
+# terminalOpen = ['Terminal','-n','"`pwd`"']
+# x11termOpen = ['XQuartz','-n','"`pwd`"']
+#
+#
+# # Web sites
+# gcalPath = 'firefox https://calendar.google.com/calendar/r'
+# gmailPath = 'firefox https://mail.google.com/mail/u/0/#inbox'
+# webmailPath = 'firefox https://webmail.ouhsc.edu'
+# weatherServicePath = 'firefox https://radar.weather.gov/radar.php?rid=TLX'
+#
+#
+# wordProcessor
+# wordOpen = ['open','-a','Microsoft Word']
+#
+
+
+
+
+# ###################### Windows Start Commands and PATHS to Applications###########################
+#
+# # Data analysis
+# DBBrowserSQLiteStart = ['start','DBBrowserForSQLite']
+# DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.exe/Contents/MacOS/DB\ Browser\ for\ SQLite'
+# excelStart = ['start','Microsoft Excel']
+# excelPath = '/Applications/Microsoft\ Excel.exe/Contents/MacOS/Microsoft\ Excel'
+# jabrefStart = ['start','JabRef.exe'] '/Applications/JabRef.exe/Contents/MacOS/JavaApplicationStub'
+# jabrefPath = '/Applications/JabRef.exe/Contents/MacOS/JavaApplicationStub'
+# jaspStart = ['start','JASP.exe']
+# jaspPath = 'Applications/JASP.exe/Contents/MacOS/JASP'
+# jmpStart = ['start','JMP Pro 14.exe']
+# jmpPath = '/Applications/JMP\ Pro\ 14.exe/Contents/MacOS/JMP'
+# juliaStart = ['start','Julia-1.2.exe']
+# juliaPath = '/Applications/Julia-1.2.exe/Contents/MacOS/applet'
+# jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+# RstudioPathStart = ['start','RStudio']
+# RstudioPath = '/Applications/RStudio.exe/Contents/MacOS/Rstudio'
+#
+#
+# # Local files
+# localPDBfilePath = '$HOME/pdbFiles/'
+# localEMAPfilePath = '$HOME/emapFiles/'
+# localHKLfilePath = '$HOME/hklFiles/'
+#
+# # Image manipulation programs
+# gimp = '/usr/local/bin/gimp'
+# inkscapePath = '/opt/local/bin/inkscape'
+# pptStart = ['start','Microsoft PowerPoint']
+# pptPath =  '/Applications/Microsoft\ Excel.exe/Contents/MacOS/Microsoft\ PowerPoint'
+#
+#
+# # Molecular graphics programs
+# ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2.exe/Contents/MacOS/ccp4mg'
+# chimeraStart = ['start','Chimera.exe']
+# chimeraPath = '/Applications/Chimera.exe/Contents/MacOS/chimera'
+# cootPath = '/usr/local/bin/coot'
+# jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
+# yasaraStart = ['start','YASARA.exe']
+# yasaraPath = '/Applications/YASARA.exe/Contents/MacOS/yasara.exe'
+# vmdStart = ['start','VMD194.exe']
+# vmdPath = '/Applications/VMD194.exe/Contents/MacOS/startup.command'
+#
+# # Text editors
+# atomStart = ['start','atom']
+# atomPath = '/usr/local/bin/atom'
+# atomStart = ['start','atom']
+# codeStart = ['start','code']
+# codePath = '/usr/local/bin/code'
+# codeStart = ['start','code']
+# emacsStart = ['start','emacs']
+# emacsPath = '/opt/local/bin/emacs'
+# geditStart = ['start','gedit2.30.2.exe']
+# geditPath = '/Applications/gedit2.30.2.exe/Contents/MacOS/gedit'
+# jeditStart = ['start','jEdit.exe']
+# jeditPath = '/Applications/jEdit.exe/Contents/MacOS/jedit'
+# neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
+# nppStart = ['start','Notepad++.exe']
+# nppPath = '/Applications/Notepad++.exe/Contents/MacOS/startwine'
+# oniStart = ['start','Oni.exe']
+# oniPath = '/Applications/Oni.exe/Contents/MacOS/Oni'
+# pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+# sublStart = ['start','subl']
+# sublimeText3Path = '/usr/local/bin/subl'
+# textmatePath  = '/usr/local/bin/mate'
+# textmateStart = ['start','mate']
+# vimPath = '/opt/local/bin/vim'
+#
+#
+# #Terminals
+# itermStart = ['start','iTerm.exe','-n','"`pwd`"']
+# terminalStart = ['start','Terminal','-n','"`pwd`"']
+# x11termStart = ['start','XQuartz','-n','"`pwd`"']
+#
+# # Web sites
+# gcalPath = 'open -a Safari.exe https://calendar.google.com/calendar/r'
+# gmailPath = 'open -a Safari.exe https://mail.google.com/mail/u/0/#inbox'
+# webmailPath = 'open -a Safari.exe https://webmail.ouhsc.edu'
+# weatherServicePath = 'open -a Safari.exe https://radar.weather.gov/radar.php?rid=TLX'
+#
+# #wordProcessor
+# wordStart = ['start','Microsoft Word.exe']
+
 
 
 ########################################################################################################
@@ -501,6 +680,8 @@ def AOD():
     cmd.set("ray_shadow_decay_factor", "0.1")
     cmd.set("ray_shadow_decay_range", "2")
     cmd.set("depth_cue","0")
+    cmd.color("gray20", "symbol c")
+    cmd.color("gray90", "symbol h")
     cmd.set("ray_opaque_background","on")
     cmd.ray()
     '''
@@ -522,6 +703,8 @@ def AOD():
     cmd.set("ray_shadow_decay_factor", "0.1")
     cmd.set("ray_shadow_decay_range", "2")
     cmd.set("depth_cue","0")
+    cmd.color("gray20", "symbol c")
+    cmd.color("gray90", "symbol h")
     cmd.set("ray_opaque_background","on")
     cmd.ray()
 cmd.extend("AOD",AOD)
@@ -848,7 +1031,7 @@ def BW():
     cmd.hide('lines'); 
     cmd.hide('nonbonded'); 
     # black and white cartoon; 
-    cms.set("opaque_background", "on")
+    cmd.set("opaque_background", "on")
     cmd.set('ray_trace_mode', '2'); 
     cmd.bg_color('white'); 
     cmd.set('antialias', '2'); 
@@ -860,7 +1043,7 @@ def BW():
     cmd.hide('lines'); 
     cmd.hide('nonbonded'); 
     # black and white cartoon; 
-    cms.set("opaque_background", "on")
+    cmd.set("opaque_background", "on")
     cmd.set('ray_trace_mode', '2'); 
     cmd.bg_color('white'); 
     cmd.set('antialias', '2'); 
@@ -1963,17 +2146,13 @@ def JASP():
 
     MORE DETAILS:
     Open JASP from within PyMOL.
-    The is a data analysis program that can do Bayesian and frequentist statistics in parallel.
-
-   >>>  Edit file path in python code below
+The is a data analysis program that can do Bayesian and frequentist statistics in parallel.
     VERTICAL PML SCRIPT:
-    arg = jaspPath;
-    subprocess.call(arg,shell=True);
+        subprocess.call(jaspOpen);
     return
 
     HORIZONTAL PML SCRIPT:
-    arg =jaspPath;subprocess.call(arg,shell=True);return
-
+        subprocess.call(jaspOpen);return
     PYTHON CODE:
 def JASP():
     subprocess.call(jaspOpen)
@@ -4167,7 +4346,7 @@ def RStudio():
     Arguments:
     None
     EXAMPLE:
-    subprocess.call(RStudioOpen); return      
+    RStudio
 
     MORE DETAILS:
     Open RStudio from within PyMOL.
@@ -4616,7 +4795,7 @@ def SC():
     NA
     HORIZONTAL PML SCRIPT:
     NA
-    Scroll up to see the list of shortcuts and their descriptions.
+
     PYTHON CODE:
 def SC():
     print(SC.__doc__)
@@ -5123,12 +5302,28 @@ return
 
     PYTHON CODE:
 def atom(fileName="test.pml"):
-    subprocess.call(atomOpen)
-    return
+    try:
+        print("Opeing the text editor atom. Please be patient. It starts slowly.")
+        subprocess.check_output(atomOpen)
+        print("Success opening atom")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'atomOpen'. \n Or use 'atomPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(atomOpen)
-    return
+    try:
+        print("Opeing the text editor atom. Please be patient. It starts slowly.")
+        subprocess.check_output(atomOpen)
+        print("Success opening atom")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'atomOpen'. \n Or use 'atomPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('atom',atom)
 
 def bbedit(fileName="test.pml"):
@@ -5157,18 +5352,34 @@ return
 
     PYTHON CODE:
 def bbedit(fileName="test.pml"):
-    subprocess.call(bbeditOpen)
-    return
+    try:
+        print("Opening the molecular graphics program bbedit.");
+        subprocess.check_output(bbeditOpen)
+        print("Success opening bbedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the bbeditOpen'. \n  Or use 'bbeditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(bbeditOpen)
-    return
+    try:
+        print("Opening the molecular graphics program bbedit.");
+        subprocess.check_output(bbeditOpen)
+        print("Success opening bbedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the bbeditOpen'. \n  Or use 'bbeditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('bbedit',bbedit)
 
 def bs(selection='all'):
     ''' 
     DESCRIPTION:
-    BallnStick
+    bs creates a ball and stick representation of an object. 
 
     USAGE:
     bs selection
@@ -5180,9 +5391,9 @@ def bs(selection='all'):
     bs 3nd3
 
     MORE DETAILS:
-    # BallnStick creates a ball and stick representation of an object 
-# Bondi VDW values added below to override default Pymol settings
-# From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+    bs creates a ball and stick representation of an object. 
+Bondi VDW values added below to override default Pymol settings.
+From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
 
     VERTICAL PML SCRIPT:
     NA
@@ -5319,22 +5530,346 @@ def bs(selection='all'):
     cmd.space("cmyk")
 
     # defines BallnStick settings
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("slate","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
     cmd.set("dash_gap",0.01)
     cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
+    cmd.hide("labels")
+
+    '''
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("slate","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
+    cmd.hide("labels")
+
+cmd.extend('bs', bs)
+
+def bsbw(selection='all'):
+    ''' 
+    DESCRIPTION:
+    bs creates a gray-scaled ball-and-stick representation of an object. 
+
+    USAGE:
+    bsbw
+
+    Arguments:
+    None
+    EXAMPLE:
+    bsbw
+
+    MORE DETAILS:
+    bs creates a gray-scaled ball-and-stick representation of an object. 
+    VERTICAL PML SCRIPT:
+    TBD
+    HORIZONTAL PML SCRIPT:
+    TBD
+    PYTHON CODE:
+def bsbw(selection='all'):
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("gray55","elem O and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem CL and "+selection)
+    cmd.color("gray40","elem K and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
     cmd.hide("labels")
     '''
 
@@ -5467,24 +6002,363 @@ def bs(selection='all'):
     cmd.space("cmyk")
 
     # defines BallnStick settings
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("gray55","elem O and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem CL and "+selection)
+    cmd.color("gray40","elem K and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
     cmd.set("dash_gap",0.01)
     cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
     cmd.hide("labels")
-cmd.extend('bs', bs)
+cmd.extend('bsbw', bsbw)
+
+def bsbwsc(selection='all'):
+    ''' 
+    DESCRIPTION:
+    bsbwsc creates a gray-scaled ball-and-stick representation of an object or selection.
+Only the side chains are shown as ball and stick when used with a cartoon (ribbon diagram).
+
+    USAGE:
+    bsbwsc
+bsbwsc selectedResidues
+
+    Arguments:
+    None or a named selection
+    EXAMPLE:
+    bsbwsc
+
+    MORE DETAILS:
+    bsbwsc creates a gray-scaled ball-and-stick representation of an object or selection.
+Only the side chains are shown as ball and stick when used with a cartoon (ribbon diagram).
+    VERTICAL PML SCRIPT:
+    TBD
+    HORIZONTAL PML SCRIPT:
+    TBD
+    PYTHON CODE:
+def bsbwsc(selection='all'):
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("cartoon", selection)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("gray55","elem O and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem CL and "+selection)
+    cmd.color("gray40","elem K and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.do("set cartoon_side_chain_helper, on")
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
+    cmd.hide("labels")
+    '''
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("cartoon", selection)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("gray55","elem O and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem CL and "+selection)
+    cmd.color("gray40","elem K and "+selection)
+    cmd.color("gray70","elem S and "+selection)
+    cmd.color("gray40","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.do("set cartoon_side_chain_helper, on")
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection+" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
+    cmd.hide("labels")
+cmd.extend('bsbwsc', bsbwsc)
 
 def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
     ''' 
@@ -5537,12 +6411,13 @@ def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
 
     selName = _self.get_unused_name("buried")
     _self.select(selName, "(%s) in %s" % (sele, tmpObj))
-
+	
+    cmd.show("spheres","buried01")
+    
     # clean up
     _self.delete(tmpObj)
 
-    if not quiet:
-        print('Found %d buried water atoms' % (len(exposed)))
+    if not quiet: print('Found %d buried water atoms' % (len(exposed)))
 
     return sorted(exposed)
 
@@ -5567,12 +6442,13 @@ def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
 
     selName = _self.get_unused_name("buried")
     _self.select(selName, "(%s) in %s" % (sele, tmpObj))
-
+	
+    cmd.show("spheres","buried01")
+    
     # clean up
     _self.delete(tmpObj)
 
-    if not quiet:
-        print('Found %d buried water atoms' % (len(exposed)))
+    if not quiet: print('Found %d buried water atoms' % (len(exposed)))
 
     return sorted(exposed)
 
@@ -5608,17 +6484,74 @@ def ccp4mg(fileName="test.pdb"):
 
     PYTHON CODE:
 def ccp4mg(fileName="test.pdb"):
-    arg = (ccp4mgCommand + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program ccp4mg.");
+        subprocess.check_output(ccp4mgOpen)
+        print("Success opening ccp4mg.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the ccp4mgOpen'. \n  Or use 'ccp4mgPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    arg = (ccp4mgCommand + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program ccp4mg.");
+        subprocess.check_output(ccp4mgOpen)
+        print("Success opening ccp4mg.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the ccp4mgOpen'. \n  Or use 'ccp4mgPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('ccp4mg',ccp4mg)
+
+def cellbasis(angles, edges):
+    ''' 
+    DESCRIPTION:
+    For the unit cell with given angles and edge lengths, calculate the basis transformation (vectors) as a 4x4 numpy.array. Used by the function supercell.
+
+    USAGE:
+    NA
+
+    Arguments:
+    NA
+    EXAMPLE:
+    NA
+
+    MORE DETAILS:
+    For the unit cell with given angles and edge lengths calculate the basis transformation (vectors) as a 4x4 numpy.array. Used by the function supercell.
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def cellbasis(angles, edges):
+    rad = [radians(i) for i in angles]
+    basis = numpy.identity(4)
+    basis[0][1] = cos(rad[2])
+    basis[1][1] = sin(rad[2])
+    basis[0][2] = cos(rad[1])
+    basis[1][2] = (cos(rad[0]) - basis[0][1]*basis[0][2])/basis[1][1]
+    basis[2][2] = sqrt(1 - basis[0][2]**2 - basis[1][2]**2)
+    edges.append(1.0)
+    return basis * edges # numpy.array multiplication!
+
+    '''
+
+    rad = [radians(i) for i in angles]
+    basis = numpy.identity(4)
+    basis[0][1] = cos(rad[2])
+    basis[1][1] = sin(rad[2])
+    basis[0][2] = cos(rad[1])
+    basis[1][2] = (cos(rad[0]) - basis[0][1]*basis[0][2])/basis[1][1]
+    basis[2][2] = sqrt(1 - basis[0][2]**2 - basis[1][2]**2)
+    edges.append(1.0)
+    return basis * edges # numpy.array multiplication!
+
+cmd.extend('cellbasis',cellbasis)
 
 def checkParams(needle, haystack, selName, het, firstOnly):
     ''' 
@@ -5748,15 +6681,75 @@ def chimera(fileName="test.pdb"):
     subprocess.call(chimeraOpen);return
     PYTHON CODE:
 def chimera(fileName="test.pdb"):
-    subprocess.call(chimeraOpen)
-    return
+    try:
+        print("Opening the molecular graphics program CHIMERA.");
+        subprocess.check_output(chimeraOpen)
+        print("Success opening CHIMERA.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'chimeraOpen'. \n  Or use 'chimeraPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(chimeraOpen)
-    return
+    try:
+        print("Opening the molecular graphics program CHIMERA.");
+        subprocess.check_output(chimeraOpen)
+        print("Success opening CHIMERA.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'chimeraOpen'. \n  Or use 'chimeraPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('chimera',chimera)
+
+def cntccp4s():
+    ''' 
+    DESCRIPTION:
+    Count number of *.ccp4 (electron density map) files in current directory.
+
+    USAGE:
+    cntccp4s
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntccp4s
+
+    MORE DETAILS:
+    Count number of *.ccp4 (electron density map) files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of ccp4 electron density files in current directory.");
+    print("Usage: cntccp4s");
+    myPath = os.getcwd();
+    ccp4Counter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of number of ccp4 electron density files in the current directory: ", ccp4Counter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of ccp4 electron density files in current directory");print("Usage: cntpses");myPath = os.getcwd();pseCounter = len(glob.glob1(myPath,"*.pdb"));print("Number of pdb files in the current directory: ", pseCounter);
+
+    PYTHON CODE:
+def cntccp4s():
+    print("Count the number of ccp4 electron density files in current directory.");
+    print("Usage: cntccp4s");
+    myPath = os.getcwd();
+    ccp4Counter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of number of ccp4 electron density files in the current directory: ", ccp4Counter);
+
+
+    '''
+
+    print("Count the number of ccp4 electron density files in current directory.");
+    print("Usage: cntccp4s");
+    myPath = os.getcwd();
+    ccp4Counter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of number of ccp4 electron density files in the current directory: ", ccp4Counter);
+
+
+cmd.extend('cntccp4s',cntccp4s)
 
 def cntfiles():
     ''' 
@@ -5781,55 +6774,301 @@ def cntfiles():
     arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l';subprocess.call(arg,shell=True);return
     PYTHON CODE:
 def cntfiles():
-    arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l';
-    subprocess.call(arg,shell=True);
+    print("Count the files in the directory.")
+    print("Usage: cntfiles.")
+    # simple version for working with CWD
+    print("Number of files in current working directory: ", len([name for name in os.listdir('.') if os.path.isfile(name)]))
     return
     '''
 
-    arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l';
-    subprocess.call(arg,shell=True);
+    print("Count the files in the directory.")
+    print("Usage: cntfiles.")
+    # simple version for working with CWD
+    print("Number of files in current working directory: ", len([name for name in os.listdir('.') if os.path.isfile(name)]))
     return
 cmd.extend('cntfiles',cntfiles)
 
-def cntpdb():
+def cntlogs():
+    ''' 
+    DESCRIPTION:
+    Count number of *.log files in current directory.
+
+    USAGE:
+    cntlogs
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntlogs
+
+    MORE DETAILS:
+    Count number of *.log files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of log files in current directory.");
+    print("Usage: cntlogs");
+    myPath = os.getcwd();
+    pngCounter = len(glob.glob1(myPath,"*.log"));
+    print("Number of number of log image files in the current directory: ", logCounter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of log image files in current directory.");print("Usage: cntlogs");myPath = os.getcwd();logCounter = len(glob.glob1(myPath,"*.log"));print("Number of number of log files in the current directory: ", logCounter);
+
+
+    PYTHON CODE:
+def cntlogs():
+    print("Count the number of log image files in current directory.");
+    print("Usage: cntlogs");
+    myPath = os.getcwd();
+    logCounter = len(glob.glob1(myPath,"*.log"));
+    print("Number of number of log image files in the current directory: ", logCounter);
+
+
+    '''
+
+    print("Count the number of log image files in current directory.");
+    print("Usage: cntlogs");
+    myPath = os.getcwd();
+    logCounter = len(glob.glob1(myPath,"*.log"));
+    print("Number of number of log image files in the current directory: ", logCounter);
+
+
+cmd.extend('cntlogs',cntlogs)
+
+def cntmtzs():
+    ''' 
+    DESCRIPTION:
+    Count number of *.mtz (structure factor) files in current directory.
+
+    USAGE:
+    cntmtzs
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntmtzs
+
+    MORE DETAILS:
+    Count number of *.mtz (structure factor) files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of mtz structure factor files in current directory.");
+    print("Usage: cntmtzs");
+    myPath = os.getcwd();
+    mtzCounter = len(glob.glob1(myPath,"*.mtz"));
+    print("Number of number of mtz structure factor  files in the current directory: ", mtzCounter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of mtz structure factor files in current directory.");
+print("Usage: cntmtzs");myPath = os.getcwd();mtzCounter = len(glob.glob1(myPath,"*.mtz"));print("Number of number of mtz structure factor  files in the current directory: ", mtzCounter);
+
+
+    PYTHON CODE:
+def cntmtzs():
+    print("Count the number of mtz structure factor files in current directory.");
+    print("Usage: cntmtzs");
+    myPath = os.getcwd();
+    mtzCounter = len(glob.glob1(myPath,"*.mtz"));
+    print("Number of number of mtz structure factor  files in the current directory: ", mtzCounter);
+
+
+    '''
+
+    print("Count the number of mtz structure factor files in current directory.");
+    print("Usage: cntmtzs");
+    myPath = os.getcwd();
+    mtzCounter = len(glob.glob1(myPath,"*.mtz"));
+    print("Number of number of mtz structure factor  files in the current directory: ", mtzCounter);
+
+
+cmd.extend('cntmtzs',cntmtzs)
+
+def cntpdbs():
     ''' 
     DESCRIPTION:
     Count number of pdb files in current directory.
 
     USAGE:
-    cntpdb
+    cntpdbs
 
     Arguments:
     None
     EXAMPLE:
-    cntpdb
+    cntpdbs
 
     MORE DETAILS:
     Count number of pdb files in current directory.
     VERTICAL PML SCRIPT:
-    arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
-    subprocess.call(arg,shell=True)
-    return
+    print("Count the number of pdb files in current working directory.");
+    print("Usage: cntpdbs");
+    myPath = os.getcwd();
+    pdbCounter = len(glob.glob1(myPath,"*.pdb"));
+    print("Number of pdb files in the current directory: ", pdbCounter);
+
 
     HORIZONTAL PML SCRIPT:
-    arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
-subprocess.call(arg,shell=True);return
+    print("Count the number of pdb files in current directory.");print("Usage: cntpdb");myPath = os.getcwd();pdbCounter = len(glob.glob1(myPath,"*.pdb"));print("Number of pdb files in the current directory: ", pdbCounter);
 
     PYTHON CODE:
-def cntpdb():
-    arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
-    subprocess.call(arg,shell=True)
+def cntpdbs():
+    print("Count the number of pdb files in the current directory.")
+    print("Usage: cntpdb")
+    myPath = os.getcwd()
+    pdbCounter = len(glob.glob1(myPath,"*.pdb"))
+    print("Number of pdb files in the current directory: ", pdbCounter)
     return
 
     '''
 
-    arg = "echo 'Count the number of pdb files in subfolders.' && echo 'Usage: cntpdb' && find ./ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e '{}/*_([1-9999]|****).pdb' ';' -print | wc -l"
-    subprocess.call(arg,shell=True)
+    print("Count the number of pdb files in the current directory.")
+    print("Usage: cntpdb")
+    myPath = os.getcwd()
+    pdbCounter = len(glob.glob1(myPath,"*.pdb"))
+    print("Number of pdb files in the current directory: ", pdbCounter)
     return
 
-cmd.extend('cntpdb',cntpdb)
+cmd.extend('cntpdbs',cntpdbs)
 
-def code(fileName="test.pml"):
+def cntpmls():
+    ''' 
+    DESCRIPTION:
+    Count number of pml (Pymol macro language) files in current directory.
+
+    USAGE:
+    cntpmls
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntpmls
+
+    MORE DETAILS:
+    Count number of pml (Pymol macro language) files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of pml (PyMOL macro language) files in current directory.");
+    print("Usage: cntpmls");
+    myPath = os.getcwd();
+    pmlCounter = len(glob.glob1(myPath,"*.pml"));
+    print("Number of pml (PyMOL macro language)  files in the current directory: ", pmlCounter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of pml  (Pymol macro language) files in current directory.");print("Usage: cntpmls");myPath = os.getcwd();pmlCounter = len(glob.glob1(myPath,"*.pdb"));print("Number of pml  files in the current directory: ", pmlCounter);
+
+    PYTHON CODE:
+def cntpmls():
+    print("Count the number of pml (Pymol macro language) files in current directory.");
+    print("Usage: cntpmls");
+    myPath = os.getcwd();
+    pmlCounter = len(glob.glob1(myPath,"*.pml"));
+    print("Number of pml files in the current directory: ", pmlCounter);
+    return	
+
+    '''
+
+    print("Count the number of pml (Pymol macro language) files in current directory.");
+    print("Usage: cntpmls");
+    myPath = os.getcwd();
+    pmlCounter = len(glob.glob1(myPath,"*.pml"));
+    print("Number of pml files in the current directory: ", pmlCounter);
+    return	
+
+cmd.extend('cntpmls',cntpmls)
+
+def cntpngs():
+    ''' 
+    DESCRIPTION:
+    Count number of *.png image files in current directory.
+
+    USAGE:
+    cntpngs
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntpngs
+
+    MORE DETAILS:
+    Count number of *.png image files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of png image files in current directory.");
+    print("Usage: cntpngs");
+    myPath = os.getcwd();
+    pngCounter = len(glob.glob1(myPath,"*.png"));
+    print("Number of number of png image files in the current directory: ", pngCounter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of png image files in current directory.");print("Usage: cntpngs");myPath = os.getcwd();pngCounter = len(glob.glob1(myPath,"*.png"));print("Number of number of png image files in the current directory: ", pngCounter);
+
+
+    PYTHON CODE:
+def cntpngs():
+    print("Count the number of png image files in current directory.");
+    print("Usage: cntpngs");
+    myPath = os.getcwd();
+    pngCounter = len(glob.glob1(myPath,"*.png"));
+    print("Number of number of png image files in the current directory: ", pngCounter);
+
+
+    '''
+
+    print("Count the number of png image files in current directory.");
+    print("Usage: cntpngs");
+    myPath = os.getcwd();
+    pngCounter = len(glob.glob1(myPath,"*.png"));
+    print("Number of number of png image files in the current directory: ", pngCounter);
+
+
+cmd.extend('cntpngs',cntpngs)
+
+def cntpses():
+    ''' 
+    DESCRIPTION:
+    Count number of *.pse (session) files in current directory.
+
+    USAGE:
+    cntpses
+
+    Arguments:
+    None
+    EXAMPLE:
+    cntpses
+
+    MORE DETAILS:
+    Count number of *.pse (session) files in current directory.
+    VERTICAL PML SCRIPT:
+    print("Count the number of pmls files in current directory.");
+    print("Usage: cntpses");
+    myPath = os.getcwd();
+    pseCounter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of pml files in the current directory: ", pseCounter);
+
+
+    HORIZONTAL PML SCRIPT:
+    print("Count the number of *.pse files (session files) in current directory.");print("Usage: cntpses");myPath = os.getcwd();pseCounter = len(glob.glob1(myPath,"*.pdb"));print("Number of pdb files in the current directory: ", pseCounter);
+
+    PYTHON CODE:
+def cntpses():
+    print("Count the number of *.pse (session) files in current directory.");
+    print("Usage: cntpses");
+    myPath = os.getcwd();
+    pseCounter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of *.pse (session) files in the current directory: ", pseCounter);
+    return	
+
+    '''
+
+    print("Count the number of *.pse (session) files in current directory.");
+    print("Usage: cntpses");
+    myPath = os.getcwd();
+    pseCounter = len(glob.glob1(myPath,"*.pse"));
+    print("Number of *.pse (session) files in the current directory: ", pseCounter);
+    return	
+
+cmd.extend('cntpses',cntpses)
+
+def code():
     ''' 
     DESCRIPTION:
     Open file with Visual Studio Code from within PyMOL.
@@ -5850,24 +7089,37 @@ def code(fileName="test.pml"):
 
     https://marketplace.visualstudio.com/items?itemName=reageyao.biosyntax
 
-    >>>  Edit file path in python code below
     VERTICAL PML SCRIPT:
-    arg = (codePath + fileName);
-    subprocess.call(arg,shell=True)
+    subprocess.call(codeOpen);
+return
 
     HORIZONTAL PML SCRIPT:
-    arg = {codePath + fileName);subprocess.call(arg,shell=True)
+    subprocess.call(codeOpen);return
 
     PYTHON CODE:
-def code(fileName="test.pml"):
-    arg = (codePath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+def code():
+    try:
+        print("Opening the molecular graphics program Virtual Studio Code.");
+        subprocess.check_output(codeOpen)
+        print("Success opening Virtual Studio Code.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the codeOpen'. \n  Or use 'codePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    arg = (codePath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program Virtual Studio Code.");
+        subprocess.check_output(codeOpen)
+        print("Success opening Virtual Studio Code.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the codeOpen'. \n  Or use 'codePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('code',code)
 
 def colorh1(selection='all'):
@@ -6123,15 +7375,27 @@ def coot(fileName="test.pdb"):
 
     PYTHON CODE:
 def coot(fileName="test.pdb"):
-    arg = (cootPath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program COOT.");
+        subprocess.check_output(cootOpen)
+        print("Success opening COOT.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'cootOpen'. \n  Or use 'cootPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    arg = (cootPath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program COOT.");
+        subprocess.check_output(cootOpen)
+        print("Success opening COOT.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'cootOpen'. \n  Or use 'cootPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('coot',coot)
 
@@ -6205,7 +7469,7 @@ def ddb():
     return
 cmd.extend('ddb',ddb)
 
-def emacs():
+def emacs(fileName="test.pml"):
     ''' 
     DESCRIPTION:
     Open file with emacs from within PyMOL.
@@ -6228,13 +7492,29 @@ return
     HORIZONTAL PML SCRIPT:
     subprocess.call(emacsOpen);return
     PYTHON CODE:
-def emacs():
-    subprocess.call(emacsOpen)
-    return
+def emacs(fileName="test.pml"):
+    try:
+        print("Opening the molecular graphics program emacs.");
+        subprocess.check_output(emacsOpen)
+        print("Success opening emacs.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the emacsOpen'. \n  Or use 'emacsPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(emacsOpen)
-    return
+    try:
+        print("Opening the molecular graphics program emacs.");
+        subprocess.check_output(emacsOpen)
+        print("Success opening emacs.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the emacsOpen'. \n  Or use 'emacsPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('emacs',emacs)
 
 def excel():
@@ -6990,7 +8270,7 @@ def gcal():
     webbrowser.open('https://calendar.google.com/calendar/r')
 cmd.extend('gcal',gcal)
 
-def gedit(fileName="test.pml"):
+def gedit():
     ''' 
     DESCRIPTION:
     Open file with gedit from within PyMOL.
@@ -7016,13 +8296,29 @@ return
     subprocess.call(geditOpen);return
 
     PYTHON CODE:
-def gedit(fileName="test.pml"):
-    subprocess.call(geditOpen)
-    return
+def gedit():
+    try:
+        print("Opening the molecular graphics program gedit.");
+        subprocess.check_output(geditOpen)
+        print("Success opening gedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the geditOpen'. \n  Or use 'geditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(geditOpen)
-    return
+    try:
+        print("Opening the molecular graphics program gedit.");
+        subprocess.check_output(geditOpen)
+        print("Success opening gedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the geditOpen'. \n  Or use 'geditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('gedit',gedit)
 
 def gitAdd():
@@ -7583,15 +8879,12 @@ def jabref():
     MORE DETAILS:
     Open the jabref from within PyMOL.
 
-   >>>  Edit file path in python code below.
     VERTICAL PML SCRIPT:
-    arg = (jabrefPath);
-    subprocess.call(arg,shell=True);
-    return;
+        subprocess.call(jabrefOpen);
+    return
 
     HORIZONTAL PML SCRIPT:
-    arg = jabrefCommand; subprocess.call(arg,shell=True);return
-
+        subprocess.call(jabrefOpen);return
     PYTHON CODE:
 def jabref():
     subprocess.call(jabrefOpen);
@@ -7632,12 +8925,28 @@ return
 
     PYTHON CODE:
 def jedit(fileName="test.pml"):
-    subprocess.call(jeditOpen)
-    return
+    try:
+        print("Opening the molecular graphics program jedit.");
+        subprocess.check_output(jeditOpen)
+        print("Success opening jedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the jeditOpen'. \n  Or use 'jeditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(jeditOpen)
-    return
+    try:
+        print("Opening the molecular graphics program jedit.");
+        subprocess.check_output(jeditOpen)
+        print("Success opening jedit.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the jeditOpen'. \n  Or use 'jeditPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('jedit',jedit)
 
 def jmol(fileName="test.pdb"):
@@ -7668,15 +8977,27 @@ def jmol(fileName="test.pdb"):
 
     PYTHON CODE:
 def jmol(fileName="test.pdb"):
-    arg = (jmolPath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program JMOL.");
+        subprocess.check_output(jmolOpen)
+        print("Success opening JMOL.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jmolOpen'. \n  Or use 'jmolPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    arg = (jmolPath + fileName)
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        print("Opening the molecular graphics program JMOL.");
+        subprocess.check_output(jmolOpen)
+        print("Success opening JMOL.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jmolOpen'. \n  Or use 'jmolPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('jmol',jmol)
 
@@ -7717,6 +9038,55 @@ def julia():
 
 cmd.extend('julia',julia)
 
+def juliapro():
+    ''' 
+    DESCRIPTION:
+    Open the juliapro from within PyMOL.
+
+    USAGE:
+    juliapro
+
+    Arguments:
+    None
+    EXAMPLE:
+    juliapro
+
+    MORE DETAILS:
+    Open the juliapro from within PyMOL.
+    VERTICAL PML SCRIPT:
+    arg = juliaproPath;
+    subprocess.call(arg,shell=True);
+    return
+
+    HORIZONTAL PML SCRIPT:
+    arg =juliaproPath;subprocess.call(arg,shell=True);return
+
+    PYTHON CODE:
+def juliapro():
+    try:
+        print("Please be patient. Juliapro depends on atom which starts slowly.");
+        subprocess.check_output(juliaproOpen)
+        print("Success opening juliapro")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'juliaproOpen'. \n  Or use 'juliaproPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+    '''
+
+    try:
+        print("Please be patient. Juliapro depends on atom which starts slowly.");
+        subprocess.check_output(juliaproOpen)
+        print("Success opening juliapro")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'juliaproOpen'. \n  Or use 'juliaproPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('juliapro',juliapro)
+
 def mate():
     ''' 
     DESCRIPTION:
@@ -7741,12 +9111,28 @@ return
 
     PYTHON CODE:
 def mate():
-    subprocess.call(mateOpen)
-    return
+    try:
+        print("Opening the molecular graphics program mate.");
+        subprocess.check_output(mateOpen)
+        print("Success opening mate.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the mateOpen'. \n  Or use 'matePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
     '''
 
-    subprocess.call(mateOpen)
-    return
+    try:
+        print("Opening the molecular graphics program mate.");
+        subprocess.check_output(mateOpen)
+        print("Success opening mate.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the mateOpen'. \n  Or use 'matePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('mate',mate)
 
 def nmr():
@@ -7861,13 +9247,27 @@ return
 
     PYTHON CODE:
 def npp():
-    subprocess.call(nppOpen)
-    return
+    try:
+        print("Opening the molecular graphics program notepad++.");
+        subprocess.check_output(nppOpen)
+        print("Success opening notepad++.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the nppOpen'. \n  Or use 'nppPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(nppOpen)
-    return
+    try:
+        print("Opening the molecular graphics program notepad++.");
+        subprocess.check_output(nppOpen)
+        print("Success opening notepad++.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the nppOpen'. \n  Or use 'nppPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('npp',npp)
 
@@ -7897,21 +9297,38 @@ def nv(fileName="testme.pml"):
 
     PYTHON CODE:
 def nv(fileName="testme.pml"):
-    subprocess.call(nvimCommand)
+    try:
+        print("Opening the molecular graphics program nvim.");
+        subprocess.check_output(nvimOpen)
+        print("Success opening nvim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the nvimOpen'. \n  Or use 'nvimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(nvimCommand)
+    try:
+        print("Opening the molecular graphics program nvim.");
+        subprocess.check_output(nvimOpen)
+        print("Success opening nvim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the nvimOpen'. \n  Or use 'nvimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('nv',nv)
 
 def oc():
     ''' 
     DESCRIPTION:
-    Open the octave from within PyMOL.
+    Open the data analysis program octave (open source analog of matlab) from within PyMOL.
+
 
     USAGE:
-    octave
+    oc
 
     Arguments:
     None
@@ -7919,30 +9336,250 @@ def oc():
     oc
 
     MORE DETAILS:
-    Open the octave from within PyMOL.
+    Open the data analysis program octave (open source analog of matlab) from within PyMOL.
 
-   >>>  Edit file path in python code below
     VERTICAL PML SCRIPT:
-    arg = octaveCommand;
-    subprocess.call(arg,shell=True);
+    subprocess.call(octaveOpen);
     return
 
     HORIZONTAL PML SCRIPT:
-    arg = octaveCommand;subprocess.call(arg,shell=True);return
+    subprocess.call(octaveOpen);return
 
     PYTHON CODE:
 def oc():
-    arg = octaveCommand
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        subprocess.check_output(octaveOpen)
+        print("Success opening octave")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'ocatvePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 
     '''
 
-    arg = octaveCommand
-    subprocess.call(arg,shell=True)
-    return
+    try:
+        subprocess.check_output(octaveOpen)
+        print("Success opening octave")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'ocatvePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 
 cmd.extend('oc',oc)
+
+def omx(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of molecule along the x-axis of the viewport. 
+
+    USAGE:
+    omx <selection>
+
+    Arguments:
+    optional selection
+    EXAMPLE:
+    omx 1lw9
+
+    MORE DETAILS:
+    Align long axis of molecule along the x-axis of the viewport in the negative direction. 
+    VERTICAL PML SCRIPT:
+    orient selection; 
+rotate selection,z,180;
+
+    HORIZONTAL PML SCRIPT:
+    orient selection;rotate selection,z,180;
+
+    PYTHON CODE:
+def omx(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',180,selection); 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',180,selection); 
+
+cmd.extend('omx',omx)
+
+def omxy(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of molecule along minus x-y axis.
+
+    USAGE:
+    omxy
+
+    Arguments:
+    None
+    EXAMPLE:
+    omxy
+
+    MORE DETAILS:
+    Align long axis of molecule along the minus x*y axis of the viewport.
+    VERTICAL PML SCRIPT:
+    cmd.orient(); 
+    cmd.turn('z',315) 
+
+    HORIZONTAL PML SCRIPT:
+    cmd.orient();cmd.turn('z',315) 
+
+    PYTHON CODE:
+def omxy(selection='all'):
+    cmd.orient(); 
+    cmd.turn('z',315) 
+
+    '''
+
+    cmd.orient(); 
+    cmd.turn('z',315) 
+
+cmd.extend('omxy',omxy)
+
+def omxyz(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the mxyz axis. 
+
+    USAGE:
+    omxyz
+
+or 
+
+omxyz selection
+
+    Arguments:
+    optional selection
+    EXAMPLE:
+    omxyz 1lw9
+
+    MORE DETAILS:
+    Align long axis of the selection along the mxyz axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient selection; 
+rotate selection,z,315;
+rotate selection,y,315;
+    HORIZONTAL PML SCRIPT:
+    orient selection; rotate selection,z,135;rotate selection,y,135);
+    PYTHON CODE:
+def omxyz(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',315,selection); 
+    cmd.rotate('y',315,selection);
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',315,selection); 
+    cmd.rotate('y',315,selection);
+cmd.extend('omxyz',omxyz)
+
+def omy(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the y-axis of the viewport in the negative direction.
+
+    USAGE:
+    omy <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    omy;
+omy 1lw9
+
+    MORE DETAILS:
+    Align long axis of the selection along the y-axis of the viewport in the negative direction.
+    VERTICAL PML SCRIPT:
+    orient; 
+    rotate <selection>, z,270
+
+    HORIZONTAL PML SCRIPT:
+    orient; rotate <selection>,z,270
+
+    PYTHON CODE:
+def omy(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',270,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',270,selection) 
+
+cmd.extend('omy',omy)
+
+def omz(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the y-axis of the viewport in the negative direction. 
+
+    USAGE:
+    omy <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    omy;
+omy 1lw9
+
+    MORE DETAILS:
+    Align long axis of the selection along the y-axis of the viewport in the negative y direction. 
+    VERTICAL PML SCRIPT:
+    orient; 
+    rotate <selection>,z,270
+
+    HORIZONTAL PML SCRIPT:
+    orient; rotate <selection>,z,270
+
+    PYTHON CODE:
+def omz(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',270,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',270,selection) 
+
+cmd.extend('omy',omy)
+
+def omz(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of selection along the z-axis of the viewport in the negative z direction. 
+
+    USAGE:
+    omz <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    omz;
+omz 1lw9
+
+    MORE DETAILS:
+    Align long axis of selection along the negative z-axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient; 
+    rotate y,270
+
+    HORIZONTAL PML SCRIPT:
+    orient; rotate z,270
+
+    PYTHON CODE:
+def omz(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('y',270,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('y',270,selection) 
+
+cmd.extend('omz',omz)
 
 def oni():
     ''' 
@@ -7970,15 +9607,203 @@ return
 
     PYTHON CODE:
 def oni():
-    subprocess.call(oniOpen)
-    return
+    try:
+        print("Opening the text editor oni.");
+        subprocess.check_output(oniOpen)
+        print("Success opening oni.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'oniOpen'. \n  Or use 'oniPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+    '''
+
+    try:
+        print("Opening the text editor oni.");
+        subprocess.check_output(oniOpen)
+        print("Success opening oni.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'oniOpen'. \n  Or use 'oniPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+cmd.extend('oni',oni)
+
+def ox(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of molecule along x-axis. 
+
+    USAGE:
+    ox <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    ox;
+    ox 1lw9
+
+
+    MORE DETAILS:
+    Align long axis of molecule along the x-axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient selection
+    HORIZONTAL PML SCRIPT:
+    orient selection
+    PYTHON CODE:
+def ox(selection='all'):
+    cmd.orient(selection) 
 
     '''
 
-    subprocess.call(oniOpen)
-    return
+    cmd.orient(selection) 
 
-cmd.extend('oni',oni)
+cmd.extend('ox',ox)
+
+def oxy(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the x-y axis. 
+
+    USAGE:
+    oxy
+
+ or
+
+oxy selection
+
+    Arguments:
+    optional selection
+    EXAMPLE:
+    oxy
+
+    MORE DETAILS:
+    Align long axis of the selection along the x-y axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient selection
+    rotate selection,z,270 
+
+    HORIZONTAL PML SCRIPT:
+    orient selection;rotate selection,z,270 
+
+    PYTHON CODE:
+def oxy(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',135,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',135,selection) 
+
+cmd.extend('oxy',oxy)
+
+def oxyz(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the xyz axis. 
+
+    USAGE:
+    oxyz
+
+or 
+
+oxyz selection
+
+    Arguments:
+    optional selection
+    EXAMPLE:
+    oxyz 1lw9
+
+    MORE DETAILS:
+    Align long axis of the selection along the xyz axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient selection; 
+rotate selection,z,135;
+rotate selection,y,135;
+    HORIZONTAL PML SCRIPT:
+    orient selection; rotate selection,z,315;rotate selection,y,315);
+    PYTHON CODE:
+def oxyz(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',135,selection); 
+    cmd.rotate('y',135,selection);
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',135,selection); 
+    cmd.rotate('y',135,selection);
+cmd.extend('oxyz',oxyz)
+
+def oy(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of the selection along the y-axis of the viewport. 
+
+    USAGE:
+    oy <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    oy;
+oy 1lw9
+
+    MORE DETAILS:
+    Align long axis of the selection along the y-axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient; 
+    rotate <selection>, z,90
+
+    HORIZONTAL PML SCRIPT:
+    orient; rotate <selection>,z,90
+
+    PYTHON CODE:
+def oy(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('z',90,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('z',90,selection) 
+
+cmd.extend('oy',oy)
+
+def oz(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Align long axis of selection along the z-axis of the viewport. 
+
+    USAGE:
+    oz <selection>
+
+    Arguments:
+    selection
+    EXAMPLE:
+    oz;
+oz 1lw9
+
+    MORE DETAILS:
+    Align long axis of selection along the z-axis of the viewport. 
+    VERTICAL PML SCRIPT:
+    orient; 
+    rotate y,90
+
+    HORIZONTAL PML SCRIPT:
+    orient; rotate z,90
+
+    PYTHON CODE:
+def oz(selection='all'):
+    cmd.orient(selection); 
+    cmd.rotate('y',90,selection) 
+
+    '''
+
+    cmd.orient(selection); 
+    cmd.rotate('y',90,selection) 
+
+cmd.extend('oz',oz)
 
 def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     ''' 
@@ -8126,6 +9951,122 @@ def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     cmd.deselect()
 cmd.extend('pairD', pairD)
 
+def pdbed(fileName="test.pdb"):
+    ''' 
+    DESCRIPTION:
+    Open PDBEditor.jar from within PyMOL. 
+
+    USAGE:
+    edpdb <filename of pdb file in present working directory>
+
+
+    Arguments:
+    None
+    EXAMPLE:
+    pdbed pdb filename
+
+    MORE DETAILS:
+    Open PDBEditor.jar from within PyMOL. 
+    Adjust file path to location of the jar file.
+
+    https://sourceforge.net/projects/pdbeditorjl/
+
+    VERTICAL PML SCRIPT:
+    print("Please wait. The PDBEditor is slow to start.")
+    arg = ("java -jar" + pdbeditorPath + fileName)
+    subprocess.call(arg,shell=True)
+    return
+
+    HORIZONTAL PML SCRIPT:
+    print("Please wait. The PDBEditoris slow to start.");arg = ("java -jar " + pdbeditorPath + fileName);subprocess.call(arg,shell=True);return
+
+    PYTHON CODE:
+def pdbed(fileName="test.pdb"):
+    try:
+        print("Opening the molecular graphics program PDBEditor.");
+        subprocess.check_output(pdbeditorOpen)
+        print("Success opening PDBeditor.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'pdbeditorOpen'. \n  Or use 'pdbeditorPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+    '''
+
+    try:
+        print("Opening the molecular graphics program PDBEditor.");
+        subprocess.check_output(pdbeditorOpen)
+        print("Success opening PDBeditor.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'pdbeditorOpen'. \n  Or use 'pdbeditorPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('pdbed',pdbed)
+
+def pdbremarks(filename):
+    ''' 
+    DESCRIPTION:
+    Read REMARK lines from PDB file. 
+Return dictionary with remarkNum as key and list of lines as value.
+Called by the function quat().
+
+    USAGE:
+    pdbremarks(filename)
+
+    Arguments:
+    filename
+    EXAMPLE:
+    pdbremarks(filename)
+
+    MORE DETAILS:
+    Read REMARK lines from PDB file. 
+Return dictionary with remarkNum as key and list of lines as value.
+Called by the function quat().
+    VERTICAL PML SCRIPT:
+    TBD
+    HORIZONTAL PML SCRIPT:
+    TBD
+    PYTHON CODE:
+def pdbremarks(filename):
+    remarks = dict()
+    if not isinstance(filename, basestring):
+        f = filename
+    elif filename[-3:] == '.gz':
+        import gzip
+        f = gzip.open(filename)
+    else:
+        f = open(filename)
+    for line in f:
+        recname = line[0:6]
+        if recname == 'REMARK':
+            num = int(line[7:10])
+            lstring = line[11:]
+            remarks.setdefault(num, []).append(lstring)
+    return remarks
+
+    '''
+
+    remarks = dict()
+    if not isinstance(filename, basestring):
+        f = filename
+    elif filename[-3:] == '.gz':
+        import gzip
+        f = gzip.open(filename)
+    else:
+        f = open(filename)
+    for line in f:
+        recname = line[0:6]
+        if recname == 'REMARK':
+            num = int(line[7:10])
+            lstring = line[11:]
+            remarks.setdefault(num, []).append(lstring)
+    return remarks
+
+cmd.extend('pdbremarks', pdbremarks)
+
 def ppt():
     ''' 
     DESCRIPTION:
@@ -8153,15 +10094,212 @@ def ppt():
 
     PYTHON CODE:
 def ppt():
-    subprocess.call(pptOpen)
-    return
-
+    try:
+        print("Opening the MS powerpoint.");
+        subprocess.check_output(pptOpen)
+        print("Success opening ppt.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'pptOpen'. \n  Or use 'pptPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
     '''
 
-    subprocess.call(pptOpen)
-    return
-
+    try:
+        print("Opening the MS powerpoint.");
+        subprocess.check_output(pptOpen)
+        print("Success opening ppt.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'pptOpen'. \n  Or use 'pptPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 cmd.extend('ptt',ppt)
+
+def quat(name=None, filename=None, prefix=None, quiet=0):
+    ''' 
+    DESCRIPTION:
+    Runs Thomas Holder's quat.py script to generate a biological unit using crystallographic symmetry.
+    Read REMARK 350 from `filename` and create biological unit (quaternary structure).
+
+    USAGE:
+    quat [name [, filename [, prefix]]]
+
+    Arguments:
+    The code for a molecular object with symmetry information. 
+    name = string: name of object and basename of PDB file, if filename is not given {default: first loaded object}
+    filename = string: file path {default: <name>.pdb}
+    prefix = string: prefix for new objects {default: <name>}
+
+    EXAMPLE:
+    fetch 4dgr
+    quat 4dgr
+
+
+    MORE DETAILS:
+    Copyright 2010 to 2011 Thomas Holder, MPI for Developmental Biology
+ 
+    Module for reading REMARK records from PDB files and in particular
+generate quaterny structure from REMARK 350.
+
+    These notes below were added by Blaine Mooers on 12 September 2019.
+
+    This content was made available under the GNU Free Documentation License 1.2
+    See https://pymolwiki.org/index.php/BiologicalUnit/Quat for more information.
+
+    quat is equavalent to biomolecule in the psico package.
+
+    Change the local mirror address for the pdb, if you have such a mirror. 
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def quat(name=None, filename=None, prefix=None, quiet=0):
+    quiet = int(quiet)
+    if name is None:
+        name = cmd.get_object_list()[0]
+    if prefix is None:
+        prefix = name
+    if filename is None:
+        candidates = [
+        '%s.pdb' % (name),
+        '%s/%s.pdb' % (cmd.get('fetch_path'), name),
+        '%s/%s/pdb%s.ent.gz' % (local_mirror_divided, name[1:3], name),
+        ]
+        for filename in candidates:
+            if os.path.exists(filename):
+                break
+        else:
+            print('please provide filename')
+            return
+        if not quiet:
+            print('loading from %s' % (filename))
+    remarks = pdbremarks(filename)
+    if 350 not in remarks:
+            print('There is no REMARK 350 in', filename)
+            return
+    quat = quat350(remarks[350])
+    for chains in quat:
+            matrices = quat[chains]
+            for num in matrices:
+                mat = matrices[num][0:12]
+                mat.extend([0,0,0,1])
+                copy = '%s_%d' % (prefix, num)
+                if not quiet:
+                    print('creating %s' % (copy))
+                cmd.create(copy, '/%s//%s' % (name, '+'.join(chains)))
+                cmd.alter(copy, 'segi="%d"' % (num))
+                cmd.transform_object(copy, mat)
+    cmd.disable(name)
+    cmd.group('%s_quat' % (prefix), '%s_*' % (prefix))
+    '''
+
+    quiet = int(quiet)
+    if name is None:
+        name = cmd.get_object_list()[0]
+    if prefix is None:
+        prefix = name
+    if filename is None:
+        candidates = [
+        '%s.pdb' % (name),
+        '%s/%s.pdb' % (cmd.get('fetch_path'), name),
+        '%s/%s/pdb%s.ent.gz' % (local_mirror_divided, name[1:3], name),
+        ]
+        for filename in candidates:
+            if os.path.exists(filename):
+                break
+        else:
+            print('please provide filename')
+            return
+        if not quiet:
+            print('loading from %s' % (filename))
+    remarks = pdbremarks(filename)
+    if 350 not in remarks:
+            print('There is no REMARK 350 in', filename)
+            return
+    quat = quat350(remarks[350])
+    for chains in quat:
+            matrices = quat[chains]
+            for num in matrices:
+                mat = matrices[num][0:12]
+                mat.extend([0,0,0,1])
+                copy = '%s_%d' % (prefix, num)
+                if not quiet:
+                    print('creating %s' % (copy))
+                cmd.create(copy, '/%s//%s' % (name, '+'.join(chains)))
+                cmd.alter(copy, 'segi="%d"' % (num))
+                cmd.transform_object(copy, mat)
+    cmd.disable(name)
+    cmd.group('%s_quat' % (prefix), '%s_*' % (prefix))
+cmd.extend('quat', quat)
+
+def quat350(rem350):
+    ''' 
+    DESCRIPTION:
+    Get transformation matrices for biomolecule 1 from REMARK 350.
+
+
+    USAGE:
+    quat350(rem350)
+
+    Arguments:
+    rem350
+    EXAMPLE:
+    quat350(rem350)
+
+    MORE DETAILS:
+    Get transformation matrices for biomolecule 1 from REMARK 350.
+
+    VERTICAL PML SCRIPT:
+    TBD
+    HORIZONTAL PML SCRIPT:
+    TBD
+    PYTHON CODE:
+def quat350(rem350):
+    biomt = dict()
+    chains = tuple()
+    seenbiomolecule = False
+    for line in rem350:
+        if line.startswith('BIOMOLECULE:'):
+            if seenbiomolecule:
+                break
+            seenbiomolecule = True
+        elif line.startswith('APPLY THE FOLLOWING TO CHAINS:'):
+            chains = tuple(chain.strip() for chain in line[30:].split(','))
+        elif line.startswith('                   AND CHAINS:'):
+            chains += tuple(chain.strip() for chain in line[30:].split(','))
+        elif line.startswith('  BIOMT'):
+            row = int(line[7])
+            num = int(line[8:12])
+            vec = line[12:].split()
+            vec = map(float, vec)
+            biomt.setdefault(chains, dict()).setdefault(num, []).extend(vec)
+    return biomt
+    '''
+
+    biomt = dict()
+    chains = tuple()
+    seenbiomolecule = False
+    for line in rem350:
+        if line.startswith('BIOMOLECULE:'):
+            if seenbiomolecule:
+                break
+            seenbiomolecule = True
+        elif line.startswith('APPLY THE FOLLOWING TO CHAINS:'):
+            chains = tuple(chain.strip() for chain in line[30:].split(','))
+        elif line.startswith('                   AND CHAINS:'):
+            chains += tuple(chain.strip() for chain in line[30:].split(','))
+        elif line.startswith('  BIOMT'):
+            row = int(line[7])
+            num = int(line[8:12])
+            vec = line[12:].split()
+            vec = map(float, vec)
+            biomt.setdefault(chains, dict()).setdefault(num, []).extend(vec)
+    return biomt
+cmd.extend('quat350', quat350)
 
 def rline():
     ''' 
@@ -8278,6 +10416,10 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
 
     USAGE:
     rv
+
+or 
+
+rv 1, 2, bestview
 
     Arguments:
     [view, decimal_places, outname]
@@ -8464,13 +10606,13 @@ def sc111():
     PYTHON CODE:
 def sc111():
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
+    supercell(1, 1, 1, object=None, color='orange', name='supercell111', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 1, , orange, supercell111, 1')
+    supercell(1, 1, 1, object=None, color='orange', name='supercell111', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 
 cmd.extend("sc111", sc111)
 
@@ -8501,14 +10643,12 @@ def sc112():
     run $HOME/Scripts/PyMOLScripts/supercell.py;supercell 1, 1, 2, , orange, supercell112, 1
     PYTHON CODE:
 def sc112():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
-
+    supercell(1, 1, 2, object=None, color='orange', name='supercell112', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 2, , orange, supercell112, 1')
-
+    supercell(1, 1, 2, object=None, color='orange', name='supercell112', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc112", sc112)
 
 
@@ -8538,12 +10678,12 @@ def sc113():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 1, 3, , orange, supercell113, 1
     PYTHON CODE:
 def sc113():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 3, , orange, supercell113, 1')
+    supercell(1, 1, 3, object=None, color='orange', name='supercell113', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 1, 3, , orange, supercell113, 1')
+    supercell(1, 1, 3, object=None, color='orange', name='supercell113', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc113", sc113)
 
 
@@ -8573,12 +10713,12 @@ def sc121():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 1, , orange, supercell121, 1
     PYTHON CODE:
 def sc121():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 1, , orange, supercell121, 1')
+    supercell(1, 2, 1, object=None, color='orange', name='supercell121', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 1, , orange, supercell121, 1')
+    supercell(1, 2, 1, object=None, color='orange', name='supercell121', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc121", sc121)
 
 
@@ -8608,12 +10748,12 @@ def sc122():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 2, , orange, supercell122, 1
     PYTHON CODE:
 def sc122():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 2, , orange, supercell122, 1')
+    supercell(1, 2, 2, object=None, color='orange', name='supercell122', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 2, , orange, supercell122, 1')
+    supercell(1, 2, 2, object=None, color='orange', name='supercell122', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc122", sc122)
 
 
@@ -8642,12 +10782,12 @@ def sc123():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 3, , orange, supercell123, 1
     PYTHON CODE:
 def sc123():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 3, , orange, supercell123, 1')
+    supercell(1, 2, 3, object=None, color='orange', name='supercell123', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 2, 3, , orange, supercell123, 1')
+    supercell(1, 2, 3, object=None, color='orange', name='supercell123', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc123", sc123)
 
 
@@ -8676,12 +10816,12 @@ def sc131():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 1, , orange, supercell131, 1
     PYTHON CODE:
 def sc131():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 1, , orange, supercell131, 1')
+    supercell(1, 3, 1, object=None, color='orange', name='supercell131', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 1, , orange, supercell131, 1')
+    supercell(1, 3, 1, object=None, color='orange', name='supercell131', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc131", sc131)
 
 
@@ -8711,12 +10851,12 @@ def sc132():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 2, , orange, supercell132, 1
     PYTHON CODE:
 def sc132():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 2, , orange, supercell132, 1')
+    supercell(1, 3, 2, object=None, color='orange', name='supercell132', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 2, , orange, supercell132, 1')
+    supercell(1, 3, 2, object=None, color='orange', name='supercell132', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc132", sc132)
 
 
@@ -8746,12 +10886,12 @@ def sc133():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 3, , orange, supercell133, 1
     PYTHON CODE:
 def sc133():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 3, , orange, supercell133, 1')
+    supercell(1, 3, 3, object=None, color='orange', name='supercell133', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 1, 3, 3, , orange, supercell133, 1')
+    supercell(1, 3, 3, object=None, color='orange', name='supercell133', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc133", sc133)
 
 
@@ -8781,13 +10921,13 @@ def sc211():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 1, , orange, supercell211, 1
     PYTHON CODE:
 def sc211():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 1, 1, , orange, supercell211, 1')
+    supercell(2, 1, 1, object=None, color='orange', name='supercell211', withmates=1)
+    print('When finished, remove the symmetry mates with the command rmsc')
 
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 1, 1, , orange, supercell211, 1')
+    supercell(2, 1, 1, object=None, color='orange', name='supercell211', withmates=1)
+    print('When finished, remove the symmetry mates with the command rmsc')
 
 cmd.extend("sc211", sc211)
 
@@ -8818,12 +10958,12 @@ def sc212():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 2, , orange, supercell121, 1
     PYTHON CODE:
 def sc212():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 1, 2, , orange, supercell212, 1')
+    supercell(2, 1, 2, object=None, color='orange', name='supercell212', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 1, 2, , orange, supercell212, 1')
+    supercell(2, 1, 2, object=None, color='orange', name='supercell212', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc212", sc212)
 
 
@@ -8853,12 +10993,12 @@ def sc213():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 1, 3, , orange, supercell213, 1
     PYTHON CODE:
 def sc213():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    Savecmd.do('supercell 2, 1, 3, , orange, supercell213, 1')
+    supercell(2, 1, 3, object=None, color='orange', name='supercell213', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    Savecmd.do('supercell 2, 1, 3, , orange, supercell213, 1')
+    supercell(2, 1, 3, object=None, color='orange', name='supercell213', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc213", sc213)
 
 
@@ -8882,20 +11022,19 @@ def sc221():
 
    >>>  Edit file path in python code below
     VERTICAL PML SCRIPT:
-    run $HOME/Scripts/PyMOLScripts/supercell.py;
-    supercell 2, 2, 1, , orange, supercell221, 1
+    supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
+
     HORIZONTAL PML SCRIPT:
-    run $HOME/Scripts/PyMOLScripts/supercell.py;supercell 2, 2, 1, , orange, supercell221, 1
+    supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
+
     PYTHON CODE:
 def sc221():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
-
+    supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 2, 1, , orange, supercell221, 1')
-
+    supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc221", sc221)
 
 
@@ -8925,14 +11064,12 @@ def sc222():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 2, 2, , orange, supercell222, 1
     PYTHON CODE:
 def sc222():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
-
+    supercell(2, 2, 2, object=None, color='orange', name='supercell222', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 2, 2, , orange, supercell222, 1')
-
+    supercell(2, 2, 2, object=None, color='orange', name='supercell222', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc222", sc222)
 
 
@@ -8961,12 +11098,12 @@ def sc231():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 2, 3, 1, , orange, supercell231, 1
     PYTHON CODE:
 def sc231():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 3, 1, , orange, supercell231, 1')
+    supercell(2, 3, 1, object=None, color='orange', name='supercell231', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 2, 3, 1, , orange, supercell231, 1')
+    supercell(2, 3, 1, object=None, color='orange', name='supercell231', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc231", sc231)
 
 def sc311():
@@ -8994,12 +11131,12 @@ def sc311():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 1, , orange, supercell311, 1
     PYTHON CODE:
 def sc311():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 1, , orange, supercell311, 1')
+    supercell(3, 1, 1, object=None, color='orange', name='supercell311', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 1, , orange, supercell311, 1')
+    supercell(3, 1, 1, object=None, color='orange', name='supercell311', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc311", sc311)
 
 
@@ -9029,12 +11166,12 @@ def sc312():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 2, , orange, supercell312, 1
     PYTHON CODE:
 def sc312():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 2, , orange, supercell312, 1')
+    supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 2, , orange, supercell312, 1')
+    supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc312", sc312)
 
 def sc313():
@@ -9063,12 +11200,12 @@ def sc313():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 3, , orange, supercell313, 1
     PYTHON CODE:
 def sc313():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 3, , orange, supercell313, 1')
+    supercell(3, 1, 3, object=None, color='orange', name='supercell313', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 1, 3, , orange, supercell313, 1')
+    supercell(3, 1, 3, object=None, color='orange', name='supercell313', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc313", sc313)
 
 
@@ -9098,12 +11235,12 @@ def sc321():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 2, 1, , orange, supercell321, 1
     PYTHON CODE:
 def sc321():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 2, 1, , orange, supercell321, 1')
+    supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 2, 1, , orange, supercell321, 1')
+    supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc321", sc321)
 
 def sc331():
@@ -9132,12 +11269,12 @@ def sc331():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 3, 1, , orange, supercell331, 1
     PYTHON CODE:
 def sc331():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 3, 1, , orange, supercell331, 1')
+    supercell(3, 3, 1, object=None, color='orange', name='supercell331', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 3, 1, , orange, supercell331, 1')
+    supercell(3, 3, 1, object=None, color='orange', name='supercell331', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc331", sc331)
 
 
@@ -9167,12 +11304,12 @@ def sc333():
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 3, 3, , orange, supercell333, 1
     PYTHON CODE:
 def sc333():
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 3, 3, , orange, supercell333, 1')
+    supercell(3, 3, 3, object=None, color='orange', name='supercell333', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
     '''
 
-    cmd.do('run $HOME/Scripts/PyMOLScripts/supercell.py')
-    cmd.do('supercell 3, 3, 3, , orange, supercell333, 1')
+    supercell(3, 3, 3, object=None, color='orange', name='supercell333', withmates=1)
+    print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc333", sc333)
 
 
@@ -9990,6 +12127,146 @@ def spse(stemName="saved"):
     cmd.save(stemName+s+".pse") 
 cmd.extend('spse',spse)
 
+def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
+    ''' 
+    DESCRIPTION:
+    Get the view settings in a compact format on one line. Save to file with timestamp appended to the stem of the filename.
+
+
+    USAGE:
+    srv
+
+    Arguments:
+    [view, decimal_places, outname]
+Note that the values in the [] are optional.
+
+    EXAMPLE:
+    srv
+
+or 
+
+srv 1, 2, bestview
+
+    MORE DETAILS:
+    Get the view settings in a compact format on one line.
+    The default StoredView is "0", the current view.
+    You can get a stored view assigned to some
+     other digit with the view command) and rounds to two decimal
+     places (two digits to the right of the decimal point) the
+     18-element viewing matrix and rewrites the matrix elements
+     on a single line with no whitespaces and a semicolon at the
+     end. The saved space eases the making of a single line of
+     PyMOL commands separated by semicolons. A semicolon 
+     with nothing to the right of it at the end of a line of grouped commands
+     is harmless.
+
+            18 elements of the view settings (0-17)
+
+            0 - 8 = column-major 3x3 matrix. Rotates the model axes
+            to the camera axes. 
+
+            9 - 11 = origin of rotation relative to the camera
+            in camera space
+
+            12 - 14 = origin of rotation in model space
+
+            15 = front plane distance from the camera
+
+            16 = rear plane distance from the camera
+
+            17 = orthoscopic flag 
+            (not implemented in older versions)
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
+    #convert the commandline arguments from strings to integers
+
+    StoredView = int(StoredView)
+    decimal_places = int(decimal_places)
+
+    #call the get_view function
+
+    m = cmd.get_view(StoredView)
+
+
+    #Make a list of the elements in the orientation matrix.
+
+    myList = [m[0], m[1], m[2], m[3], m[4], m[5], m[6],m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14],m[15], m[16], m[17]]
+
+    #Round off the matrix elements to two decimal places (two fractional places)
+    #This rounding approach solved the problem of unwanted
+    #whitespaces when I tried using a string format statement
+
+    myRoundedList = [round(elem, decimal_places) for elem in myList]
+    
+    #x is the string template for the output. The whitespace is required
+    #between the "set_view" and "("
+
+    x = 'set_view ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},\
+{10},{11},{12},{13},{14},{15},{16},{17});'
+
+    #print to the external gui.
+    print(x.format(*myRoundedList))
+
+    #print 'set_view ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},\
+    #{10},{11},{12},{13},{14},{15},{16},{17})'.format(*myRoundedList)
+
+    #Write to a text file.
+    DT=datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT)
+    myFile = open(fileStemName+s+".txt", "a")
+    myFile.write(x.format(*myRoundedList) + "\n")
+    myFile.close()
+    return
+
+    '''
+
+    #convert the commandline arguments from strings to integers
+
+    StoredView = int(StoredView)
+    decimal_places = int(decimal_places)
+
+    #call the get_view function
+
+    m = cmd.get_view(StoredView)
+
+
+    #Make a list of the elements in the orientation matrix.
+
+    myList = [m[0], m[1], m[2], m[3], m[4], m[5], m[6],m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14],m[15], m[16], m[17]]
+
+    #Round off the matrix elements to two decimal places (two fractional places)
+    #This rounding approach solved the problem of unwanted
+    #whitespaces when I tried using a string format statement
+
+    myRoundedList = [round(elem, decimal_places) for elem in myList]
+    
+    #x is the string template for the output. The whitespace is required
+    #between the "set_view" and "("
+
+    x = 'set_view ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},\
+{10},{11},{12},{13},{14},{15},{16},{17});'
+
+    #print to the external gui.
+    print(x.format(*myRoundedList))
+
+    #print 'set_view ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},\
+    #{10},{11},{12},{13},{14},{15},{16},{17})'.format(*myRoundedList)
+
+    #Write to a text file.
+    DT=datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
+    s = str(DT)
+    myFile = open(fileStemName+s+".txt", "a")
+    myFile.write(x.format(*myRoundedList) + "\n")
+    myFile.close()
+    return
+
+cmd.extend("srv", srv)
+
 def ssdf(stemName="saved"):
     ''' 
     DESCRIPTION:
@@ -10052,17 +12329,172 @@ return
 
     PYTHON CODE:
 def st3(fileName="test.pml"):
-    subprocess.call(sublOpen);
-    return
-
+    try:
+        print("Opening the molecular graphics program sublime text.");
+        subprocess.check_output(sublOpen)
+        print("Success opening subl.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(sublOpen);
-    return
-
+    try:
+        print("Opening the molecular graphics program sublime text.");
+        subprocess.check_output(sublOpen)
+        print("Success opening subl.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('st3',st3)
+
+def supercell(a=1, b=1, c=1, object=None, color='blue', name='supercell', withmates=1):
+
+    ''' 
+    DESCRIPTION:
+      (c) 2010 Thomas Holder
+
+Generate symmetry mates to fill unit cell. 
+
+    USAGE:
+    supercell a, b, c [, object [, color [, name [, withmates]]]]
+
+    Arguments:
+    a, b, c = integer: repeat cell in x,y,z direction a,b,c times {default: 1,1,1}
+ 
+object = string: name of object to take cell definition from
+ 
+color = string: color of cell {default: blue}
+ 
+name = string: name of the cgo object to create {default: supercell}
+ 
+withmates = bool: also create symmetry mates in displayed cells {default: 1}
+
+    EXAMPLE:
+    NA
+
+    MORE DETAILS:
+    (c) 2010 Thomas Holder
+
+GNU Free Documentation License 1.2
+
+Draw a supercell, as requested by Nicolas Bock on the pymol-users
+mailing list (Subject: [PyMOL] feature request: supercell construction
+Date: 04/12/2010 10:12:17 PM (Mon, 12 Apr 2010 14:12:17 -0600))
+
+source: https://pymolwiki.org/index.php/Supercell
+
+Calls two other functions: cellbasis and symexpcell.
+Both of these functions are also in this collection.
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def supercell(a=1, b=1, c=1, object=None, color='blue', name='supercell', withmates=1):
+
+    if object is None:
+        object = cmd.get_object_list()[0]
+    withmates = int(withmates)
+    sym = cmd.get_symmetry(object)
+    cell_edges = sym[0:3]
+    cell_angles = sym[3:6]
+ 
+    basis = cellbasis(cell_angles, cell_edges)
+    assert isinstance(basis, numpy.ndarray)
+ 
+    ts = list()
+    for i in range(int(a)):
+        for j in range(int(b)):
+            for k in range(int(c)):
+                ts.append([i,j,k])
+    obj = [
+            cgo.BEGIN,
+            cgo.LINES,
+            cgo.COLOR,
+    ]
+    obj.extend(cmd.get_color_tuple(color))
+ 
+    for t in ts:
+        shift = basis[0:3,0:3] * t
+        shift = shift[:,0] + shift[:,1] + shift[:,2]
+ 
+        for i in range(3):
+            vi = basis[0:3,i]
+            vj = [
+                numpy.array([0.,0.,0.]),
+                basis[0:3,(i+1)%3],
+                basis[0:3,(i+2)%3],
+                basis[0:3,(i+1)%3] + basis[0:3,(i+2)%3]
+                ]
+            for j in range(4):
+                obj.append(cgo.VERTEX)
+                obj.extend((shift + vj[j]).tolist())
+                obj.append(cgo.VERTEX)
+                obj.extend((shift + vj[j] + vi).tolist())
+ 
+        if withmates:
+            symexpcell('m%d%d%d_' % tuple(t), object, *t)
+ 
+    obj.append(cgo.END)
+    cmd.delete(name)
+    cmd.load_cgo(obj, name)
+
+    '''
+
+    if object is None:
+        object = cmd.get_object_list()[0]
+    withmates = int(withmates)
+    sym = cmd.get_symmetry(object)
+    cell_edges = sym[0:3]
+    cell_angles = sym[3:6]
+ 
+    basis = cellbasis(cell_angles, cell_edges)
+    assert isinstance(basis, numpy.ndarray)
+ 
+    ts = list()
+    for i in range(int(a)):
+        for j in range(int(b)):
+            for k in range(int(c)):
+                ts.append([i,j,k])
+    obj = [
+            cgo.BEGIN,
+            cgo.LINES,
+            cgo.COLOR,
+    ]
+    obj.extend(cmd.get_color_tuple(color))
+ 
+    for t in ts:
+        shift = basis[0:3,0:3] * t
+        shift = shift[:,0] + shift[:,1] + shift[:,2]
+ 
+        for i in range(3):
+            vi = basis[0:3,i]
+            vj = [
+                numpy.array([0.,0.,0.]),
+                basis[0:3,(i+1)%3],
+                basis[0:3,(i+2)%3],
+                basis[0:3,(i+1)%3] + basis[0:3,(i+2)%3]
+                ]
+            for j in range(4):
+                obj.append(cgo.VERTEX)
+                obj.extend((shift + vj[j]).tolist())
+                obj.append(cgo.VERTEX)
+                obj.extend((shift + vj[j] + vi).tolist())
+ 
+        if withmates:
+            symexpcell('m%d%d%d_' % tuple(t), object, *t)
+ 
+    obj.append(cgo.END)
+    cmd.delete(name)
+    cmd.load_cgo(obj, name)
+
+cmd.extend('supercell', supercell)
 
 def swrl(stemName="saved"):
     ''' 
@@ -10098,6 +12530,120 @@ def swrl(stemName="saved"):
     s = str(DT)
     cmd.save(stemName+s+".wrl") 
 cmd.extend('swrlf',swrl)
+
+def symexpcell(prefix='mate', object=None, a=0, b=0, c=0):
+    ''' 
+    DESCRIPTION:
+      (c) 2010 Thomas Holder
+
+Creates all symmetry-related objects for the specified object that occur with their bounding box center within the unit cell.
+
+
+
+    USAGE:
+    symexpcell prefix, object, [a, b, c]
+
+    Arguments:
+    prefix = string: prefix of new objects
+
+object = string: object for which to create symmetry mates
+
+a, b, c = integer: create neighboring cell {default: 0,0,0}
+
+    EXAMPLE:
+    NA
+
+    MORE DETAILS:
+    (c) 2010 Thomas Holder
+
+
+Creates all symmetry-related objects for the specified object that occur with their bounding box center within the unit cell.
+
+Used by the function supercell.
+
+Also see symexp, http://www.pymolwiki.org/index.php/SuperSym.
+
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def symexpcell(prefix='mate', object=None, a=0, b=0, c=0):
+    if object is None:
+        object = cmd.get_object_list()[0]
+
+    sym = cmd.get_symmetry(object)
+    cell_edges = sym[0:3]
+    cell_angles = sym[3:6]
+    spacegroup = sym[6]
+
+    basis = cellbasis(cell_angles, cell_edges)
+    basis = numpy.matrix(basis)
+
+    extent = cmd.get_extent(object)
+    center = sum(numpy.array(extent)) * 0.5
+    center = numpy.matrix(center.tolist() + [1.0]).T
+    center_cell = basis.I * center
+
+    extra_shift = [[float(i)] for i in (a,b,c)]
+
+    i = 0
+    matrices = xray.sg_sym_to_mat_list(spacegroup)
+    for mat in matrices:
+        i += 1
+
+        mat = numpy.matrix(mat)
+        shift = numpy.floor(mat * center_cell)
+        mat[0:3,3] -= shift[0:3,0]
+        mat[0:3,3] += extra_shift
+
+        mat = basis * mat * basis.I
+        mat_list = list(mat.flat)
+
+        name = '%s%d' % (prefix, i)
+        cmd.create(name, object)
+        cmd.transform_object(name, mat_list, 0)
+        cmd.color(i+1, name)
+    '''
+
+    if object is None:
+        object = cmd.get_object_list()[0]
+
+    sym = cmd.get_symmetry(object)
+    cell_edges = sym[0:3]
+    cell_angles = sym[3:6]
+    spacegroup = sym[6]
+
+    basis = cellbasis(cell_angles, cell_edges)
+    basis = numpy.matrix(basis)
+
+    extent = cmd.get_extent(object)
+    center = sum(numpy.array(extent)) * 0.5
+    center = numpy.matrix(center.tolist() + [1.0]).T
+    center_cell = basis.I * center
+
+    extra_shift = [[float(i)] for i in (a,b,c)]
+
+    i = 0
+    matrices = xray.sg_sym_to_mat_list(spacegroup)
+    for mat in matrices:
+        i += 1
+
+        mat = numpy.matrix(mat)
+        shift = numpy.floor(mat * center_cell)
+        mat[0:3,3] -= shift[0:3,0]
+        mat[0:3,3] += extra_shift
+
+        mat = basis * mat * basis.I
+        mat_list = list(mat.flat)
+
+        name = '%s%d' % (prefix, i)
+        cmd.create(name, object)
+        cmd.transform_object(name, mat_list, 0)
+        cmd.color(i+1, name)
+cmd.extend('symexpcell', symexpcell)
+
 
 def term():
     ''' 
@@ -10575,13 +13121,27 @@ def vim(fileName="test.pml"):
 
     PYTHON CODE:
 def vim(fileName="test.pml"):
-    subprocess.call(vimCommand)
-    return
+    try:
+        print("Opening the molecular graphics program vim.");
+        subprocess.check_output(sublOpen)
+        print("Success opening vim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the vimopen'. \n  Or use 'vimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(vimCommand)
-    return
+    try:
+        print("Opening the molecular graphics program vim.");
+        subprocess.check_output(sublOpen)
+        print("Success opening vim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the vimopen'. \n  Or use 'vimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('vim',vim)
 
@@ -10611,13 +13171,27 @@ return
     subprocess.call(vmdOpen);return
     PYTHON CODE:
 def vmd():
-    subprocess.call(vmdOpen)
-    return
+    try:
+        print("Opening the molecular graphics program VMD.");
+        subprocess.check_output(vmdOpen)
+        print("Success opening VMD.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'vmdOpen'. \n  Or use 'vmdPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
     '''
 
-    subprocess.call(vmdOpen)
-    return
+    try:
+        print("Opening the molecular graphics program VMD.");
+        subprocess.check_output(vmdOpen)
+        print("Success opening VMD.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'vmdOpen'. \n  Or use 'vmdPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('vmd',vmd)
 
@@ -10678,6 +13252,43 @@ def webmail():
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
 cmd.extend('webmail',webmail)
 
+def word():
+    ''' 
+    DESCRIPTION:
+    Open word from within PyMOL.
+
+    USAGE:
+    word
+
+    Arguments:
+    None
+    EXAMPLE:
+    word paper.docx
+
+    MORE DETAILS:
+    Open MS Word from within PyMOL. 
+    Adjust file path to MS Word on your computer.
+	
+
+    VERTICAL PML SCRIPT:
+    subprocess.call(wordOpen);
+return
+
+    HORIZONTAL PML SCRIPT:
+    subprocess.call(wordOpen);return
+
+    PYTHON CODE:
+def word():
+    subprocess.call(wordOpen)
+    return
+
+    '''
+
+    subprocess.call(wordOpen)
+    return
+
+cmd.extend('word',word)
+
 def x11():
     ''' 
     DESCRIPTION:
@@ -10706,7 +13317,7 @@ def x11():
 
     subprocess.call(x11Open);
     return
-cmd.extension('x11',x11)
+cmd.extend('x11',x11)
 
 def yasara(fileName="test.pml"):
     ''' 
@@ -10735,14 +13346,26 @@ return
 
     PYTHON CODE:
 def yasara(fileName="test.pml"):
-    subprocess.call(yasaraOpen)
-    return
-
+    try:
+        print("Opening the molecular graphics program Yasara.");
+        subprocess.check_output(yasaraOpen)
+        print("Success opening Yasara.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'yasaraOpen'. \n  Or use 'yasaraPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
     '''
 
-    subprocess.call(yasaraOpen)
-    return
-
+    try:
+        print("Opening the molecular graphics program Yasara.");
+        subprocess.check_output(yasaraOpen)
+        print("Success opening Yasara.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'yasaraOpen'. \n  Or use 'yasaraPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 cmd.extend('yasara',yasara)
 
 def yrb(selection='all'):

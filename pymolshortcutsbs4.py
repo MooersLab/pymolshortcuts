@@ -156,12 +156,6 @@ __status__ = "Production"
 
 cmd.set('ray_opaque_background','on')
 
-##################################  Edit PATHS to local directories of files ###############################################
-# $HOME/ is the user's main directory: /Users/username or /home/username. r'$HOME' is equivalent to ~. 
-localPDBfilePath = r'$HOME/pdbFiles/'
-localEMAPfilePath = r'$HOME/emapFiles/'
-localHKLfilePath = r'$HOME/hklFiles/'
-
 AppPaths='''You may have to edit the file paths to your applications around line XXX in pymolshortcut.py.'''
 print(AppPaths)
 
@@ -180,257 +174,56 @@ print(AppPaths)
 ##################################  PATHS to Applications ###############################################
 
 # Data analysis
-DBBrowserSQLiteOpen = ['open','-a','DBBrowserForSQLite']
 DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.app/Contents/MacOS/DB\ Browser\ for\ SQLite'
-excelOpen = ['open','-a','Microsoft Excel']
-excelPath = r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
-jabrefOpen = ['open','-a','JabRef.app'] '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
-jabrefPath = r'/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
-jaspOpen = ['open','-a','JASP.app']
-jaspPath = r'Applications/JASP.app/Contents/MacOS/JASP'
-jmpOpen = ['open','-a','JMP Pro 14.app']
-jmpPath = r'/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
-juliaOpen = ['open','-a','Julia-1.2.app']
-juliaPath = r'/Applications/Julia-1.2.app/Contents/MacOS/applet'
-jupyterPath = r'/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
-Rpath = r'/usr/local/bin/R'
-ROpen = ['open','-a','R'] 
-RstudioOpen = ['open','-a','RStudio'] 
-RstudioPath = r'/Applications/RStudio.app/Contents/MacOS/Rstudio'
+excelPath = '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
+jabrefPath = '/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+jaspPath = 'Applications/JASP.app/Contents/MacOS/JASP'
+jmpPath = '/Applications/JMP\ Pro\ 14.app/Contents/MacOS/JMP'
+juliaPath = '/Applications/Julia-1.2.app/Contents/MacOS/applet'
+jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
+RstudioPath = '/Applications/RStudio.app/Contents/MacOS/Rstudio'
 
+
+# Local files 
+localPDBfilePath = '$HOME/pdbFiles/'
+localEMAPfilePath = '$HOME/emapFiles/'
+localHKLfilePath = '$HOME/hklFiles/'
 
 # Image manipulation programs
-gimp = r'/usr/local/bin/gimp'
-inkscapePath = r'/opt/local/bin/inkscape'
-pptOpen = ['open','-a','Microsoft PowerPoint']
-pptPath =  r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
+gimp = '/usr/local/bin/gimp'
+inkscape = '/opt/local/bin/inkscape'
+pptPath =  '/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
 
 
 # Molecular graphics programs
-ccp4mgPath = r'/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
-chimeraOpen = ['open','-a','Chimera.app']
-chimeraPath = r'/Applications/Chimera.app/Contents/MacOS/chimera'
+ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
+chimeraPath = '/Applications/Chimera.app/Contents/MacOS/chimera'
 cootPath = '/usr/local/bin/coot'
 jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
-yasaraOpen = ['open','-a','YASARA.app']
-yasaraPath = r'/Applications/YASARA.app/Contents/MacOS/yasara.app'
-vmdOpen = ['open','-a','VMD194.app']
-vmdPath = r'/Applications/VMD194.app/Contents/MacOS/startup.command'
+yasaraPath = '/Applications/YASARA.app/Contents/MacOS/yasara.app'
+vmdPath = '/Applications/VMD194.app/Contents/MacOS/startup.command'
 
 # Text editors
-atomOpen = ['open','-a','atom']
-atomPath = r'/usr/local/bin/atom'
-atomStart = ['start','atom']
-bbeditOpen = ['open','-a','bbedit']
-bbeditPath = r'/usr/local/bin/bbedit'
-codeOpen = ['open','-a','code']
-codePath = r'/usr/local/bin/code'
-codeStart = ['start','code']
-emacsOpen = ['open','-a','emacs']
-emacsPath = r'/opt/local/bin/emacs'
-geditOpen = ['open','-a','gedit2.30.2.app']
-geditPath = r'/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
-jeditOpen = ['open','-a','jEdit.app']
-jeditPath = r'/Applications/jEdit.app/Contents/MacOS/jedit'
-neovimPath = r'/Users/blaine/software/nvim-osx64/bin/nvim'
-nppOpen = ['open','-a','Notepad++.app']
-nppPath = r'/Applications/Notepad++.app/Contents/MacOS/startwine'
-oniOpen = ['open','-a','Oni.app']
-oniPath = r'/Applications/Oni.app/Contents/MacOS/Oni'
-pdbedPath = r'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
-sublOpen = ['open','-a','subl']
-sublimeText3Path = r'/usr/local/bin/subl'
-textmatePath  = r'/usr/local/bin/mate'
-textmateOpen = ['open','-a','mate']
-vimPath = r'/opt/local/bin/vim'
-
-
-#Terminals
-itermOpen = ['open','-a','iTerm.app','-n','"`pwd`"']
-terminalOpen = ['open','-a','Terminal','-n','"`pwd`"']
-x11Open = ['open','-a','XQuartz','-n','"`pwd`"']
+atomPath = '/usr/local/bin/atom'
+bbeditPath = '/usr/local/bin/bbedit'
+codePath = '/usr/local/bin/code'
+emacsPath = '/opt/local/bin/emacs'
+geditPath = '/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
+jeditPath = '/Applications/jEdit.app/Contents/MacOS/jedit'
+notepadppPath = '/Applications/Notepad++.app/Contents/MacOS/startwine'
+neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
+oniPath = '/Applications/Oni.app/Contents/MacOS/Oni'
+pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+sublimeText3Path = '/usr/local/bin/subl'
+textmatePath  = '/usr/local/bin/mate'
+vimPath = '/opt/local/bin/vim'
 
 # Web sites 
 gcalPath = 'open -a Safari.app https://calendar.google.com/calendar/r'
 gmailPath = 'open -a Safari.app https://mail.google.com/mail/u/0/#inbox'
 webmailPath = 'open -a Safari.app https://webmail.ouhsc.edu'
-weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'
-
-#wordProcessor
-wordOpen = ['open','-a','Microsoft Word.app']
-
-# ##################################  Linux run commands and PATHS to Applications ###############################################
-#
-# # Data analysis
-# DBBrowserSQLiteStart = ['DBBrowserForSQLite']
-# DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite/Contents/MacOS/DB\ Browser\ for\ SQLite'
-# excelOpen = ['Microsoft Excel']
-# excelPath = '/Applications/Microsoft\ Excel/Contents/MacOS/Microsoft\ Excel'
-# jabrefOpen = ['JabRef'] '/Applications/JabRef/Contents/MacOS/JavaApplicationStub'
-# jabrefPath = '/Applications/JabRef/Contents/MacOS/JavaApplicationStub'
-# jaspOpen = ['JASP']
-# jaspPath = 'Applications/JASP/Contents/MacOS/JASP'
-# jmpOpen = ['JMP Pro 14']
-# jmpPath = '/Applications/JMP\ Pro\ 14/Contents/MacOS/JMP'
-# juliaOpen = ['Julia-1.2']
-# juliaPath = '/Applications/Julia-1.2/Contents/MacOS/applet'
-# jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
-# RstudioPathOpen = ['RStudio']
-# RstudioPath = '/Applications/RStudio/Contents/MacOS/Rstudio'
-#
-#
-# # Local files
-# localPDBfilePath = '$HOME/pdbFiles/'
-# localEMAPfilePath = '$HOME/emapFiles/'
-# localHKLfilePath = '$HOME/hklFiles/'
-#
-# # Image manipulation programs
-# gimp = '/usr/local/bin/gimp'
-# inkscapePath = '/opt/local/bin/inkscape'
-# pptOpen = ['Microsoft PowerPoint']
-# pptPath =  '/Applications/Microsoft\ Excel/Contents/MacOS/Microsoft\ PowerPoint'
-#
-#
-# # Molecular graphics programs
-# ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2/Contents/MacOS/ccp4mg'
-# chimeraOpen = ['Chimera']
-# chimeraPath = '/Applications/Chimera/Contents/MacOS/chimera'
-# cootPath = '/usr/local/bin/coot'
-# jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
-# yasaraOpen = ['YASARA']
-# yasaraPath = '/Applications/YASARA/Contents/MacOS/yasara'
-# vmdOpen = ['VMD194']
-# vmdPath = '/Applications/VMD194/Contents/MacOS/startup.command'
-#
-#
-# # Text editors
-# atomOpen = ['atom']
-# atomPath = '/usr/local/bin/atom'
-# atomStart = ['start','atom']
-# codeOpen = ['code']
-# codePath = '/usr/local/bin/code'
-# emacsOpen = ['emacs']
-# emacsPath = '/opt/local/bin/emacs'
-# geditOpen = ['gedit2.30.2']
-# geditPath = '/Applications/gedit2.30.2/Contents/MacOS/gedit'
-# jeditOpen = ['jEdit']
-# jeditPath = '/Applications/jEdit/Contents/MacOS/jedit'
-# neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
-# nppOpen = ['Notepad++']
-# nppPath = '/Applications/Notepad++/Contents/MacOS/startwine'
-# oniOpen = ['Oni']
-# oniPath = '/Applications/Oni/Contents/MacOS/Oni'
-# pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
-# sublOpen = ['subl']
-# sublimeText3Path = '/usr/local/bin/subl'
-# textmatePath  = '/usr/local/bin/mate'
-# textmateOpen = ['mate']
-# vimPath = '/opt/local/bin/vim'
-#
-#
-# #Terminals
-# itermOpen = ['iTerm','-n','"`pwd`"']
-# terminalOpen = ['Terminal','-n','"`pwd`"']
-# x11termOpen = ['XQuartz','-n','"`pwd`"']
-#
-#
-# # Web sites
-# gcalPath = 'firefox https://calendar.google.com/calendar/r'
-# gmailPath = 'firefox https://mail.google.com/mail/u/0/#inbox'
-# webmailPath = 'firefox https://webmail.ouhsc.edu'
-# weatherServicePath = 'firefox https://radar.weather.gov/radar.php?rid=TLX'
-#
-#
-# wordProcessor
-# wordOpen = ['open','-a','Microsoft Word']
-#
-
-
-
-
-# ###################### Windows Start Commands and PATHS to Applications###########################
-#
-# # Data analysis
-# DBBrowserSQLiteStart = ['start','DBBrowserForSQLite']
-# DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.exe/Contents/MacOS/DB\ Browser\ for\ SQLite'
-# excelStart = ['start','Microsoft Excel']
-# excelPath = '/Applications/Microsoft\ Excel.exe/Contents/MacOS/Microsoft\ Excel'
-# jabrefStart = ['start','JabRef.exe'] '/Applications/JabRef.exe/Contents/MacOS/JavaApplicationStub'
-# jabrefPath = '/Applications/JabRef.exe/Contents/MacOS/JavaApplicationStub'
-# jaspStart = ['start','JASP.exe']
-# jaspPath = 'Applications/JASP.exe/Contents/MacOS/JASP'
-# jmpStart = ['start','JMP Pro 14.exe']
-# jmpPath = '/Applications/JMP\ Pro\ 14.exe/Contents/MacOS/JMP'
-# juliaStart = ['start','Julia-1.2.exe']
-# juliaPath = '/Applications/Julia-1.2.exe/Contents/MacOS/applet'
-# jupyterPath = '/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
-# RstudioPathStart = ['start','RStudio']
-# RstudioPath = '/Applications/RStudio.exe/Contents/MacOS/Rstudio'
-#
-#
-# # Local files
-# localPDBfilePath = '$HOME/pdbFiles/'
-# localEMAPfilePath = '$HOME/emapFiles/'
-# localHKLfilePath = '$HOME/hklFiles/'
-#
-# # Image manipulation programs
-# gimp = '/usr/local/bin/gimp'
-# inkscapePath = '/opt/local/bin/inkscape'
-# pptStart = ['start','Microsoft PowerPoint']
-# pptPath =  '/Applications/Microsoft\ Excel.exe/Contents/MacOS/Microsoft\ PowerPoint'
-#
-#
-# # Molecular graphics programs
-# ccp4mgPath = '/Applications/ccp4-7.0/ccp4i2.exe/Contents/MacOS/ccp4mg'
-# chimeraStart = ['start','Chimera.exe']
-# chimeraPath = '/Applications/Chimera.exe/Contents/MacOS/chimera'
-# cootPath = '/usr/local/bin/coot'
-# jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
-# yasaraStart = ['start','YASARA.exe']
-# yasaraPath = '/Applications/YASARA.exe/Contents/MacOS/yasara.exe'
-# vmdStart = ['start','VMD194.exe']
-# vmdPath = '/Applications/VMD194.exe/Contents/MacOS/startup.command'
-#
-# # Text editors
-# atomStart = ['start','atom']
-# atomPath = '/usr/local/bin/atom'
-# atomStart = ['start','atom']
-# codeStart = ['start','code']
-# codePath = '/usr/local/bin/code'
-# codeStart = ['start','code']
-# emacsStart = ['start','emacs']
-# emacsPath = '/opt/local/bin/emacs'
-# geditStart = ['start','gedit2.30.2.exe']
-# geditPath = '/Applications/gedit2.30.2.exe/Contents/MacOS/gedit'
-# jeditStart = ['start','jEdit.exe']
-# jeditPath = '/Applications/jEdit.exe/Contents/MacOS/jedit'
-# neovimPath = '/Users/blaine/software/nvim-osx64/bin/nvim'
-# nppStart = ['start','Notepad++.exe']
-# nppPath = '/Applications/Notepad++.exe/Contents/MacOS/startwine'
-# oniStart = ['start','Oni.exe']
-# oniPath = '/Applications/Oni.exe/Contents/MacOS/Oni'
-# pdbedPath = 'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
-# sublStart = ['start','subl']
-# sublimeText3Path = '/usr/local/bin/subl'
-# textmatePath  = '/usr/local/bin/mate'
-# textmateStart = ['start','mate']
-# vimPath = '/opt/local/bin/vim'
-#
-#
-# #Terminals
-# itermStart = ['start','iTerm.exe','-n','"`pwd`"']
-# terminalStart = ['start','Terminal','-n','"`pwd`"']
-# x11termStart = ['start','XQuartz','-n','"`pwd`"']
-#
-# # Web sites
-# gcalPath = 'open -a Safari.exe https://calendar.google.com/calendar/r'
-# gmailPath = 'open -a Safari.exe https://mail.google.com/mail/u/0/#inbox'
-# webmailPath = 'open -a Safari.exe https://webmail.ouhsc.edu'
-# weatherServicePath = 'open -a Safari.exe https://radar.weather.gov/radar.php?rid=TLX'
-#
-# #wordProcessor
-# wordStart = ['start','Microsoft Word.exe']
-
+weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'   
+ 
 ########################################################################################################
 def AB(searchTerm="pymol"):
     ''' 
@@ -2786,12 +2579,14 @@ def JASP():
 
     PYTHON CODE:
 
-    subprocess.call(jaspOpen)
+    arg = jaspPath
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(jaspOpen)
+    arg = jaspPath
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('JASP',JASP)
@@ -2890,12 +2685,14 @@ def JMP():
 
     PYTHON CODE:
 
-    subprocess.call(jmpOpen)
+    arg = jmpPath
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(jmpOpen)
+    arg = jmpPath
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('JMP',JMP)
@@ -3033,7 +2830,7 @@ def LBST():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4pco.pdb')
+    cmd.load('4pco.pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -3065,7 +2862,7 @@ def LBST():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4pco.pdb')
+    cmd.load('4pco.pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -3340,7 +3137,7 @@ def LGGT():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4gdx.pdb')
+    cmd.load('4gdx.pdb')
     cmd.remove('name H*')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -3361,7 +3158,7 @@ def LGGT():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4gdx.pdb')
+    cmd.load('4gdx.pdb')
     cmd.remove('name H*')
     cmd.show_as('cartoon')
     cmd.bg_color('white')
@@ -3456,7 +3253,7 @@ def LGU():
     PYTHON CODE:
 
     cmd.reinitialize();
-    cmd.load(localPDBfilePath + '4PCO.pdb')
+    cmd.load('4PCO.pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -3485,7 +3282,7 @@ def LGU():
     '''
 
     cmd.reinitialize();
-    cmd.load(localPDBfilePath + '4PCO.pdb')
+    cmd.load('4PCO.pdb')
     cmd.hide('everything')
     cmd.bg_color('white')
     cmd.cartoon('oval')
@@ -3607,7 +3404,7 @@ def LLG():
 
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.load(localEMAPfilePath + '4dgr2FoFc.ccp4')
+    cmd.load('4dgr2FoFc.ccp4')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3649,7 +3446,7 @@ def LLG():
 
     cmd.reinitialize()
     cmd.load('4dgr.pdb')
-    cmd.load(localEMAPfilePath + '4dgr2FoFc.ccp4')
+    cmd.load('4dgr2FoFc.ccp4')
     cmd.select('LongGlycan', 'resi 469:477')
     cmd.orient('LongGlycan')
     cmd.remove('not LongGlycan')
@@ -3758,7 +3555,7 @@ def LN9():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4dgr.pdb')
+    cmd.load('4dgr.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
@@ -3775,7 +3572,7 @@ def LN9():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '4dgr.pdb')
+    cmd.load('4dgr.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 4dgr')
     cmd.show_as('cartoon')
@@ -3913,7 +3710,7 @@ def LNA():
 
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.load(localPDBfilePath + '3nd4.pdb');
+    cmd.load('3nd4.pdb');
     cmd.hide('cartoon');
     cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4');
@@ -3978,7 +3775,7 @@ def LNA():
 
     cmd.reinitialize();
     cmd.viewport('900','600');
-    cmd.load(localPDBfilePath + '3nd4.pdb');
+    cmd.load('3nd4.pdb');
     cmd.hide('cartoon');
     cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4');
@@ -4100,7 +3897,7 @@ def LT4L():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3fa0.pdb')
+    cmd.load('3fa0.pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -4118,7 +3915,7 @@ def LT4L():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3fa0.pdb')
+    cmd.load('3fa0.pdb')
     cmd.orient()
     cmd.turn('z', '-90')
     cmd.turn('y', '-5')
@@ -4195,7 +3992,7 @@ def LU8():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3nd3.pdb')
+    cmd.load('3nd3.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
@@ -4213,7 +4010,7 @@ def LU8():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3nd3.pdb')
+    cmd.load('3nd3.pdb')
     #cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd3')
     cmd.hide('everything')
@@ -4290,7 +4087,7 @@ def LWC8():
     PYTHON CODE:
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3nd4.pdb')
+    cmd.load('3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
     cmd.do('run $HOME/mg18OU/quat.py')
@@ -4308,7 +4105,7 @@ def LWC8():
     '''
 
     cmd.reinitialize()
-    cmd.load(localPDBfilePath + '3nd4.pdb')
+    cmd.load('3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
     cmd.do('run $HOME/mg18OU/quat.py')
@@ -5575,59 +5372,6 @@ def RS():
 cmd.extend('RS',RS)
 
 
-def RStudio():
-    ''' 
-    DESCRIPTION:
-
-    Open Rstudio GUI.
-
-
-    USAGE:
-
-    RStudio
-
-
-    Arguments:
-
-    None
-
-
-    EXAMPLE:
-
-    subprocess.call(RStudioOpen); return      
-
-
-    MORE DETAILS:
-
-    Open RStudio from within PyMOL.
-
-
-
-    VERTICAL PML SCRIPT:
-
-    subprocess.call(RStudioOpen); 
-return   
-
-
-
-    HORIZONTAL PML SCRIPT:
-
-    subprocess.call(RStudioOpen); return
-
-
-    PYTHON CODE:
-
-    subprocess.call(RStudioOpen)
-    return
-
-    '''
-
-    subprocess.call(RStudioOpen)
-    return
-
-cmd.extend('RStudio',RStudio)
-
-
 def SAXS():
     ''' 
     DESCRIPTION:
@@ -6822,34 +6566,36 @@ def atom(fileName="test.pml"):
 
     EXAMPLE:
 
-    atom
+    atom script.pml
 
 
     MORE DETAILS:
 
-    Open the text editor Atom from within PyMOL. 
+    Open the text editor Atom from within PyMOL. Adjust the path to Atom as needed for your system.
+     
+    >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(atomOpen);
-return
-
+     Open file with the text editor Atom from within PyMOL. Adjust the path as needed for your system.
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(atomOpen);return
+    arg = ("/usr/local/bin/atom " + fileName)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(atomOpen)
+    arg = ("/usr/local/bin/atom " + fileName)
+    subprocess.call(arg,shell=True)
     return
     '''
 
-    subprocess.call(atomOpen)
+    arg = ("/usr/local/bin/atom " + fileName)
+    subprocess.call(arg,shell=True)
     return
 cmd.extend('atom',atom)
 
@@ -6873,36 +6619,40 @@ def bbedit(fileName="test.pml"):
 
     EXAMPLE:
 
-    bbedit
+    bbedit script.pml
 
 
     MORE DETAILS:
 
     Open file with the text editor bbedit from within PyMOL. 
     Adjust the path as needed for your system.
-    Only available for Mac OS.
+    Only available for the Mac OS.
 
+    >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(bbeditOpen);
-return
+    arg = (bbeditPath + fileName)
+    subprocess.call(arg,shell=True)
+
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(bbeditOpen);return
+    arg = (bbeditPath + fileName); subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(bbeditOpen)
+    arg = (bbeditPath + fileName)
+    subprocess.call(arg,shell=True)
     return
     '''
 
-    subprocess.call(bbeditOpen)
+    arg = (bbeditPath + fileName)
+    subprocess.call(arg,shell=True)
     return
 cmd.extend('bbedit',bbedit)
 
@@ -7340,24 +7090,28 @@ def chimera(fileName="test.pdb"):
 
     VERTICAL PML SCRIPT:
 
-        subprocess.call(chimeraOpen)
+    arg = (chimeriaPath + fileName);
+    subprocess.call(arg,shell=True);
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(chimeraOpen);return
+    arg = (chimeriaPath + fileName);subprocess.call(arg,shell=True);return
+
 
 
     PYTHON CODE:
 
-    subprocess.call(chimeraOpen)
+    arg = (chimeriaPath+ fileName)
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(chimeraOpen)
+    arg = (chimeriaPath+ fileName)
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('chimera',chimera)
@@ -7611,38 +7365,41 @@ def cranR():
 
     EXAMPLE:
 
-    ROpen   
+    cranR script.R
 
 
     MORE DETAILS:
 
     Open Cran R from within PyMOL.
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(ROpen); 
-return      
+    arg = (RPath);
+    subprocess.call(arg,shell=True);
+    return
+
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(ROpen); return      
+    arg = (RPath);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(ROpen)
+    arg = (RPath)
+    subprocess.call(arg,shell=True)
     return
-
 
     '''
 
-    subprocess.call(ROpen)
+    arg = (RPath)
+    subprocess.call(arg,shell=True)
     return
-
 
 cmd.extend('cranR',cranR)
 
@@ -7691,16 +7448,18 @@ def ddb():
 
     PYTHON CODE:
 
-    subprocess.call(DBBrowserSQLiteOpen);
+    arg = dbbrowserPath;
+    subprocess.call(arg,shell=True);
     return
     '''
 
-    subprocess.call(DBBrowserSQLiteOpen);
+    arg = dbbrowserPath;
+    subprocess.call(arg,shell=True);
     return
 cmd.extend('ddb',ddb)
 
 
-def emacs():
+def emacs(fileName="testme.pml"):
     ''' 
     DESCRIPTION:
 
@@ -7719,7 +7478,7 @@ def emacs():
 
     EXAMPLE:
 
-    emacs
+    emacs script.pml
 
 
     MORE DETAILS:
@@ -7727,26 +7486,32 @@ def emacs():
     Open file with emacs from within PyMOL. 
     Adjust path to emacs on your computer as needed.
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(emacsOpen);
-return
+    arg2 = ('--file ' + fileName);
+    subprocess.call(emacsCommand)
+
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(emacsOpen);return
+    arg2 = ('--file ' + fileName);subprocess.call(emacsCommand)
 
 
     PYTHON CODE:
 
-    subprocess.call(emacsOpen)
+    arg = (emacsPath+ fileName)
+    arg2 = ('--file ' + fileName)
+    subprocess.call(emacsCommand)
     return
     '''
 
-    subprocess.call(emacsOpen)
+    arg = (emacsPath+ fileName)
+    arg2 = ('--file ' + fileName)
+    subprocess.call(emacsCommand)
     return
 cmd.extend('emacs',emacs)
 
@@ -7796,12 +7561,14 @@ def excel():
 
     PYTHON CODE:
 
-    subprocess.call(excelOpen)
+    arg = excelCommand
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(excelOpen)
+    arg = excelCommand
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('excel',excel)
@@ -7874,37 +7641,40 @@ def gedit(fileName="test.pml"):
 
     EXAMPLE:
 
-    gedit
+    gedit script.pml
 
 
     MORE DETAILS:
 
     Open file with gedit from within PyMOL. 
     Adjust the filepath for location of your executable.
-    Can be installed via macports on Mac OS.
+    Can be installed via macports on the mac.
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(emacsOpen)
-return
+    arg = (geditPath +" -w " + fileName);
+    subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(geditOpen);return
+    arg = ( geditPath + " -w " + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(geditOpen)
+    arg = (geditPath + " -w " + fileName)
+    subprocess.call(arg,shell=True)
     return
     '''
 
-    subprocess.call(geditOpen)
+    arg = (geditPath + " -w " + fileName)
+    subprocess.call(arg,shell=True)
     return
 cmd.extend('gedit',gedit)
 
@@ -8298,29 +8068,30 @@ def iterm():
 
     Open iTerm2 window on MacOS. 
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(itermOpen);
+    subprocess.call(itermCommand);
     return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(itermOpen);return
+    subprocess.call(itermPath);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(itermOpen)
+    subprocess.call(itermPath)
     return
 
     '''
 
-    subprocess.call(itermOpen)
+    subprocess.call(itermPath)
     return
 
 cmd.extend('iterm',iterm)
@@ -8371,12 +8142,14 @@ def jabref():
 
     PYTHON CODE:
 
-    subprocess.call(jabrefOpen);
+    arg = jabrefCommand;
+    subprocess.call(arg,shell=True);
     return
 
     '''
 
-    subprocess.call(jabrefOpen);
+    arg = jabrefCommand;
+    subprocess.call(arg,shell=True);
     return
 
 cmd.extend('jabref',jabref)
@@ -8415,24 +8188,26 @@ def jedit(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(jeditOpen)
-return
+    arg = (jeditCommand+ fileName);
+    subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(jeditOpen);return
+    arg = (jeditCommand + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(jeditOpen)
+    arg = (jeditCommand + fileName)
+    subprocess.call(arg,shell=True)
     return
     '''
 
-    subprocess.call(jeditOpen)
+    arg = (jeditCommand + fileName)
+    subprocess.call(arg,shell=True)
     return
 cmd.extend('jedit',jedit)
 
@@ -8541,22 +8316,24 @@ def julia():
 
     PYTHON CODE:
 
-    subprocess.call(juliaOpen);
+    arg = juliaPath;
+    subprocess.call(arg,shell=True);
     return
 
     '''
 
-    subprocess.call(juliaOpen);
+    arg = juliaPath;
+    subprocess.call(arg,shell=True);
     return
 
 cmd.extend('julia',julia)
 
 
-def mate():
+def mate(fileName="test.pml"):
     ''' 
     DESCRIPTION:
 
-    Open textmate from within PyMOL. 
+    Open file with mate from within PyMOL. 
 
 
     USAGE:
@@ -8571,34 +8348,39 @@ def mate():
 
     EXAMPLE:
 
-    mate
+    mate script.pml
 
 
     MORE DETAILS:
 
-    Open file with Textmate (Mac OS only) from within PyMOL.  Adjust path to Textmate on your computer as needed.
+    Open file with Textmate (Mac OS only) from within PyMOL. 
+    Adjust path to Textmate on your computer as needed.
+
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(mateOpen)
-return
+    arg = (matePath + fileName);
+    subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(mateOpen);return
+    arg = (matePath + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(mateOpen)
+    arg = (matePath + fileName)
+    subprocess.call(arg,shell=True)
     return
     '''
 
-    subprocess.call(mateOpen)
+    arg = (matePath + fileName)
+    subprocess.call(arg,shell=True)
     return
 cmd.extend('mate',mate)
 
@@ -8745,16 +8527,16 @@ def notPyMOL():
 cmd.extend('notPyMOL',notPyMOL)
 
 
-def npp():
+def notepadpp(fileName="test.pml"):
     ''' 
     DESCRIPTION:
 
-    Open notepadpp from within PyMOL. 
+    Open file with notepadpp from within PyMOL. 
 
 
     USAGE:
 
-    npp
+    notepadpp
 
 
     Arguments:
@@ -8764,39 +8546,41 @@ def npp():
 
     EXAMPLE:
 
-    npp
+    notepadpp script.pml
 
 
     MORE DETAILS:
 
-    Open notepadpp from within PyMOL. 
-Notepadpp can be installed on Mac OS and Linux via wine.
+    Open file with notepadpp from within PyMOL. 
+    Adjust path to notepadpp on your computer as needed.
+
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(nppOpen)
-return
+    arg = (notepadppPath + fileName);
+    subprocess.call(arg,shell=True)
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(nppOpen);return
+    arg = (notepadppPath + fileName);    subprocess.call(arg,shell=True)
 
 
 
     PYTHON CODE:
 
-    subprocess.call(nppOpen)
+    arg = (notepadppPath + fileName)
+    subprocess.call(arg,shell=True)
     return
-
     '''
 
-    subprocess.call(nppOpen)
+    arg = (notepadppPath + fileName)
+    subprocess.call(arg,shell=True)
     return
-
-cmd.extend('npp',npp)
+cmd.extend('notepadpp',notepadpp)
 
 
 def nv(fileName="testme.pml"):
@@ -8910,7 +8694,7 @@ def oc():
 cmd.extend('oc',oc)
 
 
-def oni():
+def oni(fileName="test.pml"):
     ''' 
     DESCRIPTION:
 
@@ -8929,7 +8713,7 @@ def oni():
 
     EXAMPLE:
 
-    oni
+    oni script.pml
 
 
     MORE DETAILS:
@@ -8937,29 +8721,33 @@ def oni():
     Open the editor Oni from within PyMOL. 
     The is an editor based on neovim.
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(oniOpen);
-return
+    arg = (oniPath + fileName);
+    subprocess.call(arg,shell=True);
+    return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(oniOpen);return
+    arg = (oniPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(oniOpen)
+    arg = (oniPath + fileName)
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(oniOpen)
+    arg = (oniPath + fileName)
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('oni',oni)
@@ -8991,31 +8779,33 @@ def ppt():
 
     Open the powerpoint from within PyMOL. 
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(pptOpen); 
+    arg = powerpointCommand
+    subprocess.call(arg,shell=True)
     return
-
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(pptOpen); return
-
+    arg = powerpointCommand;subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(pptOpen)
+    arg =powerpointCommand
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(pptOpen)
+    arg =powerpointCommand
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('ptt',ppt)
@@ -11850,7 +11640,7 @@ def st3(fileName="test.pml"):
 
     EXAMPLE:
 
-    st3
+    st3 script.pml
 
 
     MORE DETAILS:
@@ -11863,28 +11653,29 @@ def st3(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(sublOpen);
-return
+    arg = (sublimetext3Path  + "-w " + fileName);
+    subprocess.call(arg,shell=True);
+    return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(sublOpen);return
+    arg = (sublimetext3Path  + "-w " + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(sublOpen);
+    arg = (sublimetext3Path  + "-w " + fileName)
+    subprocess.call(arg,shell=True)
     return
-
 
     '''
 
-    subprocess.call(sublOpen);
+    arg = (sublimetext3Path  + "-w " + fileName)
+    subprocess.call(arg,shell=True)
     return
-
 
 cmd.extend('st3',st3)
 
@@ -11998,7 +11789,7 @@ def term():
 cmd.extend('term',term)
 
 
-def vdwTrans(selection='all'):
+def vdw(selection='all'):
     ''' 
     DESCRIPTION:
 
@@ -12007,7 +11798,7 @@ def vdwTrans(selection='all'):
 
     USAGE:
 
-    vdwTrans selection
+    vdw selection
 
 
     Arguments:
@@ -12018,7 +11809,7 @@ def vdwTrans(selection='all'):
 
     EXAMPLE:
 
-    vdwTrans 3nd3
+    vdw 3nd3
 
 
     MORE DETAILS:
@@ -12170,7 +11961,6 @@ def vdwTrans(selection='all'):
     cmd.space("cmyk")
    
     # ball and stick settings
-    arg1 = 'selection="all"'
     cmd.show("sticks", arg1)
     cmd.show("spheres", arg1)
     cmd.color("gray85","elem C and "+arg1)
@@ -12320,7 +12110,6 @@ def vdwTrans(selection='all'):
     cmd.space("cmyk")
    
     # ball and stick settings
-    arg1 = 'selection="all"'
     cmd.show("sticks", arg1)
     cmd.show("spheres", arg1)
     cmd.color("gray85","elem C and "+arg1)
@@ -12339,7 +12128,7 @@ def vdwTrans(selection='all'):
     cmd.zoom(arg1)
     cmd.hide("labels")
 
-cmd.extend('vdwTrans', vdwTrans)
+cmd.extend('vdw', vdw)
 
 
 def vim(fileName="test.pml"):
@@ -12398,7 +12187,7 @@ def vim(fileName="test.pml"):
 cmd.extend('vim',vim)
 
 
-def vmd():
+def vmd(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
 
@@ -12430,24 +12219,28 @@ def vmd():
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(vmdOpen);
-return
+    arg = (vmdCommand+ fileName);
+    subprocess.call(arg,shell=True);
+    return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(vmdOpen);return
+    arg = (vmdCommand + fileName);subprocess.call(arg,shell=True);return
+
 
 
     PYTHON CODE:
 
-    subprocess.call(vmdOpen)
+    arg = (vmdCommand+ fileName)
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(vmdOpen)
+    arg = (vmdCommand+ fileName)
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('vmd',vmd)
@@ -12548,7 +12341,7 @@ def webmail():
 cmd.extend('webmail',webmail)
 
 
-def word():
+def word(fileName="Script.docx"):
     ''' 
     DESCRIPTION:
 
@@ -12574,20 +12367,20 @@ def word():
 
     Open MS Word from within PyMOL. 
     Adjust file path to MS Word on your computer.
-	
 
+   >>>  Edit file path in python code below
 
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(wordOpen);
-return
+    subprocess.call(wordCommand, '--args', fileName);
+    return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-    subprocess.call(wordOpen);return
+    subprocess.call(wordCommand, '--args', fileName);return
 
 
 
@@ -12602,55 +12395,6 @@ return
     return
 
 cmd.extend('word',word)
-
-
-def x11():
-    ''' 
-    DESCRIPTION:
-
-    Open x11 or XQuartz terminal.
-
-
-    USAGE:
-
-    x11
-
-
-    Arguments:
-
-    None
-
-
-    EXAMPLE:
-
-    x11
-
-
-    MORE DETAILS:
-
-    Open x11 or XQuartz terminal.
-
-
-    VERTICAL PML SCRIPT:
-
-    subprocess.call(x11Open)
-return
-
-
-    HORIZONTAL PML SCRIPT:
-
-    subprocess.call(x11Open);return
-
-
-    PYTHON CODE:
-
-    subprocess.call(x11Open);
-    return
-    '''
-
-    subprocess.call(x11Open);
-    return
-cmd.extension('x11',x11)
 
 
 def yasara(fileName="test.pml"):
@@ -12684,26 +12428,28 @@ def yasara(fileName="test.pml"):
 
     VERTICAL PML SCRIPT:
 
-    subprocess.call(yasaraOpen);
-return
-
+    arg = (yasaraPath + fileName);
+    subprocess.call(arg,shell=True);
+    return
 
 
 
     HORIZONTAL PML SCRIPT:
 
-        subprocess.call(yasaraOpen);return
+    arg = (yasaraPath + fileName);subprocess.call(arg,shell=True);return
 
 
 
     PYTHON CODE:
 
-    subprocess.call(yasaraOpen)
+    arg = (yasaraPath + fileName)
+    subprocess.call(arg,shell=True)
     return
 
     '''
 
-    subprocess.call(yasaraOpen)
+    arg = (yasaraPath + fileName)
+    subprocess.call(arg,shell=True)
     return
 
 cmd.extend('yasara',yasara)
