@@ -190,8 +190,8 @@ DBBrowserSQLiteOpen = ['open','-a','DBBrowserForSQLite']
 DBBrowserSQLitePath = '/Applications/DBBrowserForSQLite.app/Contents/MacOS/DB\ Browser\ for\ SQLite'
 excelOpen = ['open','-a','Microsoft Excel']
 excelPath = r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ Excel'
-jabrefOpen = ['open','-a','JabRef.app']
-jabrefPath = r'/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
+JabRefOpen = ['open','-a','JabRef.app']
+JabRefPath = r'/Applications/JabRef.app/Contents/MacOS/JavaApplicationStub'
 jaspOpen = ['open','-a','JASP.app']
 jaspPath = r'Applications/JASP.app/Contents/MacOS/JASP'
 jmpOpen = ['open','-a','JMP Pro 14.app']
@@ -201,28 +201,38 @@ juliaPath = r'/Applications/Julia-1.2.app/Contents/MacOS/applet'
 juliaproOpen = ['open','-a','JuliaPro-1.2.0-1.app']
 juliaproPath = r'/Applications/JuliaPro-1.2.0-1.app/Contents/MacOS/applet'
 jupyterPath = r'/opt/local/Library/Frameworks/Python.framework/Versions/3.7/bin/jupyter-notebook'
-octaveOpen = ['open','-a','Octave4.app']
-octavePath = r'/Applications/MacPorts/Octave.app/Contents/MacOS/Octave'
+octaveCommand = '/Applications/MacPorts/Octave.app/Contents/MacOS/Octave'
+octaveOpen = ['open', '-n','-a','/Applications/MacPorts/Octave.app/Contents/MacOS/Octave']
+octavePath = '/Applications/MacPorts/Octave.app/Contents/MacOS/Octave'
 Rpath = r'/usr/local/bin/R'
 ROpen = ['open','-a','R'] 
-RstudioOpen = ['open','-a','RStudio'] 
-RstudioPath = r'/Applications/RStudio.app/Contents/MacOS/Rstudio'
+RStudioOpen = ['open','-a','RStudio'] 
+RStudioPath = r'/Applications/RStudio.app/Contents/MacOS/Rstudio'
 
 
 # Image manipulation programs
-gimp = r'/usr/local/bin/gimp'
-inkscapePath = r'/opt/local/bin/inkscape'
+gimpOpen=['/opt/local/bin/gimp','-n']
+gimpPath = r'/opt/local/bin/gimp'
+
+inkscapeCommand = ['/opt/local/bin/inkscape','--file=','fileName']
+inkscapeOpen = ['/opt/local/bin/inkscape']
+inkscapePath = '/opt/local/bin/inkscape'
+
 pptOpen = ['open','-a','Microsoft PowerPoint']
 pptPath =  r'/Applications/Microsoft\ Excel.app/Contents/MacOS/Microsoft\ PowerPoint'
 
 
 # Molecular graphics programs
-ccp4mgCommand = ['open','-a','ccp4mg']
-ccp4mgPath = r'/Applications/ccp4-7.0/ccp4i2.app/Contents/MacOS/ccp4mg'
+ccp4mgCommand = ['/Applications/ccp4-7.0/QtMG.app/Contents/MacOS/QtMG','shell=True']
+ccp4mgOpen = ['open','-n','-a','QtMG.app']
+ccp4mgPath = r'/Applications/ccp4-7.0/QtMG.app/Contents/MacOS/QtMG'
 chimeraOpen = ['open','-a','Chimera.app']
 chimeraPath = r'/Applications/Chimera.app/Contents/MacOS/chimera'
+cootOpen =['open','-a','coot.app']
 cootPath = '/usr/local/bin/coot'
-jmolPath = 'java -jar /Applications/jars/jmol-14.29.52/Jmol.jar'
+jmolCommand = 'java -jar /Applications/jars/jmol-14.29.54/Jmol.jar'
+jmolOpen = ['java','-jar','/Applications/jars/jmol-14.29.54/Jmol.jar']
+jmolPath = '/Applications/jars/jmol-14.29.54/Jmol.jar'
 yasaraOpen = ['open','-a','YASARA.app']
 yasaraPath = r'/Applications/YASARA.app/Contents/MacOS/yasara.app'
 vmdOpen = ['open','-a','VMD194.app']
@@ -234,42 +244,143 @@ atomPath = r'/usr/local/bin/atom'
 atomStart = ['start','atom']
 bbeditOpen = ['open','-a','bbedit']
 bbeditPath = r'/usr/local/bin/bbedit'
-codeOpen = ['open','-a','code']
+codeOpen = ['/usr/local/bin/code']
 codePath = r'/usr/local/bin/code'
-codeStart = ['start','code']
-emacsOpen = ['open','-a','emacs']
+emacsCommand = ['open','-a','Emacs.app', '"$@"']
+emacsOpen = ['open','-a','Emacs.app']
 emacsPath = r'/opt/local/bin/emacs'
 geditOpen = ['open','-a','gedit2.30.2.app']
 geditPath = r'/Applications/gedit2.30.2.app/Contents/MacOS/gedit'
 jeditOpen = ['open','-a','jEdit.app']
 jeditPath = r'/Applications/jEdit.app/Contents/MacOS/jedit'
 neovimPath = r'/Users/blaine/software/nvim-osx64/bin/nvim'
+neovimOpen = ['open','-n','-a','/Users/blaine/software/nvim-osx64/bin/nvim']
 nppOpen = ['open','-a','Notepad++.app']
 nppPath = r'/Applications/Notepad++.app/Contents/MacOS/startwine'
 oniOpen = ['open','-a','Oni.app']
 oniPath = r'/Applications/Oni.app/Contents/MacOS/Oni'
-pdbeditorOpen = r'java -jar /Applications/jars/PDB_Editor_FIX090203.jar'
+pdbeditorOpen = ['java','-jar','/Applications/jars/PDB_Editor_FIX090203.jar']
 pdbeditorPath = r'/Applications/jars/PDB_Editor_FIX090203.jar'
-sublOpen = ['open','-a','subl']
+sublimeText3Open = ['/usr/local/bin/subl','test.pml']
 sublimeText3Path = r'/usr/local/bin/subl'
 textmatePath  = r'/usr/local/bin/mate'
-textmateOpen = ['open','-a','mate']
+textMateOpen = ['open','-a','TextMate']
 vimPath = r'/opt/local/bin/vim'
-
+vimOpen = ['open','-a','MacVim.app']
 
 #Terminals
-itermOpen = ['open','-a','iTerm.app','-n','"`pwd`"']
-terminalOpen = ['open','-a','Terminal','-n','"`pwd`"']
-x11Open = ['open','-a','XQuartz','-n','"`pwd`"']
+itermOpen = ['open','-n','-a','iTerm.app']
+terminalOpen = ['open','-n','-a','Terminal.app']
+xquartzOpen = ['open','-n','-a','XQuartz.app']
+x11Open = ['open','-n','-a','X11.app']
+
 
 # Web sites 
-gcalPath = 'open -a Safari.app https://calendar.google.com/calendar/r'
-gmailPath = 'open -a Safari.app https://mail.google.com/mail/u/0/#inbox'
-webmailPath = 'open -a Safari.app https://webmail.ouhsc.edu'
-weatherServicePath = 'open -a Safari.app https://radar.weather.gov/radar.php?rid=TLX'
+gcalURL = 'https://calendar.google.com/calendar/r'
+gmailURL = 'https://mail.google.com/mail/u/0/#inbox'
+webmailURL = 'https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f'
+weatherServiceRadarURL = 'https://radar.weather.gov/radar.php?rid=TLX'
+
+# Web static sites
+atsasURL = 'https://www.embl-hamburg.de/biosaxs/download.html'
+scatterURL = 'http://www.bioisis.net/tutorial/9'
+bioxtasrawURL = 'https://bioxtas-raw.readthedocs.io/en/latest/manual/Introduction_to_RAW_and_this_documentation.html'
+acaURL = 'http://www.amercrystalassn.org'
+alsURL = 'https://als.lbl.gov/'
+apsURL = 'https://www.aps.anl.gov/'
+biocatURL = 'https://www.bio.aps.anl.gov/pages/links.html'
+sasbdbURL = 'https://www.sasbdb.org/'
+chimeriaURL = 'https://www.cgl.ucsf.edu/chimera/'
+chessURL = 'https://www.chess.cornell.edu'
+emdbURL = 'https://www.ebi.ac.uk/pdbe/emdb/'
+epURL = 'https://github.com/MooersLab/EasyPyMOL'
+jmURL = 'http://wiki.jmol.org/index.php/Main_Page'
+lbsfURL = 'https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx'
+ouMCLURL = 'http://structuralbiology.ou.edu/mcl'
+molgrURL = 'https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html'
+molgrwikiURL = 'https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems'
+nslsIIURL = 'https://www.bnl.gov/ps/'
+ndbURL = 'http://ndbserver.rutgers.edu'
+
+ppcURL = 'http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core'
+psURL = 'https://www.proteinsociety.org/'
+rsURL = 'https://www.rnasociety.org/'
+saxsURL = 'https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0'
+saxierURL = 'https://www.saxier.org/forum/'
+ssrlbl42URL = 'https://www-ssrl.slac.stanford.edu/~saxs/'
+sbgridURL= 'https://www.youtube.com/user/SBGridTV/videos'
+ssrlsmbURL = 'http://smb.slac.stanford.edu'
+ssurfURL = 'http://www.ssurf.org'
+scipyURL = 'https://www.scipy2019.scipy.org'
+
+#### Web search sites
+# Send search term to Amazon.com
+abURL = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords='
+
+
+anacondaURL = 'https://anaconda.org/search?q='
+
+# Send search term to arxiv
+axURL = 'https://arxiv.org/search/?query='
+
+# Send search term to Biorxiv 
+bxURL = 'https://www.biorxiv.org/search/'
+
+
+gbURL = 'https://www.google.com/search?tbm=bks&q='
+
+
+ghURL = 'https://www.github.com/search?q='
+
+# Send search terms to Google.com. 
+goURL = 'http://www.google.com/search?btnG=1&q='
+
+# Had to use Sweden's Google Scholar.
+gsURL = 'https://scholar.google.se/scholar?hl=en&q='
+gsnURL = 'https://scholar.google.se/scholar?hl=en&q='
+
+# Send search terms to Google Videos.
+gvURL = 'https://www.google.com/videohp/search?btnG=1&q='
+
+# Send search terms to PubMed. 
+ipmURL = 'https://www.ncbi.nlm.nih.gov/pubmed/?term=' 
+
+iucrURL = 'https://journals.iucr.org/'
+
+
+
+stackoverflowURL = 'https://stackoverflow.com/search?q='
+spnURL = 'https://www.springer.com/gp/search?query='
+spURL = 'https://www.springer.com/gp/search?query='
+scienceDirectURL1 = 'https://www.sciencedirect.com/search/advanced?qs='
+scienceDirectURL2 = '&show=100&sortBy=relevance'
+
+rgnURL = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
+rgURL = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
+pwURL = 'https://pymolwiki.org/index.php/'
+pmlURL = 'https://sourceforge.net/p/pymol/mailman/search/?q='
+pmlnURL = 'https://sourceforge.net/p/pymol/mailman/search/?q='
+pmURL = 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
+pdbURL = 'https://www.rcsb.org/structure/'
+pdbnURL = 'https://www.rcsb.org/structure/'
+pymolURL = 'https://pymolwiki.org/index.php/'
+
+researchGateURL = 'https://www.researchgate.net/search.Search.html?type=researcher&query='
+
+scienceDirectURL1 = 'https://www.sciencedirect.com/search/advanced?qs='
+scienceDirectURL2 = '&show=100&sortBy=relevance'
+
+sourceForgeURL = "https://sourceforge.net/directory/os:mac/?q="
+
+springerBooksURL1 = 'https://www.springer.com/gp/search?query='
+springerBooksURL2 = '&submit=Submit+Query'
+
 
 #wordProcessor
 wordOpen = ['open','-a','Microsoft Word.app']
+
+# Optional local mirror of the PDB
+local_mirror_divided = '/mnt/bio/db/pdb.divided'
 
 # ##################################  Linux run commands and PATHS to Applications ###############################################
 #
@@ -356,7 +467,8 @@ wordOpen = ['open','-a','Microsoft Word.app']
 # wordProcessor
 # wordOpen = ['open','-a','Microsoft Word']
 #
-
+# # Optional local mirror of the PDB
+# local_mirror_divided = '/mnt/bio/db/pdb.divided'
 
 
 
@@ -443,6 +555,8 @@ wordOpen = ['open','-a','Microsoft Word.app']
 # #wordProcessor
 # wordStart = ['start','Microsoft Word.exe']
 
+# # Optional local mirror of the PDB
+# local_mirror_divided = '/mnt/bio/db/pdb.divided'
 
 
 ########################################################################################################
@@ -454,7 +568,7 @@ def AB(searchTerm="pymol"):
     USAGE:
     AB
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     AB
@@ -465,6 +579,7 @@ def AB(searchTerm="pymol"):
     The second argument is the number of hits to return. 
     The default web browser is used. 
 
+
     VERTICAL PML SCRIPT:
     url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords=';
     webbrowser.open(url+searchTerm)
@@ -474,16 +589,84 @@ def AB(searchTerm="pymol"):
 
     PYTHON CODE:
 def AB(searchTerm="pymol"):
-    url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords='
-    webbrowser.open(url+searchTerm)
+    url = abURL
+    try:
+        print("Sending",  searchTerm, " to Amazon.com Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to Amazon.com Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('AB',AB)
     '''
 
-    url = 'https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Dstripbooks&field-keywords='
-    webbrowser.open(url+searchTerm)
+    url = abURL
+    try:
+        print("Sending",  searchTerm, " to Amazon.com Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to Amazon.com Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('AB',AB)
 
+
+def AC(searchTerm='pymol'):
+    ''' 
+    DESCRIPTION:
+    Send search term to Anaconda Cloud.
+
+
+
+    USAGE:
+    AC
+
+
+
+    ARGUMENTS:
+    NA
+
+
+    EXAMPLE:
+    AC
+
+
+
+    MORE DETAILS:
+    Send search term to Anaconda Cloud.
+    May have to login first on default browser.
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def AC(searchTerm='pymol'):
+    url=anacondaURL
+    try:
+        print("Sending ",  searchTerm, " to  the Anaconda Cloud webpage in default browser. May have to register and login in first.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  Anaconda Cloud  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('AC',AC)
+    '''
+
+    url=anacondaURL
+    try:
+        print("Sending ",  searchTerm, " to  the Anaconda Cloud webpage in default browser. May have to register and login in first.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  Anaconda Cloud  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('AC',AC)
+
+
 def ACA():
     ''' 
     DESCRIPTION:
@@ -492,27 +675,44 @@ def ACA():
     USAGE:
     ACA
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     ACA
 
     MORE DETAILS:
     Open the American Crystallographic Association Annual Meeting webpage.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def ACA():
-    webbrowser.open_new_tab('http://www.amercrystalassn.org/2018-meeting-homepage')
+    url=acaURL
+    try:
+        print("Trying to open American Crystallographic Association (ACA) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening ACA homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('ACA',ACA)
     '''
 
-    webbrowser.open_new_tab('http://www.amercrystalassn.org/2018-meeting-homepage')
+    url=acaURL
+    try:
+        print("Trying to open American Crystallographic Association (ACA) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening ACA homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('ACA',ACA)
 
+
 def ALS():
     ''' 
     DESCRIPTION:
@@ -521,24 +721,43 @@ def ALS():
     USAGE:
     ALS
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     ALS
 
     MORE DETAILS:
     Open website of the Advanced Light Source.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def ALS():
-    webbrowser.open('https://als.lbl.gov/')
+    url=alsURL
+    try:
+        print("Trying to open Advanced Light Source (ALS) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening ALS homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('ALS',ALS)
     '''
 
-    webbrowser.open('https://als.lbl.gov/')
+    url=alsURL
+    try:
+        print("Trying to open Advanced Light Source (ALS) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening ALS homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('ALS',ALS)
+
 
 def AO():
     ''' 
@@ -548,7 +767,7 @@ def AO():
     USAGE:
     AO
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     AO
@@ -557,6 +776,7 @@ def AO():
     Commands to make ambient occlusion image like those in Qutemole.
     Works only with the command line immediately under the command 
     history window at the top of the gui.
+
     VERTICAL PML SCRIPT:
     set_color oxygen, [1.0,0.4,0.4];
     set_color nitrogen, [0.5,0.5,1.0];
@@ -597,6 +817,7 @@ def AO():
     cmd.set("depth_cue","0")
     cmd.set("ray_opaque_background","on")
     cmd.ray()
+cmd.extend('AO',AO)
     '''
 
     cmd.set_color("oxygen", "[1.0,0.4,0.4]")
@@ -619,6 +840,7 @@ def AO():
     cmd.ray()
 cmd.extend('AO',AO)
 
+
 def AOD():
     ''' 
     DESCRIPTION:
@@ -627,7 +849,7 @@ def AOD():
     USAGE:
     AOD
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     AOD
@@ -639,6 +861,7 @@ def AOD():
     in your new script. Copy and paste onto the comand line below. Works only 
     with the command line immediately under the command history window at 
     the top of the gui.
+
     VERTICAL PML SCRIPT:
     set_color oxygen, [1.0,0.4,0.4];
      set_color nitrogen, [0.5,0.5,1.0];
@@ -684,6 +907,7 @@ def AOD():
     cmd.color("gray90", "symbol h")
     cmd.set("ray_opaque_background","on")
     cmd.ray()
+cmd.extend("AOD",AOD)
     '''
 
     cmd.set_color("oxygen", "[1.0,0.4,0.4]")
@@ -709,6 +933,7 @@ def AOD():
     cmd.ray()
 cmd.extend("AOD",AOD)
 
+
 def APS():
     ''' 
     DESCRIPTION:
@@ -717,24 +942,43 @@ def APS():
     USAGE:
     APS
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     APS
 
     MORE DETAILS:
     Open website of the Advanced Photon Source.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def APS():
-    webbrowser.open('https://www.aps.anl.gov/')
+    url=apsURL
+    try:
+        print("Trying to open Advanced Photon Source (APS) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening APS homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('APS',APS)
     '''
 
-    webbrowser.open('https://www.aps.anl.gov/')
+    url=apsURL
+    try:
+        print("Trying to open Advanced Photon Source (APS) homepage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening APS homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('APS',APS)
+
 
 def AX(searchTerm="pymol"):
     ''' 
@@ -744,7 +988,7 @@ def AX(searchTerm="pymol"):
     USAGE:
     AX
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     AX
@@ -754,74 +998,38 @@ def AX(searchTerm="pymol"):
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def AX(searchTerm="pymol"):
-    webbrowser.open('https://arxiv.org/search/?query='+searchTerm+'&searchtype=all&order=-announced_date_first&size=50')
+    url = axURL
+    searchType= '&searchtype=all&order=-announced_date_first&size=50'
+    try:
+        print("Sending ",  searchTerm, " to  Amazon.com Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm+searchType)
+        print("Sent ",  searchTerm, " to  Amazon.com Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('AX',AX)
     '''
 
-    webbrowser.open('https://arxiv.org/search/?query='+searchTerm+'&searchtype=all&order=-announced_date_first&size=50')
+    url = axURL
+    searchType= '&searchtype=all&order=-announced_date_first&size=50'
+    try:
+        print("Sending ",  searchTerm, " to  Amazon.com Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm+searchType)
+        print("Sent ",  searchTerm, " to  Amazon.com Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('AX',AX)
 
-def BC():
-    ''' 
-    DESCRIPTION:
-    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
-
-
-    USAGE:
-    BC
-
-    Arguments:
-    NA
-    EXAMPLE:
-    BC
-
-    MORE DETAILS:
-    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def BC():
-    webbrowser.open('http://www.bio.aps.anl.gov/')
-    '''
-
-    webbrowser.open('http://www.bio.aps.anl.gov/')
-cmd.extend('BC',BC)
-
-def BD():
-    ''' 
-    DESCRIPTION:
-    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
-
-    USAGE:
-    BD
-
-    Arguments:
-    NA
-    EXAMPLE:
-    BD
-
-    MORE DETAILS:
-    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def BD():
-    webbrowser.open('https://www.sasbdb.org/')
-    '''
-
-    webbrowser.open('https://www.sasbdb.org/')
-cmd.extend('BD',BD)
 
 def BST():
     ''' 
@@ -831,7 +1039,7 @@ def BST():
     USAGE:
     BST
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     BST
@@ -840,6 +1048,7 @@ def BST():
     G2G3/U9U8 base step , PDB code 4PCO. 
     From the 1.32 Angstrom resolution structure 
     of the RNA decamer with 8 GU base pairs.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -877,12 +1086,15 @@ def BST():
     png 4PCO.png
 
     HORIZONTAL PML SCRIPT:
-    delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
+    delete all;fetch 4PCO, type=pdb, async=0;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));hide cartoon;set valence, off;remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view(-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. dd24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
     PYTHON CODE:
 def BST():
     cmd.reinitialize()
     cmd.fetch('4PCO', type='pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
+    cmd.hide('cartoon')
+    cmd.set('valence', 'off')
+
     cmd.remove('not G2G3')
     cmd.bg_color('white')
     cmd.set('stick_radius', '0.14')
@@ -910,11 +1122,15 @@ def BST():
     cmd.ray('1600', '1000')
     cmd.png('4PCO.png')
 
+cmd.extend('BST',BST)
     '''
 
     cmd.reinitialize()
     cmd.fetch('4PCO', type='pdb')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
+    cmd.hide('cartoon')
+    cmd.set('valence', 'off')
+
     cmd.remove('not G2G3')
     cmd.bg_color('white')
     cmd.set('stick_radius', '0.14')
@@ -944,6 +1160,7 @@ def BST():
 
 cmd.extend('BST',BST)
 
+
 def BU():
     ''' 
     DESCRIPTION:
@@ -952,25 +1169,29 @@ def BU():
     USAGE:
     BU
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     BU
 
     MORE DETAILS:
-    Commands to make biological unit. Requires a pdb file. There are
-    other ways of displaying the biological unit in PyMOL. Depends on
-    the quat3.py script by Thomas Holder.
-
-   >>>  Edit file path in python code below
+    Commands to make biological unit. 
+    Requires a pdb file rather than the cif file returned by the fetch command. 
+    There are other ways of displaying the biological unit in PyMOL including downloading *.pdb1 from the PDB. 
+    Depends on the quat3.py script by Thomas Holder.
 
     Type 'help BU' to see this documentation
-    printed to the command history window. Select from the command
-    history individual lines of code to build a new script. Select the
-    hortizontal script at the bottom if retaining most of the commands
-    in your new script. Copy and paste onto the command line below.
-    Works only with the command line immediately under the command
-    history window at the top of the gui.
+    printed to the command history window. 
+
+    Select from the command history individual 
+    lines of code to build a new script. 
+
+    Select the hortizontal script at the bottom if retaining 
+    most of the commands in your new script. 
+
+    Copy and paste onto the command line below.
+    Works only with the command line immediately under the     command history window at the top of the gui.
+
     VERTICAL PML SCRIPT:
     run ~/Scripts/PyMOLScripts/quat3.py; 
     quat 
@@ -981,11 +1202,13 @@ def BU():
 def BU():
     cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat')
+cmd.extend('BU',BU)
     '''
 
     cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat')
 cmd.extend('BU',BU)
+
 
 def BW():
     ''' 
@@ -1002,13 +1225,14 @@ def BW():
     history window at the top of the gui.
 
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     BW
 
     MORE DETAILS:
     Commands to make black-and white-ribbon cartoon on a white background.
+
     VERTICAL PML SCRIPT:
     show cartoon; 
     hide lines; 
@@ -1037,6 +1261,7 @@ def BW():
     cmd.set('antialias', '2'); 
     cmd.ray('600','600'); 
     cmd.png('test.png')
+cmd.extend('BW', BW)
     '''
 
     cmd.show_as("cartoon", "all"); 
@@ -1051,6 +1276,7 @@ def BW():
     cmd.png('test.png')
 cmd.extend('BW', BW)
 
+
 def BX(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -1059,7 +1285,7 @@ def BX(searchTerm="pymol"):
     USAGE:
     BX
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     BX
@@ -1070,21 +1296,36 @@ def BX(searchTerm="pymol"):
     The search phrase does not need to be enclosed in quotes. 
     The default web browser is used. 
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def BX(searchTerm="pymol"):
-    url = 'https://www.biorxiv.org/search/'
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = 'https://www.biorxiv.org/search/'
-    webbrowser.open(url+searchTerm)
+    url = bxURL
+    try:
+        print("Sending", searchTerm,"to bioRxiv in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent", searchTerm," to bioRxiv in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('BX',BX)
+    '''
+
+    url = bxURL
+    try:
+        print("Sending", searchTerm,"to bioRxiv in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent", searchTerm," to bioRxiv in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('BX',BX)
+
 
 def CB():
     ''' 
@@ -1094,7 +1335,7 @@ def CB():
     USAGE:
     CB
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     CB
@@ -1174,6 +1415,7 @@ color cb_sky_blue, 3fa0
     __author__ = 'Jared Sampson'
     __version__ = '0.1'
 
+
     VERTICAL PML SCRIPT:
     run ~/Pymol-script-repo/colorblindfriendly.py
     HORIZONTAL PML SCRIPT:
@@ -1213,6 +1455,7 @@ def CB():
             cmd.set_color("cb_%s" % alt, c[1])
             print("           cb_%s" % alt)
 
+cmd.extend('CB',CB)
     '''
 
     # Color blind friendly color list based on information found at:
@@ -1250,6 +1493,7 @@ def CB():
 
 cmd.extend('CB',CB)
 
+
 def CBSS():
     ''' 
     DESCRIPTION:
@@ -1258,7 +1502,7 @@ def CBSS():
     USAGE:
     CBSS
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     CBSS
@@ -1286,6 +1530,7 @@ def CBSS():
     cmd.color('cb_yellow', 'ss S')
     cmd.color('cb_green', 'ss L+')
 
+cmd.extend('CBSS',CBSS)
     '''
 
     cmd.do('CB')
@@ -1296,61 +1541,56 @@ def CBSS():
 
 cmd.extend('CBSS',CBSS)
 
-def CH():
-    ''' 
-    DESCRIPTION:
-    Open the webste of UCSF Chimera.
-
-    USAGE:
-    CH
-
-    Arguments:
-    NA
-    EXAMPLE:
-    CH
-
-    MORE DETAILS:
-    Open the webste of UCSF Chimera.
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def CH():
-    webbrowser.open('https://www.cgl.ucsf.edu/chimera/')
-    '''
-
-    webbrowser.open('https://www.cgl.ucsf.edu/chimera/')
-cmd.extend('CH',CH)
 
 def CHESS():
     ''' 
     DESCRIPTION:
     Open the website of CHESS.
 
+
     USAGE:
     CHESS
 
-    Arguments:
+
+    ARGUMENTS:
     NA
     EXAMPLE:
     CHESS
 
+
     MORE DETAILS:
     Open the website of CHESS.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def CHESS():
-    webbrowser.open('https://www.chess.cornell.edu/')
-
-    '''
-
-    webbrowser.open('https://www.chess.cornell.edu/')
+    url=chessURL
+    try:
+        print("Opening the website of CHESS.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of CHESS.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('CHESS',CHESS)
+    '''
+
+    url=chessURL
+    try:
+        print("Opening the website of CHESS.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of CHESS.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('CHESS',CHESS)
+
 
 def CR():
     ''' 
@@ -1360,7 +1600,7 @@ def CR():
     USAGE:
     CR
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     CR
@@ -1374,6 +1614,7 @@ def CR():
     Adapted from KP Wu's blog post:
     https://kpwu.wordpress.com/2012/05/24/pymol-different-colors-of-
     nucleic-acid-rings/
+
 
     VERTICAL PML SCRIPT:
     hide everything;
@@ -1411,6 +1652,7 @@ def CR():
     cmd.show_as('cartoon')
     cmd.disable('rna_U')    
 
+cmd.extend('CR',CR)
     '''
 
     cmd.hide('everything')
@@ -1431,15 +1673,16 @@ def CR():
 
 cmd.extend('CR',CR)
 
+
 def CSS():
     ''' 
     DESCRIPTION:
-    Commands to color ribbon or cartoon representations of proteins by
+    Commands to color ribbon or cartoon representations of proteins by secondary structure. 
 
     USAGE:
     CSS
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     CSS
@@ -1468,6 +1711,7 @@ def CSS():
     cmd.color('yellow', 'ss S')
     cmd.color('green', 'ss L+')
 
+cmd.extend('CSS',CSS)
     '''
 
     cmd.show_as('cartoon')
@@ -1477,6 +1721,7 @@ def CSS():
 
 cmd.extend('CSS',CSS)
 
+
 def DU():
     ''' 
     DESCRIPTION:
@@ -1485,7 +1730,7 @@ def DU():
     USAGE:
     DU
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     DU
@@ -1501,6 +1746,7 @@ def DU():
     in your new script. Copy and paste onto the comand line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     cartoon dumbbell;
@@ -1518,6 +1764,7 @@ def DU():
     cmd.set('cartoon_dumbbell_radius', '0.4')
     cmd.show('cartoon')
 
+cmd.extend('DU',DU) 
     '''
 
     cmd.cartoon('dumbbell')
@@ -1527,35 +1774,55 @@ def DU():
 
 cmd.extend('DU',DU) 
 
+
 def EMDB():
     ''' 
     DESCRIPTION:
     Open the website of the Electron Microscopy Data Bank.
 
+
     USAGE:
     EMDB
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     EMDB
 
     MORE DETAILS:
     Open the website of the Electron Microscopy Data Bank.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def EMDB():
-    webbrowser.open('https://www.ebi.ac.uk/pdbe/emdb/')
+    url=emdbURL
+    try:
+        print("Opening the website of the Electron Microscopy Data Bank.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the Electron Microscopy Data Bank.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('EMDB',EMDB)
     '''
 
-    webbrowser.open('https://www.ebi.ac.uk/pdbe/emdb/')
+    url=emdbURL
+    try:
+        print("Opening the website of the Electron Microscopy Data Bank.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the Electron Microscopy Data Bank.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('EMDB',EMDB)
 
+
 def EP():
     ''' 
     DESCRIPTION:
@@ -1564,24 +1831,43 @@ def EP():
     USAGE:
     EP
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     EP
 
     MORE DETAILS:
     EasyPyMOL github site.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def EP():
-    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
+    url=epURL
+    try:
+        print("Opening the EasyPyMOL github page in new tab of default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the EasyPyMOL github page in new tab of default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('EP',EP)
     '''
 
-    webbrowser.open('http://wiki.jmol.org/index.php/Main_Page')
+    url=epURL
+    try:
+        print("Opening the EasyPyMOL github page in new tab of default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the EasyPyMOL github page in new tab of default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('EP',EP)
+
 
 def FR():
     ''' 
@@ -1591,7 +1877,7 @@ def FR():
     USAGE:
     FR
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     FR
@@ -1606,6 +1892,7 @@ def FR():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the PyMOL gui.
+
 
     VERTICAL PML SCRIPT:
     show sticks;
@@ -1628,6 +1915,7 @@ def FR():
     cmd.set('cartoon_ring_transparency', '0.5')
     cmd.show_as('cartoon')
 
+cmd.extend('FR',FR)
     '''
 
     cmd.show('sticks')
@@ -1640,6 +1928,7 @@ def FR():
 
 cmd.extend('FR',FR)
 
+
 def GB(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -1648,13 +1937,14 @@ def GB(searchTerm="pymol"):
     USAGE:
     GB
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     GB
 
     MORE DETAILS:
     Send search term or phrase to Google Books in default browser.
+
     VERTICAL PML SCRIPT:
     url = 'https://www.google.com/search?tbm=bks&q='
     webbrowser.open(url+searchTerm)
@@ -1664,15 +1954,29 @@ def GB(searchTerm="pymol"):
 
     PYTHON CODE:
 def GB(searchTerm="pymol"):
-    url = 'https://www.google.com/search?tbm=bks&q='
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = 'https://www.google.com/search?tbm=bks&q='
-    webbrowser.open(url+searchTerm)
+    url = gbURL
+    try:
+        print("Sending",  searchTerm, " to Google Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to Google Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('GB',GB)
+    '''
+
+    url = gbURL
+    try:
+        print("Sending",  searchTerm, " to Google Books in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to Google Books in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('GB',GB)
+
 
 def GGT():
     ''' 
@@ -1683,7 +1987,7 @@ def GGT():
     USAGE:
     GGT
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     GGT
@@ -1699,6 +2003,7 @@ def GGT():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -1742,6 +2047,7 @@ def GGT():
     cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
     cmd.draw()
 
+cmd.extend('GGT',GGT)
     '''
 
     cmd.reinitialize()
@@ -1765,6 +2071,7 @@ def GGT():
 
 cmd.extend('GGT',GGT)
 
+
 def GH(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
@@ -1773,7 +2080,7 @@ def GH(searchTerm="pymol"):
     USAGE:
     GH
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     GH
@@ -1783,6 +2090,7 @@ def GH(searchTerm="pymol"):
     The search phrase does not need to be enclosed in quotes. 
     The second argument is the number of hits to return. 
     The default web browser is used. 
+
 
     VERTICAL PML SCRIPT:
     url = 'https://www.github.com/search?q='
@@ -1793,15 +2101,29 @@ def GH(searchTerm="pymol"):
 
     PYTHON CODE:
 def GH(searchTerm="pymol"):
-    url = 'https://www.github.com/search?q='
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = 'https://www.github.com/search?q='
-    webbrowser.open(url+searchTerm)
+    url = ghURL
+    try:
+        print("Sending",  searchTerm, " to GitHub in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to GitHubs in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('GH',GH)
+    '''
+
+    url = ghURL
+    try:
+        print("Sending",  searchTerm, " to GitHub in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to GitHubs in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('GH',GH)
+
 
 def GO(searchTerm="pymol",numHits="200"):
     ''' 
@@ -1811,7 +2133,7 @@ def GO(searchTerm="pymol",numHits="200"):
     USAGE:
     GO
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     GO
@@ -1828,11 +2150,31 @@ def GO(searchTerm="pymol",numHits="200"):
     NA
     PYTHON CODE:
 def GO(searchTerm="pymol",numHits="200"):
-    webbrowser.open('https://www.google.com/searchq='+searchTerm+'&num='+str(numHits))
+    url = goURL
+    nhits= '&num='
+    try:
+        print("Sending ", searchTerm," search term or phrase to Google in default browser along with number of hits to be returned.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(goURL+searchTerm + nhits + str(numHits))
+        print("Sent ", searchTerm," to Google in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('GO',GO)
     '''
 
-    webbrowser.open('https://www.google.com/searchq='+searchTerm+'&num='+str(numHits))
+    url = goURL
+    nhits= '&num='
+    try:
+        print("Sending ", searchTerm," search term or phrase to Google in default browser along with number of hits to be returned.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(goURL+searchTerm + nhits + str(numHits))
+        print("Sent ", searchTerm," to Google in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('GO',GO)
+
 
 def GS(searchTerm="pymol"):
     ''' 
@@ -1842,10 +2184,11 @@ def GS(searchTerm="pymol"):
     USAGE:
     GS
 
-    Arguments:
-    searchTerm, searchTerm, searchTerm,
+    ARGUMENTS:
+    searchTerm, searchTerm, searchTerm
+
     EXAMPLE:
-    GS
+    GS molecular replacement software
 
     MORE DETAILS:
     Send search term or phrase to Google Scholar in default browser.
@@ -1860,15 +2203,29 @@ def GS(searchTerm="pymol"):
     NA
     PYTHON CODE:
 def GS(searchTerm="pymol"):
-    url = 'https://scholar.google.se/scholar?hl=en&q='
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = 'https://scholar.google.se/scholar?hl=en&q='
-    webbrowser.open(url+searchTerm)
+    url = gsURL
+    try:
+        print("Sending ", searchTerm," to Google Sholar in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ", searchTerm," to Google Sholar in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('GS',GS)
+    '''
+
+    url = gsURL
+    try:
+        print("Sending ", searchTerm," to Google Sholar in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ", searchTerm," to Google Sholar in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('GS',GS)
+
 
 def GU():
     ''' 
@@ -1879,7 +2236,7 @@ def GU():
     USAGE:
     GU
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     GU
@@ -1899,6 +2256,7 @@ Type 'help GU' to see this documentation
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -1961,6 +2319,7 @@ def GU():
     cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
     cmd.draw()
 
+cmd.extend('GU',GU)
     '''
 
     cmd.reinitialize();
@@ -1992,18 +2351,19 @@ def GU():
 
 cmd.extend('GU',GU)
 
+
 def GV(searchTerm="pymol"):
     ''' 
     DESCRIPTION:
     Send search term or phrase to Google Videos in default browser.
 
     USAGE:
-    GV
+    GV searchTerm
 
-    Arguments:
-    GV Linus Pauling; GS Francis Crick; GS Alexander Rich
+    ARGUMENTS:
+    searchTerm  (Do not have to be in quotes. Can be multiple terms.)
     EXAMPLE:
-    GV
+    GV pymol movie
 
     MORE DETAILS:
     Send search term or phrase to Google Videos in default browser.
@@ -2011,21 +2371,36 @@ def GV(searchTerm="pymol"):
     The default web browser is used. 
     The default search term is pymol.
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def GV(searchTerm="pymol"):
-    url = 'https://www.google.com/search?q=video+';
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = 'https://www.google.com/search?q=video+';
-    webbrowser.open(url+searchTerm)
+    url = gvURL
+    try:
+        print("Sending",  searchTerm, "to Google Video in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(goURL+searchTerm)
+        print("Sent ",  searchTerm, " to Google Video in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('GV',GV)
+    '''
+
+    url = gvURL
+    try:
+        print("Sending",  searchTerm, "to Google Video in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(goURL+searchTerm)
+        print("Sent ",  searchTerm, " to Google Video in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('GV',GV)
+
 
 def HH():
     ''' 
@@ -2035,13 +2410,15 @@ def HH():
     USAGE:
     HH
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     HH
 
     MORE DETAILS:
     Hide hydrogen atoms of currently visible molecular objects.
+
+
     VERTICAL PML SCRIPT:
     hide everything, name H* 
     HORIZONTAL PML SCRIPT:
@@ -2049,10 +2426,12 @@ def HH():
     PYTHON CODE:
 def HH():
     cmd.hide('everything', 'name H*')
+cmd.extend('HH',HH)
     '''
 
     cmd.hide('everything', 'name H*')
 cmd.extend('HH',HH)
+
 
 def IPM(searchTerms = [], *args):
     ''' 
@@ -2062,7 +2441,7 @@ def IPM(searchTerms = [], *args):
     USAGE:
     IPM
 
-    Arguments:
+    ARGUMENTS:
     search=[string,string]; IPM(search)
     EXAMPLE:
     search=["pymol","vmd","jmol"]; IPM(search)
@@ -2074,35 +2453,46 @@ def IPM(searchTerms = [], *args):
     Must enclose each search term (can be of multiple words) in single or double quotes.
     Has a time delay to avoid overwhelming the webserver.
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def IPM(searchTerms = [], *args):
-    print('Sending '+ searchTerms + ' to Pubmed and display list of search results in separate tabs of the default brower.')
-    for term in searchTerms:
-        t0 = time.time()
-        sterm = str(term)
-        webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+sterm)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print('Finished searching PubMed for', sterm, '.')
-    print('Finished searching PubMed for ' + searchTerms + '.') 
-
-    '''
-
-    print('Sending '+ searchTerms + ' to Pubmed and display list of search results in separate tabs of the default brower.')
-    for term in searchTerms:
-        t0 = time.time()
-        sterm = str(term)
-        webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+sterm)
-        response_delay = time.time() - t0
-        time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
-        print('Finished searching PubMed for', sterm, '.')
-    print('Finished searching PubMed for ' + searchTerms + '.') 
+    url = ipmURL
+    try:
+        print('Sending',  searchTerm, ' to Pubmed and display list of search results in separate tabs of the default brower.')
+        for term in searchTerms:
+            t0 = time.time()
+            sterm = str(term)
+            webbrowser.open_new_tab(url+sterm)
+            response_delay = time.time() - t0
+            time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+            print('Finished searching PubMed for ', sterm, '.')
+        print('Finished searching PubMed for  ',  searchTerms, '.') 
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('IPM',IPM)
+    '''
+
+    url = ipmURL
+    try:
+        print('Sending',  searchTerm, ' to Pubmed and display list of search results in separate tabs of the default brower.')
+        for term in searchTerms:
+            t0 = time.time()
+            sterm = str(term)
+            webbrowser.open_new_tab(url+sterm)
+            response_delay = time.time() - t0
+            time.sleep(10*response_delay)  # wait 10x longer than it took them to respond
+            print('Finished searching PubMed for ', sterm, '.')
+        print('Finished searching PubMed for  ',  searchTerms, '.') 
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('IPM',IPM)
+
 
 def IUCR(searchTerm="pymol"):
     ''' 
@@ -2112,24 +2502,44 @@ def IUCR(searchTerm="pymol"):
     USAGE:
     IUCR
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     IUCR
 
     MORE DETAILS:
     Open website of the IUCr Journals.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def IUCR(searchTerm="pymol"):
-    webbrowser.open('https://journals.iucr.org/')
+    url=iucrURL
+    try:
+        print("Opening the IUCr journals webpage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the IUCr journals webpage.");
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('IUCR',IUCR)
     '''
 
-    webbrowser.open('https://journals.iucr.org/')
+    url=iucrURL
+    try:
+        print("Opening the IUCr journals webpage.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the IUCr journals webpage.");
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('IUCR',IUCR)
+
 
 def JASP():
     ''' 
@@ -2139,14 +2549,15 @@ def JASP():
     USAGE:
     JASP
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     JASP
 
     MORE DETAILS:
-    Open JASP from within PyMOL.
-The is a data analysis program that can do Bayesian and frequentist statistics in parallel.
+    Open JASP from within PyMOL.  The is a data analysis program 
+    that can do Bayesian and frequentist statistics in parallel.
+
     VERTICAL PML SCRIPT:
         subprocess.call(jaspOpen);
     return
@@ -2155,44 +2566,81 @@ The is a data analysis program that can do Bayesian and frequentist statistics i
         subprocess.call(jaspOpen);return
     PYTHON CODE:
 def JASP():
-    subprocess.call(jaspOpen)
-    return
-
-    '''
-
-    subprocess.call(jaspOpen)
-    return
+    try:
+        print("Opening the JASP.");
+        subprocess.check_output(jaspOpen)
+        print("Success opening JASP.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jaspOpen'. \n  Or use 'jaspPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('JASP',JASP)
+    '''
+
+    try:
+        print("Opening the JASP.");
+        subprocess.check_output(jaspOpen)
+        print("Success opening JASP.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jaspOpen'. \n  Or use 'jaspPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('JASP',JASP)
+
 
 def JM():
     ''' 
     DESCRIPTION:
     Open the Jmol wiki.
 
+
     USAGE:
     JM
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     JM
 
     MORE DETAILS:
     Open the Jmol wiki.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def JM():
-    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
+    url=jmURL
+    try:
+        print("Opening the Jmol wiki.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the Jmol wiki.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
-    '''
-
-    webbrowser.open('https://github.com/MooersLab/EasyPyMOL')
 
 cmd.extend('JM',JM)
+    '''
+
+    url=jmURL
+    try:
+        print("Opening the Jmol wiki.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the Jmol wiki.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+
+cmd.extend('JM',JM)
+
 
 def JMP():
     ''' 
@@ -2202,7 +2650,7 @@ def JMP():
     USAGE:
     JMP
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     JMP
@@ -2210,7 +2658,7 @@ def JMP():
     MORE DETAILS:
     Open the JMP from within PyMOL. 
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = jmpPath;
     subprocess.call(arg,shell=True);
@@ -2221,15 +2669,31 @@ def JMP():
 
     PYTHON CODE:
 def JMP():
-    subprocess.call(jmpOpen)
-    return
-
-    '''
-
-    subprocess.call(jmpOpen)
-    return
+    try:
+        print("Opening the JMP.");
+        subprocess.check_output(jmpOpen)
+        print("Success opening JMP.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jmpOpen'. \n  Or use 'jmpPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('JMP',JMP)
+    '''
+
+    try:
+        print("Opening the JMP.");
+        subprocess.check_output(jmpOpen)
+        print("Success opening JMP.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jmpOpen'. \n  Or use 'jmpPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('JMP',JMP)
+
 
 def LBSF():
     ''' 
@@ -2239,26 +2703,43 @@ def LBSF():
     USAGE:
     LBSF
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LBSF
 
     MORE DETAILS:
     Open website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def LBSF():
-    webbrowser.open('https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx')
-
-    '''
-
-    webbrowser.open('https://research.ouhsc.edu/CoreFacilities/LaboratoryofBiomolecularStructureandFunction.aspx')
+    url=lbsfURL
+    try:
+        print("Opening the website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('LBSF',LBSF)
+    '''
+
+    url=lbsfURL
+    try:
+        print("Opening the website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of Laboratory of Biomolecular Structure and Function, the X-ray diffraction core facility at OUHSC.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('LBSF',LBSF)
+
 
 def LBST():
     ''' 
@@ -2268,7 +2749,7 @@ def LBST():
     USAGE:
     LBST
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LBST
@@ -2286,9 +2767,12 @@ def LBST():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
+
     VERTICAL PML SCRIPT:
     delete all;
     load 4pco.pdb;
+    hide cartoon;
+    set valence, off;
     select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));
     remove not G2G3;
     bg_color white;
@@ -2322,11 +2806,13 @@ def LBST():
     png 4pco.png
 
     HORIZONTAL PML SCRIPT:
-    delete all;load 4PCO.pdb;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
+    delete all;load 4PCO.pdb;hide cartoon;set valence, off;select G2G3, ( ((resi 2 or resi 3) and chain A) or ((resi 8 or resi 9) and chain B));remove not G2G3;bg_color white;show sticks;set stick_radius=0.14;set stick_ball, on;set stick_ball_ratio,1.9;set_view (-0.75,0.09,0.66,-0.2,0.92,-0.35,-0.64,-0.39,-0.67,-0.0,-0.0,-43.7,7. 24,9.55,11.78,29.46,57.91,-20.0);remove name H*;select carbon1, element C and (resi 3 or resi 8);select carbon2, element C and (resi 2 or resi 9);color gray70, carbon1;color gray10, carbon2;show sticks;space cmyk;distance hbond1, /4PCO//B/U`9/N3,/4PCO//A/G`2/O6;distance hbond2, /4PCO//B/U`9/O2,/4PCO//A/G`2/N1;distance hbond3, /4PCO//A/U`3/N3,/4PCO//B/G`8/O6;distance hbond4, /4PCO//A/U`3/O2,/4PCO//B/G`8/N1;color black, hbond1;color black, hbond2;color gray70, hbond3;color gray70, hbond4;show nb_spheres;set nb_spheres_size, 0.35;hide labels;ray 1600,1000;png 4PCO.png
     PYTHON CODE:
 def LBST():
     cmd.reinitialize()
     cmd.load(localPDBfilePath + '4pco.pdb')
+    cmd.hide('cartoon')
+    cmd.set('valence', 'off')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -2355,10 +2841,13 @@ def LBST():
     cmd.ray('1600', '1000')
     cmd.png('4PCO.png')
 
+cmd.extend('LBST',LBST)
     '''
 
     cmd.reinitialize()
     cmd.load(localPDBfilePath + '4pco.pdb')
+    cmd.hide('cartoon')
+    cmd.set('valence', 'off')
     cmd.select('G2G3', '( ((resi 2 or resi 3) and chain A)or ((resi 8 or resi 9) and chain B) )')
     cmd.remove('not G2G3')
     cmd.bg_color('white')
@@ -2389,6 +2878,7 @@ def LBST():
 
 cmd.extend('LBST',LBST)
 
+
 def LG():
     ''' 
     DESCRIPTION:
@@ -2398,7 +2888,7 @@ def LG():
     USAGE:
     LG
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     LG
@@ -2414,6 +2904,8 @@ def LG():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
+
     VERTICAL PML SCRIPT:
     delete all;
     fetch 4dgr, async=0;
@@ -2499,6 +2991,7 @@ def LG():
     preset.ball_and_stick("all",mode=1);
     cmd.draw()
 
+cmd.extend('LG',LG)
     '''
 
     cmd.reinitialize()
@@ -2543,6 +3036,7 @@ def LG():
 
 cmd.extend('LG',LG)
 
+
 def LGGT():
     ''' 
     DESCRIPTION:
@@ -2553,7 +3047,7 @@ def LGGT():
     USAGE:
     LGGT
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LGGT
@@ -2570,6 +3064,7 @@ def LGGT():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -2613,6 +3108,7 @@ def LGGT():
     cmd.set_view('(0.55,-0.83,0.07,0.5,0.26,-0.82,0.66,0.49,0.56,0.0,0.0,-197.16,-22.42,-22.69,-12.01,155.44,238.88,-20.0)')
     cmd.draw()
 
+cmd.extend('LGGT',LGGT)
     '''
 
     cmd.reinitialize()
@@ -2636,6 +3132,7 @@ def LGGT():
 
 cmd.extend('LGGT',LGGT)
 
+
 def LGU():
     ''' 
     DESCRIPTION:
@@ -2645,7 +3142,7 @@ def LGU():
     USAGE:
     LGU
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LGU
@@ -2656,6 +3153,7 @@ def LGU():
     the asymmetric unit. Deleted chain E and cobalt 
     hexammine 102. Cartoon with filled rings and
     bases cartoon.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -2718,6 +3216,7 @@ def LGU():
     cmd.set_view('(0.34,-0.81, 0.48,0.89,0.11,-0.45,0.31,0.58,0.76,-0.0,0.0,-196.36,-9.82,6.76,15.84,159.01,233.71,-20.0)')
     cmd.draw()
 
+cmd.extend('LGU',LGU)
     '''
 
     cmd.reinitialize();
@@ -2749,6 +3248,7 @@ def LGU():
 
 cmd.extend('LGU',LGU)
 
+
 def LLG():
     ''' 
     DESCRIPTION:
@@ -2758,7 +3258,7 @@ def LLG():
     USAGE:
     LLG
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LLG
@@ -2776,6 +3276,7 @@ def LLG():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -2862,6 +3363,7 @@ def LLG():
     preset.ball_and_stick("all",mode=1);
     cmd.draw()
 
+cmd.extend('LLG',LLG)
     '''
 
     cmd.reinitialize()
@@ -2906,6 +3408,7 @@ def LLG():
 
 cmd.extend('LLG',LLG)
 
+
 def LN9():
     ''' 
     DESCRIPTION:
@@ -2914,7 +3417,7 @@ def LN9():
     USAGE:
     LN9
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LN9
@@ -2933,6 +3436,7 @@ def LN9():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -2970,6 +3474,7 @@ def LN9():
     cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
     cmd.draw()
 
+cmd.extend('LN9',LN9)
     '''
 
     cmd.reinitialize()
@@ -2989,6 +3494,7 @@ def LN9():
 
 cmd.extend('LN9',LN9)
 
+
 def LNA():
     ''' 
     DESCRIPTION:
@@ -2998,7 +3504,7 @@ def LNA():
     USAGE:
     LNA
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LNA
@@ -3024,6 +3530,7 @@ def LNA():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -3094,7 +3601,9 @@ def LNA():
     cmd.viewport('900','600');
     cmd.load(localPDBfilePath + '3nd4.pdb');
     cmd.hide('cartoon');
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.set('valence','off');
+    cmd.show('sticks');
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
@@ -3153,13 +3662,16 @@ def LNA():
     cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
     cmd.rock()
 
+cmd.extend('LNA',LNA)
     '''
 
     cmd.reinitialize();
     cmd.viewport('900','600');
     cmd.load(localPDBfilePath + '3nd4.pdb');
     cmd.hide('cartoon');
-    cmd.do('run $HOME/mg18OU/quat.py')
+    cmd.set('valence','off');
+    cmd.show('sticks');
+    cmd.do('run $HOME/Scripts/PyMOLScripts/quat3.py')
     cmd.do('quat 3nd4');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
@@ -3220,6 +3732,7 @@ def LNA():
 
 cmd.extend('LNA',LNA)
 
+
 def LT4L():
     ''' 
     DESCRIPTION:
@@ -3229,7 +3742,7 @@ def LT4L():
     USAGE:
     LT4L
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LT4L
@@ -3237,6 +3750,7 @@ def LT4L():
     MORE DETAILS:
     Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0. 
     The file 3FA0 must be in the current working directory. 
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -3275,6 +3789,7 @@ def LT4L():
     cmd.ray('1500', '1600')
     cmd.png("T4L.png")
 
+cmd.extend('LT4L',LT4L)
     '''
 
     cmd.reinitialize()
@@ -3295,6 +3810,7 @@ def LT4L():
 
 cmd.extend('LT4L',LT4L)
 
+
 def LU8():
     ''' 
     DESCRIPTION:
@@ -3304,7 +3820,7 @@ def LU8():
     USAGE:
     LU8
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LU8
@@ -3314,6 +3830,7 @@ def LU8():
     Has one strand in the asymmetric unit. Uses quat.py to generate
     the second strand. Cartoon with filled rings and bases cartoon.
     The file 3nd3.pdb needs to be in the current working directory.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -3351,6 +3868,7 @@ def LU8():
     cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
     cmd.draw()
 
+cmd.extend('LU8',LU8)
     '''
 
     cmd.reinitialize()
@@ -3371,6 +3889,7 @@ def LU8():
 
 cmd.extend('LU8',LU8)
 
+
 def LWC8():
     ''' 
     DESCRIPTION:
@@ -3379,7 +3898,7 @@ def LWC8():
     USAGE:
     LWC8
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     LWC8
@@ -3390,6 +3909,8 @@ def LWC8():
     Needs quat.py to generate the second strand. 
     Cartoon with filled rings and bases cartoon.
     The file 3nd4.pdb must be in the current working directory.
+
+
     VERTICAL PML SCRIPT:
     delete all; 
     load 3nd4.pdb;
@@ -3415,7 +3936,7 @@ def LWC8():
     cmd.load(localPDBfilePath + '3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    # cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
@@ -3427,13 +3948,14 @@ def LWC8():
     cmd.set_view('(-0.96,-0.03,0.3,-0.31,0.02,-0.95,0.03,-1.0,-0.03,0.0,0.0,-231.24,8.16,15.68,-1.66,200.47,262.01,-20.0)')
     cmd.rock()
 
+cmd.extend('LWC8',LWC8)
     '''
 
     cmd.reinitialize()
     cmd.load(localPDBfilePath + '3nd4.pdb')
     cmd.remove('name H*')
     cmd.hide('everything')
-    cmd.do('run $HOME/mg18OU/quat.py')
+    # cmd.do('run $HOME/mg18OU/quat.py')
     cmd.do('quat 3nd4')
     cmd.bg_color('white')
     cmd.do('show stick')
@@ -3447,6 +3969,7 @@ def LWC8():
 
 cmd.extend('LWC8',LWC8)
 
+
 def MA(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
@@ -3455,13 +3978,14 @@ def MA(searchTerm='pymol'):
     USAGE:
     MA
 
-    Arguments:
+    ARGUMENTS:
     search term(s), N
     EXAMPLE:
     MA pymol plugin
 
     MORE DETAILS:
     Send search term to all searchable websites in pymolshortcuts.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -3485,6 +4009,7 @@ def MA(searchTerm='pymol'):
     SO(searchTerm)
     SP(searchTerm)
 
+cmd.extend('MA',MA)
     '''
 
     AX(searchTerm)
@@ -3506,6 +4031,7 @@ def MA(searchTerm='pymol'):
 
 cmd.extend('MA',MA)
 
+
 def MB(searchTerm='pymol'):
     ''' 
     DESCRIPTION:
@@ -3514,13 +4040,14 @@ def MB(searchTerm='pymol'):
     USAGE:
     MB
 
-    Arguments:
+    ARGUMENTS:
     search term(s)
     EXAMPLE:
     MB pymol plugin
 
     MORE DETAILS:
     Send search term to search multiple sites that contain book content.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -3531,6 +4058,7 @@ def MB(searchTerm='pymol'):
     SD(searchTerm)
     SP(searchTerm)
 
+cmd.extend('MB',MB)
     '''
 
     GB(searchTerm)
@@ -3538,6 +4066,7 @@ def MB(searchTerm='pymol'):
     SP(searchTerm)
 
 cmd.extend('MB',MB)
+
 
 def MC(searchTerm='pymol'):
     ''' 
@@ -3547,7 +4076,7 @@ def MC(searchTerm='pymol'):
     USAGE:
     MC
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     MC pymol
@@ -3566,6 +4095,7 @@ def MC(searchTerm='pymol'):
     Science Direct
     Stackoverflow
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -3583,6 +4113,7 @@ def MC(searchTerm='pymol'):
     SD(searchTerm)
     SF(searchTerm)
 
+cmd.extend('MC',MC)
     '''
 
     BX(searchTerm)
@@ -3598,33 +4129,56 @@ def MC(searchTerm='pymol'):
 
 cmd.extend('MC',MC)
 
+
 def MCL():
     ''' 
     DESCRIPTION:
     Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma.
 
+
+
     USAGE:
     MCL
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     MCL
 
     MORE DETAILS:
     Open website of Macromolecular Crystallography Laboratory at the University of Oklahoma.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def MCL():
-    webbrowser.open('http://structuralbiology.ou.edu/mcl')
+    url=ouMCLURL
+    try:
+        print("Opening the website of Macromolecular Crystallography Laboratory at the University of Oklahoma.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of Macromolecular Crystallography Laboratory at the University of Oklahoma.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('MCL',MCL)
     '''
 
-    webbrowser.open('http://structuralbiology.ou.edu/mcl')
+    url=ouMCLURL
+    try:
+        print("Opening the website of Macromolecular Crystallography Laboratory at the University of Oklahoma.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of Macromolecular Crystallography Laboratory at the University of Oklahoma.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('MCL',MCL)
 
+
 def MG():
     ''' 
     DESCRIPTION:
@@ -3633,24 +4187,89 @@ def MG():
     USAGE:
     MG
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     MG
 
     MORE DETAILS:
     Open website of the OUHSC molecular graphics course.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def MG():
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
+    url=molgrURL
+    try:
+        print("Opening the website with molecular graphic links.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened website with molecular graphic links..")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('MG',MG)
     '''
 
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/moleculargraphicslinks.html')
+    url=molgrURL
+    try:
+        print("Opening the website with molecular graphic links.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened website with molecular graphic links..")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('MG',MG)
+
+
+def MGW():
+    ''' 
+    DESCRIPTION:
+    Open Wikipedia webpage about molecular graphics.
+
+    USAGE:
+    MGW
+
+    ARGUMENTS:
+    NA
+    EXAMPLE:
+    MGW
+
+    MORE DETAILS:
+    Open Wikipedia webpage about molecular graphics.
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def MGW():
+    url=molgrwikiURL
+    try:
+        print("Opening the Wikipedia webpage about molecular graphics.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the Wikipedia webpage about molecular graphics.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('MGW',MGW)
+    '''
+
+    url=molgrwikiURL
+    try:
+        print("Opening the Wikipedia webpage about molecular graphics.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the Wikipedia webpage about molecular graphics.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('MGW',MGW)
+
 
 def MM(searchTerm='pymol'):
     ''' 
@@ -3660,7 +4279,7 @@ def MM(searchTerm='pymol'):
     USAGE:
     MM
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     MM pymol
@@ -3676,6 +4295,7 @@ def MM(searchTerm='pymol'):
     Science Direct
     Springer
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -3690,6 +4310,7 @@ def MM(searchTerm='pymol'):
     SD(searchTerm)
     SP(searchTerm)
 
+cmd.extend('MM',MM)
     '''
 
     AX(searchTerm)
@@ -3702,6 +4323,7 @@ def MM(searchTerm='pymol'):
 
 cmd.extend('MM',MM)
 
+
 def N9():
     ''' 
     DESCRIPTION:
@@ -3711,7 +4333,7 @@ def N9():
     USAGE:
     N9
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     N9
@@ -3729,6 +4351,7 @@ def N9():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -3765,6 +4388,7 @@ def N9():
     cmd.set_view('(0.98,-0.22,0.01,0.22,0.98,0.02,-0.01,-0.02,1.0,-0.0,0.0,-323.44,1.46,5.33,56.19,274.72,372.15,-20.0)')
     cmd.draw()
 
+cmd.extend('N9',N9)
     '''
 
     cmd.reinitialize()
@@ -3783,6 +4407,7 @@ def N9():
 
 cmd.extend('N9',N9)
 
+
 def NA():
     ''' 
     DESCRIPTION:
@@ -3792,7 +4417,7 @@ def NA():
     USAGE:
     NA
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     NA
@@ -3811,6 +4436,7 @@ def NA():
     Import the file with the @Labels.pml command. 
     Include the path to the file if the labels file is not 
     in the current working directory of PyMOL. 
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -3881,10 +4507,13 @@ def NA():
     cmd.reinitialize();
     cmd.viewport('900','600');
     cmd.fetch('3nd4', type='pdb1');
-    cmd.do('split_states 3nd4')
+    cmd.do('split_states 3nd4');
+    cmd.hide('cartoon');
+    cmd.hide('spheres');
+    cmd.set('valence','off');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
-    cmd.hide('everything', 'name H*');
+    cmd.hide('everything', 'elem H*');
     cmd.bg_color('white');
     cmd.create('coorCov', '(3nd4_0001 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
@@ -3900,7 +4529,7 @@ def NA():
     cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 219)');
     cmd.show('nb_spheres');
     cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_0001/1/A/HOH`119/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond1', '3nd4_0001 and resi 119 and name O', '3nd4_0001 and resi 1 and name OP2');
     cmd.distance('hbond2', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/A`3/OP2');
     cmd.distance('hbond3', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/HOH`119/O');
     cmd.distance('hbond4', '/3nd4_0001/1/A/G`4/N7', '/3nd4_0001/1/A/HOH`91/O');
@@ -3937,15 +4566,19 @@ def NA():
     cmd.disable('carbon');
     cmd.set_view('-0.9,0.34,-0.26,0.33,0.18,-0.93,-0.27,-0.92,-0.28,-0.07,-0.23,-27.83,8.63,19.85,13.2,16.0,31.63,-20.0');
 
+cmd.extend('NA',NA)
     '''
 
     cmd.reinitialize();
     cmd.viewport('900','600');
     cmd.fetch('3nd4', type='pdb1');
-    cmd.do('split_states 3nd4')
+    cmd.do('split_states 3nd4');
+    cmd.hide('cartoon');
+    cmd.hide('spheres');
+    cmd.set('valence','off');
     cmd.show('sticks');
     cmd.set('stick_radius', '0.125');
-    cmd.hide('everything', 'name H*');
+    cmd.hide('everything', 'elem H*');
     cmd.bg_color('white');
     cmd.create('coorCov', '(3nd4_0001 and (resi 19 or resi 119 or resi 219 or resi 319 or resi 419 or resi 519 or (resi 3 and name N7)))');
     cmd.bond('(coorCov//A/NA`19/NA)','(coorCov//A/A`3/N7)');
@@ -3961,7 +4594,7 @@ def NA():
     cmd.distance('(3nd4_0001 and chain A and resi 19 and name NA)','(3nd4_0001 and chain A and resi 219)');
     cmd.show('nb_spheres');
     cmd.set('nb_spheres_size', '.35');
-    cmd.distance('hbond1', '/3nd4_0001/1/A/HOH`119/O', '/3nd4_0001/1/A/A`3/OP2');
+    cmd.distance('hbond1', '3nd4_0001 and resi 119 and name O', '3nd4_0001 and resi 1 and name OP2');
     cmd.distance('hbond2', '/3nd4_0001/1/A/HOH`319/O', '/3nd4_0001/1/A/A`3/OP2');
     cmd.distance('hbond3', '/3nd4_0001/1/A/HOH`91/O', '/3nd4_0001/1/A/HOH`119/O');
     cmd.distance('hbond4', '/3nd4_0001/1/A/G`4/N7', '/3nd4_0001/1/A/HOH`91/O');
@@ -4000,6 +4633,7 @@ def NA():
 
 cmd.extend('NA',NA)
 
+
 def NDB():
     ''' 
     DESCRIPTION:
@@ -4008,25 +4642,47 @@ def NDB():
     USAGE:
     NDB
 
-    Arguments:
+
+
+    ARGUMENTS:
     NA
     EXAMPLE:
     NDB
 
     MORE DETAILS:
     Open website of the Nucleic Acid Database.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def NDB():
-    webbrowser.open('https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems')
+    url=ndbURL
+    try:
+        print("Opening the website of the Nucleic Acid Database.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened website of the Nucleic Acid Database.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('NDB',NDB)
     '''
 
-    webbrowser.open('https://en.wikipedia.org/wiki/List_of_molecular_graphics_systems')
+    url=ndbURL
+    try:
+        print("Opening the website of the Nucleic Acid Database.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened website of the Nucleic Acid Database.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('NDB',NDB)
 
+
 def NSLSII():
     ''' 
     DESCRIPTION:
@@ -4035,24 +4691,44 @@ def NSLSII():
     USAGE:
     NSLSII
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     NSLSII
 
     MORE DETAILS:
     Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def NSLSII():
-    webbrowser.open('https://www.bnl.gov/ps/')
+    url=nslsIIURL
+    try:
+        print("Opening the website of the National Synchrotron Light Source II ,NSLSII, at Brookhaven National Laboratory..");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the National Synchrotron Light Source II ,NSLSII, at Brookhaven National Laboratory.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('NSLSII',NSLSII)
     '''
 
-    webbrowser.open('https://www.bnl.gov/ps/')
+    url=nslsIIURL
+    try:
+        print("Opening the website of the National Synchrotron Light Source II ,NSLSII, at Brookhaven National Laboratory..");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the National Synchrotron Light Source II ,NSLSII, at Brookhaven National Laboratory.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('NSLSII',NSLSII)
+
 
 def PDB(searchTerm="3fa0",numHits="5"):
     ''' 
@@ -4062,34 +4738,55 @@ def PDB(searchTerm="3fa0",numHits="5"):
     USAGE:
     PDB
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     PBB 3fa0
 
+
+
     MORE DETAILS:
-    Submit a search term to the Protein Data Bank.
+    Submit a pdbcode to the Protein Data Bank and get back the webpage for the orrespondong structure.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PDB(searchTerm="3fa0",numHits="5"):
-    webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
+    url = pdbURL
+    try:
+        print("Sending",  searchTerm, " to the PBD webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to the PBD webpage in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('PDB',PDB)
     '''
 
-    webbrowser.open('https://www.rcsb.org/structure/'+searchTerm)
+    url = pdbURL
+    try:
+        print("Sending",  searchTerm, " to the PBD webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to the PBD webpage in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('PDB',PDB)
+
 
 def PE(selection):
     ''' 
     DESCRIPTION:
-    Apply pearl effect about cations.
+    Apply pearl effect about selection cation or anion.
 
     USAGE:
-    PE
+    PE selection
 
-    Arguments:
+
+
+    ARGUMENTS:
     selection
     EXAMPLE:
     PE selection
@@ -4098,6 +4795,8 @@ def PE(selection):
     Apply pearl effect about cations. 
     This effect shows a transparent sphere around an inner opaque sphere.
     Must supply the <selection> of a cation or anion. 
+
+
     VERTICAL PML SCRIPT:
     select magnesium1, <selection>
     create magnesium2, magnesium1
@@ -4110,22 +4809,75 @@ def PE(selection):
     PYTHON CODE:
 def PE(selection):
     cmd.select('magnesium1',selection)
-    cmd.create('magnesium2', 'magnesium1')
-    cmd.show(spheres, 'magnesium1')
-    cmd.show(spheres, 'magnesium2')
-    cmd.set('spehrical transparency, 0.4, magnesium2')
-    cmd.set('spehrescale, 1.05, magnesium2')
+    cmd.create('magnesium2', selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.4', 'magnesium2')
+    cmd.set('sphere_scale', '1.1', 'magnesium2')
 
+cmd.extend('PE',PE)
     '''
 
     cmd.select('magnesium1',selection)
-    cmd.create('magnesium2', 'magnesium1')
-    cmd.show(spheres, 'magnesium1')
-    cmd.show(spheres, 'magnesium2')
-    cmd.set('spehrical transparency, 0.4, magnesium2')
-    cmd.set('spehrescale, 1.05, magnesium2')
+    cmd.create('magnesium2', selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.4', 'magnesium2')
+    cmd.set('sphere_scale', '1.1', 'magnesium2')
 
 cmd.extend('PE',PE)
+
+
+def PE2(selection):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selected cation or anion.
+
+    USAGE:
+    PE2 selection
+
+
+
+    ARGUMENTS:
+    selection of one catoin or anion
+    EXAMPLE:
+    PE2 /3nd4//A/NA`19/NA
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.35 sphere_scale).
+    Must supply the <selection> of a cation or anion. 
+
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE2(selection):
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.35', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+cmd.extend('PE2',PE2)
+    '''
+
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.35', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+cmd.extend('PE2',PE2)
+
 
 def PM(searchTerm="pymol"):
     ''' 
@@ -4135,7 +4887,7 @@ def PM(searchTerm="pymol"):
     USAGE:
     PM
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     PM
@@ -4146,19 +4898,36 @@ def PM(searchTerm="pymol"):
     The multi word search terms do not need to be enclosed in quotes. 
     Takes one search term but multiple commands can be submitted at once (see below).
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PM(searchTerm="pymol"):
-    webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
-
-    '''
-
-    webbrowser.open('https://www.ncbi.nlm.nih.gov/pubmed/?term='+searchTerm)
+    url = pmURL
+    try:
+        print("Sending",  searchTerm, " to the PubMed webpage in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  the PubMed webpagein default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('PM',PM)
+    '''
+
+    url = pmURL
+    try:
+        print("Sending",  searchTerm, " to the PubMed webpage in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  the PubMed webpagein default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('PM',PM)
+
 
 def PML(searchTerm="3d_pdf"):
     ''' 
@@ -4168,7 +4937,7 @@ def PML(searchTerm="3d_pdf"):
     USAGE:
     PML
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     PML session file
@@ -4182,20 +4951,37 @@ def PML(searchTerm="3d_pdf"):
     Multiple term search: 
     PML text editor; PML 3d pdf; PML black and white cartoon;
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PML(searchTerm="3d_pdf"):
-    webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
+    url = pmlURL
+    try:
+        print("Sending",  searchTerm, " to the PyMOL mailing list in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to the PubMed webpagein default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('PML',PML)
     '''
 
-    webbrowser.open('https://sourceforge.net/p/pymol/mailman/search/?q='+searchTerm)
+    url = pmlURL
+    try:
+        print("Sending",  searchTerm, " to the PyMOL mailing list in default browser.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to the PubMed webpagein default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('PML',PML)
 
+
 def PPC():
     ''' 
     DESCRIPTION:
@@ -4204,27 +4990,44 @@ def PPC():
     USAGE:
     PPC
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     PPC
 
     MORE DETAILS:
     Open the website of the Protein Production Facility at the University of Oklahoma in Norman.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PPC():
-    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
+    url=ppcURL
+    try:
+        print("Opening the website of the Protein Production Facility at the University of Oklahoma in Norman.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the Protein Production Facility at the University of Oklahoma in Norman.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
 
+cmd.extend('PPC',PPC)
     '''
 
-    webbrowser.open('http://www.ou.edu/cas/chemistry/research/research-support-services/protein-production-core')
+    url=ppcURL
+    try:
+        print("Opening the website of the Protein Production Facility at the University of Oklahoma in Norman.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the website of the Protein Production Facility at the University of Oklahoma in Norman.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
 
 cmd.extend('PPC',PPC)
 
+
 def PS():
     ''' 
     DESCRIPTION:
@@ -4233,24 +5036,43 @@ def PS():
     USAGE:
     PS
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     PS
 
     MORE DETAILS:
     Open the home page of the Protein Soceity.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PS():
-    webbrowser.open('https://www.proteinsociety.org/')
+    url=psURL
+    try:
+        print("Opening the home page of the Protein Soceity.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the home page of the Protein Soceity.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('PS',PS)
     '''
 
-    webbrowser.open('https://www.proteinsociety.org/')
+    url=psURL
+    try:
+        print("Opening the home page of the Protein Soceity.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the home page of the Protein Soceity.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('PS',PS)
+
 
 def PW(searchTerm="3d_pdf"):
     ''' 
@@ -4260,24 +5082,41 @@ def PW(searchTerm="3d_pdf"):
     USAGE:
     PW
 
-    Arguments:
-    NA
+    ARGUMENTS:
+    searchTerm
     EXAMPLE:
     PW
 
     MORE DETAILS:
-    Submit search of the PyMOL Wiki.    
+    Submit search of the PyMOL Wiki. 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def PW(searchTerm="3d_pdf"):
-    webbrowser.open('https://pymolwiki.org/index.php/'+searchTerm)
+    url = pymolURL
+    try:
+        print("Sending ",  searchTerm, " to  the PyMOL Wiki webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  PyMOL Wiki  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('PW',PW)
     '''
 
-    webbrowser.open('https://pymolwiki.org/index.php/'+searchTerm)
+    url = pymolURL
+    try:
+        print("Sending ",  searchTerm, " to  the PyMOL Wiki webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to  PyMOL Wiki  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('PW',PW)
+
 
 def RG(searchTerm='best molecular graphics program'):
     ''' 
@@ -4287,24 +5126,41 @@ def RG(searchTerm='best molecular graphics program'):
     USAGE:
     RG
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     RG best molecular graphics program
 
     MORE DETAILS:
     Submit a search query of Research Gate. 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def RG(searchTerm='best molecular graphics program'):
-    webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
+    url = researchGateURL
+    try:
+        print("Sending",  searchTerm, " to  the Research Gate webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to Research Gate  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('RG',RG)
     '''
 
-    webbrowser.open('https://www.researchgate.net/search.Search.html?type=researcher&query='+searchTerm)
+    url = researchGateURL
+    try:
+        print("Sending",  searchTerm, " to  the Research Gate webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to Research Gate  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('RG',RG)
+
 
 def RS():
     ''' 
@@ -4314,26 +5170,43 @@ def RS():
     USAGE:
     RS
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     RS
 
     MORE DETAILS:
-     Open the homepage of the RNA Society.
+    Open the homepage of the RNA Society.
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def RS():
-    webbrowser.open('https://www.rnasociety.org/')
-
-    '''
-
-    webbrowser.open('https://www.rnasociety.org/')
+    url=rsURL
+    try:
+        print("Opening the homepage of the RNA Society.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the homepage of the RNA Society.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
 
 cmd.extend('RS',RS)
+    '''
+
+    url=rsURL
+    try:
+        print("Opening the homepage of the RNA Society.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the homepage of the RNA Society.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('RS',RS)
+
 
 def RStudio():
     ''' 
@@ -4343,13 +5216,14 @@ def RStudio():
     USAGE:
     RStudio
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     RStudio
 
     MORE DETAILS:
     Open RStudio from within PyMOL.
+
 
     VERTICAL PML SCRIPT:
     subprocess.call(RStudioOpen); 
@@ -4359,16 +5233,32 @@ return
     subprocess.call(RStudioOpen); return
     PYTHON CODE:
 def RStudio():
-    subprocess.call(RStudioOpen)
-    return
+    try:
+        print("Opening the RStudio.");
+        subprocess.check_output(RStudioOpen)
+        print("Success opening RStudio.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'RStudioOpen'. \n  Or use ''RStudioPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
+cmd.extend('RStudio',RStudio)
     '''
 
-    subprocess.call(RStudioOpen)
-    return
+    try:
+        print("Opening the RStudio.");
+        subprocess.check_output(RStudioOpen)
+        print("Success opening RStudio.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'RStudioOpen'. \n  Or use ''RStudioPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('RStudio',RStudio)
 
+
 def SAXS():
     ''' 
     DESCRIPTION:
@@ -4377,78 +5267,43 @@ def SAXS():
     USAGE:
     SAXS
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     SAXS
 
     MORE DETAILS:
     Open the webpage of SAXS links at OUHSC. 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def SAXS():
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0')
+    url=saxsURL
+    try:
+        print("Opening the webpage of SAXS links at OUHSC.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SAXS links at OUHSC.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+cmd.extend('SAXS',SAXS)
     '''
 
-    webbrowser.open('https://www.oumedicine.com/docs/default-source/ad-biochemistry-workfiles/small-angle-scattering-links-27aug2014.html?sfvrsn=0')
+    url=saxsURL
+    try:
+        print("Opening the webpage of SAXS links at OUHSC.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SAXS links at OUHSC.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
 cmd.extend('SAXS',SAXS)
 
-def SB():
-    ''' 
-    DESCRIPTION:
-    Open the webpage of SSRL Biological SAXS at BL 4-2.
-
-    USAGE:
-    SB
-
-    Arguments:
-    NA
-    EXAMPLE:
-    SB
-
-    MORE DETAILS:
-    Open the webpage of SSRL Biological SAXS at BL 4-2.
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def SB():
-    webbrowser.open('https://www-ssrl.slac.stanford.edu/~saxs/')
-    '''
-
-    webbrowser.open('https://www-ssrl.slac.stanford.edu/~saxs/')
-cmd.extend('SB',SB)
-
-def SBGRID():
-    ''' 
-    DESCRIPTION:
-    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
-
-    USAGE:
-    SBGRID
-
-    Arguments:
-    NA
-    EXAMPLE:
-    SBGRID
-
-    MORE DETAILS:
-    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def SBGRID():
-    webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
-    '''
-
-    webbrowser.open('https://www.youtube.com/user/SBGridTV/videos')
-cmd.extend('SBGRID',SBGRID)
 
 def SC():
     ''' 
@@ -4458,7 +5313,7 @@ def SC():
     USAGE:
     SC
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     SC
@@ -4800,11 +5655,13 @@ def SC():
 def SC():
     print(SC.__doc__)
 
+cmd.extend('SC',SC)
     '''
 
     print(SC.__doc__)
 
 cmd.extend('SC',SC)
+
 
 def SD(searchTerm="pymol"):
     ''' 
@@ -4814,7 +5671,7 @@ def SD(searchTerm="pymol"):
     USAGE:
     SD
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     SD session file
@@ -4828,23 +5685,36 @@ def SD(searchTerm="pymol"):
     Multiple term search: 
     SD text editor; SD 3d pdf; SD black and white cartoon;
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def SD(searchTerm="pymol"):
-    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
-    url2 = '&show=100&sortBy=relevance'
-    webbrowser.open(url1+searchTerm+url2)
-
-    '''
-
-    url1 = 'https://www.sciencedirect.com/search/advanced?qs='
-    url2 = '&show=100&sortBy=relevance'
-    webbrowser.open(url1+searchTerm+url2)
+    url1 = scienceDirectURL1
+    url2 = scienceDirectURL2
+    try:
+        print("Sending",  searchTerm, " to  the Science Direct webpage in the default browser.");
+        webbrowser.open_new_tab(url1+searchTerm+url2)
+        print('Sent', searchTerm, 'to the Science Direct webpage in the default browser.')
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('SD',SD)
+    '''
+
+    url1 = scienceDirectURL1
+    url2 = scienceDirectURL2
+    try:
+        print("Sending",  searchTerm, " to  the Science Direct webpage in the default browser.");
+        webbrowser.open_new_tab(url1+searchTerm+url2)
+        print('Sent', searchTerm, 'to the Science Direct webpage in the default browser.')
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('SD',SD)
+
 
 def SF(searchTerm='pymol'):
     ''' 
@@ -4854,59 +5724,129 @@ def SF(searchTerm='pymol'):
     USAGE:
     SF
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     SF pymol
 
     MORE DETAILS:
     Send search term to sourceforge.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def SF(searchTerm='pymol'):
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
+    url = sourceForgeURL
+    try:
+        print("Sending ",  searchTerm, " to  the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to sourceforge  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('SF',SF)
+    '''
+
+    url = sourceForgeURL
+    try:
+        print("Sending ",  searchTerm, " to  the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, " to sourceforge  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('SF',SF)
+
+
+def SH():
+    ''' 
+    DESCRIPTION:
+    Show hydrogen atoms of currently visible molecular objects.
+
+    USAGE:
+    SH
+
+    ARGUMENTS:
+    None
+    EXAMPLE:
+    SH
+
+    MORE DETAILS:
+    Show hydrogen atoms of currently visible molecular objects.
+    VERTICAL PML SCRIPT:
+    show sticks, element H
+    HORIZONTAL PML SCRIPT:
+    show sticks, element H
+    PYTHON CODE:
+def SH():
+    cmd.show('sticks', 'element H')
+cmd.extend('SH',SH)
+    '''
+
+    cmd.show('sticks', 'element H')
+cmd.extend('SH',SH)
+
 
 def SO(searchTerm="3d_pdf"):
     ''' 
     DESCRIPTION:
     Submit a search term to Stackoverflow.
 
+
     USAGE:
     SO
 
-    Arguments:
-    NA
+
+
+    ARGUMENTS:
+    searchTerm
+
+
     EXAMPLE:
     SO
 
+
+
+
     MORE DETAILS:
     Submit a search term to Stackoverflow.
+
+
+
     VERTICAL PML SCRIPT:
     NA
+
+
     HORIZONTAL PML SCRIPT:
     NA
+
+
     PYTHON CODE:
 def SO(searchTerm="3d_pdf"):
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
-
-    '''
-
-    url = "https://stackoverflow.com/search?q="
-    webbrowser.open(url+searchTerm)
+    url = stackoverflowURL
+    try:
+        print("Sending",  searchTerm, " to the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to  stackoverflow  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('SO',SO)
+    '''
+
+    url = stackoverflowURL
+    try:
+        print("Sending",  searchTerm, " to the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url+searchTerm)
+        print("Sent ",  searchTerm, "to  stackoverflow  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('SO',SO)
+
 
 def SP(searchTerm="pymol"):
     ''' 
@@ -4916,59 +5856,101 @@ def SP(searchTerm="pymol"):
     USAGE:
     SP
 
-    Arguments:
+    ARGUMENTS:
     searchTerm
     EXAMPLE:
     SP
 
     MORE DETAILS:
     Submit a search term to Springer Books.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def SP(searchTerm="pymol"):
-    url1 = 'https://www.springer.com/gp/search?query='
-    url2 = '&submit=Submit+Query'
-    webbrowser.open(url1+searchTerm+url2)
+    url1 = springerBooksURL1
+    url2 = springerBooksURL2
+    try:
+        print("Sending ",  searchTerm, " to  the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url1+searchTerm+url2)
+        print("Sent ",  searchTerm, " to sourceforge  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
+cmd.extend('SP',SP)
     '''
 
-    url1 = 'https://www.springer.com/gp/search?query='
-    url2 = '&submit=Submit+Query'
-    webbrowser.open(url1+searchTerm+url2)
+    url1 = springerBooksURL1
+    url2 = springerBooksURL2
+    try:
+        print("Sending ",  searchTerm, " to  the sourceforge webpage in default browser.");
+        webbrowser.open_new_tab(url1+searchTerm+url2)
+        print("Sent ",  searchTerm, " to sourceforge  in default browser.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
 
 cmd.extend('SP',SP)
 
-def SSRL():
+
+def SSRLSMB():
     ''' 
     DESCRIPTION:
     Open the webpage of SSRL Structural Molecular Biology.
 
-    USAGE:
-    SSRL
 
-    Arguments:
+
+    USAGE:
+    SSRLSMB
+
+
+
+    ARGUMENTS:
     NA
     EXAMPLE:
-    SSRL
+    SSRLSMB
+
+
 
     MORE DETAILS:
     Open the webpage of SSRL Structural Molecular Biology.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
-def SSRL():
-    webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
+def SSRLSMB():
+    url=ssrlsmbURL
+    try:
+        print("Opening the webpage of SSRL Structural Molecular Biology.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SSRL Structural Molecular Biology.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
 
+
+
+cmd.extend('SSRLSMB',SSRLSMB)
     '''
 
-    webbrowser.open('http://ssrl.slac.stanford.edu/smb/index.html')
+    url=ssrlsmbURL
+    try:
+        print("Opening the webpage of SSRL Structural Molecular Biology.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SSRL Structural Molecular Biology.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
 
-cmd.extend('SSRL',SSRL)
+
+
+cmd.extend('SSRLSMB',SSRLSMB)
+
 
 def SSURF():
     ''' 
@@ -4979,19 +5961,24 @@ def SSURF():
     USAGE:
     SSURF
 
-    Arguments:
+
+
+    ARGUMENTS:
     NA
     EXAMPLE:
     SSURF
+
+
 
     MORE DETAILS:
     Open the webpage of the Society for Science at User Research Facilities (SSURF).
     SSURF is nonprofit organization in the US that serves as the
     nexus for users and user executive committees at
-    national laboratories. SUURF is not a lobbying organization, but
+    national laboratories. SSURF is not a lobbying organization, but
     it helps organize visits to Congress to educate legislators about
     the importance of national laboratories in science. Membership
     is free of students. The annual fee is nominal for PIs. 
+
 
     VERTICAL PML SCRIPT:
     NA
@@ -4999,11 +5986,31 @@ def SSURF():
     NA
     PYTHON CODE:
 def SSURF():
-    webbrowser.open('http://www.ssurf.org/')
+    url=ssurfURL
+    try:
+        print("Opening the webpage of the Society for Science at User Research Facilities (SSURF).");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Society for Science at User Research Facilities (SSURF).")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('SSURF',SSURF)
     '''
 
-    webbrowser.open('http://www.ssurf.org/')
+    url=ssurfURL
+    try:
+        print("Opening the webpage of the Society for Science at User Research Facilities (SSURF).");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Society for Science at User Research Facilities (SSURF).")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
 cmd.extend('SSURF',SSURF)
+
 
 def SciPy19():
     ''' 
@@ -5013,24 +6020,46 @@ def SciPy19():
     USAGE:
     SciPy19
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     SciPy19
 
     MORE DETAILS:
     Open the SciPy 2019 YouTube Channel.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
 def SciPy19():
-    webbrowser.open('https://www.scipy2019.scipy.org')
+    url=scipyURL
+    try:
+        print("Opening the webpage of the SciPy19 meeting.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the SciPy19 meeting.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('SciPy19',SciPy19)
     '''
 
-    webbrowser.open('https://www.scipy2019.scipy.org')
+    url=scipyURL
+    try:
+        print("Opening the webpage of the SciPy19 meeting.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the SciPy19 meeting.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
 cmd.extend('SciPy19',SciPy19)
+
 
 def T4L():
     ''' 
@@ -5040,7 +6069,7 @@ def T4L():
     USAGE:
     T4L
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     T4L
@@ -5054,6 +6083,8 @@ def T4L():
     in your new script. Copy and paste onto the command line below.
     Works only with the command line immediately under the command
     history window at the top of the gui.
+
+
 
     VERTICAL PML SCRIPT:
     delete all;
@@ -5092,6 +6123,7 @@ def T4L():
     cmd.ray('1500', '1600')
     cmd.png("T4L.png")
 
+cmd.extend('T4L',T4L)
     '''
 
     cmd.reinitialize()
@@ -5112,6 +6144,7 @@ def T4L():
 
 cmd.extend('T4L',T4L)
 
+
 def U8():
     ''' 
     DESCRIPTION:
@@ -5121,7 +6154,7 @@ def U8():
     USAGE:
     U8
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     U8
@@ -5139,7 +6172,6 @@ def U8():
     history window at the top of the gui.
 
 
-   >>>  Edit file path to quat.py in Python code below.
     VERTICAL PML SCRIPT:
     delete all;
     fetch 3nd3,type=pdb,async=0;
@@ -5176,6 +6208,7 @@ def U8():
     cmd.set_view('(-1.0,-0.03,0.06,-0.06,0.01,-1.0,0.04,-1.0,-0.01,-0.09,-0.02,-168.02,7.85,15.56,-0.21,137.38,199.33,-20.0)')
     cmd.draw()
 
+cmd.extend('U8',U8)
     '''
 
     cmd.reinitialize()
@@ -5195,6 +6228,7 @@ def U8():
 
 cmd.extend('U8',U8)
 
+
 def WC8():
     ''' 
     DESCRIPTION:
@@ -5203,7 +6237,7 @@ def WC8():
     USAGE:
     WC8
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     WC8
@@ -5222,7 +6256,7 @@ def WC8():
     Works only with the command line immediately under the command
     history window at the top of the gui.
 
-   >>>  Edit file path to quat.py in Python code below.
+
     VERTICAL PML SCRIPT:
     delete all; 
     fetch 3nd4,type=pdb,async=0;
@@ -5259,6 +6293,7 @@ def WC8():
     cmd.set_view('(-0.98,-0.03,0.22,-0.23,0.02,-0.97,0.03,-1.0,-0.03,0.0,0.0,-175.3,8.16,15.68,-1.66,144.53,206.07,-20.0)')
     cmd.rock()
 
+cmd.extend('WC8',WC8)
     '''
 
     cmd.reinitialize()
@@ -5278,6 +6313,7 @@ def WC8():
 
 cmd.extend('WC8',WC8)
 
+
 def atom(fileName="test.pml"):
     ''' 
     DESCRIPTION:
@@ -5286,16 +6322,18 @@ def atom(fileName="test.pml"):
     USAGE:
     atom
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     atom
 
     MORE DETAILS:
-    Open the text editor Atom from within PyMOL. 
+    Open the text editor Atom from within PyMOL.
+
+
     VERTICAL PML SCRIPT:
     subprocess.call(atomOpen);
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(atomOpen);return
@@ -5312,6 +6350,7 @@ def atom(fileName="test.pml"):
     except OSError:
         pass # executable not found
 
+cmd.extend('atom',atom)
     '''
 
     try:
@@ -5326,6 +6365,7 @@ def atom(fileName="test.pml"):
 
 cmd.extend('atom',atom)
 
+
 def bbedit(fileName="test.pml"):
     ''' 
     DESCRIPTION:
@@ -5334,7 +6374,7 @@ def bbedit(fileName="test.pml"):
     USAGE:
     bbedit
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     bbedit
@@ -5344,9 +6384,10 @@ def bbedit(fileName="test.pml"):
     Adjust the path as needed for your system.
     Only available for Mac OS.
 
+
     VERTICAL PML SCRIPT:
     subprocess.call(bbeditOpen);
-return
+    return
     HORIZONTAL PML SCRIPT:
     subprocess.call(bbeditOpen);return
 
@@ -5362,6 +6403,7 @@ def bbedit(fileName="test.pml"):
     except OSError:
         pass # executable not found
 
+cmd.extend('bbedit',bbedit)
     '''
 
     try:
@@ -5376,6 +6418,59 @@ def bbedit(fileName="test.pml"):
 
 cmd.extend('bbedit',bbedit)
 
+
+def biocat():
+    ''' 
+    DESCRIPTION:
+    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
+
+
+
+    USAGE:
+    biocat
+
+
+    ARGUMENTS:
+    NA
+
+    EXAMPLE:
+    biocat
+
+
+    MORE DETAILS:
+    Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def biocat():
+    url=biocatURL
+    try:
+        print("Opening the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening the BIOCAT biological SAXS beamline at the Advanced Photon Source homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('biocat',biocat)
+    '''
+
+    url=biocatURL
+    try:
+        print("Opening the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening the BIOCAT biological SAXS beamline at the Advanced Photon Source homepage.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('biocat',biocat)
+
+
 def bs(selection='all'):
     ''' 
     DESCRIPTION:
@@ -5384,7 +6479,7 @@ def bs(selection='all'):
     USAGE:
     bs selection
 
-    Arguments:
+    ARGUMENTS:
     selection
 
     EXAMPLE:
@@ -5392,8 +6487,10 @@ def bs(selection='all'):
 
     MORE DETAILS:
     bs creates a ball and stick representation of an object. 
-Bondi VDW values added below to override default Pymol settings.
-From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+    Bondi VDW values added below to override default Pymol settings.
+    From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+
+
 
     VERTICAL PML SCRIPT:
     NA
@@ -5548,6 +6645,7 @@ def bs(selection='all'):
     cmd.zoom(selection)
     cmd.hide("labels")
 
+cmd.extend('bs', bs)
     '''
 
     # Bondi VDW values 
@@ -5699,6 +6797,7 @@ def bs(selection='all'):
 
 cmd.extend('bs', bs)
 
+
 def bsbw(selection='all'):
     ''' 
     DESCRIPTION:
@@ -5707,17 +6806,19 @@ def bsbw(selection='all'):
     USAGE:
     bsbw
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     bsbw
 
     MORE DETAILS:
     bs creates a gray-scaled ball-and-stick representation of an object. 
+
+
     VERTICAL PML SCRIPT:
-    TBD
+    NA
     HORIZONTAL PML SCRIPT:
-    TBD
+    NA
     PYTHON CODE:
 def bsbw(selection='all'):
     # Bondi VDW values 
@@ -5871,6 +6972,7 @@ def bsbw(selection='all'):
     cmd.hide("lines", selection)
     cmd.zoom(selection)
     cmd.hide("labels")
+cmd.extend('bsbw', bsbw)
     '''
 
     # Bondi VDW values 
@@ -6026,6 +7128,7 @@ def bsbw(selection='all'):
     cmd.hide("labels")
 cmd.extend('bsbw', bsbw)
 
+
 def bsbwsc(selection='all'):
     ''' 
     DESCRIPTION:
@@ -6034,20 +7137,22 @@ Only the side chains are shown as ball and stick when used with a cartoon (ribbo
 
     USAGE:
     bsbwsc
-bsbwsc selectedResidues
+    bsbwsc selectedResidues
 
-    Arguments:
+    ARGUMENTS:
     None or a named selection
     EXAMPLE:
     bsbwsc
 
     MORE DETAILS:
     bsbwsc creates a gray-scaled ball-and-stick representation of an object or selection.
-Only the side chains are shown as ball and stick when used with a cartoon (ribbon diagram).
+    Only the side chains are shown as ball and stick when used with a cartoon (ribbon diagram).
+
+
     VERTICAL PML SCRIPT:
-    TBD
+    NA
     HORIZONTAL PML SCRIPT:
-    TBD
+    NA
     PYTHON CODE:
 def bsbwsc(selection='all'):
     # Bondi VDW values 
@@ -6203,6 +7308,7 @@ def bsbwsc(selection='all'):
     cmd.hide("lines", selection)
     cmd.zoom(selection)
     cmd.hide("labels")
+cmd.extend('bsbwsc', bsbwsc)
     '''
 
     # Bondi VDW values 
@@ -6360,6 +7466,362 @@ def bsbwsc(selection='all'):
     cmd.hide("labels")
 cmd.extend('bsbwsc', bsbwsc)
 
+
+def bsvdw(arg1="all"):
+    ''' 
+    DESCRIPTION:
+    Transparent vdw surface over ball and stick representation by Bobby Patton at Colorato State University. 
+
+    USAGE:
+    bsvdw selection
+
+    ARGUMENTS:
+    selection
+    EXAMPLE:
+    bsvdw 1lw9
+
+    MORE DETAILS:
+    Transparent vdw surface over ball and stick representation by Bobby Patton at Colorato State University. 
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def bsvdw(arg1="all"):
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+
+    # defines VDW Sphere settings
+    cmd.copy(arg1+"_vdw", arg1)
+    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.rebuild()
+    cmd.set("sphere_scale", 1, arg1+"_vdw")
+    cmd.hide("nonbonded", arg1+"_vdw")
+    cmd.hide("lines", arg1+"_vdw")
+    cmd.hide("sticks", arg1+"_vdw")
+    cmd.hide("cartoon", arg1+"_vdw")
+    cmd.show("spheres", arg1+"_vdw")
+    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    print("Note that the selection of 'all' does not work when applying this function")
+    print("to multiple models as are found in pdb1 files and when multiple chains")
+    print("make up the biological unit.")
+    print("The shortcut has to be applied separately to each model.")
+
+
+cmd.extend('bsvdw', bsvdw)
+    '''
+
+    # Bondi VDW values 
+    cmd.alter("elem Ac", "vdw=2.00")
+    cmd.alter("elem Al", "vdw=2.00")
+    cmd.alter("elem Am", "vdw=2.00")
+    cmd.alter("elem Sb", "vdw=2.00")
+    cmd.alter("elem Ar", "vdw=1.88")
+    cmd.alter("elem As", "vdw=1.85")
+    cmd.alter("elem At", "vdw=2.00")
+    cmd.alter("elem Ba", "vdw=2.00")
+    cmd.alter("elem Bk", "vdw=2.00")
+    cmd.alter("elem Be", "vdw=2.00")
+    cmd.alter("elem Bi", "vdw=2.00")
+    cmd.alter("elem Bh", "vdw=2.00")
+    cmd.alter("elem B ", "vdw=2.00")
+    cmd.alter("elem Br", "vdw=1.85")
+    cmd.alter("elem Cd", "vdw=1.58")
+    cmd.alter("elem Cs", "vdw=2.00")
+    cmd.alter("elem Ca", "vdw=2.00")
+    cmd.alter("elem Cf", "vdw=2.00")
+    cmd.alter("elem C ", "vdw=1.70")
+    cmd.alter("elem Ce", "vdw=2.00")
+    cmd.alter("elem Cl", "vdw=1.75")
+    cmd.alter("elem Cr", "vdw=2.00")
+    cmd.alter("elem Co", "vdw=2.00")
+    cmd.alter("elem Cu", "vdw=1.40")
+    cmd.alter("elem Cm", "vdw=2.00")
+    cmd.alter("elem Ds", "vdw=2.00")
+    cmd.alter("elem Db", "vdw=2.00")
+    cmd.alter("elem Dy", "vdw=2.00")
+    cmd.alter("elem Es", "vdw=2.00")
+    cmd.alter("elem Er", "vdw=2.00")
+    cmd.alter("elem Eu", "vdw=2.00")
+    cmd.alter("elem Fm", "vdw=2.00")
+    cmd.alter("elem F ", "vdw=1.47")
+    cmd.alter("elem Fr", "vdw=2.00")
+    cmd.alter("elem Gd", "vdw=2.00")
+    cmd.alter("elem Ga", "vdw=1.87")
+    cmd.alter("elem Ge", "vdw=2.00")
+    cmd.alter("elem Au", "vdw=1.66")
+    cmd.alter("elem Hf", "vdw=2.00")
+    cmd.alter("elem Hs", "vdw=2.00")
+    cmd.alter("elem He", "vdw=1.40")
+    cmd.alter("elem Ho", "vdw=2.00")
+    cmd.alter("elem In", "vdw=1.93")
+    cmd.alter("elem I ", "vdw=1.98")
+    cmd.alter("elem Ir", "vdw=2.00")
+    cmd.alter("elem Fe", "vdw=2.00")
+    cmd.alter("elem Kr", "vdw=2.02")
+    cmd.alter("elem La", "vdw=2.00")
+    cmd.alter("elem Lr", "vdw=2.00")
+    cmd.alter("elem Pb", "vdw=2.02")
+    cmd.alter("elem Li", "vdw=1.82")
+    cmd.alter("elem Lu", "vdw=2.00")
+    cmd.alter("elem Mg", "vdw=1.73")
+    cmd.alter("elem Mn", "vdw=2.00")
+    cmd.alter("elem Mt", "vdw=2.00")
+    cmd.alter("elem Md", "vdw=2.00")
+    cmd.alter("elem Hg", "vdw=1.55")
+    cmd.alter("elem Mo", "vdw=2.00")
+    cmd.alter("elem Nd", "vdw=2.00")
+    cmd.alter("elem Ne", "vdw=1.54")
+    cmd.alter("elem Np", "vdw=2.00")
+    cmd.alter("elem Ni", "vdw=1.63")
+    cmd.alter("elem Nb", "vdw=2.00")
+    cmd.alter("elem N ", "vdw=1.55")
+    cmd.alter("elem No", "vdw=2.00")
+    cmd.alter("elem Os", "vdw=2.00")
+    cmd.alter("elem O ", "vdw=1.52")
+    cmd.alter("elem Pd", "vdw=1.63")
+    cmd.alter("elem P ", "vdw=1.80")
+    cmd.alter("elem Pt", "vdw=1.72")
+    cmd.alter("elem Pu", "vdw=2.00")
+    cmd.alter("elem Po", "vdw=2.00")
+    cmd.alter("elem K ", "vdw=2.75")
+    cmd.alter("elem Pr", "vdw=2.00")
+    cmd.alter("elem Pm", "vdw=2.00")
+    cmd.alter("elem Pa", "vdw=2.00")
+    cmd.alter("elem Ra", "vdw=2.00")
+    cmd.alter("elem Rn", "vdw=2.00")
+    cmd.alter("elem Re", "vdw=2.00")
+    cmd.alter("elem Rh", "vdw=2.00")
+    cmd.alter("elem Rb", "vdw=2.00")
+    cmd.alter("elem Ru", "vdw=2.00")
+    cmd.alter("elem Rf", "vdw=2.00")
+    cmd.alter("elem Sm", "vdw=2.00")
+    cmd.alter("elem Sc", "vdw=2.00")
+    cmd.alter("elem Sg", "vdw=2.00")
+    cmd.alter("elem Se", "vdw=1.90")
+    cmd.alter("elem Si", "vdw=2.10")
+    cmd.alter("elem Ag", "vdw=1.72")
+    cmd.alter("elem Na", "vdw=2.27")
+    cmd.alter("elem Sr", "vdw=2.00")
+    cmd.alter("elem S ", "vdw=1.80")
+    cmd.alter("elem Ta", "vdw=2.00")
+    cmd.alter("elem Tc", "vdw=2.00")
+    cmd.alter("elem Te", "vdw=2.06")
+    cmd.alter("elem Tb", "vdw=2.00")
+    cmd.alter("elem Tl", "vdw=1.96")
+    cmd.alter("elem Th", "vdw=2.00")
+    cmd.alter("elem Tm", "vdw=2.00")
+    cmd.alter("elem Sn", "vdw=2.17")
+    cmd.alter("elem Ti", "vdw=2.00")
+    cmd.alter("elem W ", "vdw=2.00")
+    cmd.alter("elem U ", "vdw=1.86")
+    cmd.alter("elem V ", "vdw=2.00")
+    cmd.alter("elem Xe", "vdw=2.16")
+    cmd.alter("elem Yb", "vdw=2.00")
+    cmd.alter("elem Y ", "vdw=2.00")
+    cmd.alter("elem Zn", "vdw=1.39")
+    cmd.alter("elem Zr", "vdw=2.00")
+    cmd.rebuild()
+
+    # workspace settings
+    cmd.bg_color("white")
+    cmd.set("ray_opaque_background", "off")
+    cmd.set("orthoscopic", 0)
+    cmd.set("transparency", 0.5)
+    cmd.set("dash_gap", 0)
+    cmd.set("ray_trace_mode", 1)
+    cmd.set("ray_texture", 2)
+    cmd.set("antialias", 3)
+    cmd.set("ambient", 0.5)
+    cmd.set("spec_count", 5)
+    cmd.set("shininess", 50)
+    cmd.set("specular", 1)
+    cmd.set("reflect", .1)
+    cmd.space("cmyk")
+
+    # defines BallnStick settings
+    cmd.show("sticks", arg1)
+    cmd.show("spheres", arg1)
+    cmd.color("gray85","elem C and "+arg1)
+    cmd.color("gray98","elem H and "+arg1)
+    cmd.color("slate","elem N and "+arg1)
+    cmd.set("stick_radius",0.07, arg1)
+    cmd.set("sphere_scale",0.18, arg1)
+    cmd.set("sphere_scale",0.13, arg1+" and elem H")
+    cmd.set("dash_gap",0.01, arg1)
+    cmd.set("dash_radius",0.07, arg1)
+    cmd.set("stick_color","black", arg1)
+    cmd.set("dash_gap",0.01)
+    cmd.set("dash_radius",0.035)
+    cmd.hide("nonbonded", arg1)
+    cmd.hide("lines", arg1)
+    cmd.zoom(arg1)
+    cmd.hide("labels")
+
+    # defines VDW Sphere settings
+    cmd.copy(arg1+"_vdw", arg1)
+    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.rebuild()
+    cmd.set("sphere_scale", 1, arg1+"_vdw")
+    cmd.hide("nonbonded", arg1+"_vdw")
+    cmd.hide("lines", arg1+"_vdw")
+    cmd.hide("sticks", arg1+"_vdw")
+    cmd.hide("cartoon", arg1+"_vdw")
+    cmd.show("spheres", arg1+"_vdw")
+    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    print("Note that the selection of 'all' does not work when applying this function")
+    print("to multiple models as are found in pdb1 files and when multiple chains")
+    print("make up the biological unit.")
+    print("The shortcut has to be applied separately to each model.")
+
+
+cmd.extend('bsvdw', bsvdw)
+
+
 def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
     ''' 
     DESCRIPTION:
@@ -6368,7 +7830,7 @@ def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
     USAGE:
     buriedW
 
-    Arguments:
+    ARGUMENTS:
     sele = string: atom selection {default: all}
 cutoff = float: threshold on what one considers an "exposed"
 atom (in A**2) {default: surface_residue_cutoff}
@@ -6387,6 +7849,8 @@ Author:  Unknown
 
 License: GNU Free Documentation License 1.2
 License Link: http://www.gnu.org/licenses/fdl-1.2.html
+
+
     VERTICAL PML SCRIPT:
     NotYet
     HORIZONTAL PML SCRIPT:
@@ -6422,6 +7886,7 @@ def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
     return sorted(exposed)
 
 
+cmd.extend('buriedW', buriedW)
     '''
 
     cutoff, state, quiet = float(cutoff), int(state), int(quiet)
@@ -6455,7 +7920,53 @@ def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
 
 cmd.extend('buriedW', buriedW)
 
-def ccp4mg(fileName="test.pdb"):
+
+def cartoonbw(arg1='all'):
+    ''' 
+    DESCRIPTION:
+    Grayscale by secondary structure.
+
+    USAGE:
+    cartoonbw
+
+    ARGUMENTS:
+    selection
+
+    EXAMPLE:
+    cartoonbw
+
+    MORE DETAILS:
+    Grayscale by secondary structure.
+    Helices were converted from red using formula in gscale().
+    Strands were converted from yellow using formula in gscale().
+    Loops were converted from green using formula in gscale().
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def cartoonbw(arg1='all'):
+    cmd.show_as('cartoon')
+    cmd.color('grey21', 'ss H')
+    cmd.color('grey92', 'ss S')
+    cmd.color('grey71', 'ss L+')
+    cmd.set('cartoon_discrete_colors','on')
+
+
+cmd.extend('cartoonbw', cartoonbw)
+    '''
+
+    cmd.show_as('cartoon')
+    cmd.color('grey21', 'ss H')
+    cmd.color('grey92', 'ss S')
+    cmd.color('grey71', 'ss L+')
+    cmd.set('cartoon_discrete_colors','on')
+
+
+cmd.extend('cartoonbw', cartoonbw)
+
+
+def ccp4mg():
     ''' 
     DESCRIPTION:
     Open ccp4mg from within PyMOL. 
@@ -6465,7 +7976,7 @@ def ccp4mg(fileName="test.pdb"):
     USAGE:
     ccp4mg
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     ccp4mg
@@ -6474,19 +7985,18 @@ def ccp4mg(fileName="test.pdb"):
     Open ccp4mg from within PyMOL. 
     Adjust url for your location.
 
+
     VERTICAL PML SCRIPT:
-    arg = ( ccp4mgCommand + fileName);
-    subprocess.call(arg,shell=True);
-    return
+    NA
 
     HORIZONTAL PML SCRIPT:
-    arg = (ccp4mgCommand + fileName);subprocess.call(arg,shell=True);return
+    NA
 
     PYTHON CODE:
-def ccp4mg(fileName="test.pdb"):
+def ccp4mg():
     try:
         print("Opening the molecular graphics program ccp4mg.");
-        subprocess.check_output(ccp4mgOpen)
+        subprocess.check_output(ccp4mgCommand)
         print("Success opening ccp4mg.")
     except subprocess.CalledProcessError:
         print("Executable not found! \n  Check syntax of the ccp4mgOpen'. \n  Or use 'ccp4mgPath' as the argument of check_output().")
@@ -6494,11 +8004,12 @@ def ccp4mg(fileName="test.pdb"):
     except OSError:
         pass # executable not found
 
+cmd.extend('ccp4mg',ccp4mg)
     '''
 
     try:
         print("Opening the molecular graphics program ccp4mg.");
-        subprocess.check_output(ccp4mgOpen)
+        subprocess.check_output(ccp4mgCommand)
         print("Success opening ccp4mg.")
     except subprocess.CalledProcessError:
         print("Executable not found! \n  Check syntax of the ccp4mgOpen'. \n  Or use 'ccp4mgPath' as the argument of check_output().")
@@ -6508,6 +8019,7 @@ def ccp4mg(fileName="test.pdb"):
 
 cmd.extend('ccp4mg',ccp4mg)
 
+
 def cellbasis(angles, edges):
     ''' 
     DESCRIPTION:
@@ -6516,13 +8028,14 @@ def cellbasis(angles, edges):
     USAGE:
     NA
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     NA
 
     MORE DETAILS:
-    For the unit cell with given angles and edge lengths calculate the basis transformation (vectors) as a 4x4 numpy.array. Used by the function supercell.
+    For the unit cell with given angles and edge lengths calculate the basis transformation 
+     (vectors) as a 4x4 numpy.array. Used by the function supercell.
     VERTICAL PML SCRIPT:
     NotYet
     HORIZONTAL PML SCRIPT:
@@ -6539,6 +8052,7 @@ def cellbasis(angles, edges):
     edges.append(1.0)
     return basis * edges # numpy.array multiplication!
 
+cmd.extend('cellbasis',cellbasis)
     '''
 
     rad = [radians(i) for i in angles]
@@ -6553,6 +8067,7 @@ def cellbasis(angles, edges):
 
 cmd.extend('cellbasis',cellbasis)
 
+
 def checkParams(needle, haystack, selName, het, firstOnly):
     ''' 
     DESCRIPTION:
@@ -6561,7 +8076,7 @@ def checkParams(needle, haystack, selName, het, firstOnly):
     USAGE:
     NA
 
-    Arguments:
+    ARGUMENTS:
     NA
     EXAMPLE:
     NA
@@ -6569,11 +8084,11 @@ def checkParams(needle, haystack, selName, het, firstOnly):
     MORE DETAILS:
     Checks user params for the findSeq function.
 
-Source: https://pymolwiki.org/index.php/Findseq
-Author: Jason Vertrees
-Modificaiton: rewrote furnction name in camelcase
-License:  GNU Free Documentation License 1.2
-License Link: 
+    Source: https://pymolwiki.org/index.php/Findseq
+    Author: Jason Vertrees
+    Modificaiton: rewrote furnction name in camelcase
+    License:  GNU Free Documentation License 1.2
+    License Link: 
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -6615,6 +8130,7 @@ def checkParams(needle, haystack, selName, het, firstOnly):
         print("Error: selName was not a string.")
         return False
     return True
+
     '''
 
     """
@@ -6654,6 +8170,7 @@ def checkParams(needle, haystack, selName, het, firstOnly):
     return True
 
 
+
 def chimera(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
@@ -6663,7 +8180,7 @@ def chimera(fileName="test.pdb"):
     USAGE:
     chimera
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     chimera
@@ -6672,7 +8189,7 @@ def chimera(fileName="test.pdb"):
     Open Chimera from within PyMOL. 
     Adjust url for your location.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
         subprocess.call(chimeraOpen)
     return
@@ -6691,6 +8208,7 @@ def chimera(fileName="test.pdb"):
     except OSError:
         pass # executable not found
 
+cmd.extend('chimera',chimera)
     '''
 
     try:
@@ -6705,6 +8223,55 @@ def chimera(fileName="test.pdb"):
 
 cmd.extend('chimera',chimera)
 
+
+def chimeraWeb():
+    ''' 
+    DESCRIPTION:
+    Open the webste of UCSF Chimera.
+
+
+    USAGE:
+    chimeraWeb
+
+    ARGUMENTS:
+    NA
+    EXAMPLE:
+    chimeraWeb
+
+    MORE DETAILS:
+    Open the webste of UCSF Chimera.
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def chimeraWeb():
+    url=chimeriaURL
+    try:
+        print("Opening the website of UCSF Chimera.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of UCSF Chimera.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('chimeraWeb',chimeraWeb)
+    '''
+
+    url=chimeriaURL
+    try:
+        print("Opening the website of UCSF Chimera.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the website of UCSF Chimera.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('chimeraWeb',chimeraWeb)
+
+
 def cntccp4s():
     ''' 
     DESCRIPTION:
@@ -6713,13 +8280,15 @@ def cntccp4s():
     USAGE:
     cntccp4s
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntccp4s
 
     MORE DETAILS:
     Count number of *.ccp4 (electron density map) files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of ccp4 electron density files in current directory.");
     print("Usage: cntccp4s");
@@ -6740,6 +8309,7 @@ def cntccp4s():
     print("Number of number of ccp4 electron density files in the current directory: ", ccp4Counter);
 
 
+cmd.extend('cntccp4s',cntccp4s)
     '''
 
     print("Count the number of ccp4 electron density files in current directory.");
@@ -6751,6 +8321,7 @@ def cntccp4s():
 
 cmd.extend('cntccp4s',cntccp4s)
 
+
 def cntfiles():
     ''' 
     DESCRIPTION:
@@ -6759,13 +8330,15 @@ def cntfiles():
     USAGE:
     cntfiles
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntfiles
 
     MORE DETAILS:
     Count number of files in current directory.
+
+
     VERTICAL PML SCRIPT:
     arg = 'echo "Count the files in the directory." && echo "Usage: cntfiles." && find . -type f | wc -l'
     subprocess.call(arg,shell=True)
@@ -6779,6 +8352,7 @@ def cntfiles():
     # simple version for working with CWD
     print("Number of files in current working directory: ", len([name for name in os.listdir('.') if os.path.isfile(name)]))
     return
+cmd.extend('cntfiles',cntfiles)
     '''
 
     print("Count the files in the directory.")
@@ -6788,6 +8362,7 @@ def cntfiles():
     return
 cmd.extend('cntfiles',cntfiles)
 
+
 def cntlogs():
     ''' 
     DESCRIPTION:
@@ -6796,13 +8371,15 @@ def cntlogs():
     USAGE:
     cntlogs
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntlogs
 
     MORE DETAILS:
     Count number of *.log files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of log files in current directory.");
     print("Usage: cntlogs");
@@ -6824,6 +8401,7 @@ def cntlogs():
     print("Number of number of log image files in the current directory: ", logCounter);
 
 
+cmd.extend('cntlogs',cntlogs)
     '''
 
     print("Count the number of log image files in current directory.");
@@ -6835,6 +8413,7 @@ def cntlogs():
 
 cmd.extend('cntlogs',cntlogs)
 
+
 def cntmtzs():
     ''' 
     DESCRIPTION:
@@ -6843,13 +8422,15 @@ def cntmtzs():
     USAGE:
     cntmtzs
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntmtzs
 
     MORE DETAILS:
     Count number of *.mtz (structure factor) files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of mtz structure factor files in current directory.");
     print("Usage: cntmtzs");
@@ -6872,6 +8453,7 @@ def cntmtzs():
     print("Number of number of mtz structure factor  files in the current directory: ", mtzCounter);
 
 
+cmd.extend('cntmtzs',cntmtzs)
     '''
 
     print("Count the number of mtz structure factor files in current directory.");
@@ -6883,6 +8465,7 @@ def cntmtzs():
 
 cmd.extend('cntmtzs',cntmtzs)
 
+
 def cntpdbs():
     ''' 
     DESCRIPTION:
@@ -6891,13 +8474,15 @@ def cntpdbs():
     USAGE:
     cntpdbs
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntpdbs
 
     MORE DETAILS:
     Count number of pdb files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of pdb files in current working directory.");
     print("Usage: cntpdbs");
@@ -6918,6 +8503,7 @@ def cntpdbs():
     print("Number of pdb files in the current directory: ", pdbCounter)
     return
 
+cmd.extend('cntpdbs',cntpdbs)
     '''
 
     print("Count the number of pdb files in the current directory.")
@@ -6929,6 +8515,7 @@ def cntpdbs():
 
 cmd.extend('cntpdbs',cntpdbs)
 
+
 def cntpmls():
     ''' 
     DESCRIPTION:
@@ -6937,13 +8524,15 @@ def cntpmls():
     USAGE:
     cntpmls
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntpmls
 
     MORE DETAILS:
     Count number of pml (Pymol macro language) files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of pml (PyMOL macro language) files in current directory.");
     print("Usage: cntpmls");
@@ -6964,6 +8553,7 @@ def cntpmls():
     print("Number of pml files in the current directory: ", pmlCounter);
     return	
 
+cmd.extend('cntpmls',cntpmls)
     '''
 
     print("Count the number of pml (Pymol macro language) files in current directory.");
@@ -6975,6 +8565,7 @@ def cntpmls():
 
 cmd.extend('cntpmls',cntpmls)
 
+
 def cntpngs():
     ''' 
     DESCRIPTION:
@@ -6983,13 +8574,15 @@ def cntpngs():
     USAGE:
     cntpngs
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntpngs
 
     MORE DETAILS:
     Count number of *.png image files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of png image files in current directory.");
     print("Usage: cntpngs");
@@ -7011,6 +8604,7 @@ def cntpngs():
     print("Number of number of png image files in the current directory: ", pngCounter);
 
 
+cmd.extend('cntpngs',cntpngs)
     '''
 
     print("Count the number of png image files in current directory.");
@@ -7022,6 +8616,7 @@ def cntpngs():
 
 cmd.extend('cntpngs',cntpngs)
 
+
 def cntpses():
     ''' 
     DESCRIPTION:
@@ -7030,13 +8625,15 @@ def cntpses():
     USAGE:
     cntpses
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     cntpses
 
     MORE DETAILS:
     Count number of *.pse (session) files in current directory.
+
+
     VERTICAL PML SCRIPT:
     print("Count the number of pmls files in current directory.");
     print("Usage: cntpses");
@@ -7057,6 +8654,7 @@ def cntpses():
     print("Number of *.pse (session) files in the current directory: ", pseCounter);
     return	
 
+cmd.extend('cntpses',cntpses)
     '''
 
     print("Count the number of *.pse (session) files in current directory.");
@@ -7068,6 +8666,7 @@ def cntpses():
 
 cmd.extend('cntpses',cntpses)
 
+
 def code():
     ''' 
     DESCRIPTION:
@@ -7076,7 +8675,7 @@ def code():
     USAGE:
     code
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     code script.pml
@@ -7089,9 +8688,11 @@ def code():
 
     https://marketplace.visualstudio.com/items?itemName=reageyao.biosyntax
 
+
+
     VERTICAL PML SCRIPT:
     subprocess.call(codeOpen);
-return
+     return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(codeOpen);return
@@ -7108,6 +8709,7 @@ def code():
     except OSError:
         pass # executable not found
 
+cmd.extend('code',code)
     '''
 
     try:
@@ -7122,6 +8724,7 @@ def code():
 
 cmd.extend('code',code)
 
+
 def colorh1(selection='all'):
     ''' 
     DESCRIPTION:
@@ -7130,7 +8733,7 @@ def colorh1(selection='all'):
     USAGE:
     colorh1
 
-    Arguments:
+    ARGUMENTS:
      <selection>
     EXAMPLE:
     colorh1
@@ -7138,6 +8741,8 @@ colorh1 1lw9
 
     MORE DETAILS:
     Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 1 according to https://pymolwiki.org/index.php/Color_h.
+
+
     VERTICAL PML SCRIPT:
     NotYet
     HORIZONTAL PML SCRIPT:
@@ -7187,6 +8792,7 @@ def colorh1(selection='all'):
     cmd.color("color_lys","("+s+" and resn lys)")
     cmd.color("color_arg","("+s+" and resn arg)")
 
+cmd.extend('colorh1',colorh1)
     '''
 
     s = str(selection)
@@ -7234,6 +8840,7 @@ def colorh1(selection='all'):
 
 cmd.extend('colorh1',colorh1)
 
+
 def colorh2(selection='all'):
     ''' 
     DESCRIPTION:
@@ -7242,7 +8849,7 @@ def colorh2(selection='all'):
     USAGE:
     colorh2
 
-    Arguments:
+    ARGUMENTS:
      <selection>
     EXAMPLE:
     colorh2
@@ -7250,6 +8857,8 @@ colorh2 1lw9
 
     MORE DETAILS:
     Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 2 according to  https://pymolwiki.org/index.php/Color_h.
+
+
     VERTICAL PML SCRIPT:
     NotYet
     HORIZONTAL PML SCRIPT:
@@ -7299,6 +8908,7 @@ def colorh2(selection='all'):
     cmd.color("color_lys2","("+s+" and resn lys)")
     cmd.color("color_arg2","("+s+" and resn arg)")
 
+cmd.extend('colorh2',colorh2)
     '''
 
     s = str(selection)
@@ -7346,6 +8956,7 @@ def colorh2(selection='all'):
 
 cmd.extend('colorh2',colorh2)
 
+
 def coot(fileName="test.pdb"):
     ''' 
     DESCRIPTION:
@@ -7356,7 +8967,7 @@ def coot(fileName="test.pdb"):
     USAGE:
     coot
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     coot
@@ -7364,7 +8975,7 @@ def coot(fileName="test.pdb"):
     MORE DETAILS:
     Open coot from within PyMOL. 
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = (cootPath + fileName)
     subprocess.call(arg,shell=True)
@@ -7385,6 +8996,7 @@ def coot(fileName="test.pdb"):
     except OSError:
         pass # executable not found
 
+cmd.extend('coot',coot)
     '''
 
     try:
@@ -7399,6 +9011,7 @@ def coot(fileName="test.pdb"):
 
 cmd.extend('coot',coot)
 
+
 def cranR():
     ''' 
     DESCRIPTION:
@@ -7407,13 +9020,15 @@ def cranR():
     USAGE:
     cranR
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     ROpen   
 
     MORE DETAILS:
     Open Cran R from within PyMOL.
+
+
 
     VERTICAL PML SCRIPT:
     subprocess.call(ROpen); 
@@ -7423,17 +9038,31 @@ return
 
     PYTHON CODE:
 def cranR():
-    subprocess.call(ROpen)
-    return
-
-
-    '''
-
-    subprocess.call(ROpen)
-    return
-
+    try:
+        print("Opening the Cran R.");
+        subprocess.check_output(ROpen)
+        print("Success opening R.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'RlOpen'. \n  Or use 'RPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('cranR',cranR)
+    '''
+
+    try:
+        print("Opening the Cran R.");
+        subprocess.check_output(ROpen)
+        print("Success opening R.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'RlOpen'. \n  Or use 'RPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('cranR',cranR)
+
 
 def ddb():
     ''' 
@@ -7443,7 +9072,7 @@ def ddb():
     USAGE:
     ddb
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     ddb database.db
@@ -7451,7 +9080,7 @@ def ddb():
     MORE DETAILS:
     Open DBBrowserSQLite. 
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = dbbrowserPath;
     subprocess.call(arg,shell=True);
@@ -7461,13 +9090,31 @@ def ddb():
     arg = dbbrowserPath;subprocess.call(arg,shell=True);return
     PYTHON CODE:
 def ddb():
-    subprocess.call(DBBrowserSQLiteOpen);
-    return
+    try:
+        print("Opening the DBBrowserSQLite.");
+        subprocess.check_output(DBBrowserSQLiteOpen)
+        print("Success opening DBBrowserSQLite.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'excelOpen'. \n  Or use 'excelPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('ddb',ddb)
     '''
 
-    subprocess.call(DBBrowserSQLiteOpen);
-    return
+    try:
+        print("Opening the DBBrowserSQLite.");
+        subprocess.check_output(DBBrowserSQLiteOpen)
+        print("Success opening DBBrowserSQLite.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'excelOpen'. \n  Or use 'excelPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
 cmd.extend('ddb',ddb)
+
 
 def emacs(fileName="test.pml"):
     ''' 
@@ -7477,7 +9124,7 @@ def emacs(fileName="test.pml"):
     USAGE:
     emacs
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     emacs
@@ -7486,15 +9133,16 @@ def emacs(fileName="test.pml"):
     Open file with emacs from within PyMOL. 
     Adjust path to emacs on your computer as needed.
 
+
     VERTICAL PML SCRIPT:
     subprocess.call(emacsOpen);
-return
+    return
     HORIZONTAL PML SCRIPT:
     subprocess.call(emacsOpen);return
     PYTHON CODE:
 def emacs(fileName="test.pml"):
     try:
-        print("Opening the molecular graphics program emacs.");
+        print("Opening the text editor emacs.");
         subprocess.check_output(emacsOpen)
         print("Success opening emacs.")
     except subprocess.CalledProcessError:
@@ -7503,10 +9151,11 @@ def emacs(fileName="test.pml"):
     except OSError:
         pass # executable not found
 
+cmd.extend('emacs',emacs)
     '''
 
     try:
-        print("Opening the molecular graphics program emacs.");
+        print("Opening the text editor emacs.");
         subprocess.check_output(emacsOpen)
         print("Success opening emacs.")
     except subprocess.CalledProcessError:
@@ -7517,6 +9166,7 @@ def emacs(fileName="test.pml"):
 
 cmd.extend('emacs',emacs)
 
+
 def excel():
     ''' 
     DESCRIPTION:
@@ -7525,7 +9175,7 @@ def excel():
     USAGE:
     excel
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     excel
@@ -7533,7 +9183,7 @@ def excel():
     MORE DETAILS:
     Open excel from within PyMOL. 
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = excelCommand
     subprocess.call(arg,shell=True)
@@ -7544,702 +9194,31 @@ def excel():
 
     PYTHON CODE:
 def excel():
-    subprocess.call(excelOpen)
-    return
+    try:
+        print("Opening the Microsoft Excel.");
+        subprocess.check_output(excelOpen)
+        print("Success opening Excel.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'excelOpen'. \n  Or use 'excelPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
+cmd.extend('excel',excel)
     '''
 
-    subprocess.call(excelOpen)
-    return
+    try:
+        print("Opening the Microsoft Excel.");
+        subprocess.check_output(excelOpen)
+        print("Success opening Excel.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'excelOpen'. \n  Or use 'excelPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('excel',excel)
 
-def findSeq(needle, haystack, selName=None, het=0, firstOnly=0):
-    ''' 
-    DESCRIPTION:
-    Returns as selection matching a sequence fragment.
-
-    USAGE:
-    findSeq
-
-    Arguments:
-    singleLetterSequence
-    EXAMPLE:
-    findSeq CGHT
-
-    MORE DETAILS:
-    Returns as selection matching a sequence fragment.
-
-DESCRIPTION:
-Given a sequence/regex to find, select those
-matching amino acids in the protein.
-
-USAGE:
-findseq needle, haystack[, selName[, het[, firstOnly]]]
-
-PARAMS:
-needle (string)
-		the sequence of amino acids to match and select
-		in the haystack.  This can be a sequence of amino
-		acids, or a string-style regular expression.  See
-		examples.
-
-hastack (string or PyMOL selection)
-		name of the PyMOL object/selection in which
-		to find the needle.
-
-selName (string; defaults to None)
-		This is the name of the selection to return.  If selName
-		is left blank (None), then the selection name will be
-		foundSeqXYZ where XYZ is some random number; if selName is
-		"sele" the usual PyMOL "(sele)" will be used; and, lastly,
-		if selName is anything else, that name will be used verbatim.
-
-het (0 or 1; defaults to 0)
-		This boolean flag allows (1) or disallows (0) heteroatoms
-		from being considered.
-
-firstOnly (0 or 1; defaults to 0)
-		Subsequences or motifs might be repeated, this controls how we
-		consider multiple matches.  If firstOnly is False (0) then we return
-		all found subsequences; if firstOnly is True (1), then we just return
-		the first found sequence.
-
-RETURNS:
-a newly created selection with the atoms you sought.  If there are
-more than two contiguous regions, then a newly created group is
-returned with each contiguous segment its own selection.
-
-EXAMPLE:
-# find SPVI in 1h12, foundSeqXYZ as return name
-findseq SPVI, 1h12
-
-# find FATEW and make it (sele).
-findseq FATEW, 1g01, sele
-
-# find the regular expression GMS.*QWY in 1a3h
-# and put the return value in (sele).
-fetch 1a3h
-# this ends up finding the sequence, GMSSHGLQWY
-findseq GMS.*QWY, 1a3h, sele
-
-NOTES:
-Assumes we're using the ONE LETTER amino acid abbreviations.
-
-AUTHOR:
-Jason Vertrees, 2009.
-
-    VERTICAL PML SCRIPT:
-    NotYet
-    HORIZONTAL PML SCRIPT:
-    NotYet
-    PYTHON CODE:
-def findSeq(needle, haystack, selName=None, het=0, firstOnly=0):
-    # set the name of the selection to return.
-    if selName == None:
-        rSelName = "foundSeq" + str(random.randint(0, 32000))
-        selName = rSelName
-    elif selName == "sele":
-        rSelName = "sele"
-    else:
-        rSelName = selName
-
-    # input checking
-    if not checkParams(needle, haystack, selName, het, firstOnly):
-        print("There was an error with a parameter.  Please see")
-        print("the above error message for how to fix it.")
-        return None
-
-    one_letter = {
-        '00C': 'C', '01W': 'X', '0A0': 'D', '0A1': 'Y', '0A2': 'K',
-        '0A8': 'C', '0AA': 'V', '0AB': 'V', '0AC': 'G', '0AD': 'G',
-        '0AF': 'W', '0AG': 'L', '0AH': 'S', '0AK': 'D', '0AM': 'A',
-        '0AP': 'C', '0AU': 'U', '0AV': 'A', '0AZ': 'P', '0BN': 'F',
-        '0C ': 'C', '0CS': 'A', '0DC': 'C', '0DG': 'G', '0DT': 'T',
-        '0G ': 'G', '0NC': 'A', '0SP': 'A', '0U ': 'U', '0YG': 'YG',
-        '10C': 'C', '125': 'U', '126': 'U', '127': 'U', '128': 'N',
-        '12A': 'A', '143': 'C', '175': 'ASG', '193': 'X', '1AP': 'A',
-        '1MA': 'A', '1MG': 'G', '1PA': 'F', '1PI': 'A', '1PR': 'N',
-        '1SC': 'C', '1TQ': 'W', '1TY': 'Y', '200': 'F', '23F': 'F',
-        '23S': 'X', '26B': 'T', '2AD': 'X', '2AG': 'G', '2AO': 'X',
-        '2AR': 'A', '2AS': 'X', '2AT': 'T', '2AU': 'U', '2BD': 'I',
-        '2BT': 'T', '2BU': 'A', '2CO': 'C', '2DA': 'A', '2DF': 'N',
-        '2DM': 'N', '2DO': 'X', '2DT': 'T', '2EG': 'G', '2FE': 'N',
-        '2FI': 'N', '2FM': 'M', '2GT': 'T', '2HF': 'H', '2LU': 'L',
-        '2MA': 'A', '2MG': 'G', '2ML': 'L', '2MR': 'R', '2MT': 'P',
-        '2MU': 'U', '2NT': 'T', '2OM': 'U', '2OT': 'T', '2PI': 'X',
-        '2PR': 'G', '2SA': 'N', '2SI': 'X', '2ST': 'T', '2TL': 'T',
-        '2TY': 'Y', '2VA': 'V', '32S': 'X', '32T': 'X', '3AH': 'H',
-        '3AR': 'X', '3CF': 'F', '3DA': 'A', '3DR': 'N', '3GA': 'A',
-        '3MD': 'D', '3ME': 'U', '3NF': 'Y', '3TY': 'X', '3XH': 'G',
-        '4AC': 'N', '4BF': 'Y', '4CF': 'F', '4CY': 'M', '4DP': 'W',
-        '4F3': 'GYG', '4FB': 'P', '4FW': 'W', '4HT': 'W', '4IN': 'X',
-        '4MF': 'N', '4MM': 'X', '4OC': 'C', '4PC': 'C', '4PD': 'C',
-        '4PE': 'C', '4PH': 'F', '4SC': 'C', '4SU': 'U', '4TA': 'N',
-        '5AA': 'A', '5AT': 'T', '5BU': 'U', '5CG': 'G', '5CM': 'C',
-        '5CS': 'C', '5FA': 'A', '5FC': 'C', '5FU': 'U', '5HP': 'E',
-        '5HT': 'T', '5HU': 'U', '5IC': 'C', '5IT': 'T', '5IU': 'U',
-        '5MC': 'C', '5MD': 'N', '5MU': 'U', '5NC': 'C', '5PC': 'C',
-        '5PY': 'T', '5SE': 'U', '5ZA': 'TWG', '64T': 'T', '6CL': 'K',
-        '6CT': 'T', '6CW': 'W', '6HA': 'A', '6HC': 'C', '6HG': 'G',
-        '6HN': 'K', '6HT': 'T', '6IA': 'A', '6MA': 'A', '6MC': 'A',
-        '6MI': 'N', '6MT': 'A', '6MZ': 'N', '6OG': 'G', '70U': 'U',
-        '7DA': 'A', '7GU': 'G', '7JA': 'I', '7MG': 'G', '8AN': 'A',
-        '8FG': 'G', '8MG': 'G', '8OG': 'G', '9NE': 'E', '9NF': 'F',
-        '9NR': 'R', '9NV': 'V', 'A  ': 'A', 'A1P': 'N', 'A23': 'A',
-        'A2L': 'A', 'A2M': 'A', 'A34': 'A', 'A35': 'A', 'A38': 'A',
-        'A39': 'A', 'A3A': 'A', 'A3P': 'A', 'A40': 'A', 'A43': 'A',
-        'A44': 'A', 'A47': 'A', 'A5L': 'A', 'A5M': 'C', 'A5O': 'A',
-        'A66': 'X', 'AA3': 'A', 'AA4': 'A', 'AAR': 'R', 'AB7': 'X',
-        'ABA': 'A', 'ABR': 'A', 'ABS': 'A', 'ABT': 'N', 'ACB': 'D',
-        'ACL': 'R', 'AD2': 'A', 'ADD': 'X', 'ADX': 'N', 'AEA': 'X',
-        'AEI': 'D', 'AET': 'A', 'AFA': 'N', 'AFF': 'N', 'AFG': 'G',
-        'AGM': 'R', 'AGT': 'X', 'AHB': 'N', 'AHH': 'X', 'AHO': 'A',
-        'AHP': 'A', 'AHS': 'X', 'AHT': 'X', 'AIB': 'A', 'AKL': 'D',
-        'ALA': 'A', 'ALC': 'A', 'ALG': 'R', 'ALM': 'A', 'ALN': 'A',
-        'ALO': 'T', 'ALQ': 'X', 'ALS': 'A', 'ALT': 'A', 'ALY': 'K',
-        'AP7': 'A', 'APE': 'X', 'APH': 'A', 'API': 'K', 'APK': 'K',
-        'APM': 'X', 'APP': 'X', 'AR2': 'R', 'AR4': 'E', 'ARG': 'R',
-        'ARM': 'R', 'ARO': 'R', 'ARV': 'X', 'AS ': 'A', 'AS2': 'D',
-        'AS9': 'X', 'ASA': 'D', 'ASB': 'D', 'ASI': 'D', 'ASK': 'D',
-        'ASL': 'D', 'ASM': 'X', 'ASN': 'N', 'ASP': 'D', 'ASQ': 'D',
-        'ASU': 'N', 'ASX': 'B', 'ATD': 'T', 'ATL': 'T', 'ATM': 'T',
-        'AVC': 'A', 'AVN': 'X', 'AYA': 'A', 'AYG': 'AYG', 'AZK': 'K',
-        'AZS': 'S', 'AZY': 'Y', 'B1F': 'F', 'B1P': 'N', 'B2A': 'A',
-        'B2F': 'F', 'B2I': 'I', 'B2V': 'V', 'B3A': 'A', 'B3D': 'D',
-        'B3E': 'E', 'B3K': 'K', 'B3L': 'X', 'B3M': 'X', 'B3Q': 'X',
-        'B3S': 'S', 'B3T': 'X', 'B3U': 'H', 'B3X': 'N', 'B3Y': 'Y',
-        'BB6': 'C', 'BB7': 'C', 'BB9': 'C', 'BBC': 'C', 'BCS': 'C',
-        'BCX': 'C', 'BE2': 'X', 'BFD': 'D', 'BG1': 'S', 'BGM': 'G',
-        'BHD': 'D', 'BIF': 'F', 'BIL': 'X', 'BIU': 'I', 'BJH': 'X',
-        'BLE': 'L', 'BLY': 'K', 'BMP': 'N', 'BMT': 'T', 'BNN': 'A',
-        'BNO': 'X', 'BOE': 'T', 'BOR': 'R', 'BPE': 'C', 'BRU': 'U',
-        'BSE': 'S', 'BT5': 'N', 'BTA': 'L', 'BTC': 'C', 'BTR': 'W',
-        'BUC': 'C', 'BUG': 'V', 'BVP': 'U', 'BZG': 'N', 'C  ': 'C',
-        'C12': 'TYG', 'C1X': 'K', 'C25': 'C', 'C2L': 'C', 'C2S': 'C',
-        'C31': 'C', 'C32': 'C', 'C34': 'C', 'C36': 'C', 'C37': 'C',
-        'C38': 'C', 'C3Y': 'C', 'C42': 'C', 'C43': 'C', 'C45': 'C',
-        'C46': 'C', 'C49': 'C', 'C4R': 'C', 'C4S': 'C', 'C5C': 'C',
-        'C66': 'X', 'C6C': 'C', 'C99': 'TFG', 'CAF': 'C', 'CAL': 'X',
-        'CAR': 'C', 'CAS': 'C', 'CAV': 'X', 'CAY': 'C', 'CB2': 'C',
-        'CBR': 'C', 'CBV': 'C', 'CCC': 'C', 'CCL': 'K', 'CCS': 'C',
-        'CCY': 'CYG', 'CDE': 'X', 'CDV': 'X', 'CDW': 'C', 'CEA': 'C',
-        'CFL': 'C', 'CFY': 'FCYG', 'CG1': 'G', 'CGA': 'E', 'CGU': 'E',
-        'CH ': 'C', 'CH6': 'MYG', 'CH7': 'KYG', 'CHF': 'X', 'CHG': 'X',
-        'CHP': 'G', 'CHS': 'X', 'CIR': 'R', 'CJO': 'GYG', 'CLE': 'L',
-        'CLG': 'K', 'CLH': 'K', 'CLV': 'AFG', 'CM0': 'N', 'CME': 'C',
-        'CMH': 'C', 'CML': 'C', 'CMR': 'C', 'CMT': 'C', 'CNU': 'U',
-        'CP1': 'C', 'CPC': 'X', 'CPI': 'X', 'CQR': 'GYG', 'CR0': 'TLG',
-        'CR2': 'GYG', 'CR5': 'G', 'CR7': 'KYG', 'CR8': 'HYG', 'CRF': 'TWG',
-        'CRG': 'THG', 'CRK': 'MYG', 'CRO': 'GYG', 'CRQ': 'QYG', 'CRU': 'E',
-        'CRW': 'ASG', 'CRX': 'ASG', 'CS0': 'C', 'CS1': 'C', 'CS3': 'C',
-        'CS4': 'C', 'CS8': 'N', 'CSA': 'C', 'CSB': 'C', 'CSD': 'C',
-        'CSE': 'C', 'CSF': 'C', 'CSH': 'SHG', 'CSI': 'G', 'CSJ': 'C',
-        'CSL': 'C', 'CSO': 'C', 'CSP': 'C', 'CSR': 'C', 'CSS': 'C',
-        'CSU': 'C', 'CSW': 'C', 'CSX': 'C', 'CSY': 'SYG', 'CSZ': 'C',
-        'CTE': 'W', 'CTG': 'T', 'CTH': 'T', 'CUC': 'X', 'CWR': 'S',
-        'CXM': 'M', 'CY0': 'C', 'CY1': 'C', 'CY3': 'C', 'CY4': 'C',
-        'CYA': 'C', 'CYD': 'C', 'CYF': 'C', 'CYG': 'C', 'CYJ': 'X',
-        'CYM': 'C', 'CYQ': 'C', 'CYR': 'C', 'CYS': 'C', 'CZ2': 'C',
-        'CZO': 'GYG', 'CZZ': 'C', 'D11': 'T', 'D1P': 'N', 'D3 ': 'N',
-        'D33': 'N', 'D3P': 'G', 'D3T': 'T', 'D4M': 'T', 'D4P': 'X',
-        'DA ': 'A', 'DA2': 'X', 'DAB': 'A', 'DAH': 'F', 'DAL': 'A',
-        'DAR': 'R', 'DAS': 'D', 'DBB': 'T', 'DBM': 'N', 'DBS': 'S',
-        'DBU': 'T', 'DBY': 'Y', 'DBZ': 'A', 'DC ': 'C', 'DC2': 'C',
-        'DCG': 'G', 'DCI': 'X', 'DCL': 'X', 'DCT': 'C', 'DCY': 'C',
-        'DDE': 'H', 'DDG': 'G', 'DDN': 'U', 'DDX': 'N', 'DFC': 'C',
-        'DFG': 'G', 'DFI': 'X', 'DFO': 'X', 'DFT': 'N', 'DG ': 'G',
-        'DGH': 'G', 'DGI': 'G', 'DGL': 'E', 'DGN': 'Q', 'DHA': 'A',
-        'DHI': 'H', 'DHL': 'X', 'DHN': 'V', 'DHP': 'X', 'DHU': 'U',
-        'DHV': 'V', 'DI ': 'I', 'DIL': 'I', 'DIR': 'R', 'DIV': 'V',
-        'DLE': 'L', 'DLS': 'K', 'DLY': 'K', 'DM0': 'K', 'DMH': 'N',
-        'DMK': 'D', 'DMT': 'X', 'DN ': 'N', 'DNE': 'L', 'DNG': 'L',
-        'DNL': 'K', 'DNM': 'L', 'DNP': 'A', 'DNR': 'C', 'DNS': 'K',
-        'DOA': 'X', 'DOC': 'C', 'DOH': 'D', 'DON': 'L', 'DPB': 'T',
-        'DPH': 'F', 'DPL': 'P', 'DPP': 'A', 'DPQ': 'Y', 'DPR': 'P',
-        'DPY': 'N', 'DRM': 'U', 'DRP': 'N', 'DRT': 'T', 'DRZ': 'N',
-        'DSE': 'S', 'DSG': 'N', 'DSN': 'S', 'DSP': 'D', 'DT ': 'T',
-        'DTH': 'T', 'DTR': 'W', 'DTY': 'Y', 'DU ': 'U', 'DVA': 'V',
-        'DXD': 'N', 'DXN': 'N', 'DYG': 'DYG', 'DYS': 'C', 'DZM': 'A',
-        'E  ': 'A', 'E1X': 'A', 'EDA': 'A', 'EDC': 'G', 'EFC': 'C',
-        'EHP': 'F', 'EIT': 'T', 'ENP': 'N', 'ESB': 'Y', 'ESC': 'M',
-        'EXY': 'L', 'EY5': 'N', 'EYS': 'X', 'F2F': 'F', 'FA2': 'A',
-        'FA5': 'N', 'FAG': 'N', 'FAI': 'N', 'FCL': 'F', 'FFD': 'N',
-        'FGL': 'G', 'FGP': 'S', 'FHL': 'X', 'FHO': 'K', 'FHU': 'U',
-        'FLA': 'A', 'FLE': 'L', 'FLT': 'Y', 'FME': 'M', 'FMG': 'G',
-        'FMU': 'N', 'FOE': 'C', 'FOX': 'G', 'FP9': 'P', 'FPA': 'F',
-        'FRD': 'X', 'FT6': 'W', 'FTR': 'W', 'FTY': 'Y', 'FZN': 'K',
-        'G  ': 'G', 'G25': 'G', 'G2L': 'G', 'G2S': 'G', 'G31': 'G',
-        'G32': 'G', 'G33': 'G', 'G36': 'G', 'G38': 'G', 'G42': 'G',
-        'G46': 'G', 'G47': 'G', 'G48': 'G', 'G49': 'G', 'G4P': 'N',
-        'G7M': 'G', 'GAO': 'G', 'GAU': 'E', 'GCK': 'C', 'GCM': 'X',
-        'GDP': 'G', 'GDR': 'G', 'GFL': 'G', 'GGL': 'E', 'GH3': 'G',
-        'GHG': 'Q', 'GHP': 'G', 'GL3': 'G', 'GLH': 'Q', 'GLM': 'X',
-        'GLN': 'Q', 'GLQ': 'E', 'GLU': 'E', 'GLX': 'Z', 'GLY': 'G',
-        'GLZ': 'G', 'GMA': 'E', 'GMS': 'G', 'GMU': 'U', 'GN7': 'G',
-        'GND': 'X', 'GNE': 'N', 'GOM': 'G', 'GPL': 'K', 'GS ': 'G',
-        'GSC': 'G', 'GSR': 'G', 'GSS': 'G', 'GSU': 'E', 'GT9': 'C',
-        'GTP': 'G', 'GVL': 'X', 'GYC': 'CYG', 'GYS': 'SYG', 'H2U': 'U',
-        'H5M': 'P', 'HAC': 'A', 'HAR': 'R', 'HBN': 'H', 'HCS': 'X',
-        'HDP': 'U', 'HEU': 'U', 'HFA': 'X', 'HGL': 'X', 'HHI': 'H',
-        'HHK': 'AK', 'HIA': 'H', 'HIC': 'H', 'HIP': 'H', 'HIQ': 'H',
-        'HIS': 'H', 'HL2': 'L', 'HLU': 'L', 'HMF': 'A', 'HMR': 'R',
-        'HOL': 'N', 'HPC': 'F', 'HPE': 'F', 'HPQ': 'F', 'HQA': 'A',
-        'HRG': 'R', 'HRP': 'W', 'HS8': 'H', 'HS9': 'H', 'HSE': 'S',
-        'HSL': 'S', 'HSO': 'H', 'HTI': 'C', 'HTN': 'N', 'HTR': 'W',
-        'HV5': 'A', 'HVA': 'V', 'HY3': 'P', 'HYP': 'P', 'HZP': 'P',
-        'I  ': 'I', 'I2M': 'I', 'I58': 'K', 'I5C': 'C', 'IAM': 'A',
-        'IAR': 'R', 'IAS': 'D', 'IC ': 'C', 'IEL': 'K', 'IEY': 'HYG',
-        'IG ': 'G', 'IGL': 'G', 'IGU': 'G', 'IIC': 'SHG', 'IIL': 'I',
-        'ILE': 'I', 'ILG': 'E', 'ILX': 'I', 'IMC': 'C', 'IML': 'I',
-        'IOY': 'F', 'IPG': 'G', 'IPN': 'N', 'IRN': 'N', 'IT1': 'K',
-        'IU ': 'U', 'IYR': 'Y', 'IYT': 'T', 'JJJ': 'C', 'JJK': 'C',
-        'JJL': 'C', 'JW5': 'N', 'K1R': 'C', 'KAG': 'G', 'KCX': 'K',
-        'KGC': 'K', 'KOR': 'M', 'KPI': 'K', 'KST': 'K', 'KYQ': 'K',
-        'L2A': 'X', 'LA2': 'K', 'LAA': 'D', 'LAL': 'A', 'LBY': 'K',
-        'LC ': 'C', 'LCA': 'A', 'LCC': 'N', 'LCG': 'G', 'LCH': 'N',
-        'LCK': 'K', 'LCX': 'K', 'LDH': 'K', 'LED': 'L', 'LEF': 'L',
-        'LEH': 'L', 'LEI': 'V', 'LEM': 'L', 'LEN': 'L', 'LET': 'X',
-        'LEU': 'L', 'LG ': 'G', 'LGP': 'G', 'LHC': 'X', 'LHU': 'U',
-        'LKC': 'N', 'LLP': 'K', 'LLY': 'K', 'LME': 'E', 'LMQ': 'Q',
-        'LMS': 'N', 'LP6': 'K', 'LPD': 'P', 'LPG': 'G', 'LPL': 'X',
-        'LPS': 'S', 'LSO': 'X', 'LTA': 'X', 'LTR': 'W', 'LVG': 'G',
-        'LVN': 'V', 'LYM': 'K', 'LYN': 'K', 'LYR': 'K', 'LYS': 'K',
-        'LYX': 'K', 'LYZ': 'K', 'M0H': 'C', 'M1G': 'G', 'M2G': 'G',
-        'M2L': 'K', 'M2S': 'M', 'M3L': 'K', 'M5M': 'C', 'MA ': 'A',
-        'MA6': 'A', 'MA7': 'A', 'MAA': 'A', 'MAD': 'A', 'MAI': 'R',
-        'MBQ': 'Y', 'MBZ': 'N', 'MC1': 'S', 'MCG': 'X', 'MCL': 'K',
-        'MCS': 'C', 'MCY': 'C', 'MDH': 'X', 'MDO': 'ASG', 'MDR': 'N',
-        'MEA': 'F', 'MED': 'M', 'MEG': 'E', 'MEN': 'N', 'MEP': 'U',
-        'MEQ': 'Q', 'MET': 'M', 'MEU': 'G', 'MF3': 'X', 'MFC': 'GYG',
-        'MG1': 'G', 'MGG': 'R', 'MGN': 'Q', 'MGQ': 'A', 'MGV': 'G',
-        'MGY': 'G', 'MHL': 'L', 'MHO': 'M', 'MHS': 'H', 'MIA': 'A',
-        'MIS': 'S', 'MK8': 'L', 'ML3': 'K', 'MLE': 'L', 'MLL': 'L',
-        'MLY': 'K', 'MLZ': 'K', 'MME': 'M', 'MMT': 'T', 'MND': 'N',
-        'MNL': 'L', 'MNU': 'U', 'MNV': 'V', 'MOD': 'X', 'MP8': 'P',
-        'MPH': 'X', 'MPJ': 'X', 'MPQ': 'G', 'MRG': 'G', 'MSA': 'G',
-        'MSE': 'M', 'MSL': 'M', 'MSO': 'M', 'MSP': 'X', 'MT2': 'M',
-        'MTR': 'T', 'MTU': 'A', 'MTY': 'Y', 'MVA': 'V', 'N  ': 'N',
-        'N10': 'S', 'N2C': 'X', 'N5I': 'N', 'N5M': 'C', 'N6G': 'G',
-        'N7P': 'P', 'NA8': 'A', 'NAL': 'A', 'NAM': 'A', 'NB8': 'N',
-        'NBQ': 'Y', 'NC1': 'S', 'NCB': 'A', 'NCX': 'N', 'NCY': 'X',
-        'NDF': 'F', 'NDN': 'U', 'NEM': 'H', 'NEP': 'H', 'NF2': 'N',
-        'NFA': 'F', 'NHL': 'E', 'NIT': 'X', 'NIY': 'Y', 'NLE': 'L',
-        'NLN': 'L', 'NLO': 'L', 'NLP': 'L', 'NLQ': 'Q', 'NMC': 'G',
-        'NMM': 'R', 'NMS': 'T', 'NMT': 'T', 'NNH': 'R', 'NP3': 'N',
-        'NPH': 'C', 'NRP': 'LYG', 'NRQ': 'MYG', 'NSK': 'X', 'NTY': 'Y',
-        'NVA': 'V', 'NYC': 'TWG', 'NYG': 'NYG', 'NYM': 'N', 'NYS': 'C',
-        'NZH': 'H', 'O12': 'X', 'O2C': 'N', 'O2G': 'G', 'OAD': 'N',
-        'OAS': 'S', 'OBF': 'X', 'OBS': 'X', 'OCS': 'C', 'OCY': 'C',
-        'ODP': 'N', 'OHI': 'H', 'OHS': 'D', 'OIC': 'X', 'OIP': 'I',
-        'OLE': 'X', 'OLT': 'T', 'OLZ': 'S', 'OMC': 'C', 'OMG': 'G',
-        'OMT': 'M', 'OMU': 'U', 'ONE': 'U', 'ONL': 'X', 'OPR': 'R',
-        'ORN': 'A', 'ORQ': 'R', 'OSE': 'S', 'OTB': 'X', 'OTH': 'T',
-        'OTY': 'Y', 'OXX': 'D', 'P  ': 'G', 'P1L': 'C', 'P1P': 'N',
-        'P2T': 'T', 'P2U': 'U', 'P2Y': 'P', 'P5P': 'A', 'PAQ': 'Y',
-        'PAS': 'D', 'PAT': 'W', 'PAU': 'A', 'PBB': 'C', 'PBF': 'F',
-        'PBT': 'N', 'PCA': 'E', 'PCC': 'P', 'PCE': 'X', 'PCS': 'F',
-        'PDL': 'X', 'PDU': 'U', 'PEC': 'C', 'PF5': 'F', 'PFF': 'F',
-        'PFX': 'X', 'PG1': 'S', 'PG7': 'G', 'PG9': 'G', 'PGL': 'X',
-        'PGN': 'G', 'PGP': 'G', 'PGY': 'G', 'PHA': 'F', 'PHD': 'D',
-        'PHE': 'F', 'PHI': 'F', 'PHL': 'F', 'PHM': 'F', 'PIV': 'X',
-        'PLE': 'L', 'PM3': 'F', 'PMT': 'C', 'POM': 'P', 'PPN': 'F',
-        'PPU': 'A', 'PPW': 'G', 'PQ1': 'N', 'PR3': 'C', 'PR5': 'A',
-        'PR9': 'P', 'PRN': 'A', 'PRO': 'P', 'PRS': 'P', 'PSA': 'F',
-        'PSH': 'H', 'PST': 'T', 'PSU': 'U', 'PSW': 'C', 'PTA': 'X',
-        'PTH': 'Y', 'PTM': 'Y', 'PTR': 'Y', 'PU ': 'A', 'PUY': 'N',
-        'PVH': 'H', 'PVL': 'X', 'PYA': 'A', 'PYO': 'U', 'PYX': 'C',
-        'PYY': 'N', 'QLG': 'QLG', 'QUO': 'G', 'R  ': 'A', 'R1A': 'C',
-        'R1B': 'C', 'R1F': 'C', 'R7A': 'C', 'RC7': 'HYG', 'RCY': 'C',
-        'RIA': 'A', 'RMP': 'A', 'RON': 'X', 'RT ': 'T', 'RTP': 'N',
-        'S1H': 'S', 'S2C': 'C', 'S2D': 'A', 'S2M': 'T', 'S2P': 'A',
-        'S4A': 'A', 'S4C': 'C', 'S4G': 'G', 'S4U': 'U', 'S6G': 'G',
-        'SAC': 'S', 'SAH': 'C', 'SAR': 'G', 'SBL': 'S', 'SC ': 'C',
-        'SCH': 'C', 'SCS': 'C', 'SCY': 'C', 'SD2': 'X', 'SDG': 'G',
-        'SDP': 'S', 'SEB': 'S', 'SEC': 'A', 'SEG': 'A', 'SEL': 'S',
-        'SEM': 'X', 'SEN': 'S', 'SEP': 'S', 'SER': 'S', 'SET': 'S',
-        'SGB': 'S', 'SHC': 'C', 'SHP': 'G', 'SHR': 'K', 'SIB': 'C',
-        'SIC': 'DC', 'SLA': 'P', 'SLR': 'P', 'SLZ': 'K', 'SMC': 'C',
-        'SME': 'M', 'SMF': 'F', 'SMP': 'A', 'SMT': 'T', 'SNC': 'C',
-        'SNN': 'N', 'SOC': 'C', 'SOS': 'N', 'SOY': 'S', 'SPT': 'T',
-        'SRA': 'A', 'SSU': 'U', 'STY': 'Y', 'SUB': 'X', 'SUI': 'DG',
-        'SUN': 'S', 'SUR': 'U', 'SVA': 'S', 'SVX': 'S', 'SVZ': 'X',
-        'SYS': 'C', 'T  ': 'T', 'T11': 'F', 'T23': 'T', 'T2S': 'T',
-        'T2T': 'N', 'T31': 'U', 'T32': 'T', 'T36': 'T', 'T37': 'T',
-        'T38': 'T', 'T39': 'T', 'T3P': 'T', 'T41': 'T', 'T48': 'T',
-        'T49': 'T', 'T4S': 'T', 'T5O': 'U', 'T5S': 'T', 'T66': 'X',
-        'T6A': 'A', 'TA3': 'T', 'TA4': 'X', 'TAF': 'T', 'TAL': 'N',
-        'TAV': 'D', 'TBG': 'V', 'TBM': 'T', 'TC1': 'C', 'TCP': 'T',
-        'TCQ': 'X', 'TCR': 'W', 'TCY': 'A', 'TDD': 'L', 'TDY': 'T',
-        'TFE': 'T', 'TFO': 'A', 'TFQ': 'F', 'TFT': 'T', 'TGP': 'G',
-        'TH6': 'T', 'THC': 'T', 'THO': 'X', 'THR': 'T', 'THX': 'N',
-        'THZ': 'R', 'TIH': 'A', 'TLB': 'N', 'TLC': 'T', 'TLN': 'U',
-        'TMB': 'T', 'TMD': 'T', 'TNB': 'C', 'TNR': 'S', 'TOX': 'W',
-        'TP1': 'T', 'TPC': 'C', 'TPG': 'G', 'TPH': 'X', 'TPL': 'W',
-        'TPO': 'T', 'TPQ': 'Y', 'TQQ': 'W', 'TRF': 'W', 'TRG': 'K',
-        'TRN': 'W', 'TRO': 'W', 'TRP': 'W', 'TRQ': 'W', 'TRW': 'W',
-        'TRX': 'W', 'TS ': 'N', 'TST': 'X', 'TT ': 'N', 'TTD': 'T',
-        'TTI': 'U', 'TTM': 'T', 'TTQ': 'W', 'TTS': 'Y', 'TY2': 'Y',
-        'TY3': 'Y', 'TYB': 'Y', 'TYI': 'Y', 'TYN': 'Y', 'TYO': 'Y',
-        'TYQ': 'Y', 'TYR': 'Y', 'TYS': 'Y', 'TYT': 'Y', 'TYU': 'N',
-        'TYX': 'X', 'TYY': 'Y', 'TZB': 'X', 'TZO': 'X', 'U  ': 'U',
-        'U25': 'U', 'U2L': 'U', 'U2N': 'U', 'U2P': 'U', 'U31': 'U',
-        'U33': 'U', 'U34': 'U', 'U36': 'U', 'U37': 'U', 'U8U': 'U',
-        'UAR': 'U', 'UCL': 'U', 'UD5': 'U', 'UDP': 'N', 'UFP': 'N',
-        'UFR': 'U', 'UFT': 'U', 'UMA': 'A', 'UMP': 'U', 'UMS': 'U',
-        'UN1': 'X', 'UN2': 'X', 'UNK': 'X', 'UR3': 'U', 'URD': 'U',
-        'US1': 'U', 'US2': 'U', 'US3': 'T', 'US5': 'U', 'USM': 'U',
-        'V1A': 'C', 'VAD': 'V', 'VAF': 'V', 'VAL': 'V', 'VB1': 'K',
-        'VDL': 'X', 'VLL': 'X', 'VLM': 'X', 'VMS': 'X', 'VOL': 'X',
-        'X  ': 'G', 'X2W': 'E', 'X4A': 'N', 'X9Q': 'AFG', 'XAD': 'A',
-        'XAE': 'N', 'XAL': 'A', 'XAR': 'N', 'XCL': 'C', 'XCP': 'X',
-        'XCR': 'C', 'XCS': 'N', 'XCT': 'C', 'XCY': 'C', 'XGA': 'N',
-        'XGL': 'G', 'XGR': 'G', 'XGU': 'G', 'XTH': 'T', 'XTL': 'T',
-        'XTR': 'T', 'XTS': 'G', 'XTY': 'N', 'XUA': 'A', 'XUG': 'G',
-        'XX1': 'K', 'XXY': 'THG', 'XYG': 'DYG', 'Y  ': 'A', 'YCM': 'C',
-        'YG ': 'G', 'YOF': 'Y', 'YRR': 'N', 'YYG': 'G', 'Z  ': 'C',
-        'ZAD': 'A', 'ZAL': 'A', 'ZBC': 'C', 'ZCY': 'C', 'ZDU': 'U',
-        'ZFB': 'X', 'ZGU': 'G', 'ZHP': 'N', 'ZTH': 'T', 'ZZJ': 'A'}
-
-    # remove hetero atoms (waters/ligands/etc) from consideration?
-    if het:
-        cmd.select("__h", "br. " + haystack)
-    else:
-        cmd.select("__h", "br. " + haystack + " and not het")
-
-    # get the AAs in the haystack
-    aaDict = {'aaList': []}
-    cmd.iterate("(name ca) and __h", "aaList.append((resi,resn,chain))", space=aaDict)
-
-    IDs = [int(x[0]) for x in aaDict['aaList']]
-    AAs = ''.join([one_letter[x[1]] for x in aaDict['aaList']])
-    chains = [x[2] for x in aaDict['aaList']]
-
-    reNeedle = re.compile(needle.upper())
-    it = reNeedle.finditer(AAs)
-
-    # make an empty selection to which we add residues
-    cmd.select(rSelName, 'None')
-
-    for i in it:
-        (start, stop) = i.span()
-        # we found some residues, which chains are they from?
-        i_chains = chains[start:stop]
-        # are all residues from one chain?
-        if len(set(i_chains)) != 1:
-            # now they are not, this match is not really a match, skip it
-            continue
-        chain = i_chains[0]
-        cmd.select(rSelName, rSelName + " or (__h and i. " + str(IDs[start]) + "-" + str(IDs[stop - 1]) + " and c. " + chain + " )")
-        if int(firstOnly):
-            break
-    cmd.delete("__h")
-    return rSelName
-
-    '''
-
-    # set the name of the selection to return.
-    if selName == None:
-        rSelName = "foundSeq" + str(random.randint(0, 32000))
-        selName = rSelName
-    elif selName == "sele":
-        rSelName = "sele"
-    else:
-        rSelName = selName
-
-    # input checking
-    if not checkParams(needle, haystack, selName, het, firstOnly):
-        print("There was an error with a parameter.  Please see")
-        print("the above error message for how to fix it.")
-        return None
-
-    one_letter = {
-        '00C': 'C', '01W': 'X', '0A0': 'D', '0A1': 'Y', '0A2': 'K',
-        '0A8': 'C', '0AA': 'V', '0AB': 'V', '0AC': 'G', '0AD': 'G',
-        '0AF': 'W', '0AG': 'L', '0AH': 'S', '0AK': 'D', '0AM': 'A',
-        '0AP': 'C', '0AU': 'U', '0AV': 'A', '0AZ': 'P', '0BN': 'F',
-        '0C ': 'C', '0CS': 'A', '0DC': 'C', '0DG': 'G', '0DT': 'T',
-        '0G ': 'G', '0NC': 'A', '0SP': 'A', '0U ': 'U', '0YG': 'YG',
-        '10C': 'C', '125': 'U', '126': 'U', '127': 'U', '128': 'N',
-        '12A': 'A', '143': 'C', '175': 'ASG', '193': 'X', '1AP': 'A',
-        '1MA': 'A', '1MG': 'G', '1PA': 'F', '1PI': 'A', '1PR': 'N',
-        '1SC': 'C', '1TQ': 'W', '1TY': 'Y', '200': 'F', '23F': 'F',
-        '23S': 'X', '26B': 'T', '2AD': 'X', '2AG': 'G', '2AO': 'X',
-        '2AR': 'A', '2AS': 'X', '2AT': 'T', '2AU': 'U', '2BD': 'I',
-        '2BT': 'T', '2BU': 'A', '2CO': 'C', '2DA': 'A', '2DF': 'N',
-        '2DM': 'N', '2DO': 'X', '2DT': 'T', '2EG': 'G', '2FE': 'N',
-        '2FI': 'N', '2FM': 'M', '2GT': 'T', '2HF': 'H', '2LU': 'L',
-        '2MA': 'A', '2MG': 'G', '2ML': 'L', '2MR': 'R', '2MT': 'P',
-        '2MU': 'U', '2NT': 'T', '2OM': 'U', '2OT': 'T', '2PI': 'X',
-        '2PR': 'G', '2SA': 'N', '2SI': 'X', '2ST': 'T', '2TL': 'T',
-        '2TY': 'Y', '2VA': 'V', '32S': 'X', '32T': 'X', '3AH': 'H',
-        '3AR': 'X', '3CF': 'F', '3DA': 'A', '3DR': 'N', '3GA': 'A',
-        '3MD': 'D', '3ME': 'U', '3NF': 'Y', '3TY': 'X', '3XH': 'G',
-        '4AC': 'N', '4BF': 'Y', '4CF': 'F', '4CY': 'M', '4DP': 'W',
-        '4F3': 'GYG', '4FB': 'P', '4FW': 'W', '4HT': 'W', '4IN': 'X',
-        '4MF': 'N', '4MM': 'X', '4OC': 'C', '4PC': 'C', '4PD': 'C',
-        '4PE': 'C', '4PH': 'F', '4SC': 'C', '4SU': 'U', '4TA': 'N',
-        '5AA': 'A', '5AT': 'T', '5BU': 'U', '5CG': 'G', '5CM': 'C',
-        '5CS': 'C', '5FA': 'A', '5FC': 'C', '5FU': 'U', '5HP': 'E',
-        '5HT': 'T', '5HU': 'U', '5IC': 'C', '5IT': 'T', '5IU': 'U',
-        '5MC': 'C', '5MD': 'N', '5MU': 'U', '5NC': 'C', '5PC': 'C',
-        '5PY': 'T', '5SE': 'U', '5ZA': 'TWG', '64T': 'T', '6CL': 'K',
-        '6CT': 'T', '6CW': 'W', '6HA': 'A', '6HC': 'C', '6HG': 'G',
-        '6HN': 'K', '6HT': 'T', '6IA': 'A', '6MA': 'A', '6MC': 'A',
-        '6MI': 'N', '6MT': 'A', '6MZ': 'N', '6OG': 'G', '70U': 'U',
-        '7DA': 'A', '7GU': 'G', '7JA': 'I', '7MG': 'G', '8AN': 'A',
-        '8FG': 'G', '8MG': 'G', '8OG': 'G', '9NE': 'E', '9NF': 'F',
-        '9NR': 'R', '9NV': 'V', 'A  ': 'A', 'A1P': 'N', 'A23': 'A',
-        'A2L': 'A', 'A2M': 'A', 'A34': 'A', 'A35': 'A', 'A38': 'A',
-        'A39': 'A', 'A3A': 'A', 'A3P': 'A', 'A40': 'A', 'A43': 'A',
-        'A44': 'A', 'A47': 'A', 'A5L': 'A', 'A5M': 'C', 'A5O': 'A',
-        'A66': 'X', 'AA3': 'A', 'AA4': 'A', 'AAR': 'R', 'AB7': 'X',
-        'ABA': 'A', 'ABR': 'A', 'ABS': 'A', 'ABT': 'N', 'ACB': 'D',
-        'ACL': 'R', 'AD2': 'A', 'ADD': 'X', 'ADX': 'N', 'AEA': 'X',
-        'AEI': 'D', 'AET': 'A', 'AFA': 'N', 'AFF': 'N', 'AFG': 'G',
-        'AGM': 'R', 'AGT': 'X', 'AHB': 'N', 'AHH': 'X', 'AHO': 'A',
-        'AHP': 'A', 'AHS': 'X', 'AHT': 'X', 'AIB': 'A', 'AKL': 'D',
-        'ALA': 'A', 'ALC': 'A', 'ALG': 'R', 'ALM': 'A', 'ALN': 'A',
-        'ALO': 'T', 'ALQ': 'X', 'ALS': 'A', 'ALT': 'A', 'ALY': 'K',
-        'AP7': 'A', 'APE': 'X', 'APH': 'A', 'API': 'K', 'APK': 'K',
-        'APM': 'X', 'APP': 'X', 'AR2': 'R', 'AR4': 'E', 'ARG': 'R',
-        'ARM': 'R', 'ARO': 'R', 'ARV': 'X', 'AS ': 'A', 'AS2': 'D',
-        'AS9': 'X', 'ASA': 'D', 'ASB': 'D', 'ASI': 'D', 'ASK': 'D',
-        'ASL': 'D', 'ASM': 'X', 'ASN': 'N', 'ASP': 'D', 'ASQ': 'D',
-        'ASU': 'N', 'ASX': 'B', 'ATD': 'T', 'ATL': 'T', 'ATM': 'T',
-        'AVC': 'A', 'AVN': 'X', 'AYA': 'A', 'AYG': 'AYG', 'AZK': 'K',
-        'AZS': 'S', 'AZY': 'Y', 'B1F': 'F', 'B1P': 'N', 'B2A': 'A',
-        'B2F': 'F', 'B2I': 'I', 'B2V': 'V', 'B3A': 'A', 'B3D': 'D',
-        'B3E': 'E', 'B3K': 'K', 'B3L': 'X', 'B3M': 'X', 'B3Q': 'X',
-        'B3S': 'S', 'B3T': 'X', 'B3U': 'H', 'B3X': 'N', 'B3Y': 'Y',
-        'BB6': 'C', 'BB7': 'C', 'BB9': 'C', 'BBC': 'C', 'BCS': 'C',
-        'BCX': 'C', 'BE2': 'X', 'BFD': 'D', 'BG1': 'S', 'BGM': 'G',
-        'BHD': 'D', 'BIF': 'F', 'BIL': 'X', 'BIU': 'I', 'BJH': 'X',
-        'BLE': 'L', 'BLY': 'K', 'BMP': 'N', 'BMT': 'T', 'BNN': 'A',
-        'BNO': 'X', 'BOE': 'T', 'BOR': 'R', 'BPE': 'C', 'BRU': 'U',
-        'BSE': 'S', 'BT5': 'N', 'BTA': 'L', 'BTC': 'C', 'BTR': 'W',
-        'BUC': 'C', 'BUG': 'V', 'BVP': 'U', 'BZG': 'N', 'C  ': 'C',
-        'C12': 'TYG', 'C1X': 'K', 'C25': 'C', 'C2L': 'C', 'C2S': 'C',
-        'C31': 'C', 'C32': 'C', 'C34': 'C', 'C36': 'C', 'C37': 'C',
-        'C38': 'C', 'C3Y': 'C', 'C42': 'C', 'C43': 'C', 'C45': 'C',
-        'C46': 'C', 'C49': 'C', 'C4R': 'C', 'C4S': 'C', 'C5C': 'C',
-        'C66': 'X', 'C6C': 'C', 'C99': 'TFG', 'CAF': 'C', 'CAL': 'X',
-        'CAR': 'C', 'CAS': 'C', 'CAV': 'X', 'CAY': 'C', 'CB2': 'C',
-        'CBR': 'C', 'CBV': 'C', 'CCC': 'C', 'CCL': 'K', 'CCS': 'C',
-        'CCY': 'CYG', 'CDE': 'X', 'CDV': 'X', 'CDW': 'C', 'CEA': 'C',
-        'CFL': 'C', 'CFY': 'FCYG', 'CG1': 'G', 'CGA': 'E', 'CGU': 'E',
-        'CH ': 'C', 'CH6': 'MYG', 'CH7': 'KYG', 'CHF': 'X', 'CHG': 'X',
-        'CHP': 'G', 'CHS': 'X', 'CIR': 'R', 'CJO': 'GYG', 'CLE': 'L',
-        'CLG': 'K', 'CLH': 'K', 'CLV': 'AFG', 'CM0': 'N', 'CME': 'C',
-        'CMH': 'C', 'CML': 'C', 'CMR': 'C', 'CMT': 'C', 'CNU': 'U',
-        'CP1': 'C', 'CPC': 'X', 'CPI': 'X', 'CQR': 'GYG', 'CR0': 'TLG',
-        'CR2': 'GYG', 'CR5': 'G', 'CR7': 'KYG', 'CR8': 'HYG', 'CRF': 'TWG',
-        'CRG': 'THG', 'CRK': 'MYG', 'CRO': 'GYG', 'CRQ': 'QYG', 'CRU': 'E',
-        'CRW': 'ASG', 'CRX': 'ASG', 'CS0': 'C', 'CS1': 'C', 'CS3': 'C',
-        'CS4': 'C', 'CS8': 'N', 'CSA': 'C', 'CSB': 'C', 'CSD': 'C',
-        'CSE': 'C', 'CSF': 'C', 'CSH': 'SHG', 'CSI': 'G', 'CSJ': 'C',
-        'CSL': 'C', 'CSO': 'C', 'CSP': 'C', 'CSR': 'C', 'CSS': 'C',
-        'CSU': 'C', 'CSW': 'C', 'CSX': 'C', 'CSY': 'SYG', 'CSZ': 'C',
-        'CTE': 'W', 'CTG': 'T', 'CTH': 'T', 'CUC': 'X', 'CWR': 'S',
-        'CXM': 'M', 'CY0': 'C', 'CY1': 'C', 'CY3': 'C', 'CY4': 'C',
-        'CYA': 'C', 'CYD': 'C', 'CYF': 'C', 'CYG': 'C', 'CYJ': 'X',
-        'CYM': 'C', 'CYQ': 'C', 'CYR': 'C', 'CYS': 'C', 'CZ2': 'C',
-        'CZO': 'GYG', 'CZZ': 'C', 'D11': 'T', 'D1P': 'N', 'D3 ': 'N',
-        'D33': 'N', 'D3P': 'G', 'D3T': 'T', 'D4M': 'T', 'D4P': 'X',
-        'DA ': 'A', 'DA2': 'X', 'DAB': 'A', 'DAH': 'F', 'DAL': 'A',
-        'DAR': 'R', 'DAS': 'D', 'DBB': 'T', 'DBM': 'N', 'DBS': 'S',
-        'DBU': 'T', 'DBY': 'Y', 'DBZ': 'A', 'DC ': 'C', 'DC2': 'C',
-        'DCG': 'G', 'DCI': 'X', 'DCL': 'X', 'DCT': 'C', 'DCY': 'C',
-        'DDE': 'H', 'DDG': 'G', 'DDN': 'U', 'DDX': 'N', 'DFC': 'C',
-        'DFG': 'G', 'DFI': 'X', 'DFO': 'X', 'DFT': 'N', 'DG ': 'G',
-        'DGH': 'G', 'DGI': 'G', 'DGL': 'E', 'DGN': 'Q', 'DHA': 'A',
-        'DHI': 'H', 'DHL': 'X', 'DHN': 'V', 'DHP': 'X', 'DHU': 'U',
-        'DHV': 'V', 'DI ': 'I', 'DIL': 'I', 'DIR': 'R', 'DIV': 'V',
-        'DLE': 'L', 'DLS': 'K', 'DLY': 'K', 'DM0': 'K', 'DMH': 'N',
-        'DMK': 'D', 'DMT': 'X', 'DN ': 'N', 'DNE': 'L', 'DNG': 'L',
-        'DNL': 'K', 'DNM': 'L', 'DNP': 'A', 'DNR': 'C', 'DNS': 'K',
-        'DOA': 'X', 'DOC': 'C', 'DOH': 'D', 'DON': 'L', 'DPB': 'T',
-        'DPH': 'F', 'DPL': 'P', 'DPP': 'A', 'DPQ': 'Y', 'DPR': 'P',
-        'DPY': 'N', 'DRM': 'U', 'DRP': 'N', 'DRT': 'T', 'DRZ': 'N',
-        'DSE': 'S', 'DSG': 'N', 'DSN': 'S', 'DSP': 'D', 'DT ': 'T',
-        'DTH': 'T', 'DTR': 'W', 'DTY': 'Y', 'DU ': 'U', 'DVA': 'V',
-        'DXD': 'N', 'DXN': 'N', 'DYG': 'DYG', 'DYS': 'C', 'DZM': 'A',
-        'E  ': 'A', 'E1X': 'A', 'EDA': 'A', 'EDC': 'G', 'EFC': 'C',
-        'EHP': 'F', 'EIT': 'T', 'ENP': 'N', 'ESB': 'Y', 'ESC': 'M',
-        'EXY': 'L', 'EY5': 'N', 'EYS': 'X', 'F2F': 'F', 'FA2': 'A',
-        'FA5': 'N', 'FAG': 'N', 'FAI': 'N', 'FCL': 'F', 'FFD': 'N',
-        'FGL': 'G', 'FGP': 'S', 'FHL': 'X', 'FHO': 'K', 'FHU': 'U',
-        'FLA': 'A', 'FLE': 'L', 'FLT': 'Y', 'FME': 'M', 'FMG': 'G',
-        'FMU': 'N', 'FOE': 'C', 'FOX': 'G', 'FP9': 'P', 'FPA': 'F',
-        'FRD': 'X', 'FT6': 'W', 'FTR': 'W', 'FTY': 'Y', 'FZN': 'K',
-        'G  ': 'G', 'G25': 'G', 'G2L': 'G', 'G2S': 'G', 'G31': 'G',
-        'G32': 'G', 'G33': 'G', 'G36': 'G', 'G38': 'G', 'G42': 'G',
-        'G46': 'G', 'G47': 'G', 'G48': 'G', 'G49': 'G', 'G4P': 'N',
-        'G7M': 'G', 'GAO': 'G', 'GAU': 'E', 'GCK': 'C', 'GCM': 'X',
-        'GDP': 'G', 'GDR': 'G', 'GFL': 'G', 'GGL': 'E', 'GH3': 'G',
-        'GHG': 'Q', 'GHP': 'G', 'GL3': 'G', 'GLH': 'Q', 'GLM': 'X',
-        'GLN': 'Q', 'GLQ': 'E', 'GLU': 'E', 'GLX': 'Z', 'GLY': 'G',
-        'GLZ': 'G', 'GMA': 'E', 'GMS': 'G', 'GMU': 'U', 'GN7': 'G',
-        'GND': 'X', 'GNE': 'N', 'GOM': 'G', 'GPL': 'K', 'GS ': 'G',
-        'GSC': 'G', 'GSR': 'G', 'GSS': 'G', 'GSU': 'E', 'GT9': 'C',
-        'GTP': 'G', 'GVL': 'X', 'GYC': 'CYG', 'GYS': 'SYG', 'H2U': 'U',
-        'H5M': 'P', 'HAC': 'A', 'HAR': 'R', 'HBN': 'H', 'HCS': 'X',
-        'HDP': 'U', 'HEU': 'U', 'HFA': 'X', 'HGL': 'X', 'HHI': 'H',
-        'HHK': 'AK', 'HIA': 'H', 'HIC': 'H', 'HIP': 'H', 'HIQ': 'H',
-        'HIS': 'H', 'HL2': 'L', 'HLU': 'L', 'HMF': 'A', 'HMR': 'R',
-        'HOL': 'N', 'HPC': 'F', 'HPE': 'F', 'HPQ': 'F', 'HQA': 'A',
-        'HRG': 'R', 'HRP': 'W', 'HS8': 'H', 'HS9': 'H', 'HSE': 'S',
-        'HSL': 'S', 'HSO': 'H', 'HTI': 'C', 'HTN': 'N', 'HTR': 'W',
-        'HV5': 'A', 'HVA': 'V', 'HY3': 'P', 'HYP': 'P', 'HZP': 'P',
-        'I  ': 'I', 'I2M': 'I', 'I58': 'K', 'I5C': 'C', 'IAM': 'A',
-        'IAR': 'R', 'IAS': 'D', 'IC ': 'C', 'IEL': 'K', 'IEY': 'HYG',
-        'IG ': 'G', 'IGL': 'G', 'IGU': 'G', 'IIC': 'SHG', 'IIL': 'I',
-        'ILE': 'I', 'ILG': 'E', 'ILX': 'I', 'IMC': 'C', 'IML': 'I',
-        'IOY': 'F', 'IPG': 'G', 'IPN': 'N', 'IRN': 'N', 'IT1': 'K',
-        'IU ': 'U', 'IYR': 'Y', 'IYT': 'T', 'JJJ': 'C', 'JJK': 'C',
-        'JJL': 'C', 'JW5': 'N', 'K1R': 'C', 'KAG': 'G', 'KCX': 'K',
-        'KGC': 'K', 'KOR': 'M', 'KPI': 'K', 'KST': 'K', 'KYQ': 'K',
-        'L2A': 'X', 'LA2': 'K', 'LAA': 'D', 'LAL': 'A', 'LBY': 'K',
-        'LC ': 'C', 'LCA': 'A', 'LCC': 'N', 'LCG': 'G', 'LCH': 'N',
-        'LCK': 'K', 'LCX': 'K', 'LDH': 'K', 'LED': 'L', 'LEF': 'L',
-        'LEH': 'L', 'LEI': 'V', 'LEM': 'L', 'LEN': 'L', 'LET': 'X',
-        'LEU': 'L', 'LG ': 'G', 'LGP': 'G', 'LHC': 'X', 'LHU': 'U',
-        'LKC': 'N', 'LLP': 'K', 'LLY': 'K', 'LME': 'E', 'LMQ': 'Q',
-        'LMS': 'N', 'LP6': 'K', 'LPD': 'P', 'LPG': 'G', 'LPL': 'X',
-        'LPS': 'S', 'LSO': 'X', 'LTA': 'X', 'LTR': 'W', 'LVG': 'G',
-        'LVN': 'V', 'LYM': 'K', 'LYN': 'K', 'LYR': 'K', 'LYS': 'K',
-        'LYX': 'K', 'LYZ': 'K', 'M0H': 'C', 'M1G': 'G', 'M2G': 'G',
-        'M2L': 'K', 'M2S': 'M', 'M3L': 'K', 'M5M': 'C', 'MA ': 'A',
-        'MA6': 'A', 'MA7': 'A', 'MAA': 'A', 'MAD': 'A', 'MAI': 'R',
-        'MBQ': 'Y', 'MBZ': 'N', 'MC1': 'S', 'MCG': 'X', 'MCL': 'K',
-        'MCS': 'C', 'MCY': 'C', 'MDH': 'X', 'MDO': 'ASG', 'MDR': 'N',
-        'MEA': 'F', 'MED': 'M', 'MEG': 'E', 'MEN': 'N', 'MEP': 'U',
-        'MEQ': 'Q', 'MET': 'M', 'MEU': 'G', 'MF3': 'X', 'MFC': 'GYG',
-        'MG1': 'G', 'MGG': 'R', 'MGN': 'Q', 'MGQ': 'A', 'MGV': 'G',
-        'MGY': 'G', 'MHL': 'L', 'MHO': 'M', 'MHS': 'H', 'MIA': 'A',
-        'MIS': 'S', 'MK8': 'L', 'ML3': 'K', 'MLE': 'L', 'MLL': 'L',
-        'MLY': 'K', 'MLZ': 'K', 'MME': 'M', 'MMT': 'T', 'MND': 'N',
-        'MNL': 'L', 'MNU': 'U', 'MNV': 'V', 'MOD': 'X', 'MP8': 'P',
-        'MPH': 'X', 'MPJ': 'X', 'MPQ': 'G', 'MRG': 'G', 'MSA': 'G',
-        'MSE': 'M', 'MSL': 'M', 'MSO': 'M', 'MSP': 'X', 'MT2': 'M',
-        'MTR': 'T', 'MTU': 'A', 'MTY': 'Y', 'MVA': 'V', 'N  ': 'N',
-        'N10': 'S', 'N2C': 'X', 'N5I': 'N', 'N5M': 'C', 'N6G': 'G',
-        'N7P': 'P', 'NA8': 'A', 'NAL': 'A', 'NAM': 'A', 'NB8': 'N',
-        'NBQ': 'Y', 'NC1': 'S', 'NCB': 'A', 'NCX': 'N', 'NCY': 'X',
-        'NDF': 'F', 'NDN': 'U', 'NEM': 'H', 'NEP': 'H', 'NF2': 'N',
-        'NFA': 'F', 'NHL': 'E', 'NIT': 'X', 'NIY': 'Y', 'NLE': 'L',
-        'NLN': 'L', 'NLO': 'L', 'NLP': 'L', 'NLQ': 'Q', 'NMC': 'G',
-        'NMM': 'R', 'NMS': 'T', 'NMT': 'T', 'NNH': 'R', 'NP3': 'N',
-        'NPH': 'C', 'NRP': 'LYG', 'NRQ': 'MYG', 'NSK': 'X', 'NTY': 'Y',
-        'NVA': 'V', 'NYC': 'TWG', 'NYG': 'NYG', 'NYM': 'N', 'NYS': 'C',
-        'NZH': 'H', 'O12': 'X', 'O2C': 'N', 'O2G': 'G', 'OAD': 'N',
-        'OAS': 'S', 'OBF': 'X', 'OBS': 'X', 'OCS': 'C', 'OCY': 'C',
-        'ODP': 'N', 'OHI': 'H', 'OHS': 'D', 'OIC': 'X', 'OIP': 'I',
-        'OLE': 'X', 'OLT': 'T', 'OLZ': 'S', 'OMC': 'C', 'OMG': 'G',
-        'OMT': 'M', 'OMU': 'U', 'ONE': 'U', 'ONL': 'X', 'OPR': 'R',
-        'ORN': 'A', 'ORQ': 'R', 'OSE': 'S', 'OTB': 'X', 'OTH': 'T',
-        'OTY': 'Y', 'OXX': 'D', 'P  ': 'G', 'P1L': 'C', 'P1P': 'N',
-        'P2T': 'T', 'P2U': 'U', 'P2Y': 'P', 'P5P': 'A', 'PAQ': 'Y',
-        'PAS': 'D', 'PAT': 'W', 'PAU': 'A', 'PBB': 'C', 'PBF': 'F',
-        'PBT': 'N', 'PCA': 'E', 'PCC': 'P', 'PCE': 'X', 'PCS': 'F',
-        'PDL': 'X', 'PDU': 'U', 'PEC': 'C', 'PF5': 'F', 'PFF': 'F',
-        'PFX': 'X', 'PG1': 'S', 'PG7': 'G', 'PG9': 'G', 'PGL': 'X',
-        'PGN': 'G', 'PGP': 'G', 'PGY': 'G', 'PHA': 'F', 'PHD': 'D',
-        'PHE': 'F', 'PHI': 'F', 'PHL': 'F', 'PHM': 'F', 'PIV': 'X',
-        'PLE': 'L', 'PM3': 'F', 'PMT': 'C', 'POM': 'P', 'PPN': 'F',
-        'PPU': 'A', 'PPW': 'G', 'PQ1': 'N', 'PR3': 'C', 'PR5': 'A',
-        'PR9': 'P', 'PRN': 'A', 'PRO': 'P', 'PRS': 'P', 'PSA': 'F',
-        'PSH': 'H', 'PST': 'T', 'PSU': 'U', 'PSW': 'C', 'PTA': 'X',
-        'PTH': 'Y', 'PTM': 'Y', 'PTR': 'Y', 'PU ': 'A', 'PUY': 'N',
-        'PVH': 'H', 'PVL': 'X', 'PYA': 'A', 'PYO': 'U', 'PYX': 'C',
-        'PYY': 'N', 'QLG': 'QLG', 'QUO': 'G', 'R  ': 'A', 'R1A': 'C',
-        'R1B': 'C', 'R1F': 'C', 'R7A': 'C', 'RC7': 'HYG', 'RCY': 'C',
-        'RIA': 'A', 'RMP': 'A', 'RON': 'X', 'RT ': 'T', 'RTP': 'N',
-        'S1H': 'S', 'S2C': 'C', 'S2D': 'A', 'S2M': 'T', 'S2P': 'A',
-        'S4A': 'A', 'S4C': 'C', 'S4G': 'G', 'S4U': 'U', 'S6G': 'G',
-        'SAC': 'S', 'SAH': 'C', 'SAR': 'G', 'SBL': 'S', 'SC ': 'C',
-        'SCH': 'C', 'SCS': 'C', 'SCY': 'C', 'SD2': 'X', 'SDG': 'G',
-        'SDP': 'S', 'SEB': 'S', 'SEC': 'A', 'SEG': 'A', 'SEL': 'S',
-        'SEM': 'X', 'SEN': 'S', 'SEP': 'S', 'SER': 'S', 'SET': 'S',
-        'SGB': 'S', 'SHC': 'C', 'SHP': 'G', 'SHR': 'K', 'SIB': 'C',
-        'SIC': 'DC', 'SLA': 'P', 'SLR': 'P', 'SLZ': 'K', 'SMC': 'C',
-        'SME': 'M', 'SMF': 'F', 'SMP': 'A', 'SMT': 'T', 'SNC': 'C',
-        'SNN': 'N', 'SOC': 'C', 'SOS': 'N', 'SOY': 'S', 'SPT': 'T',
-        'SRA': 'A', 'SSU': 'U', 'STY': 'Y', 'SUB': 'X', 'SUI': 'DG',
-        'SUN': 'S', 'SUR': 'U', 'SVA': 'S', 'SVX': 'S', 'SVZ': 'X',
-        'SYS': 'C', 'T  ': 'T', 'T11': 'F', 'T23': 'T', 'T2S': 'T',
-        'T2T': 'N', 'T31': 'U', 'T32': 'T', 'T36': 'T', 'T37': 'T',
-        'T38': 'T', 'T39': 'T', 'T3P': 'T', 'T41': 'T', 'T48': 'T',
-        'T49': 'T', 'T4S': 'T', 'T5O': 'U', 'T5S': 'T', 'T66': 'X',
-        'T6A': 'A', 'TA3': 'T', 'TA4': 'X', 'TAF': 'T', 'TAL': 'N',
-        'TAV': 'D', 'TBG': 'V', 'TBM': 'T', 'TC1': 'C', 'TCP': 'T',
-        'TCQ': 'X', 'TCR': 'W', 'TCY': 'A', 'TDD': 'L', 'TDY': 'T',
-        'TFE': 'T', 'TFO': 'A', 'TFQ': 'F', 'TFT': 'T', 'TGP': 'G',
-        'TH6': 'T', 'THC': 'T', 'THO': 'X', 'THR': 'T', 'THX': 'N',
-        'THZ': 'R', 'TIH': 'A', 'TLB': 'N', 'TLC': 'T', 'TLN': 'U',
-        'TMB': 'T', 'TMD': 'T', 'TNB': 'C', 'TNR': 'S', 'TOX': 'W',
-        'TP1': 'T', 'TPC': 'C', 'TPG': 'G', 'TPH': 'X', 'TPL': 'W',
-        'TPO': 'T', 'TPQ': 'Y', 'TQQ': 'W', 'TRF': 'W', 'TRG': 'K',
-        'TRN': 'W', 'TRO': 'W', 'TRP': 'W', 'TRQ': 'W', 'TRW': 'W',
-        'TRX': 'W', 'TS ': 'N', 'TST': 'X', 'TT ': 'N', 'TTD': 'T',
-        'TTI': 'U', 'TTM': 'T', 'TTQ': 'W', 'TTS': 'Y', 'TY2': 'Y',
-        'TY3': 'Y', 'TYB': 'Y', 'TYI': 'Y', 'TYN': 'Y', 'TYO': 'Y',
-        'TYQ': 'Y', 'TYR': 'Y', 'TYS': 'Y', 'TYT': 'Y', 'TYU': 'N',
-        'TYX': 'X', 'TYY': 'Y', 'TZB': 'X', 'TZO': 'X', 'U  ': 'U',
-        'U25': 'U', 'U2L': 'U', 'U2N': 'U', 'U2P': 'U', 'U31': 'U',
-        'U33': 'U', 'U34': 'U', 'U36': 'U', 'U37': 'U', 'U8U': 'U',
-        'UAR': 'U', 'UCL': 'U', 'UD5': 'U', 'UDP': 'N', 'UFP': 'N',
-        'UFR': 'U', 'UFT': 'U', 'UMA': 'A', 'UMP': 'U', 'UMS': 'U',
-        'UN1': 'X', 'UN2': 'X', 'UNK': 'X', 'UR3': 'U', 'URD': 'U',
-        'US1': 'U', 'US2': 'U', 'US3': 'T', 'US5': 'U', 'USM': 'U',
-        'V1A': 'C', 'VAD': 'V', 'VAF': 'V', 'VAL': 'V', 'VB1': 'K',
-        'VDL': 'X', 'VLL': 'X', 'VLM': 'X', 'VMS': 'X', 'VOL': 'X',
-        'X  ': 'G', 'X2W': 'E', 'X4A': 'N', 'X9Q': 'AFG', 'XAD': 'A',
-        'XAE': 'N', 'XAL': 'A', 'XAR': 'N', 'XCL': 'C', 'XCP': 'X',
-        'XCR': 'C', 'XCS': 'N', 'XCT': 'C', 'XCY': 'C', 'XGA': 'N',
-        'XGL': 'G', 'XGR': 'G', 'XGU': 'G', 'XTH': 'T', 'XTL': 'T',
-        'XTR': 'T', 'XTS': 'G', 'XTY': 'N', 'XUA': 'A', 'XUG': 'G',
-        'XX1': 'K', 'XXY': 'THG', 'XYG': 'DYG', 'Y  ': 'A', 'YCM': 'C',
-        'YG ': 'G', 'YOF': 'Y', 'YRR': 'N', 'YYG': 'G', 'Z  ': 'C',
-        'ZAD': 'A', 'ZAL': 'A', 'ZBC': 'C', 'ZCY': 'C', 'ZDU': 'U',
-        'ZFB': 'X', 'ZGU': 'G', 'ZHP': 'N', 'ZTH': 'T', 'ZZJ': 'A'}
-
-    # remove hetero atoms (waters/ligands/etc) from consideration?
-    if het:
-        cmd.select("__h", "br. " + haystack)
-    else:
-        cmd.select("__h", "br. " + haystack + " and not het")
-
-    # get the AAs in the haystack
-    aaDict = {'aaList': []}
-    cmd.iterate("(name ca) and __h", "aaList.append((resi,resn,chain))", space=aaDict)
-
-    IDs = [int(x[0]) for x in aaDict['aaList']]
-    AAs = ''.join([one_letter[x[1]] for x in aaDict['aaList']])
-    chains = [x[2] for x in aaDict['aaList']]
-
-    reNeedle = re.compile(needle.upper())
-    it = reNeedle.finditer(AAs)
-
-    # make an empty selection to which we add residues
-    cmd.select(rSelName, 'None')
-
-    for i in it:
-        (start, stop) = i.span()
-        # we found some residues, which chains are they from?
-        i_chains = chains[start:stop]
-        # are all residues from one chain?
-        if len(set(i_chains)) != 1:
-            # now they are not, this match is not really a match, skip it
-            continue
-        chain = i_chains[0]
-        cmd.select(rSelName, rSelName + " or (__h and i. " + str(IDs[start]) + "-" + str(IDs[stop - 1]) + " and c. " + chain + " )")
-        if int(firstOnly):
-            break
-    cmd.delete("__h")
-    return rSelName
-
-cmd.extend('findSeq', findSeq)
 
 def gcal():
     ''' 
@@ -8249,26 +9228,45 @@ def gcal():
     USAGE:
     gcal
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gcal
 
     MORE DETAILS:
     Open Google Calendar.
 
-   >>>  Edit url in python code below
+
     VERTICAL PML SCRIPT:
     webbrowser.open('https://calendar.google.com/calendar/r')
     HORIZONTAL PML SCRIPT:
     webbrowser.open('https://calendar.google.com/calendar/r')
     PYTHON CODE:
 def gcal():
-    webbrowser.open('https://calendar.google.com/calendar/r')
+    url=gcalURL
+    try:
+        print("Trying to open gcal.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening gcal.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('gcal',gcal)
     '''
 
-    webbrowser.open('https://calendar.google.com/calendar/r')
+    url=gcalURL
+    try:
+        print("Trying to open gcal.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Success opening gcal.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('gcal',gcal)
+
 
 def gedit():
     ''' 
@@ -8278,8 +9276,9 @@ def gedit():
     USAGE:
     gedit
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gedit
 
@@ -8288,9 +9287,10 @@ def gedit():
     Adjust the filepath for location of your executable.
     Can be installed via macports on Mac OS.
 
+
     VERTICAL PML SCRIPT:
     subprocess.call(emacsOpen)
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(geditOpen);return
@@ -8307,6 +9307,7 @@ def gedit():
     except OSError:
         pass # executable not found
 
+cmd.extend('gedit',gedit)
     '''
 
     try:
@@ -8321,6 +9322,61 @@ def gedit():
 
 cmd.extend('gedit',gedit)
 
+
+def gimp():
+    ''' 
+    DESCRIPTION:
+    Open the image editing program gimp from within PyMOL.
+
+
+    USAGE:
+    gimp
+
+    ARGUMENTS:
+    None
+    EXAMPLE:
+    gimp
+
+    MORE DETAILS:
+    Open the image editing program gimp from within PyMOL. 
+
+
+    VERTICAL PML SCRIPT:
+    arg = (gimpPath + fileName)
+    subprocess.call(arg,shell=True)
+    return
+
+    HORIZONTAL PML SCRIPT:
+    arg = (gimpPath + fileName);subprocess.call(arg,shell=True);return
+
+    PYTHON CODE:
+def gimp():
+    try:
+        print("Opening the gimp.");
+        subprocess.check_output(gimpOpen)
+        print("Success opening gimp.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'gimpOpen'. \n  Or use 'gimpPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('gimp',gimp)
+    '''
+
+    try:
+        print("Opening the gimp.");
+        subprocess.check_output(gimpOpen)
+        print("Success opening gimp.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'gimpOpen'. \n  Or use 'gimpPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('gimp',gimp)
+
+
 def gitAdd():
     ''' 
     DESCRIPTION:
@@ -8329,13 +9385,16 @@ def gitAdd():
     USAGE:
     gitAdd
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gitAdd
 
     MORE DETAILS:
     Enter help(gitAdd) to print steps for adding a file to version control.
+
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -8343,10 +9402,12 @@ def gitAdd():
     PYTHON CODE:
 def gitAdd():
     #NA
+cmd.extend("gitAdd",gitAdd)
     '''
 
     #NA
 cmd.extend("gitAdd",gitAdd)
+
 
 def gitCommit():
     ''' 
@@ -8357,8 +9418,9 @@ def gitCommit():
     USAGE:
     gitCommit
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gitCommit
 
@@ -8368,6 +9430,7 @@ def gitCommit():
     git add filename
     git commit -m "Message about changes"
 
+
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -8375,10 +9438,12 @@ def gitCommit():
     PYTHON CODE:
 def gitCommit():
     #NA
+cmd.extend("gitCommit",gitCommit)
     '''
 
     #NA
 cmd.extend("gitCommit",gitCommit)
+
 
 def gitInit():
     ''' 
@@ -8388,10 +9453,12 @@ def gitInit():
     USAGE:
     gitInit
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gitInit
+
 
     MORE DETAILS:
     Enter help(gitInit) to print steps for creating a git repository.
@@ -8467,48 +9534,66 @@ def gitInit():
         git commit -m "Added new text in $1.pml" 
         }
 
+
     VERTICAL PML SCRIPT:
     NA
+
     HORIZONTAL PML SCRIPT:
     NA
+
     PYTHON CODE:
 def gitInit():
     print(gitInit.__doc__)
+
+cmd.extend("gitInit",gitInit)
     '''
 
     print(gitInit.__doc__)
+
 cmd.extend("gitInit",gitInit)
+
 
 def gitPull():
     ''' 
     DESCRIPTION:
     Enter help(gitPush) to print steps to supdate a repository on github.com.
 
+
     USAGE:
     gitPull
 
-    Arguments:
+
+    ARGUMENTS:
     None
+
     EXAMPLE:
     gitPull
+
 
     MORE DETAILS:
     Enter help(gitPull) to print steps to send to updates to a repository on github.com.
       Step 1: pull file from an existing repository. 
 
-        git pull 
+        git pull
+
 
     VERTICAL PML SCRIPT:
     NA
+
     HORIZONTAL PML SCRIPT:
     NA
+
     PYTHON CODE:
 def gitPull():
     #NA
+cmd.extend("gitPull",gitPull)
+
     '''
 
     #NA
 cmd.extend("gitPull",gitPull)
+
+
 
 def gitPush():
     ''' 
@@ -8519,7 +9604,7 @@ def gitPush():
     USAGE:
     gitPush
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     gitPush
@@ -8529,8 +9614,9 @@ def gitPush():
 
       Step 1: push updated file to an existing repository. 
 
-        git push 
+        git push
 
+ 
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
@@ -8538,12 +9624,14 @@ def gitPush():
     PYTHON CODE:
 def gitPush():
     #NA
+cmd.extend("gitPush",gitPush)
     '''
 
     #NA
 cmd.extend("gitPush",gitPush)
 
-def GM():
+
+def gmail():
     ''' 
     DESCRIPTION:
     Open gmail. 
@@ -8551,42 +9639,439 @@ def GM():
     USAGE:
     gmail
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     gmail
 
     MORE DETAILS:
-    Open gmail. Edit url in python code below
+    Open gmail. Edit url in python code below.
+
+
     VERTICAL PML SCRIPT:
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
     HORIZONTAL PML SCRIPT:
     webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
     PYTHON CODE:
-def GM():
-    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
+def gmail():
+    url=gmailURL
+    try:
+        print("Trying to open gmail.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening gmail.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('gmail',gmail)
     '''
 
-    webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
-cmd.extend('GM',GM)
+    url=gmailURL
+    try:
+        print("Trying to open gmail.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening gmail.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('gmail',gmail)
+
+
+def gscale(selection="all"):
+    ''' 
+    DESCRIPTION:
+    Apply grayscale to all atoms by element. 
+
+    USAGE:
+    gs <selection> # the default selection is 'all'
+
+
+    ARGUMENTS:
+    <selection>
+    EXAMPLE:
+    gs 3nd4
+
+
+    MORE DETAILS:
+    Apply grayscale to all atoms by element. 
+    Made a dictionary of elements and their RGB values on the 0 to 1 scale.
+    Converted the RGB values to grayscale with this formula:
+
+    Y = 0.2126 * R + 0.7152 * G + 0.0722 * B
+
+    where Y is the grayscale. 
+    Wrote out the colors and elements as pml and python commands. 
+    VERTICAL PML SCRIPT:
+    color grey64, (elem Ac)
+color grey67, (elem Al)
+color grey39, (elem Am)
+color grey46, (elem Sb)
+color grey75, (elem Ar)
+color grey58, (elem As)
+color grey33, (elem At)
+color grey56, (elem Ba)
+color grey40, (elem Bk)
+color grey87, (elem Be)
+color grey40, (elem Bi)
+color grey20, (elem Bh)
+color grey77, (elem B)
+color grey26, (elem Br)
+color grey86, (elem Cd)
+color grey76, (elem Ca)
+color grey34, (elem Cf)
+color grey77, (elem C)
+color grey98, (elem Ce)
+color grey17, (elem Cs)
+color grey70, (elem Cl)
+color grey60, (elem Cr)
+color grey64, (elem Co)
+color grey54, (elem Cu)
+color grey42, (elem Cm)
+color grey89, (elem D)
+color grey19, (elem Db)
+color grey79, (elem Dy)
+color grey29, (elem Es)
+color grey67, (elem Er)
+color grey85, (elem Eu)
+color grey28, (elem Fm)
+color grey93, (elem F)
+color grey8, (elem Fr)
+color grey82, (elem Gd)
+color grey60, (elem Ga)
+color grey52, (elem Ge)
+color grey80, (elem Au)
+color grey68, (elem Hf)
+color grey20, (elem Hs)
+color grey96, (elem He)
+color grey75, (elem Ho)
+color grey89, (elem H)
+color grey49, (elem In)
+color grey16, (elem I)
+color grey29, (elem Ir)
+color grey48, (elem Fe)
+color grey65, (elem Kr)
+color grey76, (elem La)
+color grey19, (elem Lr)
+color grey34, (elem Pb)
+color grey60, (elem Li)
+color grey48, (elem Lu)
+color grey83, (elem Mg)
+color grey52, (elem Mn)
+color grey20, (elem Mt)
+color grey23, (elem Md)
+color grey72, (elem Hg)
+color grey62, (elem Mo)
+color grey93, (elem Nd)
+color grey85, (elem Ne)
+color grey43, (elem Np)
+color grey67, (elem Ni)
+color grey69, (elem Nb)
+color grey25, (elem N)
+color grey23, (elem No)
+color grey36, (elem Os)
+color grey44, (elem O)
+color grey33, (elem Pd)
+color grey57, (elem P)
+color grey82, (elem Pt)
+color grey37, (elem Pu)
+color grey40, (elem Po)
+color grey35, (elem K)
+color grey95, (elem Pr)
+color grey90, (elem Pm)
+color grey52, (elem Pa)
+color grey35, (elem Ra)
+color grey46, (elem Rn)
+color grey43, (elem Re)
+color grey39, (elem Rh)
+color grey27, (elem Rb)
+color grey47, (elem Ru)
+color grey19, (elem Rf)
+color grey89, (elem Sm)
+color grey90, (elem Sc)
+color grey20, (elem Sg)
+color grey66, (elem Se)
+color grey80, (elem Si)
+color grey75, (elem Ag)
+color grey46, (elem Na)
+color grey71, (elem Sr)
+color grey76, (elem S)
+color grey60, (elem Ta)
+color grey53, (elem Tc)
+color grey51, (elem Te)
+color grey81, (elem Tb)
+color grey39, (elem Tl)
+color grey59, (elem Th)
+color grey61, (elem Tm)
+color grey48, (elem Sn)
+color grey75, (elem Ti)
+color grey50, (elem W)
+color grey47, (elem U)
+color grey65, (elem V)
+color grey54, (elem Xe)
+color grey55, (elem Yb)
+color grey91, (elem Y)
+color grey51, (elem Zn)
+color grey81, (elem Zr)
+
+
+    HORIZONTAL PML SCRIPT:
+    color grey64, (elem Ac);color grey67, (elem Al);color grey39, (elem Am);color grey46, (elem Sb);color grey58, (elem As);color grey33, (elem At);color grey56, (elem Ba);color grey40, (elem Bk);color grey87, (elem Be);color grey40, (elem Bi);color grey20, (elem Bh);color grey77, (elem B);color grey26, (elem Br);color grey86, (elem Cd);color grey76, (elem Ca);color grey34, (elem Cf);color grey77, (elem C);color grey98, (elem Ce);color grey70, (elem Cl);color grey60, (elem Cr);color grey64, (elem Co);color grey54, (elem Cu);color grey42, (elem Cm);color grey89, (elem D);color grey19, (elem Db);color grey79, (elem Dy);color grey29, (elem Es);color grey67, (elem Er);color grey85, (elem Eu);color grey28, (elem Fm);color grey93, (elem F);color grey8, (elem Fr);color grey82, (elem Gd);color grey60, (elem Ga);color grey52, (elem Ge);color grey80, (elem Au);color grey68, (elem Hf);color grey20, (elem Hs);color grey96, (elem He);color grey75, (elem Ho);color grey89, (elem H);color grey49, (elem In);color grey16, (elem I);color grey29, (elem Ir);color grey48, (elem Fe);color grey65, (elem Kr);color grey76, (elem La);color grey19, (elem Lr);color grey34, (elem Pb);color grey60, (elem Li);color grey48, (elem Lu);color grey83, (elem Mg);color grey52, (elem Mn);color grey20, (elem Mt);color grey23, (elem Md);color grey72, (elem Hg);color grey62, (elem Mo);color grey93, (elem Nd);color grey85, (elem Ne);color grey43, (elem Np);color grey67, (elem Ni);color grey69, (elem Nb);color grey25, (elem N);color grey23, (elem No);color grey36, (elem Os);color grey44, (elem O);color grey33, (elem Pd);color grey57, (elem P);color grey82, (elem Pt);color grey37, (elem Pu);color grey40, (elem Po);color grey35, (elem K);color grey95, (elem Pr);color grey90, (elem Pm);color grey52, (elem Pa);color grey35, (elem Ra);color grey46, (elem Rn);color grey43, (elem Re);color grey39, (elem Rh);color grey27, (elem Rb);color grey47, (elem Ru);color grey19, (elem Rf);color grey89, (elem Sm);color grey90, (elem Sc);color grey20, (elem Sg);color grey66, (elem Se);color grey80, (elem Si);color grey75, (elem Ag);color grey46, (elem Na);color grey71, (elem Sr);color grey76, (elem S);color grey60, (elem Ta);color grey53, (elem Tc);color grey51, (elem Te);color grey81, (elem Tb);color grey39, (elem Tl);color grey59, (elem Th);color grey61, (elem Tm);color grey48, (elem Sn);color grey75, (elem Ti);color grey50, (elem W);color grey47, (elem U);color grey65, (elem V);color grey54, (elem Xe);color grey55, (elem Yb);color grey91, (elem Y);color grey51, (elem Zn);color grey81, (elem Zr);
+
+    PYTHON CODE:
+def gscale(selection="all"):
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')
+cmd.extend('gscale',gscale)
+    '''
+
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')
+cmd.extend('gscale',gscale)
+
 
 def hb(selection='all'):
     ''' 
     DESCRIPTION:
     Creates an object of all H-bonds found by PyMOL.
 
+
     USAGE:
     hb <selection>
 
-    Arguments:
+    ARGUMENTS:
     The selection is optional. It is "all" by default.
+
+
     EXAMPLE:
     hbond 1lw9
 
     MORE DETAILS:
     Creates an object of all polar contacts found by PyMOL. 
-They all may not be H-bonds (e.g., a water cannot partake in 
-five H-bonds at once). User be aware!
+    They all may not be H-bonds (e.g., a water cannot partake in 
+    five H-bonds at once). User be aware!
+
+
     VERTICAL PML SCRIPT:
     hbonds, all, all, 3.2, mode=2 
     HORIZONTAL PML SCRIPT:
@@ -8598,6 +10083,8 @@ def hb(selection='all'):
     cmd.set("dash_color","grey30")
     cmd.set("dash_width","1.5")
     cmd.set("dash_length",".25")
+    print("Enter 'rmhb' to remove the hbonds.")
+cmd.extend('hb',hb)
     '''
 
     cmd.distance("hbonds", "all", "all", "3.2", mode="2")
@@ -8605,18 +10092,76 @@ def hb(selection='all'):
     cmd.set("dash_color","grey30")
     cmd.set("dash_width","1.5")
     cmd.set("dash_length",".25")
+    print("Enter 'rmhb' to remove the hbonds.")
 cmd.extend('hb',hb)
+
+
+def inkscape():
+    ''' 
+    DESCRIPTION:
+    Open the image editing program inkscape from within PyMOL. 
+
+    USAGE:
+    inkscape
+
+
+    ARGUMENTS:
+    None
+
+    EXAMPLE:
+    inkscape
+
+
+    MORE DETAILS:
+    Open the image editing program inkscape from within PyMOL. 
+
+
+    VERTICAL PML SCRIPT:
+    arg = (inkscapePath + fileName)
+    subprocess.call(arg,shell=True)
+    return
+
+    HORIZONTAL PML SCRIPT:
+    arg = (inkscapePath + fileName);subprocess.call(arg,shell=True);return
+
+    PYTHON CODE:
+def inkscape():
+    try:
+        print("Opening the inkscape.");
+        subprocess.check_output(inkscapeOpen)
+        print("Success opening inkscape.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'inkscapeOpen'. \n  Or use 'inkscapePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('inkscape',inkscape)
+    '''
+
+    try:
+        print("Opening the inkscape.");
+        subprocess.check_output(inkscapeOpen)
+        print("Success opening inkscape.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'inkscapeOpen'. \n  Or use 'inkscapePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('inkscape',inkscape)
+
 
 def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
     ''' 
     DESCRIPTION:
-    Returns s selection of interface residues named according to what you passed into selName.
+    Returns a selection of interface residues named according to what you passed into selName.
 
     USAGE:
     objname, selection1, selection2, cutoff=1.0, selectionNameForInterface
 
 
-    Arguments:
+    ARGUMENTS:
     PARAMS
     cmpx
         The complex containing cA and cB
@@ -8639,12 +10184,12 @@ def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
         The name of the selection to return.
 
     EXAMPLE:
-    myComlpex, c. A, c. B
+    interface 1BRS, c. C, c. F
 
     MORE DETAILS:
     interfaceResidues -- finds 'interface' residues between two chains in a complex.
 
-PARAMS
+    PARAMS
 	cmpx
 		The complex containing cA and cB
 
@@ -8665,13 +10210,13 @@ PARAMS
 	selName
 		The name of the selection to return.
 
-RETURNS
+    RETURNS
 	* A selection of interface residues is created and named
 		depending on what you passed into selName
 	* An array of values is returned where each value is:
 		( modelName, residueNumber, dASA )
 
-NOTES
+    NOTES
 	If you have two chains that are not from the same PDB that you want
 	to complex together, use the create command like:
 		create myComplex, pdb1WithChainA or pdb2withChainX
@@ -8683,13 +10228,22 @@ NOTES
 	cA and cB, alone.  Once it has this, it calculates the difference
 	and any residues ABOVE the cutoff are called interface residues.
 
-AUTHOR:
-	Jason Vertrees, 2009.		
+    AUTHOR:
+	Jason Vertrees, 2009.
+     
+    SOURCE:
+                Source: https://pymolwiki.org/index.php/InterfaceResidues
+
+    LICENSE:
+                GNU Free Documentation License 1.2
+                https://www.gnu.org/licenses/old-licenses/fdl-1.2.en.html
+
+			
 
     VERTICAL PML SCRIPT:
-    NotYet
+    NA
     HORIZONTAL PML SCRIPT:
-    NotYet
+    NA
     PYTHON CODE:
 def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
     # Save user's settings, before setting dot_solvent
@@ -8758,6 +10312,7 @@ def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
 
     return rVal
 
+cmd.extend('interface', interface)
     '''
 
     # Save user's settings, before setting dot_solvent
@@ -8828,6 +10383,7 @@ def interface(cmpx, cA='c. A', cB='c. B', cutoff=1.0, selName="interface"):
 
 cmd.extend('interface', interface)
 
+
 def iterm():
     ''' 
     DESCRIPTION:
@@ -8836,13 +10392,15 @@ def iterm():
     USAGE:
     iterm
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     iterm
 
     MORE DETAILS:
     Open iTerm2 window on MacOS. 
+
+
 
     VERTICAL PML SCRIPT:
     subprocess.call(itermOpen);
@@ -8853,15 +10411,29 @@ def iterm():
 
     PYTHON CODE:
 def iterm():
-    subprocess.call(itermOpen)
-    return
+    try:
+        print("Opening an iTerm window.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.Popen(itermOpen)
+        print("Opened an iTerm window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
 
-    '''
-
-    subprocess.call(itermOpen)
-    return
 
 cmd.extend('iterm',iterm)
+    '''
+
+    try:
+        print("Opening an iTerm window.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.Popen(itermOpen)
+        print("Opened an iTerm window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('iterm',iterm)
+
 
 def jabref():
     ''' 
@@ -8871,13 +10443,14 @@ def jabref():
     USAGE:
     jabref
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     jabref
 
     MORE DETAILS:
     Open the jabref from within PyMOL.
+
 
     VERTICAL PML SCRIPT:
         subprocess.call(jabrefOpen);
@@ -8887,15 +10460,31 @@ def jabref():
         subprocess.call(jabrefOpen);return
     PYTHON CODE:
 def jabref():
-    subprocess.call(jabrefOpen);
-    return
-
-    '''
-
-    subprocess.call(jabrefOpen);
-    return
+    try:
+        print("Opening the bibliography manager JabRef.");
+        subprocess.check_output(JabRefOpen)
+        print("Success opening JabRef.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jabrefOpen'. \n  Or use 'jabrefPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('jabref',jabref)
+    '''
+
+    try:
+        print("Opening the bibliography manager JabRef.");
+        subprocess.check_output(JabRefOpen)
+        print("Success opening JabRef.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'jabrefOpen'. \n  Or use 'jabrefPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('jabref',jabref)
+
 
 def jedit(fileName="test.pml"):
     ''' 
@@ -8905,7 +10494,7 @@ def jedit(fileName="test.pml"):
     USAGE:
     jedit
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     jedit script.pml
@@ -8915,10 +10504,10 @@ def jedit(fileName="test.pml"):
     Adjust file path to your executable.
     Can be installed via macports on the Mac.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     subprocess.call(jeditOpen)
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(jeditOpen);return
@@ -8935,6 +10524,7 @@ def jedit(fileName="test.pml"):
     except OSError:
         pass # executable not found
 
+cmd.extend('jedit',jedit)
     '''
 
     try:
@@ -8949,24 +10539,28 @@ def jedit(fileName="test.pml"):
 
 cmd.extend('jedit',jedit)
 
-def jmol(fileName="test.pdb"):
+
+def jmol():
     ''' 
     DESCRIPTION:
     Open Jmol from within PyMOL.
 
+
     USAGE:
     jmol
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     jmol
+
 
     MORE DETAILS:
     Open Jmol from within PyMOL.
     Adjust file path to your location of Jmol.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = (jmolPath + fileName)
     subprocess.call(arg,shell=True)
@@ -8975,8 +10569,9 @@ def jmol(fileName="test.pdb"):
     HORIZONTAL PML SCRIPT:
     arg = (jmolPath + fileName);subprocess.call(arg,shell=True);return
 
+
     PYTHON CODE:
-def jmol(fileName="test.pdb"):
+def jmol():
     try:
         print("Opening the molecular graphics program JMOL.");
         subprocess.check_output(jmolOpen)
@@ -8987,6 +10582,7 @@ def jmol(fileName="test.pdb"):
     except OSError:
         pass # executable not found
 
+cmd.extend('jmol',jmol)
     '''
 
     try:
@@ -9001,6 +10597,7 @@ def jmol(fileName="test.pdb"):
 
 cmd.extend('jmol',jmol)
 
+
 def julia():
     ''' 
     DESCRIPTION:
@@ -9009,15 +10606,16 @@ def julia():
     USAGE:
     julia
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     julia
 
     MORE DETAILS:
     Open the julia from within PyMOL.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     arg = juliaPath;
     subprocess.call(arg,shell=True);
@@ -9028,31 +10626,51 @@ def julia():
 
     PYTHON CODE:
 def julia():
-    subprocess.call(juliaOpen);
-    return
-
-    '''
-
-    subprocess.call(juliaOpen);
-    return
+    try:
+        print("Opening the REPL of the programming language julia REPL.");
+        subprocess.check_output(juliaOpen)
+        print("Success opening julia.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'juliaOpen'. \n  Or use 'juliaPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('julia',julia)
+    '''
+
+    try:
+        print("Opening the REPL of the programming language julia REPL.");
+        subprocess.check_output(juliaOpen)
+        print("Success opening julia.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'juliaOpen'. \n  Or use 'juliaPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('julia',julia)
+
 
 def juliapro():
     ''' 
     DESCRIPTION:
     Open the juliapro from within PyMOL.
 
+
     USAGE:
     juliapro
 
-    Arguments:
+    ARGUMENTS:
     None
+
     EXAMPLE:
     juliapro
 
     MORE DETAILS:
     Open the juliapro from within PyMOL.
+
+
     VERTICAL PML SCRIPT:
     arg = juliaproPath;
     subprocess.call(arg,shell=True);
@@ -9073,6 +10691,8 @@ def juliapro():
     except OSError:
         pass # executable not found
 
+cmd.extend('juliapro',juliapro)
+
     '''
 
     try:
@@ -9087,24 +10707,31 @@ def juliapro():
 
 cmd.extend('juliapro',juliapro)
 
+
+
 def mate():
     ''' 
     DESCRIPTION:
     Open textmate from within PyMOL. 
 
+
+
     USAGE:
     mate
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     mate
 
     MORE DETAILS:
-    Open file with Textmate (Mac OS only) from within PyMOL.  Adjust path to Textmate on your computer as needed.
+    Open file with Textmate (Mac OS only) from within PyMOL.  
+    Adjust path to Textmate on your computer as needed.
+
+
     VERTICAL PML SCRIPT:
     subprocess.call(mateOpen)
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(mateOpen);return
@@ -9113,19 +10740,7 @@ return
 def mate():
     try:
         print("Opening the molecular graphics program mate.");
-        subprocess.check_output(mateOpen)
-        print("Success opening mate.")
-    except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the mateOpen'. \n  Or use 'matePath' as the argument of check_output().")
-        pass # handle errors in the called executable
-    except OSError:
-        pass # executable not found
-
-    '''
-
-    try:
-        print("Opening the molecular graphics program mate.");
-        subprocess.check_output(mateOpen)
+        subprocess.check_output(textMateOpen)
         print("Success opening mate.")
     except subprocess.CalledProcessError:
         print("Executable not found! \n  Check syntax of the mateOpen'. \n  Or use 'matePath' as the argument of check_output().")
@@ -9135,6 +10750,24 @@ def mate():
 
 cmd.extend('mate',mate)
 
+
+    '''
+
+    try:
+        print("Opening the molecular graphics program mate.");
+        subprocess.check_output(textMateOpen)
+        print("Success opening mate.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the mateOpen'. \n  Or use 'matePath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('mate',mate)
+
+
+
+
 def nmr():
 
     ''' 
@@ -9144,13 +10777,15 @@ def nmr():
     USAGE:
     nmr
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     nmr
 
     MORE DETAILS:
     Show all models in a nmr structure. 
+
+
     VERTICAL PML SCRIPT:
     set all_states, on
     HORIZONTAL PML SCRIPT:
@@ -9159,68 +10794,56 @@ def nmr():
 def nmr():
 
     cmd.do('set all_states, on')
+cmd.extend("nmr", nmr)
+
     '''
 
     cmd.do('set all_states, on')
 cmd.extend("nmr", nmr)
 
 
+
 def nmroff():
 
     ''' 
     DESCRIPTION:
-    Hide all but first model in a nmr structure. 
+    Hide all but first model in a nmr structure.
+
 
     USAGE:
     nmroff
 
-    Arguments:
+
+    ARGUMENTS:
     None
+
     EXAMPLE:
     nmroff
 
+
     MORE DETAILS:
     Hide all but first model in a nmr structure. 
+
+
     VERTICAL PML SCRIPT:
     set all_states, off
     HORIZONTAL PML SCRIPT:
     set all_states, off
+
     PYTHON CODE:
 def nmroff():
 
     cmd.do('set all_states, off')
+
+cmd.extend("nmr", nmr)
+
     '''
 
     cmd.do('set all_states, off')
+
 cmd.extend("nmr", nmr)
 
 
-def notPyMOL():
-    ''' 
-    DESCRIPTION:
-    Open website with list of other molecular graphics programs.
-
-    USAGE:
-    notPyMOL
-
-    Arguments:
-    NA
-    EXAMPLE:
-    notPyMOL
-
-    MORE DETAILS:
-    Open website with list of other molecular graphics programs.
-    VERTICAL PML SCRIPT:
-    NA
-    HORIZONTAL PML SCRIPT:
-    NA
-    PYTHON CODE:
-def notPyMOL():
-    webbrowser.open('https://www.bnl.gov/ps/')
-    '''
-
-    webbrowser.open('https://www.bnl.gov/ps/')
-cmd.extend('notPyMOL',notPyMOL)
 
 def npp():
     ''' 
@@ -9230,17 +10853,19 @@ def npp():
     USAGE:
     npp
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     npp
 
     MORE DETAILS:
     Open notepadpp from within PyMOL. 
-Notepadpp can be installed on Mac OS and Linux via wine.
+    Notepadpp can be installed on Mac OS and Linux via wine.
+
+
     VERTICAL PML SCRIPT:
     subprocess.call(nppOpen)
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(nppOpen);return
@@ -9257,6 +10882,7 @@ def npp():
     except OSError:
         pass # executable not found
 
+cmd.extend('npp',npp)
     '''
 
     try:
@@ -9271,55 +10897,58 @@ def npp():
 
 cmd.extend('npp',npp)
 
-def nv(fileName="testme.pml"):
+
+def nv():
     ''' 
     DESCRIPTION:
-    Open file with neovim from within PyMOL.
+    Open neovim from within PyMOL.
 
     USAGE:
     nv
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
-    nv script.pml
+    nv
 
     MORE DETAILS:
-    Open file with neovim from within PyMOL. 
+    Open neovim from within PyMOL. 
     Adjust path to neovim on your computer as needed.
 
-   >>>  Edit file path in python code below
-    VERTICAL PML SCRIPT:
-    subprocess.call(nvimCommand)
 
+    VERTICAL PML SCRIPT:
+    NA
     HORIZONTAL PML SCRIPT:
-        subprocess.call(nvimCommand)
+    NA
+
 
     PYTHON CODE:
-def nv(fileName="testme.pml"):
+def nv():
     try:
-        print("Opening the molecular graphics program nvim.");
-        subprocess.check_output(nvimOpen)
-        print("Success opening nvim.")
+        print("Opening the text editor neovim.");
+        subprocess.check_output(neovimOpen)
+        print("Success opening neovim.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the nvimOpen'. \n  Or use 'nvimPath' as the argument of check_output().")
-        pass # handle errors in the called executable
-    except OSError:
-        pass # executable not found
-
-    '''
-
-    try:
-        print("Opening the molecular graphics program nvim.");
-        subprocess.check_output(nvimOpen)
-        print("Success opening nvim.")
-    except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the nvimOpen'. \n  Or use 'nvimPath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the neovimOpen'. \n  Or use 'neovimPath' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
 cmd.extend('nv',nv)
+    '''
+
+    try:
+        print("Opening the text editor neovim.");
+        subprocess.check_output(neovimOpen)
+        print("Success opening neovim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the neovimOpen'. \n  Or use 'neovimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('nv',nv)
+
 
 def oc():
     ''' 
@@ -9330,13 +10959,14 @@ def oc():
     USAGE:
     oc
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     oc
 
     MORE DETAILS:
     Open the data analysis program octave (open source analog of matlab) from within PyMOL.
+
 
     VERTICAL PML SCRIPT:
     subprocess.call(octaveOpen);
@@ -9348,28 +10978,30 @@ def oc():
     PYTHON CODE:
 def oc():
     try:
+        print("Opening octave.");
         subprocess.check_output(octaveOpen)
-        print("Success opening octave")
+        print("Success opening octave.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'ocatvePath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'octavePath' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
-
+cmd.extend('oc',oc)
     '''
 
     try:
+        print("Opening octave.");
         subprocess.check_output(octaveOpen)
-        print("Success opening octave")
+        print("Success opening octave.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'ocatvePath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the 'octaveOpen'. \n  Or use 'octavePath' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
-
 cmd.extend('oc',oc)
+
 
 def omx(selection='all'):
     ''' 
@@ -9379,16 +11011,18 @@ def omx(selection='all'):
     USAGE:
     omx <selection>
 
-    Arguments:
+    ARGUMENTS:
     optional selection
     EXAMPLE:
     omx 1lw9
 
     MORE DETAILS:
     Align long axis of molecule along the x-axis of the viewport in the negative direction. 
+
+
     VERTICAL PML SCRIPT:
     orient selection; 
-rotate selection,z,180;
+    rotate selection,z,180;
 
     HORIZONTAL PML SCRIPT:
     orient selection;rotate selection,z,180;
@@ -9398,12 +11032,14 @@ def omx(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',180,selection); 
 
+cmd.extend('omx',omx)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('z',180,selection); 
 
 cmd.extend('omx',omx)
+
 
 def omxy(selection='all'):
     ''' 
@@ -9413,13 +11049,15 @@ def omxy(selection='all'):
     USAGE:
     omxy
 
-    Arguments:
-    None
+    ARGUMENTS:
+    optional selection
     EXAMPLE:
     omxy
 
     MORE DETAILS:
     Align long axis of molecule along the minus x*y axis of the viewport.
+
+
     VERTICAL PML SCRIPT:
     cmd.orient(); 
     cmd.turn('z',315) 
@@ -9432,12 +11070,14 @@ def omxy(selection='all'):
     cmd.orient(); 
     cmd.turn('z',315) 
 
+cmd.extend('omxy',omxy)
     '''
 
     cmd.orient(); 
     cmd.turn('z',315) 
 
 cmd.extend('omxy',omxy)
+
 
 def omxyz(selection='all'):
     ''' 
@@ -9447,21 +11087,23 @@ def omxyz(selection='all'):
     USAGE:
     omxyz
 
-or 
+    or 
 
-omxyz selection
+    omxyz selection
 
-    Arguments:
+    ARGUMENTS:
     optional selection
     EXAMPLE:
     omxyz 1lw9
 
     MORE DETAILS:
     Align long axis of the selection along the mxyz axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient selection; 
-rotate selection,z,315;
-rotate selection,y,315;
+    rotate selection,z,315;
+    rotate selection,y,315;
     HORIZONTAL PML SCRIPT:
     orient selection; rotate selection,z,135;rotate selection,y,135);
     PYTHON CODE:
@@ -9469,12 +11111,14 @@ def omxyz(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',315,selection); 
     cmd.rotate('y',315,selection);
+cmd.extend('omxyz',omxyz)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('z',315,selection); 
     cmd.rotate('y',315,selection);
 cmd.extend('omxyz',omxyz)
+
 
 def omy(selection='all'):
     ''' 
@@ -9484,14 +11128,16 @@ def omy(selection='all'):
     USAGE:
     omy <selection>
 
-    Arguments:
+    ARGUMENTS:
     selection
     EXAMPLE:
     omy;
-omy 1lw9
+    omy 1lw9
 
     MORE DETAILS:
     Align long axis of the selection along the y-axis of the viewport in the negative direction.
+
+
     VERTICAL PML SCRIPT:
     orient; 
     rotate <selection>, z,270
@@ -9504,6 +11150,7 @@ def omy(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',270,selection) 
 
+cmd.extend('omy',omy)
     '''
 
     cmd.orient(selection); 
@@ -9511,40 +11158,6 @@ def omy(selection='all'):
 
 cmd.extend('omy',omy)
 
-def omz(selection='all'):
-    ''' 
-    DESCRIPTION:
-    Align long axis of the selection along the y-axis of the viewport in the negative direction. 
-
-    USAGE:
-    omy <selection>
-
-    Arguments:
-    selection
-    EXAMPLE:
-    omy;
-omy 1lw9
-
-    MORE DETAILS:
-    Align long axis of the selection along the y-axis of the viewport in the negative y direction. 
-    VERTICAL PML SCRIPT:
-    orient; 
-    rotate <selection>,z,270
-
-    HORIZONTAL PML SCRIPT:
-    orient; rotate <selection>,z,270
-
-    PYTHON CODE:
-def omz(selection='all'):
-    cmd.orient(selection); 
-    cmd.rotate('z',270,selection) 
-
-    '''
-
-    cmd.orient(selection); 
-    cmd.rotate('z',270,selection) 
-
-cmd.extend('omy',omy)
 
 def omz(selection='all'):
     ''' 
@@ -9554,14 +11167,16 @@ def omz(selection='all'):
     USAGE:
     omz <selection>
 
-    Arguments:
+    ARGUMENTS:
     selection
     EXAMPLE:
     omz;
-omz 1lw9
+    omz 1lw9
 
     MORE DETAILS:
     Align long axis of selection along the negative z-axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient; 
     rotate y,270
@@ -9574,12 +11189,14 @@ def omz(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('y',270,selection) 
 
+cmd.extend('omz',omz)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('y',270,selection) 
 
 cmd.extend('omz',omz)
+
 
 def oni():
     ''' 
@@ -9589,7 +11206,7 @@ def oni():
     USAGE:
     oni
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     oni
@@ -9598,9 +11215,10 @@ def oni():
     Open the editor Oni from within PyMOL. 
     The is an editor based on neovim.
 
+
     VERTICAL PML SCRIPT:
     subprocess.call(oniOpen);
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(oniOpen);return
@@ -9616,6 +11234,7 @@ def oni():
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
+cmd.extend('oni',oni)
     '''
 
     try:
@@ -9629,6 +11248,7 @@ def oni():
         pass # executable not found
 cmd.extend('oni',oni)
 
+
 def ox(selection='all'):
     ''' 
     DESCRIPTION:
@@ -9637,7 +11257,7 @@ def ox(selection='all'):
     USAGE:
     ox <selection>
 
-    Arguments:
+    ARGUMENTS:
     selection
     EXAMPLE:
     ox;
@@ -9646,6 +11266,8 @@ def ox(selection='all'):
 
     MORE DETAILS:
     Align long axis of molecule along the x-axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient selection
     HORIZONTAL PML SCRIPT:
@@ -9654,11 +11276,13 @@ def ox(selection='all'):
 def ox(selection='all'):
     cmd.orient(selection) 
 
+cmd.extend('ox',ox)
     '''
 
     cmd.orient(selection) 
 
 cmd.extend('ox',ox)
+
 
 def oxy(selection='all'):
     ''' 
@@ -9668,17 +11292,19 @@ def oxy(selection='all'):
     USAGE:
     oxy
 
- or
+     or
 
-oxy selection
+    oxy selection
 
-    Arguments:
+    ARGUMENTS:
     optional selection
     EXAMPLE:
     oxy
 
     MORE DETAILS:
     Align long axis of the selection along the x-y axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient selection
     rotate selection,z,270 
@@ -9691,12 +11317,14 @@ def oxy(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',135,selection) 
 
+cmd.extend('oxy',oxy)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('z',135,selection) 
 
 cmd.extend('oxy',oxy)
+
 
 def oxyz(selection='all'):
     ''' 
@@ -9706,21 +11334,23 @@ def oxyz(selection='all'):
     USAGE:
     oxyz
 
-or 
+    or 
 
-oxyz selection
+    oxyz selection
 
-    Arguments:
+    ARGUMENTS:
     optional selection
     EXAMPLE:
     oxyz 1lw9
 
     MORE DETAILS:
     Align long axis of the selection along the xyz axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient selection; 
-rotate selection,z,135;
-rotate selection,y,135;
+    rotate selection,z,135;
+    rotate selection,y,135;
     HORIZONTAL PML SCRIPT:
     orient selection; rotate selection,z,315;rotate selection,y,315);
     PYTHON CODE:
@@ -9728,12 +11358,14 @@ def oxyz(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',135,selection); 
     cmd.rotate('y',135,selection);
+cmd.extend('oxyz',oxyz)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('z',135,selection); 
     cmd.rotate('y',135,selection);
 cmd.extend('oxyz',oxyz)
+
 
 def oy(selection='all'):
     ''' 
@@ -9743,14 +11375,16 @@ def oy(selection='all'):
     USAGE:
     oy <selection>
 
-    Arguments:
+    ARGUMENTS:
     selection
     EXAMPLE:
     oy;
-oy 1lw9
+    oy 1lw9
 
     MORE DETAILS:
     Align long axis of the selection along the y-axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient; 
     rotate <selection>, z,90
@@ -9763,12 +11397,14 @@ def oy(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('z',90,selection) 
 
+cmd.extend('oy',oy)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('z',90,selection) 
 
 cmd.extend('oy',oy)
+
 
 def oz(selection='all'):
     ''' 
@@ -9778,14 +11414,16 @@ def oz(selection='all'):
     USAGE:
     oz <selection>
 
-    Arguments:
+    ARGUMENTS:
     selection
     EXAMPLE:
     oz;
-oz 1lw9
+    oz 1lw9
 
     MORE DETAILS:
     Align long axis of selection along the z-axis of the viewport. 
+
+
     VERTICAL PML SCRIPT:
     orient; 
     rotate y,90
@@ -9798,12 +11436,14 @@ def oz(selection='all'):
     cmd.orient(selection); 
     cmd.rotate('y',90,selection) 
 
+cmd.extend('oz',oz)
     '''
 
     cmd.orient(selection); 
     cmd.rotate('y',90,selection) 
 
 cmd.extend('oz',oz)
+
 
 def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     ''' 
@@ -9813,28 +11453,30 @@ def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     USAGE:
     pairwise_dist sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
 
-    Arguments:
+    ARGUMENTS:
     sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
     EXAMPLE:
     pairD chA., ch.B, 3.5, output=S, sidechain=Y, show=Y
-
+pairD i. 80, i. 89, 20, output=P, sidechain=Y, show=Y
 
     MORE DETAILS:
     usage: pairwise_dist sel1, sel2, max_dist, [output=S/P/N, [sidechain=N/Y, [show=Y/N]]]
 
-sel1 and sel2 can be any to pre-existing or newly defined selections
+    sel1 and sel2 can be any to pre-existing or newly defined selections
 
-max_dist: maximum distance in Angstrom between atoms in the two selections
+    max_dist: maximum distance in Angstrom between atoms in the two selections
 
---optional settings:
+    --optional settings:
     output: accepts Screen/Print/None (default N)
     sidechain: limits (Y) results to sidechain atoms (default N)
     show: shows (Y) individual distances in pymol menu (default=N)
 
+
     VERTICAL PML SCRIPT:
-    NotYet
+    NA
     HORIZONTAL PML SCRIPT:
-    NotYet
+    NA
+
     PYTHON CODE:
 def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     print("")
@@ -9892,6 +11534,7 @@ def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     cmd.hide("lines", "IntRes_*")
     if show=="Y": cmd.show("lines","IntRes_"+max_dist)
     cmd.deselect()
+cmd.extend('pairD', pairD)
     '''
 
     print("")
@@ -9951,16 +11594,17 @@ def pairD(sel1, sel2, max_dist, output="N", sidechain="N", show="N"):
     cmd.deselect()
 cmd.extend('pairD', pairD)
 
-def pdbed(fileName="test.pdb"):
+
+def pdbed():
     ''' 
     DESCRIPTION:
     Open PDBEditor.jar from within PyMOL. 
 
     USAGE:
-    edpdb <filename of pdb file in present working directory>
+    edpdb
 
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     pdbed pdb filename
@@ -9970,6 +11614,7 @@ def pdbed(fileName="test.pdb"):
     Adjust file path to location of the jar file.
 
     https://sourceforge.net/projects/pdbeditorjl/
+
 
     VERTICAL PML SCRIPT:
     print("Please wait. The PDBEditor is slow to start.")
@@ -9981,21 +11626,9 @@ def pdbed(fileName="test.pdb"):
     print("Please wait. The PDBEditoris slow to start.");arg = ("java -jar " + pdbeditorPath + fileName);subprocess.call(arg,shell=True);return
 
     PYTHON CODE:
-def pdbed(fileName="test.pdb"):
+def pdbed():
     try:
-        print("Opening the molecular graphics program PDBEditor.");
-        subprocess.check_output(pdbeditorOpen)
-        print("Success opening PDBeditor.")
-    except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the 'pdbeditorOpen'. \n  Or use 'pdbeditorPath' as the argument of check_output().")
-        pass # handle errors in the called executable
-    except OSError:
-        pass # executable not found
-
-    '''
-
-    try:
-        print("Opening the molecular graphics program PDBEditor.");
+        print("Opening PDB_Editor.");
         subprocess.check_output(pdbeditorOpen)
         print("Success opening PDBeditor.")
     except subprocess.CalledProcessError:
@@ -10005,6 +11638,20 @@ def pdbed(fileName="test.pdb"):
         pass # executable not found
 
 cmd.extend('pdbed',pdbed)
+    '''
+
+    try:
+        print("Opening PDB_Editor.");
+        subprocess.check_output(pdbeditorOpen)
+        print("Success opening PDBeditor.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the 'pdbeditorOpen'. \n  Or use 'pdbeditorPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('pdbed',pdbed)
+
 
 def pdbremarks(filename):
     ''' 
@@ -10016,19 +11663,22 @@ Called by the function quat().
     USAGE:
     pdbremarks(filename)
 
-    Arguments:
+    ARGUMENTS:
     filename
     EXAMPLE:
     pdbremarks(filename)
 
+
     MORE DETAILS:
     Read REMARK lines from PDB file. 
-Return dictionary with remarkNum as key and list of lines as value.
-Called by the function quat().
+    Return dictionary with remarkNum as key and list of lines as value.
+    Called by the function quat().
+
+
     VERTICAL PML SCRIPT:
-    TBD
+    NA
     HORIZONTAL PML SCRIPT:
-    TBD
+    NA
     PYTHON CODE:
 def pdbremarks(filename):
     remarks = dict()
@@ -10047,6 +11697,7 @@ def pdbremarks(filename):
             remarks.setdefault(num, []).append(lstring)
     return remarks
 
+cmd.extend('pdbremarks', pdbremarks)
     '''
 
     remarks = dict()
@@ -10067,6 +11718,7 @@ def pdbremarks(filename):
 
 cmd.extend('pdbremarks', pdbremarks)
 
+
 def ppt():
     ''' 
     DESCRIPTION:
@@ -10075,13 +11727,14 @@ def ppt():
     USAGE:
     ppt
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     ppt
 
     MORE DETAILS:
     Open the powerpoint from within PyMOL. 
+
 
     VERTICAL PML SCRIPT:
     subprocess.call(pptOpen); 
@@ -10103,6 +11756,7 @@ def ppt():
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
+cmd.extend('ppt',ppt)
     '''
 
     try:
@@ -10114,18 +11768,22 @@ def ppt():
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
-cmd.extend('ptt',ppt)
+cmd.extend('ppt',ppt)
+
 
 def quat(name=None, filename=None, prefix=None, quiet=0):
     ''' 
     DESCRIPTION:
     Runs Thomas Holder's quat.py script to generate a biological unit using crystallographic symmetry.
-    Read REMARK 350 from `filename` and create biological unit (quaternary structure).
+    Requires a pdb file. The defult file type with the fetch command is *.cif.
+    When using fetch, add the optional parameter type=pdb.
+    Of course, you can also use type=pdb1 to retrieve the biological unit form the PDB. 
+    Reads REMARK 350 from the pdb file  `filename` and creates the biological unit (quaternary structure).
 
     USAGE:
     quat [name [, filename [, prefix]]]
 
-    Arguments:
+    ARGUMENTS:
     The code for a molecular object with symmetry information. 
     name = string: name of object and basename of PDB file, if filename is not given {default: first loaded object}
     filename = string: file path {default: <name>.pdb}
@@ -10136,21 +11794,21 @@ def quat(name=None, filename=None, prefix=None, quiet=0):
     quat 4dgr
 
 
+
     MORE DETAILS:
     Copyright 2010 to 2011 Thomas Holder, MPI for Developmental Biology
  
     Module for reading REMARK records from PDB files and in particular
-generate quaterny structure from REMARK 350.
+    generate quaterny structure from REMARK 350.
 
     These notes below were added by Blaine Mooers on 12 September 2019.
 
     This content was made available under the GNU Free Documentation License 1.2
+
     See https://pymolwiki.org/index.php/BiologicalUnit/Quat for more information.
 
     quat is equavalent to biomolecule in the psico package.
-
-    Change the local mirror address for the pdb, if you have such a mirror. 
-
+ 
 
     VERTICAL PML SCRIPT:
     NA
@@ -10195,6 +11853,7 @@ def quat(name=None, filename=None, prefix=None, quiet=0):
                 cmd.transform_object(copy, mat)
     cmd.disable(name)
     cmd.group('%s_quat' % (prefix), '%s_*' % (prefix))
+cmd.extend('quat', quat)
     '''
 
     quiet = int(quiet)
@@ -10236,27 +11895,36 @@ def quat(name=None, filename=None, prefix=None, quiet=0):
     cmd.group('%s_quat' % (prefix), '%s_*' % (prefix))
 cmd.extend('quat', quat)
 
+
 def quat350(rem350):
     ''' 
     DESCRIPTION:
     Get transformation matrices for biomolecule 1 from REMARK 350.
 
 
+
     USAGE:
     quat350(rem350)
 
-    Arguments:
+
+
+    ARGUMENTS:
     rem350
+
+
     EXAMPLE:
     quat350(rem350)
+
+
 
     MORE DETAILS:
     Get transformation matrices for biomolecule 1 from REMARK 350.
 
+
     VERTICAL PML SCRIPT:
-    TBD
+    NA
     HORIZONTAL PML SCRIPT:
-    TBD
+    NA
     PYTHON CODE:
 def quat350(rem350):
     biomt = dict()
@@ -10278,6 +11946,7 @@ def quat350(rem350):
             vec = map(float, vec)
             biomt.setdefault(chains, dict()).setdefault(num, []).extend(vec)
     return biomt
+cmd.extend('quat350', quat350)
     '''
 
     biomt = dict()
@@ -10301,6 +11970,7 @@ def quat350(rem350):
     return biomt
 cmd.extend('quat350', quat350)
 
+
 def rline():
     ''' 
     DESCRIPTION:
@@ -10310,39 +11980,56 @@ def rline():
     USAGE:
     rline
 
-    Arguments:
+
+
+    ARGUMENTS:
     None
+
+
     EXAMPLE:
     rline
+
+
 
     MORE DETAILS:
     Prints cheat sheet for the readline commands.
 
-These commands are sufficient for most editing tasks:  
-      To edit code, positon cursor on command line with left mouse button.  
-      Control-e moves the cursor to the end of the line, even when it is out of view.
-      Control-a moves the cursor to the beginning of the line, even when it is out of view.    
-      Up arrow key recalls last line of commands for editing.
+    These commands are sufficient for most editing tasks:  
+    To edit code, positon cursor on command line with left mouse button.  
+    Control-e moves the cursor to the end of the line, even when it is out of view.
+    Control-a moves the cursor to the beginning of the line, even when it is out of view.    
+    Up arrow key recalls last line of commands for editing.
     
     These commands may not be available on all systems:
-      Shift-control-a selects everything from the right of the cursor to the end of the line.
-      Shift-control-e selects everything to the left of the cursor to the end of the line.
-      Command-f moves the cursor to the end of the current word.  
-      Command-b moves the cursor to the begining of the current word.
-      Control-f moves the cursor to the right by one character.   
-      Control-b moves the cursor to the left by one character.
+    Shift-control-a selects everything from the right of the cursor to the end of the line.
+    Shift-control-e selects everything to the left of the cursor to the end of the line.
+    Command-f moves the cursor to the end of the current word.  
+    Command-b moves the cursor to the begining of the current word.
+    Control-f moves the cursor to the right by one character.   
+    Control-b moves the cursor to the left by one character.
+
 
     VERTICAL PML SCRIPT:
     NA
+
+
     HORIZONTAL PML SCRIPT:
     NA
+
+
     PYTHON CODE:
 def rline():
-    print(readline.__doc__)
+    print(rline.__doc__)
+
+
+cmd.extend("rline",rline)
     '''
 
-    print(readline.__doc__)
+    print(rline.__doc__)
+
+
 cmd.extend("rline",rline)
+
 
 def rmd():
     ''' 
@@ -10352,7 +12039,7 @@ def rmd():
     USAGE:
     rmd
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     rmd
@@ -10361,21 +12048,76 @@ def rmd():
     Remove all measurement objects in the interal GUI.
     Note that there is a "delete all measurements" toggle in the internal gui.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     delete measure*;
     delete m*_*
+    delete dist*
     HORIZONTAL PML SCRIPT:
-    delete measure*; delete m*_*
+    delete measure*; delete m*_*; delete dist*
     PYTHON CODE:
 def rmd():
     cmd.do('delete measure*')
     cmd.do('delete m*_*')
+    cmd.do('delete dist*')
+cmd.extend("rmd", rmd)
     '''
 
     cmd.do('delete measure*')
     cmd.do('delete m*_*')
+    cmd.do('delete dist*')
 cmd.extend("rmd", rmd)
+
+
+def rmhb(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Delete all H-bonds in the selection, which is all by default.
+
+
+
+
+    USAGE:
+    rmhb <selection>
+
+    ARGUMENTS:
+    The selection is optional. It is "all" by default.
+
+
+    EXAMPLE:
+    rmhb
+
+ or
+
+rmhb 1lw9
+
+
+
+    MORE DETAILS:
+    Delete all H-bonds in the selection, which is all by default.
+
+
+    VERTICAL PML SCRIPT:
+    delete hbonds
+
+
+    HORIZONTAL PML SCRIPT:
+    cmd.delete('hbonds')
+
+
+    PYTHON CODE:
+def rmhb(selection='all'):
+    cmd.delete('hbonds')
+
+
+cmd.extend('rmhb',rmhb)
+    '''
+
+    cmd.delete('hbonds')
+
+
+cmd.extend('rmhb',rmhb)
+
 
 def rmsc():
 
@@ -10386,13 +12128,14 @@ def rmsc():
     USAGE:
     rmsc
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     rmsc
 
     MORE DETAILS:
     Use 'rmsc' to remove supercell objects.
+
 
     VERTICAL PML SCRIPT:
     delete supercell*;delete m*_*
@@ -10402,10 +12145,13 @@ def rmsc():
 def rmsc():
 
     cmd.do('delete supercell*;delete m*_*')
+cmd.extend("rmsc", rmsc)
+
     '''
 
     cmd.do('delete supercell*;delete m*_*')
 cmd.extend("rmsc", rmsc)
+
 
 
 def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
@@ -10421,7 +12167,7 @@ or
 
 rv 1, 2, bestview
 
-    Arguments:
+    ARGUMENTS:
     [view, decimal_places, outname]
 Note that the values in the [] are optional.
 
@@ -10457,6 +12203,7 @@ Note that the values in the [] are optional.
 
             17 = orthoscopic flag 
             (not implemented in older versions)
+
 
     VERTICAL PML SCRIPT:
     NA
@@ -10502,6 +12249,7 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
     myFile.close()
     return
 
+cmd.extend("rv", rv)
     '''
 
     #convert the commandline arguments from strings to integers
@@ -10544,6 +12292,7 @@ def rv(StoredView=0, decimal_places=2, outname="roundedview.txt"):
 
 cmd.extend("rv", rv)
 
+
 def saln(stemName="saved"):
     ''' 
     DESCRIPTION:
@@ -10552,7 +12301,7 @@ def saln(stemName="saved"):
     USAGE:
     saln
 
-    Arguments:
+    ARGUMENTS:
     alignmentFileNameStem
     EXAMPLE:
     saln  testFile
@@ -10561,6 +12310,8 @@ def saln(stemName="saved"):
     Save a aln file (alignment file) with a time stamp included in the filename to avoid
     overwriting work. Read as a commandline argument, a string as the filename 
     stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S");
     s = str(DT);
@@ -10572,12 +12323,178 @@ def saln(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".aln") 
+cmd.extend('saln',saln)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".aln") 
 cmd.extend('saln',saln)
+
+
+def sasbdb():
+    ''' 
+    DESCRIPTION:
+    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
+
+    USAGE:
+    sasbdb
+
+
+    ARGUMENTS:
+    NA
+    EXAMPLE:
+    sasbdb
+
+
+    MORE DETAILS:
+    Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB). 
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def sasbdb():
+    url=sasbdbURL
+    try:
+        print("Opening the webpage of the Small Angle Scattering Biological Data Bank (SASBDB): a curated repository for small angle scattering data and models.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Small Angle Scattering Biological Data Bank (SASBDB): a curated repository for small angle scattering data and models.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('sasbdb',sasbdb)
+    '''
+
+    url=sasbdbURL
+    try:
+        print("Opening the webpage of the Small Angle Scattering Biological Data Bank (SASBDB): a curated repository for small angle scattering data and models.");
+        # URL must be in single quotes
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Small Angle Scattering Biological Data Bank (SASBDB): a curated repository for small angle scattering data and models.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('sasbdb',sasbdb)
+
+
+def sb(selection='(all)', name='bump_check', quiet=1):
+    ''' 
+    DESCRIPTION:
+    Show van der Waals clashes as red discs. 
+
+    USAGE:
+    show_bumps [ selection [, name ]]
+
+    ARGUMENTS:
+    show_bumps [ selection [, name ]]
+
+    selection = string: atom selection {default: all}
+
+    name = string: name of CGO object to create {default: bump_check}
+
+    EXAMPLE:
+    sb
+	
+    sb 1lw9
+
+    sb i. 60:80
+
+    MORE DETAILS:
+    Show van der Waals clashes as red discs. 
+
+    Source: http://pymolwiki.org/index.php/show_bumps
+    (c) 2011 Thomas Holder, MPI for Developmental Biology
+
+    License: BSD-2-Clause:
+    https://opensource.org/licenses/BSD-2-Clause
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def sb(selection='(all)', name='bump_check', quiet=1):
+    cmd.delete(name)
+    cmd.create(name, selection, zoom=0)
+    cmd.set('sculpt_vdw_vis_mode', 1, name)
+    cmd.set('sculpt_field_mask', 0x020)  # cSculptVDW
+    for state in range(1, 1 + cmd.count_states('%' + name)):
+        cmd.sculpt_activate(name, state)
+        strain = cmd.sculpt_iterate(name, state, cycles=0)
+        if not int(quiet):
+            print('VDW Strain in state %d: %f' % (state, strain))
+    cmd.show_as('cgo', name)
+
+cmd.extend('sb',sb)
+    '''
+
+    cmd.delete(name)
+    cmd.create(name, selection, zoom=0)
+    cmd.set('sculpt_vdw_vis_mode', 1, name)
+    cmd.set('sculpt_field_mask', 0x020)  # cSculptVDW
+    for state in range(1, 1 + cmd.count_states('%' + name)):
+        cmd.sculpt_activate(name, state)
+        strain = cmd.sculpt_iterate(name, state, cycles=0)
+        if not int(quiet):
+            print('VDW Strain in state %d: %f' % (state, strain))
+    cmd.show_as('cgo', name)
+
+cmd.extend('sb',sb)
+
+
+def sbgrid():
+    ''' 
+    DESCRIPTION:
+    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
+
+    USAGE:
+    sbgrid
+
+    ARGUMENTS:
+    NA
+    EXAMPLE:
+    sbgrid
+
+    MORE DETAILS:
+    Open the webpage of the Structural Biology Grid (SBGRID) YouTube Channel.
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def sbgrid():
+    url=sbgridURL
+    try:
+        print("Opening the webpage of the Structural Biology Grid,SBGRID, YouTube Channel.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Structural Biology Grid,SBGRID, YouTube Channel.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('sbgrid',sbgrid)
+    '''
+
+    url=sbgridURL
+    try:
+        print("Opening the webpage of the Structural Biology Grid,SBGRID, YouTube Channel.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of the Structural Biology Grid,SBGRID, YouTube Channel.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('sbgrid',sbgrid)
+
 
 def sc111():
 
@@ -10588,7 +12505,7 @@ def sc111():
     USAGE:
     sc111
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc111
@@ -10598,7 +12515,7 @@ def sc111():
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;\nsupercell 1, 1, 1, , orange, supercell111, 1
     HORIZONTAL PML SCRIPT:
@@ -10609,12 +12526,15 @@ def sc111():
     supercell(1, 1, 1, object=None, color='orange', name='supercell111', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 
+cmd.extend("sc111", sc111)
+
     '''
 
     supercell(1, 1, 1, object=None, color='orange', name='supercell111', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 
 cmd.extend("sc111", sc111)
+
 
 
 def sc112():
@@ -10625,7 +12545,7 @@ def sc112():
     USAGE:
     sc112
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc112
@@ -10635,7 +12555,7 @@ def sc112():
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
-     >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 1, 2, , orange, supercell112, 1
@@ -10645,11 +12565,14 @@ def sc112():
 def sc112():
     supercell(1, 1, 2, object=None, color='orange', name='supercell112', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc112", sc112)
+
     '''
 
     supercell(1, 1, 2, object=None, color='orange', name='supercell112', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc112", sc112)
+
 
 
 def sc113():
@@ -10660,7 +12583,7 @@ def sc113():
     USAGE:
     sc113
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc113
@@ -10670,7 +12593,7 @@ def sc113():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 1, 3, , orange, supercell113, 1
@@ -10680,11 +12603,14 @@ def sc113():
 def sc113():
     supercell(1, 1, 3, object=None, color='orange', name='supercell113', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc113", sc113)
+
     '''
 
     supercell(1, 1, 3, object=None, color='orange', name='supercell113', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc113", sc113)
+
 
 
 def sc121():
@@ -10695,7 +12621,7 @@ def sc121():
     USAGE:
     sc121
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc121
@@ -10705,7 +12631,7 @@ def sc121():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+ 
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 2, 1, , orange, supercell121, 1
@@ -10715,11 +12641,14 @@ def sc121():
 def sc121():
     supercell(1, 2, 1, object=None, color='orange', name='supercell121', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc121", sc121)
+
     '''
 
     supercell(1, 2, 1, object=None, color='orange', name='supercell121', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc121", sc121)
+
 
 
 def sc122():
@@ -10730,7 +12659,7 @@ def sc122():
     USAGE:
     sc122
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc122
@@ -10740,7 +12669,7 @@ def sc122():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 2, 2, , orange, supercell122, 1
@@ -10750,11 +12679,14 @@ def sc122():
 def sc122():
     supercell(1, 2, 2, object=None, color='orange', name='supercell122', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc122", sc122)
+
     '''
 
     supercell(1, 2, 2, object=None, color='orange', name='supercell122', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc122", sc122)
+
 
 
 def sc123():
@@ -10765,7 +12697,7 @@ def sc123():
     USAGE:
     sc123
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc123
@@ -10775,7 +12707,7 @@ def sc123():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 2, 3, , orange, supercell123, 1
     HORIZONTAL PML SCRIPT:
@@ -10784,11 +12716,14 @@ def sc123():
 def sc123():
     supercell(1, 2, 3, object=None, color='orange', name='supercell123', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc123", sc123)
+
     '''
 
     supercell(1, 2, 3, object=None, color='orange', name='supercell123', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc123", sc123)
+
 
 
 def sc131():
@@ -10799,7 +12734,7 @@ def sc131():
     USAGE:
     sc131
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc131
@@ -10809,7 +12744,7 @@ def sc131():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 1, 3, 1, , orange, supercell131, 1
     HORIZONTAL PML SCRIPT:
@@ -10818,11 +12753,14 @@ def sc131():
 def sc131():
     supercell(1, 3, 1, object=None, color='orange', name='supercell131', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc131", sc131)
+
     '''
 
     supercell(1, 3, 1, object=None, color='orange', name='supercell131', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc131", sc131)
+
 
 
 def sc132():
@@ -10833,7 +12771,7 @@ def sc132():
     USAGE:
     sc132
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc132
@@ -10843,7 +12781,7 @@ def sc132():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 1, 3, 2, , orange, supercell132, 1
@@ -10853,11 +12791,14 @@ def sc132():
 def sc132():
     supercell(1, 3, 2, object=None, color='orange', name='supercell132', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc132", sc132)
+
     '''
 
     supercell(1, 3, 2, object=None, color='orange', name='supercell132', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc132", sc132)
+
 
 
 def sc133():
@@ -10868,7 +12809,7 @@ def sc133():
     USAGE:
     sc133
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc133
@@ -10878,7 +12819,7 @@ def sc133():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/mg18OU/supercell.py;
     supercell 1, 3, 3, , orange, supercell133, 1
@@ -10888,11 +12829,14 @@ def sc133():
 def sc133():
     supercell(1, 3, 3, object=None, color='orange', name='supercell133', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc133", sc133)
+
     '''
 
     supercell(1, 3, 3, object=None, color='orange', name='supercell133', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc133", sc133)
+
 
 
 def sc211():
@@ -10903,7 +12847,7 @@ def sc211():
     USAGE:
     sc211
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc211
@@ -10913,7 +12857,7 @@ def sc211():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 1, , orange, supercell211, 1
@@ -10924,12 +12868,15 @@ def sc211():
     supercell(2, 1, 1, object=None, color='orange', name='supercell211', withmates=1)
     print('When finished, remove the symmetry mates with the command rmsc')
 
+cmd.extend("sc211", sc211)
+
     '''
 
     supercell(2, 1, 1, object=None, color='orange', name='supercell211', withmates=1)
     print('When finished, remove the symmetry mates with the command rmsc')
 
 cmd.extend("sc211", sc211)
+
 
 
 def sc212():
@@ -10940,7 +12887,7 @@ def sc212():
     USAGE:
     sc212
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc212
@@ -10950,7 +12897,7 @@ def sc212():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+ 
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 2, , orange, supercell212, 1
@@ -10960,11 +12907,14 @@ def sc212():
 def sc212():
     supercell(2, 1, 2, object=None, color='orange', name='supercell212', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc212", sc212)
+
     '''
 
     supercell(2, 1, 2, object=None, color='orange', name='supercell212', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc212", sc212)
+
 
 
 def sc213():
@@ -10975,7 +12925,7 @@ def sc213():
     USAGE:
     sc213
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc213
@@ -10985,7 +12935,7 @@ def sc213():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 1, 3, , orange, supercell213, 1
@@ -10995,11 +12945,14 @@ def sc213():
 def sc213():
     supercell(2, 1, 3, object=None, color='orange', name='supercell213', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc213", sc213)
+
     '''
 
     supercell(2, 1, 3, object=None, color='orange', name='supercell213', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc213", sc213)
+
 
 
 def sc221():
@@ -11010,7 +12963,7 @@ def sc221():
     USAGE:
     sc221
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc221
@@ -11020,7 +12973,7 @@ def sc221():
     Use 'rmsc' to remove supercell objects.
     Requires Thomas Holder's supercell.py script.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
 
@@ -11031,11 +12984,14 @@ def sc221():
 def sc221():
     supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc221", sc221)
+
     '''
 
     supercell(2, 2, 1, object=None, color='orange', name='supercell221', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc221", sc221)
+
 
 
 def sc222():
@@ -11046,7 +13002,7 @@ def sc222():
     USAGE:
     sc222
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc222
@@ -11056,7 +13012,7 @@ def sc222():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 2, 2, 2, , orange, supercell222, 1
@@ -11066,11 +13022,14 @@ def sc222():
 def sc222():
     supercell(2, 2, 2, object=None, color='orange', name='supercell222', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc222", sc222)
+
     '''
 
     supercell(2, 2, 2, object=None, color='orange', name='supercell222', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc222", sc222)
+
 
 
 def sc231():
@@ -11081,7 +13040,7 @@ def sc231():
     USAGE:
     sc231
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc231
@@ -11091,7 +13050,7 @@ def sc231():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScriptssupercell.py;\n supercell 2, 3, 1, , orange, supercell231, 1
     HORIZONTAL PML SCRIPT:
@@ -11100,11 +13059,13 @@ def sc231():
 def sc231():
     supercell(2, 3, 1, object=None, color='orange', name='supercell231', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc231", sc231)
     '''
 
     supercell(2, 3, 1, object=None, color='orange', name='supercell231', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc231", sc231)
+
 
 def sc311():
     ''' 
@@ -11114,7 +13075,7 @@ def sc311():
     USAGE:
     sc311
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc311
@@ -11124,7 +13085,7 @@ def sc311():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;\n supercell 3, 1, 1, , orange, supercell311, 1
     HORIZONTAL PML SCRIPT:
@@ -11133,11 +13094,14 @@ def sc311():
 def sc311():
     supercell(3, 1, 1, object=None, color='orange', name='supercell311', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc311", sc311)
+
     '''
 
     supercell(3, 1, 1, object=None, color='orange', name='supercell311', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc311", sc311)
+
 
 
 def sc312():
@@ -11148,7 +13112,7 @@ def sc312():
     USAGE:
     sc312
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc312
@@ -11158,7 +13122,7 @@ def sc312():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 1, 2, , orange, supercell312, 1
@@ -11168,11 +13132,13 @@ def sc312():
 def sc312():
     supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc312", sc312)
     '''
 
     supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc312", sc312)
+
 
 def sc313():
     ''' 
@@ -11182,7 +13148,7 @@ def sc313():
     USAGE:
     sc313
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc313
@@ -11192,7 +13158,7 @@ def sc313():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py
     supercell 3, 1, 3, , orange, supercell313, 1
@@ -11202,11 +13168,14 @@ def sc313():
 def sc313():
     supercell(3, 1, 3, object=None, color='orange', name='supercell313', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc313", sc313)
+
     '''
 
     supercell(3, 1, 3, object=None, color='orange', name='supercell313', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc313", sc313)
+
 
 
 def sc321():
@@ -11217,7 +13186,7 @@ def sc321():
     USAGE:
     sc321
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc321
@@ -11227,7 +13196,7 @@ def sc321():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 2, 1, , orange, supercell321, 1
@@ -11237,11 +13206,13 @@ def sc321():
 def sc321():
     supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc321", sc321)
     '''
 
     supercell(3, 2, 1, object=None, color='orange', name='supercell321', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc321", sc321)
+
 
 def sc331():
     ''' 
@@ -11251,7 +13222,7 @@ def sc331():
     USAGE:
     sc331
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc331
@@ -11261,7 +13232,7 @@ def sc331():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 3, 1, , orange, supercell331, 1
@@ -11271,11 +13242,14 @@ def sc331():
 def sc331():
     supercell(3, 3, 1, object=None, color='orange', name='supercell331', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc331", sc331)
+
     '''
 
     supercell(3, 3, 1, object=None, color='orange', name='supercell331', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc331", sc331)
+
 
 
 def sc333():
@@ -11286,7 +13260,7 @@ def sc333():
     USAGE:
     sc333
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     sc333
@@ -11296,7 +13270,7 @@ def sc333():
     Use "rmsc" to remove supercell objects.
     Requires supercell.py script by Thomas Holder.
 
-   >>>  Edit file path in python code below
+ 
     VERTICAL PML SCRIPT:
     run $HOME/Scripts/PyMOLScripts/supercell.py;
     supercell 3, 3, 3, , orange, supercell333, 1
@@ -11306,11 +13280,14 @@ def sc333():
 def sc333():
     supercell(3, 3, 3, object=None, color='orange', name='supercell333', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
+cmd.extend("sc333", sc333)
+
     '''
 
     supercell(3, 3, 3, object=None, color='orange', name='supercell333', withmates=1)
     print("Use 'rmsc' to remove supercell objects.")
 cmd.extend("sc333", sc333)
+
 
 
 def sccp4(stemName="saved"):
@@ -11321,7 +13298,7 @@ def sccp4(stemName="saved"):
     USAGE:
     sccp4
 
-    Arguments:
+    ARGUMENTS:
     electronDensityMapFileNameStem
     EXAMPLE:
     sccp4  testFile
@@ -11330,6 +13307,8 @@ def sccp4(stemName="saved"):
     Save a ccp4 electron density map with a time stamp included in the 
     filename to avoid overwriting an existing file.Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11341,12 +13320,14 @@ def sccp4(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4") 
+cmd.extend('sccp4',sccp4)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4") 
 cmd.extend('sccp4',sccp4)
+
 
 def scif(stemName="saved"):
     ''' 
@@ -11356,7 +13337,7 @@ def scif(stemName="saved"):
     USAGE:
     scif
 
-    Arguments:
+    ARGUMENTS:
     currentModelFileNameStem
     EXAMPLE:
     scif  testFile
@@ -11366,6 +13347,8 @@ def scif(stemName="saved"):
     included in the filename to avoid overwriting an existing file.Read 
     as a commandline argument, a string as the filename stem or use 
     the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11377,12 +13360,14 @@ def scif(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".cif") 
+cmd.extend('scif',scif)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".cif") 
 cmd.extend('scif',scif)
+
 
 def sdae(stemName="saved"):
     ''' 
@@ -11392,7 +13377,7 @@ def sdae(stemName="saved"):
     USAGE:
     sdae
 
-    Arguments:
+    ARGUMENTS:
     ColladaFileNameStem
     EXAMPLE:
     sdae  testFile
@@ -11401,6 +13386,8 @@ def sdae(stemName="saved"):
     Save a dae file (Collada File) with a time stamp included in the filename 
     to avoid overwriting an existing file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11412,12 +13399,14 @@ def sdae(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4") 
+cmd.extend('sdae',sdae)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".ccp4") 
 cmd.extend('sdae',sdae)
+
 
 def sdat(stemName="saved"):
     ''' 
@@ -11427,7 +13416,7 @@ def sdat(stemName="saved"):
     USAGE:
     sdat
 
-    Arguments:
+    ARGUMENTS:
     outputDataFileStemName
     EXAMPLE:
     sdat  testFile
@@ -11436,6 +13425,8 @@ def sdat(stemName="saved"):
     Save a dat file (output data file) with a time stamp included in the filename 
     to avoid overwriting an existing dat file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11447,12 +13438,14 @@ def sdat(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".dat") 
+cmd.extend('sdat',sdat)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".dat") 
 cmd.extend('sdat',sdat)
+
 
 def sfasta(stemName="saved"):
     ''' 
@@ -11462,7 +13455,7 @@ def sfasta(stemName="saved"):
     USAGE:
     sfasta
 
-    Arguments:
+    ARGUMENTS:
     fastaFileStemName
     EXAMPLE:
     sfasta  testFile
@@ -11471,6 +13464,8 @@ def sfasta(stemName="saved"):
     Save a fasta (sequence) file with a time stamp included in the filename 
     to avoid overwriting an existing dat file.\n Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11482,12 +13477,14 @@ def sfasta(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".fasta") 
+cmd.extend('sfasta',sfasta)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".fasta") 
 cmd.extend('sfasta',sfasta)
+
 
 def sidtf(stemName="saved"):
     ''' 
@@ -11497,7 +13494,7 @@ def sidtf(stemName="saved"):
     USAGE:
     sidtf
 
-    Arguments:
+    ARGUMENTS:
     idtfFileStemName
     EXAMPLE:
     sidtf  testFile
@@ -11507,6 +13504,8 @@ def sidtf(stemName="saved"):
     included in the filename to avoid overwriting an existing dat file. 
     Read as a commandline argument, a string as the filename stem, 
     or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11518,12 +13517,14 @@ def sidtf(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".idtf") 
+cmd.extend('sidtf',sidtf)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".idtf") 
 cmd.extend('sidtf',sidtf)
+
 
 def smae(stemName="saved"):
     ''' 
@@ -11533,7 +13534,7 @@ def smae(stemName="saved"):
     USAGE:
     smae
 
-    Arguments:
+    ARGUMENTS:
     maeFileStemName
     EXAMPLE:
     smae  testFile
@@ -11542,6 +13543,8 @@ def smae(stemName="saved"):
     Save a mae (Maestro) file with a time stamp included in the filename 
     to avoid overwriting an existing dat file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11553,12 +13556,14 @@ def smae(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mae") 
+cmd.extend('smae',smae)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mae") 
 cmd.extend('smae',smae)
+
 
 def smmd(stemName="saved"):
     ''' 
@@ -11568,7 +13573,7 @@ def smmd(stemName="saved"):
     USAGE:
     smmd
 
-    Arguments:
+    ARGUMENTS:
     MacromodelFileStemName
     EXAMPLE:
     smmd  testFile
@@ -11577,6 +13582,8 @@ def smmd(stemName="saved"):
     Save a mmd (Macromodel) file with a time stamp included in the filename to avoid
     overwriting an existing Macromodel file. Read as a commandline argument, a string 
     as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11588,12 +13595,14 @@ def smmd(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mmd") 
+cmd.extend('smmd',smmd)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mmd") 
 cmd.extend('smmd',smmd)
+
 
 def smmod(stemName="saved"):
     ''' 
@@ -11603,7 +13612,7 @@ def smmod(stemName="saved"):
     USAGE:
     smmod
 
-    Arguments:
+    ARGUMENTS:
     MacromodelFileStemName
     EXAMPLE:
     smmod  testFile
@@ -11612,6 +13621,8 @@ def smmod(stemName="saved"):
     Save a mmod (Macromodel) file with a time stamp included in the filename 
     to avoid overwriting an existing Macromodel file.  Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11623,12 +13634,14 @@ def smmod(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mmod") 
+cmd.extend('smmod',smmod)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mmod") 
 cmd.extend('smmod',smmod)
+
 
 def smoe(stemName="saved"):
     ''' 
@@ -11638,7 +13651,7 @@ def smoe(stemName="saved"):
     USAGE:
     smoe MOEFileStemName
 
-    Arguments:
+    ARGUMENTS:
     MOEFileStemName
     EXAMPLE:
     smoe  testFile
@@ -11647,6 +13660,8 @@ def smoe(stemName="saved"):
     Save moe file (Molecular Operating Environment) with a time stamp included 
     in the filename to avoid overwriting an existing moe file. Read as a commandline
     argument, a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11658,12 +13673,14 @@ def smoe(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".moe") 
+cmd.extend('smoe',smoe)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".moe") 
 cmd.extend('smoe',smoe)
+
 
 def smol(stemName="saved"):
     ''' 
@@ -11673,7 +13690,7 @@ def smol(stemName="saved"):
     USAGE:
     smol MOEFileStemName
 
-    Arguments:
+    ARGUMENTS:
     MOEFileStemName
     EXAMPLE:
     smol  testFile
@@ -11682,6 +13699,8 @@ def smol(stemName="saved"):
     Save mol file with a time stamp included in the filename to avoid overwriting 
     an existing pmo file. Read as a commandline argument, a string as the 
     filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
    s = str(DT)
@@ -11693,12 +13712,14 @@ def smol(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mol") 
+cmd.extend('smol',smol)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mol") 
 cmd.extend('smol',smol)
+
 
 def smol2(stemName="saved"):
     ''' 
@@ -11708,7 +13729,7 @@ def smol2(stemName="saved"):
     USAGE:
     smol2 mol2FileStemName
 
-    Arguments:
+    ARGUMENTS:
     mol2FileStemName
     EXAMPLE:
     smol2  testFile
@@ -11717,6 +13738,8 @@ def smol2(stemName="saved"):
     Save mol2 (Sybyl file format) file with a time stamp included in the filename 
     to avoid overwriting an existing mol2 file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11728,12 +13751,14 @@ def smol2(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mol2") 
+cmd.extend('smol2',smol2)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mol2") 
 cmd.extend('smol2',smol2)
+
 
 def smtl(stemName="saved"):
     ''' 
@@ -11743,7 +13768,7 @@ def smtl(stemName="saved"):
     USAGE:
     smtl mtlFileStemName
 
-    Arguments:
+    ARGUMENTS:
     mtlFileStemName
     EXAMPLE:
     smtl  testFile
@@ -11753,6 +13778,8 @@ def smtl(stemName="saved"):
     in the filename to avoid overwriting an existing mtl file. Read as a 
     commandline argument, a string as the filename stem, or use the default 
     filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11764,12 +13791,14 @@ def smtl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mtl") 
+cmd.extend('smtl',smtl)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".mtl") 
 cmd.extend('smtl',smtl)
+
 
 def sobj(stemName="saved"):
     ''' 
@@ -11779,7 +13808,7 @@ def sobj(stemName="saved"):
     USAGE:
     sobj sobjFileStemName
 
-    Arguments:
+    ARGUMENTS:
     sobjFileStemName
     EXAMPLE:
     sobj  testFile
@@ -11789,6 +13818,8 @@ def sobj(stemName="saved"):
     included in the filename to avoid overwriting an existing obj file. Read 
     as a commandline argument, a string as the filename stem, or use the 
     default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11800,12 +13831,14 @@ def sobj(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".obj") 
+cmd.extend('sobj',sobj)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".obj") 
 cmd.extend('sobj',sobj)
+
 
 def sout(stemName="saved"):
     ''' 
@@ -11815,7 +13848,7 @@ def sout(stemName="saved"):
     USAGE:
     sout outFileStemName
 
-    Arguments:
+    ARGUMENTS:
     outFileStemName
     EXAMPLE:
     sout  testFile
@@ -11824,6 +13857,8 @@ def sout(stemName="saved"):
     Save output data file format with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11835,12 +13870,14 @@ def sout(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".out") 
+cmd.extend('sout',sout)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".out") 
 cmd.extend('sout',sout)
+
 
 def spdb(stemName="saved"):
     ''' 
@@ -11850,7 +13887,7 @@ def spdb(stemName="saved"):
     USAGE:
     spdb pdbFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pdbFileStemName
     EXAMPLE:
     spdb testFile
@@ -11859,6 +13896,8 @@ def spdb(stemName="saved"):
     Save pdb (Protein Data Bank) file format with a time stamp included in the 
     filename to avoid overwriting an existing out file. Read as a commandline 
     argument, a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11870,12 +13909,14 @@ def spdb(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pdb") 
+cmd.extend('spdb',spdb)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pdb") 
 cmd.extend('spdb',spdb)
+
 
 def spkl(stemName="saved"):
     ''' 
@@ -11885,7 +13926,7 @@ def spkl(stemName="saved"):
     USAGE:
     spkl pklFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pklFileStemName
     EXAMPLE:
     spkl testFile
@@ -11894,6 +13935,8 @@ def spkl(stemName="saved"):
     Save a pkl file (Python pickle file) with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)\
@@ -11905,12 +13948,14 @@ def spkl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pkl") 
+cmd.extend('spkl',spkl)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pkl") 
 cmd.extend('spkl',spkl)
+
 
 def spkla(stemName="saved"):
     ''' 
@@ -11920,7 +13965,7 @@ def spkla(stemName="saved"):
     USAGE:
     spkla pklaFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pklaFileStemName
     EXAMPLE:
     spkla testFile
@@ -11930,6 +13975,8 @@ def spkla(stemName="saved"):
     the filename to avoid overwriting an existing out file. Read as a 
     commandline argument, a string as the filename stem, or use the 
     default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11941,12 +13988,14 @@ def spkla(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pkla") 
+cmd.extend('spkla',spkla)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pkla") 
 cmd.extend('spkla',spkla)
+
 
 def spmo(stemName="saved"):
     ''' 
@@ -11956,7 +14005,7 @@ def spmo(stemName="saved"):
     USAGE:
     spmo MacromodelFileStemName
 
-    Arguments:
+    ARGUMENTS:
     MacromodelFileStemName
     EXAMPLE:
     spmo testFile
@@ -11965,6 +14014,8 @@ def spmo(stemName="saved"):
     Save pmo file (XYZ, binary format file) with a time stamp included in the filename 
     to avoid overwriting an existing pmo file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -11976,12 +14027,14 @@ def spmo(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pmo") 
+cmd.extend('spmo',spmo)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pmo") 
 cmd.extend('spmo',spmo)
+
 
 def spng(stemName="saved"):
     ''' 
@@ -11991,7 +14044,7 @@ def spng(stemName="saved"):
     USAGE:
     spng pngFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pngFileStemName
     EXAMPLE:
     spng testFile
@@ -12000,6 +14053,8 @@ def spng(stemName="saved"):
     Save a png file (Python pickle file) with a time stamp included in the filename to avoid     
     overwriting an existing out file.\n Read as a commandline argument, a string as the 
     ilename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12011,12 +14066,14 @@ def spng(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".png") 
+cmd.extend('spng',spng)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".png") 
 cmd.extend('spng',spng)
+
 
 def spov(stemName="saved"):
     ''' 
@@ -12026,7 +14083,7 @@ def spov(stemName="saved"):
     USAGE:
     spov povFileStemName
 
-    Arguments:
+    ARGUMENTS:
     povFileStemName
     EXAMPLE:
     spov testFile
@@ -12035,6 +14092,8 @@ def spov(stemName="saved"):
     Save pov (POV-ray tracing file format) file with a time stamp included in the filename 
     to avoid overwriting an existing out file. Read as a commandline argument, a string 
     as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12046,12 +14105,14 @@ def spov(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pov") 
+cmd.extend('spov',spov)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pov") 
 cmd.extend('spov',spov)
+
 
 def spqr(stemName="saved"):
     ''' 
@@ -12061,7 +14122,7 @@ def spqr(stemName="saved"):
     USAGE:
     spqr pqrFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pqrFileStemName
     EXAMPLE:
     spqr testFile
@@ -12074,6 +14135,8 @@ A pqr (PDB file with the temperature and occupancy columns replaced
     a time stamp included in the filename to avoid overwriting an existing 
     out file. Read as a commandline argument, a string as the filename stem, 
     or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12085,12 +14148,14 @@ def spqr(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pqr") 
+cmd.extend('spqr',spqr)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pqr") 
 cmd.extend('spqr',spqr)
+
 
 def spse(stemName="saved"):
     ''' 
@@ -12100,7 +14165,7 @@ def spse(stemName="saved"):
     USAGE:
     spse pseFileStemName
 
-    Arguments:
+    ARGUMENTS:
     pseFileStemName
     EXAMPLE:
     spse testFile
@@ -12109,6 +14174,8 @@ def spse(stemName="saved"):
     Save session file with a time stamp included in the filename to avoid 
     overwriting an existing pse file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12120,12 +14187,14 @@ def spse(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pse") 
+cmd.extend('spse',spse)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".pse") 
 cmd.extend('spse',spse)
+
 
 def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
     ''' 
@@ -12136,7 +14205,7 @@ def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
     USAGE:
     srv
 
-    Arguments:
+    ARGUMENTS:
     [view, decimal_places, outname]
 Note that the values in the [] are optional.
 
@@ -12176,6 +14245,7 @@ srv 1, 2, bestview
 
             17 = orthoscopic flag 
             (not implemented in older versions)
+
 
     VERTICAL PML SCRIPT:
     NA
@@ -12223,6 +14293,7 @@ def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
     myFile.close()
     return
 
+cmd.extend("srv", srv)
     '''
 
     #convert the commandline arguments from strings to integers
@@ -12267,6 +14338,7 @@ def srv(StoredView=0, decimal_places=2, fileStemName="roundedview"):
 
 cmd.extend("srv", srv)
 
+
 def ssdf(stemName="saved"):
     ''' 
     DESCRIPTION:
@@ -12275,7 +14347,7 @@ def ssdf(stemName="saved"):
     USAGE:
     ssdf sdfFileStemName
 
-    Arguments:
+    ARGUMENTS:
     sdfFileStemName
     EXAMPLE:
     ssdf testFile
@@ -12284,6 +14356,8 @@ def ssdf(stemName="saved"):
     Save session file with a time stamp included in the filename to avoid 
     overwriting an existing sdf file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12295,12 +14369,69 @@ def ssdf(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".sdf") 
+cmd.extend('ssdf',ssdf)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".sdf") 
 cmd.extend('ssdf',ssdf)
+
+
+def ssrlbl42():
+    ''' 
+    DESCRIPTION:
+    Open the webpage of SSRL Biological SAXS at BL 4-2.
+
+
+
+    USAGE:
+    ssrlbl42
+
+
+
+    ARGUMENTS:
+    NA
+    EXAMPLE:
+    ssrlbl42
+
+
+
+    MORE DETAILS:
+    Open the webpage of SSRL Biological SAXS at BL 4-2.
+
+
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def ssrlbl42():
+    url=ssrlbl42URL
+    try:
+        print("Opening the webpage of SSRL Biological SAXS at BL 4-2.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SSRL Biological SAXS at BL 4-2.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('ssrlbl42',ssrlbl42)
+    '''
+
+    url=ssrlbl42URL
+    try:
+        print("Opening the webpage of SSRL Biological SAXS at BL 4-2.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        webbrowser.open_new_tab(url)
+        print("Opened the webpage of SSRL Biological SAXS at BL 4-2.")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('ssrlbl42',ssrlbl42)
+
 
 def st3(fileName="test.pml"):
     ''' 
@@ -12310,7 +14441,7 @@ def st3(fileName="test.pml"):
     USAGE:
     st3
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     st3
@@ -12319,10 +14450,10 @@ def st3(fileName="test.pml"):
     Open Open Sublime Text 3 from within PyMOL.
     Adjust file path to executable.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     subprocess.call(sublOpen);
-return
+    return
 
     HORIZONTAL PML SCRIPT:
     subprocess.call(sublOpen);return
@@ -12330,41 +14461,45 @@ return
     PYTHON CODE:
 def st3(fileName="test.pml"):
     try:
-        print("Opening the molecular graphics program sublime text.");
-        subprocess.check_output(sublOpen)
-        print("Success opening subl.")
+        print("Opening the text editor Sublime Text 3.");
+        subprocess.Popen(sublimeText3Open)
+        print("Success opening Sublime Text 3.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublPath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublimeText3Path' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
+cmd.extend('st3',st3)
     '''
 
     try:
-        print("Opening the molecular graphics program sublime text.");
-        subprocess.check_output(sublOpen)
-        print("Success opening subl.")
+        print("Opening the text editor Sublime Text 3.");
+        subprocess.Popen(sublimeText3Open)
+        print("Success opening Sublime Text 3.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublPath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the sublpen'. \n  Or use 'sublimeText3Path' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
 cmd.extend('st3',st3)
 
+
 def supercell(a=1, b=1, c=1, object=None, color='blue', name='supercell', withmates=1):
 
     ''' 
     DESCRIPTION:
-      (c) 2010 Thomas Holder
+    Generate symmetry mates to fill unit cell. 
+    (c) 2010 Thomas Holder
 
-Generate symmetry mates to fill unit cell. 
+
+
 
     USAGE:
     supercell a, b, c [, object [, color [, name [, withmates]]]]
 
-    Arguments:
+    ARGUMENTS:
     a, b, c = integer: repeat cell in x,y,z direction a,b,c times {default: 1,1,1}
  
 object = string: name of object to take cell definition from
@@ -12379,18 +14514,20 @@ withmates = bool: also create symmetry mates in displayed cells {default: 1}
     NA
 
     MORE DETAILS:
+    Draw a supercell, as requested by Nicolas Bock on the pymol-users
+    mailing list (Subject: [PyMOL] feature request: supercell construction
+    Date: 04/12/2010 10:12:17 PM (Mon, 12 Apr 2010 14:12:17 -0600))
+
+    source: https://pymolwiki.org/index.php/Supercell
+
+    Calls two other functions: cellbasis and symexpcell.
+    Both of these functions are also in this collection.
+
     (c) 2010 Thomas Holder
 
-GNU Free Documentation License 1.2
+    GNU Free Documentation License 1.2
 
-Draw a supercell, as requested by Nicolas Bock on the pymol-users
-mailing list (Subject: [PyMOL] feature request: supercell construction
-Date: 04/12/2010 10:12:17 PM (Mon, 12 Apr 2010 14:12:17 -0600))
 
-source: https://pymolwiki.org/index.php/Supercell
-
-Calls two other functions: cellbasis and symexpcell.
-Both of these functions are also in this collection.
     VERTICAL PML SCRIPT:
     NotYet
     HORIZONTAL PML SCRIPT:
@@ -12445,6 +14582,7 @@ def supercell(a=1, b=1, c=1, object=None, color='blue', name='supercell', withma
     cmd.delete(name)
     cmd.load_cgo(obj, name)
 
+cmd.extend('supercell', supercell)
     '''
 
     if object is None:
@@ -12496,15 +14634,18 @@ def supercell(a=1, b=1, c=1, object=None, color='blue', name='supercell', withma
 
 cmd.extend('supercell', supercell)
 
+
 def swrl(stemName="saved"):
     ''' 
     DESCRIPTION:
     Save wrl (VRML 2 file format) file with a time stamp.
 
+
+
     USAGE:
     swrl wrlFileStemName
 
-    Arguments:
+    ARGUMENTS:
     wrlFileStemName
     EXAMPLE:
     swrl testFile
@@ -12513,6 +14654,8 @@ def swrl(stemName="saved"):
     Save wrl (VRML 2 file format) file with a time stamp included in the filename 
     to avoid overwriting an existing sdf file. Read as a commandline argument, 
     a string as the filename stem, or use the default filename stem "saved".
+
+
     VERTICAL PML SCRIPT:
     DT =datetime.datetime.now().strftime("y%Ym%md%dh%Hm%Ms%S")
     s = str(DT)
@@ -12524,6 +14667,7 @@ def swrl(stemName="saved"):
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
     s = str(DT)
     cmd.save(stemName+s+".wrl") 
+cmd.extend('swrlf',swrl)
     '''
 
     DT =datetime.datetime.now().strftime("yr%Ymo%mday%dhr%Hmin%Msec%S")
@@ -12531,19 +14675,19 @@ def swrl(stemName="saved"):
     cmd.save(stemName+s+".wrl") 
 cmd.extend('swrlf',swrl)
 
+
 def symexpcell(prefix='mate', object=None, a=0, b=0, c=0):
     ''' 
     DESCRIPTION:
-      (c) 2010 Thomas Holder
-
-Creates all symmetry-related objects for the specified object that occur with their bounding box center within the unit cell.
+    Creates all symmetry-related objects for the specified object that occur with their bounding box center within the unit cell.
+    (c) 2010 Thomas Holder
 
 
 
     USAGE:
     symexpcell prefix, object, [a, b, c]
 
-    Arguments:
+    ARGUMENTS:
     prefix = string: prefix of new objects
 
 object = string: object for which to create symmetry mates
@@ -12554,15 +14698,14 @@ a, b, c = integer: create neighboring cell {default: 0,0,0}
     NA
 
     MORE DETAILS:
+    Creates all symmetry-related objects for the specified object that occur with their 
+    bounding box center within the unit cell.
+
+    Used by the function supercell.
+
+    Also see symexp, http://www.pymolwiki.org/index.php/SuperSym.
+
     (c) 2010 Thomas Holder
-
-
-Creates all symmetry-related objects for the specified object that occur with their bounding box center within the unit cell.
-
-Used by the function supercell.
-
-Also see symexp, http://www.pymolwiki.org/index.php/SuperSym.
-
 
     VERTICAL PML SCRIPT:
     NotYet
@@ -12605,6 +14748,8 @@ def symexpcell(prefix='mate', object=None, a=0, b=0, c=0):
         cmd.create(name, object)
         cmd.transform_object(name, mat_list, 0)
         cmd.color(i+1, name)
+cmd.extend('symexpcell', symexpcell)
+
     '''
 
     if object is None:
@@ -12645,15 +14790,18 @@ def symexpcell(prefix='mate', object=None, a=0, b=0, c=0):
 cmd.extend('symexpcell', symexpcell)
 
 
+
 def term():
     ''' 
     DESCRIPTION:
     Open a Terminal window on MacOS.
 
+
+
     USAGE:
     term
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     term
@@ -12661,7 +14809,7 @@ def term():
     MORE DETAILS:
     Open a Terminal window on MacOS.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     subprocess.call(terminalCommand)
     return
@@ -12671,15 +14819,29 @@ def term():
 
     PYTHON CODE:
 def term():
-    subprocess.call(terminalCommand)
-    return
+    try:
+        print("Opening a terminal.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.check_output(terminalOpen)
+        print("Opened a terminal.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
 
-    '''
-
-    subprocess.call(terminalCommand)
-    return
 
 cmd.extend('term',term)
+    '''
+
+    try:
+        print("Opening a terminal.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.check_output(terminalOpen)
+        print("Opened a terminal.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('term',term)
+
 
 def timcolor(selection='all'):
     ''' 
@@ -12687,19 +14849,21 @@ def timcolor(selection='all'):
     Tim Mather's biophysical coloring scheme for proteins.
 
 
+
+
     USAGE:
     timcolor <selection>
 
-    Arguments:
+    ARGUMENTS:
      <selection>
     EXAMPLE:
     timcolor 1lw9
 
     MORE DETAILS:
     Tim Mather's biophyscial coloring scheme for proteins.
-The scheme is defined in the dictionary below.
-This scheme applies only to proteins. 
-See the yrb shortcut for an alternate coloring scheme. 
+    The scheme is defined in the dictionary below.
+    This scheme applies only to proteins. 
+    See the yrb shortcut for an alternate coloring scheme. 
 
     code={'acid'    :  'red'    ,
           'basic'   :  'blue'   ,
@@ -12738,7 +14902,9 @@ def timcolor(selection='all'):
     cmd.do (word)  #Used to be in code, but looks like
                               #dictionnaries are accessed at random
     cmd.hide ('everything','resn HOH')
+    cmd.show('surface',selection)
 
+cmd.extend('timcolor',timcolor)
     '''
 
     print(selection)
@@ -12766,34 +14932,41 @@ def timcolor(selection='all'):
     cmd.do (word)  #Used to be in code, but looks like
                               #dictionnaries are accessed at random
     cmd.hide ('everything','resn HOH')
+    cmd.show('surface',selection)
 
 cmd.extend('timcolor',timcolor)
 
-def vdwTrans(selection='all'):
+
+def tvdw(arg1='all'):
     ''' 
     DESCRIPTION:
-    Transparent vdw surface
+    Transparent vdw surface by Bobby Patton at Colorato State University. 
 
     USAGE:
     vdwTrans selection
 
-    Arguments:
+    ARGUMENTS:
     selection
 
     EXAMPLE:
     vdwTrans 3nd3
 
     MORE DETAILS:
-    # vdw creates a copy of an object with full-sized, transparent spheres
-# Bondi VDW values added below to override default Pymol settings
-# From https://gist.githubusercontent.com/bobbypaton/1cdc4784f3fc8374467bae5eb410edef/raw/9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+    vdwTrans creates a copy of an object with full-sized, transparent spheres.
+    This looks cool when combined with the bs shortcut. 
+    Bondi VDW values added below to override default Pymol settings
+    The code is from  Bobby Paton at Colorado State University
+     https://gist.githubusercontent.com/bobbypaton/\
+    1cdc4784f3fc8374467bae5eb410edef/raw/\
+    9995d51d6a64b8bcf01590c944cc38059b2f8d7f/pymol_style.py
+
 
     VERTICAL PML SCRIPT:
     NA
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
-def vdwTrans(selection='all'):
+def tvdw(arg1='all'):
     # Bondi VDW values 
     cmd.alter("elem Ac", "vdw=2.00")
     cmd.alter("elem Al", "vdw=2.00")
@@ -12921,27 +15094,26 @@ def vdwTrans(selection='all'):
     cmd.set("specular", 1)
     cmd.set("reflect", .1)
     cmd.space("cmyk")
-   
-    # ball and stick settings
-    arg1 = 'selection="all"'
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
-    cmd.set("dash_gap",0.01)
-    cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
-    cmd.hide("labels")
 
+   #van der Waals settings
+    cmd.copy(arg1+"_vdw", arg1)
+    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.rebuild()
+    cmd.set("sphere_scale", 1, arg1+"_vdw")
+    cmd.hide("nonbonded", arg1+"_vdw")
+    cmd.hide("lines", arg1+"_vdw")
+    cmd.hide("sticks", arg1+"_vdw")
+    cmd.hide("cartoon", arg1+"_vdw")
+    cmd.show("spheres", arg1+"_vdw")
+    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+
+    print("Note that the selection of 'all' does not work when applying this function")
+    print("to multiple models as are found in pdb1 files and when multiple chains")
+    print("make up the biological unit.")
+    print("The shortcut has to be applied separately to each model.")
+
+
+cmd.extend('tvdw', tvdw)
     '''
 
     # Bondi VDW values 
@@ -13071,30 +15243,63 @@ def vdwTrans(selection='all'):
     cmd.set("specular", 1)
     cmd.set("reflect", .1)
     cmd.space("cmyk")
-   
-    # ball and stick settings
-    arg1 = 'selection="all"'
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
-    cmd.set("dash_gap",0.01)
-    cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
-    cmd.hide("labels")
 
-cmd.extend('vdwTrans', vdwTrans)
+   #van der Waals settings
+    cmd.copy(arg1+"_vdw", arg1)
+    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.rebuild()
+    cmd.set("sphere_scale", 1, arg1+"_vdw")
+    cmd.hide("nonbonded", arg1+"_vdw")
+    cmd.hide("lines", arg1+"_vdw")
+    cmd.hide("sticks", arg1+"_vdw")
+    cmd.hide("cartoon", arg1+"_vdw")
+    cmd.show("spheres", arg1+"_vdw")
+    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
 
-def vim(fileName="test.pml"):
+    print("Note that the selection of 'all' does not work when applying this function")
+    print("to multiple models as are found in pdb1 files and when multiple chains")
+    print("make up the biological unit.")
+    print("The shortcut has to be applied separately to each model.")
+
+
+cmd.extend('tvdw', tvdw)
+
+
+def tvdwbw(arg1='all'):
+    ''' 
+    DESCRIPTION:
+    Transparent vdw surface by Bobby Patton at Colorato State University and grayscale by gscale function.
+
+    USAGE:
+    tvdwbw
+
+    ARGUMENTS:
+    selection
+
+    EXAMPLE:
+    tvdwbw
+
+    MORE DETAILS:
+    Transparent vdw surface by Bobby Patton at Colorato State University and grayscale by gscale function.
+    VERTICAL PML SCRIPT:
+    NA
+    HORIZONTAL PML SCRIPT:
+    NA
+    PYTHON CODE:
+def tvdwbw(arg1='all'):
+    tvdw(arg1)
+    gscale(ag1)
+
+cmd.extend('tvdwbw', tvdwbw)
+    '''
+
+    tvdw(arg1)
+    gscale(ag1)
+
+cmd.extend('tvdwbw', tvdwbw)
+
+
+def vim():
     ''' 
     DESCRIPTION:
     Open vim from within PyMOL.
@@ -13102,7 +15307,7 @@ def vim(fileName="test.pml"):
     USAGE:
     vim
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     vim script.pml
@@ -13111,7 +15316,7 @@ def vim(fileName="test.pml"):
     Open vim from within PyMOL. 
     Adjust file path to vim on your computer.
 
-   >>>  Edit file path in python code below
+ 
     VERTICAL PML SCRIPT:
     subprocess.call(vimCommand)
     return
@@ -13120,30 +15325,32 @@ def vim(fileName="test.pml"):
     subprocess.call(vimCommand);return
 
     PYTHON CODE:
-def vim(fileName="test.pml"):
+def vim():
     try:
         print("Opening the molecular graphics program vim.");
-        subprocess.check_output(sublOpen)
+        subprocess.check_output(vimOpen)
         print("Success opening vim.")
     except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the vimopen'. \n  Or use 'vimPath' as the argument of check_output().")
-        pass # handle errors in the called executable
-    except OSError:
-        pass # executable not found
-
-    '''
-
-    try:
-        print("Opening the molecular graphics program vim.");
-        subprocess.check_output(sublOpen)
-        print("Success opening vim.")
-    except subprocess.CalledProcessError:
-        print("Executable not found! \n  Check syntax of the vimopen'. \n  Or use 'vimPath' as the argument of check_output().")
+        print("Executable not found! \n  Check syntax of the vimOpen'. \n  Or use 'vimPath' as the argument of check_output().")
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
 
 cmd.extend('vim',vim)
+    '''
+
+    try:
+        print("Opening the molecular graphics program vim.");
+        subprocess.check_output(vimOpen)
+        print("Success opening vim.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the vimOpen'. \n  Or use 'vimPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('vim',vim)
+
 
 def vmd():
     ''' 
@@ -13153,7 +15360,7 @@ def vmd():
     USAGE:
     vmd
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     vmd
@@ -13162,7 +15369,7 @@ def vmd():
     Open vmd from within PyMOL.
     Adjust file path for your location of vmd.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     subprocess.call(vmdOpen);
 return
@@ -13181,6 +15388,7 @@ def vmd():
     except OSError:
         pass # executable not found
 
+cmd.extend('vmd',vmd)
     '''
 
     try:
@@ -13195,6 +15403,7 @@ def vmd():
 
 cmd.extend('vmd',vmd)
 
+
 def weather():
     ''' 
     DESCRIPTION:
@@ -13203,7 +15412,7 @@ def weather():
     USAGE:
     weather
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     weather
@@ -13212,17 +15421,40 @@ def weather():
     Open National Weather Service website for locale. 
     Adjust url for your location.
 
+
     VERTICAL PML SCRIPT:
     webbrowser.open('https://www.weather.gov/oun/')
     HORIZONTAL PML SCRIPT:
     webbrowser.open('https://www.weather.gov/oun/')
     PYTHON CODE:
 def weather():
-    webbrowser.open('https://www.weather.gov/oun/')
+    url=weatherServiceRadarURL
+    try:
+        print("Trying to open National Weather Service website.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening National Weather Service website")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
+cmd.extend('weather',weather)
     '''
 
-    webbrowser.open('https://www.weather.gov/oun/')
+    url=weatherServiceRadarURL
+    try:
+        print("Trying to open National Weather Service website.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening National Weather Service website")
+    except Exception as e:
+        print("Webbrowser error: " % e) # prints error if browser is not found
+
 cmd.extend('weather',weather)
+
 
 def webmail():
     ''' 
@@ -13232,7 +15464,7 @@ def webmail():
     USAGE:
     webmail
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     webmail
@@ -13240,17 +15472,40 @@ def webmail():
     MORE DETAILS:
     Open Web Mail in defualt browser. Adjust url for your institution.
 
+
     VERTICAL PML SCRIPT:
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
     HORIZONTAL PML SCRIPT:
     webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
     PYTHON CODE:
 def webmail():
-    webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
+    url=webmailURL
+    try:
+        print("Trying to open webmail.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening webmail.")
+    except Exception as e:
+        print("Webbroser error: " % e) # prints error if browser is not found
+
+cmd.extend('webmail',webmail)
     '''
 
-    webbrowser.open('https://webmail.ouhsc.edu/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.ouhsc.edu%2fowa%2f')
+    url=webmailURL
+    try:
+        print("Trying to open webmail.");
+       # Try to open the default webrower
+        client = webbrowser.get()
+        # URL must be in single quotes
+        client.open_new_tab(url)
+        print("Success opening webmail.")
+    except Exception as e:
+        print("Webbroser error: " % e) # prints error if browser is not found
+
 cmd.extend('webmail',webmail)
+
 
 def word():
     ''' 
@@ -13260,7 +15515,7 @@ def word():
     USAGE:
     word
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     word paper.docx
@@ -13279,31 +15534,49 @@ return
 
     PYTHON CODE:
 def word():
-    subprocess.call(wordOpen)
-    return
-
-    '''
-
-    subprocess.call(wordOpen)
-    return
+    try:
+        print("Opening the program Microsoft Word.");
+        subprocess.check_output(wordOpen)
+        print("Success opening Microsoft Word.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the wordopen'. \n  Or use 'wordPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
 
 cmd.extend('word',word)
+    '''
+
+    try:
+        print("Opening the program Microsoft Word.");
+        subprocess.check_output(wordOpen)
+        print("Success opening Microsoft Word.")
+    except subprocess.CalledProcessError:
+        print("Executable not found! \n  Check syntax of the wordopen'. \n  Or use 'wordPath' as the argument of check_output().")
+        pass # handle errors in the called executable
+    except OSError:
+        pass # executable not found
+
+cmd.extend('word',word)
+
 
 def x11():
     ''' 
     DESCRIPTION:
-    Open x11 or XQuartz terminal.
+    Open x11 terminal.
 
     USAGE:
     x11
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     x11
 
     MORE DETAILS:
-    Open x11 or XQuartz terminal.
+    Open x11 terminal.
+
+
     VERTICAL PML SCRIPT:
     subprocess.call(x11Open)
 return
@@ -13311,13 +15584,79 @@ return
     subprocess.call(x11Open);return
     PYTHON CODE:
 def x11():
-    subprocess.call(x11Open);
-    return
+    try:
+        print("Opening an X11 window.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.check_output(x11Open)
+        print("Opened an X11 window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('x11',x11)
     '''
 
-    subprocess.call(x11Open);
-    return
+    try:
+        print("Opening an X11 window.");                               
+        # URL must be in single quotes                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        subprocess.check_output(x11Open)
+        print("Opened an X11 window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
 cmd.extend('x11',x11)
+
+
+def xquartz():
+    ''' 
+    DESCRIPTION:
+    Open new XQuartz terminal on MacOS. 
+
+
+    USAGE:
+    xquartz
+
+    ARGUMENTS:
+    None
+    EXAMPLE:
+    xquartz
+
+    MORE DETAILS:
+    Open new XQuartz terminal on MacOS. 
+    Does not work on Mohave. 
+    Recommend installing and using iterm or term. 
+
+    VERTICAL PML SCRIPT:
+    subprocess.call(xquartzOpen);
+    return
+
+    HORIZONTAL PML SCRIPT:
+    subprocess.callxquartzOpen);return
+
+    PYTHON CODE:
+def xquartz():
+    try:
+        print("Opening a new XQuartz window.");                               
+        subprocess.Popen(xquartzOpen)
+        print("Opened a new XQuartz window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('xquartz',xquartz)
+    '''
+
+    try:
+        print("Opening a new XQuartz window.");                               
+        subprocess.Popen(xquartzOpen)
+        print("Opened a new XQuartz window.")
+    except Exception as e:
+        print("Subprocess error: " % e) # prints error if browser is not found 
+
+
+cmd.extend('xquartz',xquartz)
+
 
 def yasara(fileName="test.pml"):
     ''' 
@@ -13327,7 +15666,7 @@ def yasara(fileName="test.pml"):
     USAGE:
     yasara
 
-    Arguments:
+    ARGUMENTS:
     None
     EXAMPLE:
     yasara
@@ -13335,7 +15674,7 @@ def yasara(fileName="test.pml"):
     MORE DETAILS:
     Open the molecular graphics prograom YASASRA from within PyMOL.
 
-   >>>  Edit file path in python code below
+
     VERTICAL PML SCRIPT:
     subprocess.call(yasaraOpen);
 return
@@ -13355,6 +15694,7 @@ def yasara(fileName="test.pml"):
         pass # handle errors in the called executable
     except OSError:
         pass # executable not found
+cmd.extend('yasara',yasara)
     '''
 
     try:
@@ -13368,6 +15708,7 @@ def yasara(fileName="test.pml"):
         pass # executable not found
 cmd.extend('yasara',yasara)
 
+
 def yrb(selection='all'):
     ''' 
     DESCRIPTION:
@@ -13378,7 +15719,7 @@ def yrb(selection='all'):
 "yrb 'selection'" to colour only that specific structure
 
 
-    Arguments:
+    ARGUMENTS:
     None to apply to all or a selection
     EXAMPLE:
     yrb
@@ -13387,27 +15728,26 @@ yrb 1lw9
     MORE DETAILS:
     A script to highlight hydrophobicity and charge on protein surfaces.
 
-@Article{Hagemans2015AScriptToHighlightHydrophobicityAndChargeOnProteinSurfaces,
-  author   = {Hagemans, Dominique and van Belzen, Ianthe A. E. M. and Morán Luengo, Tania and Rüdiger, Stefan G. D.},
-  title    = {A script to highlight hydrophobicity and charge on protein surfaces},
-  journal  = {Frontiers in Molecular Biosciences},
-  year     = {2015},
-  volume   = {2},
-  pages    = {56},
-  issn     = {2296-889X},
-  abstract = {The composition of protein surfaces determines both affinity and specificity of protein-protein interactions. Matching of hydrophobic contacts and charged groups on both sites of the interface are crucial to ensure specificity. Here, we propose a highlighting scheme, YRB, which highlights both hydrophobicity and charge in protein structures. YRB highlighting visualizes hydrophobicity by highlighting all carbon atoms that are not bound to nitrogen and oxygen atoms. The charged oxygens of glutamate and aspartate are highlighted red and the charged nitrogens of arginine and lysine are highlighted blue. For a set of representative examples, we demonstrate that YRB highlighting intuitively visualizes segments on protein surfaces that contribute to specificity in protein-protein interfaces, including Hsp90/co-chaperone complexes, the SNARE complex and a transmembrane domain. We provide YRB highlighting in form of a script that runs using the software PyMOL.},
-  doi      = {10.3389/fmolb.2015.00056},
-  url      = {https://www.frontiersin.org/article/10.3389/fmolb.2015.00056},
-}
+    @Article{Hagemans2015AScriptToHighlightHydrophobicityAndChargeOnProteinSurfaces,
+      author   = {Hagemans, Dominique and van Belzen, Ianthe A. E. M. and Morán Luengo, Tania and Rüdiger, Stefan G. D.},
+      title    = {A script to highlight hydrophobicity and charge on protein surfaces},
+      journal  = {Frontiers in Molecular Biosciences},
+      year     = {2015},
+      volume   = {2},
+      pages    = {56},
+      issn     = {2296-889X},
+      abstract = {The composition of protein surfaces determines both affinity and specificity of protein-protein interactions. Matching of hydrophobic contacts and charged groups on both sites of the interface are crucial to ensure specificity. Here, we propose a highlighting scheme, YRB, which highlights both hydrophobicity and charge in protein structures. YRB highlighting visualizes hydrophobicity by highlighting all carbon atoms that are not bound to nitrogen and oxygen atoms. The charged oxygens of glutamate and aspartate are highlighted red and the charged nitrogens of arginine and lysine are highlighted blue. For a set of representative examples, we demonstrate that YRB highlighting intuitively visualizes segments on protein surfaces that contribute to specificity in protein-protein interfaces, including Hsp90/co-chaperone complexes, the SNARE complex and a transmembrane domain. We provide YRB highlighting in form of a script that runs using the software PyMOL.},
+      doi      = {10.3389/fmolb.2015.00056},
+      url      = {https://www.frontiersin.org/article/10.3389/fmolb.2015.00056},
+    }
 
-Created by Dominique Hagemans and Ianthe A.E.M. van Belzen, July 2015
-Rudiger group CPC, Utrecht University
+    Created by Dominique Hagemans and Ianthe A.E.M. van Belzen, July 2015
+    Rudiger group CPC, Utrecht University
 
-yellow: C, CH, CH2, CH3 groups that are not bound to N or O groups.
-red: negatively charged atoms
-blue: positively charged atoms
-grey: backbone, polar groups and remaining atoms
-
+    yellow: C, CH, CH2, CH3 groups that are not bound to N or O groups.
+    red: negatively charged atoms
+    blue: positively charged atoms
+    grey: backbone, polar groups and remaining atoms
 
 
     VERTICAL PML SCRIPT:
@@ -13452,6 +15792,7 @@ def yrb(selection='all'):
                 for (atom, color) in mapping[key]:
                     cmd.color(color, '( n. ' + atom + ' and r. ' + key + ' and ' + obj + ' )')
 
+cmd.extend('yrb',yrb)
     '''
 
     cmd.remove("hydro")
@@ -13491,6 +15832,7 @@ def yrb(selection='all'):
                     cmd.color(color, '( n. ' + atom + ' and r. ' + key + ' and ' + obj + ' )')
 
 cmd.extend('yrb',yrb)
+
 
 
  
