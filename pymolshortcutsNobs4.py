@@ -841,6 +841,94 @@ cmd.extend('AO',AO)
 cmd.extend('AO',AO)
 
 
+def AOBW():
+    ''' 
+    DESCRIPTION:
+    Commands to make ambient occlusion image like those in Qutemole but coloring with grayscale.
+
+    USAGE:
+    AOBW
+
+    ARGUMENTS:
+    None
+    EXAMPLE:
+    AOBW
+
+    MORE DETAILS:
+    Type "help AOD" to see this documentation printed to the command history window. 
+    Select from the command history individual lines of code to build a new script. 
+    Select the hortizontal script at the bottom if retaining most of the commands 
+    in your new script. Copy and paste onto the comand line below. Works only 
+    with the command line immediately under the command history window at 
+    the top of the gui.
+
+    VERTICAL PML SCRIPT:
+    set_color oxygen, [1.0,0.4,0.4];
+    set_color nitrogen, [0.5,0.5,1.0];
+    remove solvent;
+    as spheres;
+    util.cbaw;
+    bg white;
+    gscale
+    set light_count,10;
+    set spec_count,1;
+    set shininess, 10;
+    set specular,0.25;
+    set ambient,0;
+    set direct,0;
+    set reflect,1.5;
+    set ray_shadow_decay_factor, 0.1;
+    set ray_shadow_decay_range, 2;
+    set depth_cue, 0;
+    ray
+    HORIZONTAL PML SCRIPT:
+    set_color oxygen, [1.0,0.4,0.4];set_color nitrogen, [0.5,0.5,1.0];remove solvent;as spheres;util.cbaw;bg white;gscale;set light_count,8;set spec_count,1;set shininess, 10;set specular,0.25;set ambient,0;set direct,0;set reflect,1.5;set ray_shadow_decay_factor, 0.1;set ray_shadow_decay_range, 2;set depth_cue,0;color gray20, symbol c;ray
+    PYTHON CODE:
+def AOBW():
+    cmd.set_color("oxygen", "[1.0,0.4,0.4]")
+    cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
+    cmd.remove("solvent")
+    cmd.show_as("spheres")
+    cmd.util.cbaw()
+    cmd.bg_color("white")
+    gscale()
+    cmd.set("light_count", "8")
+    cmd.set("spec_count", "1")
+    cmd.set("shininess", "10")
+    cmd.set("specular", "0.25")
+    cmd.set("ambient", "0")
+    cmd.set("direct", "0")
+    cmd.set("reflect", "1.5")
+    cmd.set("ray_shadow_decay_factor", "0.1")
+    cmd.set("ray_shadow_decay_range", "2")
+    cmd.set("depth_cue","0")
+    cmd.set("ray_opaque_background","on")
+    cmd.ray()
+cmd.extend('AOBW',AOBW)
+    '''
+
+    cmd.set_color("oxygen", "[1.0,0.4,0.4]")
+    cmd.set_color("nitrogen", "[0.5,0.5,1.0]")
+    cmd.remove("solvent")
+    cmd.show_as("spheres")
+    cmd.util.cbaw()
+    cmd.bg_color("white")
+    gscale()
+    cmd.set("light_count", "8")
+    cmd.set("spec_count", "1")
+    cmd.set("shininess", "10")
+    cmd.set("specular", "0.25")
+    cmd.set("ambient", "0")
+    cmd.set("direct", "0")
+    cmd.set("reflect", "1.5")
+    cmd.set("ray_shadow_decay_factor", "0.1")
+    cmd.set("ray_shadow_decay_range", "2")
+    cmd.set("depth_cue","0")
+    cmd.set("ray_opaque_background","on")
+    cmd.ray()
+cmd.extend('AOBW',AOBW)
+
+
 def AOD():
     ''' 
     DESCRIPTION:
@@ -4776,7 +4864,7 @@ cmd.extend('PDB',PDB)
 cmd.extend('PDB',PDB)
 
 
-def PE(selection):
+def PE(selection="all"):
     ''' 
     DESCRIPTION:
     Apply pearl effect about selection cation or anion.
@@ -4807,7 +4895,7 @@ def PE(selection):
     HORIZONTAL PML SCRIPT:
     select magnesium1, <selection>;create magnesium2, magnesium1;show spheres, magnesium1;show spheres, magnesium2;set spehrical transparency, 0.4, magnesium2;set spehrescale, 1.05, magnesium2
     PYTHON CODE:
-def PE(selection):
+def PE(selection="all"):
     cmd.select('magnesium1',selection)
     cmd.create('magnesium2', selection)
     cmd.show('spheres', 'magnesium1')
@@ -4828,25 +4916,74 @@ cmd.extend('PE',PE)
 cmd.extend('PE',PE)
 
 
-def PE2(selection):
+def PE125(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selection.
+
+    USAGE:
+    PE125 selection
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE125
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.125 sphere_scale).
+    Must supply the <selection>. 
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE125(selection='all'):
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.125', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE125',PE125)
+    '''
+
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.125', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE125',PE125)
+
+
+def PE25(selection='all'):
     ''' 
     DESCRIPTION:
     Apply alternative pearl effect about selected cation or anion.
 
     USAGE:
-    PE2 selection
-
-
+    PE25 selection
 
     ARGUMENTS:
-    selection of one catoin or anion
+    selection 
     EXAMPLE:
-    PE2 /3nd4//A/NA`19/NA
+    PE25
 
     MORE DETAILS:
     Apply alternative pearl effect about selected cation or anion.
-    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.35 sphere_scale).
-    Must supply the <selection> of a cation or anion. 
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.25 sphere_scale).
+    Must supply the <selection>. 
 
 
     VERTICAL PML SCRIPT:
@@ -4854,29 +4991,289 @@ def PE2(selection):
     HORIZONTAL PML SCRIPT:
     NotYet
     PYTHON CODE:
-def PE2(selection):
+def PE25(selection='all'):
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
     cmd.select('magnesium1',selection)
     cmd.create('magnesium2',selection)
     cmd.show('spheres', 'magnesium1')
     cmd.show('spheres', 'magnesium2')
     cmd.set('sphere_transparency', '0.0', 'magnesium1')
     cmd.set('sphere_transparency', '0.5', 'magnesium2')
-    cmd.set('sphere_scale', '0.35', 'magnesium1')
+    cmd.set('sphere_scale', '0.25', 'magnesium1')
     cmd.set('sphere_scale', '1.0', 'magnesium2')
 
-cmd.extend('PE2',PE2)
+
+cmd.extend('PE25',PE25)
     '''
 
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
     cmd.select('magnesium1',selection)
     cmd.create('magnesium2',selection)
     cmd.show('spheres', 'magnesium1')
     cmd.show('spheres', 'magnesium2')
     cmd.set('sphere_transparency', '0.0', 'magnesium1')
     cmd.set('sphere_transparency', '0.5', 'magnesium2')
-    cmd.set('sphere_scale', '0.35', 'magnesium1')
+    cmd.set('sphere_scale', '0.25', 'magnesium1')
     cmd.set('sphere_scale', '1.0', 'magnesium2')
 
-cmd.extend('PE2',PE2)
+
+cmd.extend('PE25',PE25)
+
+
+def PE33(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selection.
+
+    USAGE:
+    PE33 selection
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE33
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.33 sphere_scale).
+    Must supply the <selection>. 
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE33(selection='all'):
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.33', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE33',PE33)
+    '''
+
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.33', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE33',PE33)
+
+
+def PE50(selection="all"):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selected cation or anion.
+
+    USAGE:
+    PE50 selection
+
+
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE50 /3nd4//A/NA`19/NA
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selection.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.5 sphere_scale).
+  
+
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE50(selection="all"):
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.5', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+cmd.extend('PE50',PE50)
+    '''
+
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.5', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+cmd.extend('PE50',PE50)
+
+
+def PE66(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selection.
+
+    USAGE:
+    PE66 selection
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE66
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.66 sphere_scale).
+    Must supply the <selection>. 
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE66(selection='all'):
+    print("The Pearl Effect, PE66, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.66', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE66',PE66)
+    '''
+
+    print("The Pearl Effect, PE66, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.66', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE66',PE66)
+
+
+def PE75(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selection.
+
+    USAGE:
+    PE75 selection
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE75
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.75 sphere_scale).
+    Must supply the <selection>. 
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE75(selection='all'):
+    print("The Pearl Effect, PE66, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.75', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE75',PE75)
+    '''
+
+    print("The Pearl Effect, PE66, shortcut cannot be applied more than once.")
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.75', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE75',PE75)
+
+
+def PE85(selection='all'):
+    ''' 
+    DESCRIPTION:
+    Apply alternative pearl effect about selection.
+
+    USAGE:
+    PE85 selection
+
+    ARGUMENTS:
+    selection 
+    EXAMPLE:
+    PE85
+
+    MORE DETAILS:
+    Apply alternative pearl effect about selected cation or anion.
+    This effect shows a transparent sphere (1.0 sphere_scale) around an inner opaque sphere (.85 sphere_scale).
+    Must supply the <selection>. 
+    VERTICAL PML SCRIPT:
+    NotYet
+    HORIZONTAL PML SCRIPT:
+    NotYet
+    PYTHON CODE:
+def PE85(selection='all'):
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.") 
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.85', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE85',PE85)
+    '''
+
+    print("The Pearl Effect, PEX, shortcut cannot be applied more than once.") 
+    cmd.select('magnesium1',selection)
+    cmd.create('magnesium2',selection)
+    cmd.show('spheres', 'magnesium1')
+    cmd.show('spheres', 'magnesium2')
+    cmd.set('sphere_transparency', '0.0', 'magnesium1')
+    cmd.set('sphere_transparency', '0.5', 'magnesium2')
+    cmd.set('sphere_scale', '0.85', 'magnesium1')
+    cmd.set('sphere_scale', '1.0', 'magnesium2')
+
+
+cmd.extend('PE85',PE85)
 
 
 def PM(searchTerm="pymol"):
@@ -6952,14 +7349,129 @@ def bsbw(selection='all'):
     # defines BallnStick settings
     cmd.show("sticks", selection)
     cmd.show("spheres", selection)
-    cmd.color("gray85","elem C and "+selection)
-    cmd.color("gray98","elem H and "+selection)
-    cmd.color("gray55","elem O and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem CL and "+selection)
-    cmd.color("gray40","elem K and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem N and "+selection)
+    # Gives lighter carbons
+    #cmd.color("gray85","elem C and "+selection)
+    #cmd.color("gray98","elem H and "+selection)
+    #cmd.color("gray55","elem O and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem CL and "+selection)
+    #cmd.color("gray40","elem K and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem N and "+selection)
+
+    # From grayscale().
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')   	
+    
+
     cmd.set("stick_radius",0.07, selection)
     cmd.set("sphere_scale",0.18, selection)
     cmd.set("sphere_scale",0.13, selection+" and elem H")
@@ -7106,14 +7618,129 @@ cmd.extend('bsbw', bsbw)
     # defines BallnStick settings
     cmd.show("sticks", selection)
     cmd.show("spheres", selection)
-    cmd.color("gray85","elem C and "+selection)
-    cmd.color("gray98","elem H and "+selection)
-    cmd.color("gray55","elem O and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem CL and "+selection)
-    cmd.color("gray40","elem K and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem N and "+selection)
+    # Gives lighter carbons
+    #cmd.color("gray85","elem C and "+selection)
+    #cmd.color("gray98","elem H and "+selection)
+    #cmd.color("gray55","elem O and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem CL and "+selection)
+    #cmd.color("gray40","elem K and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem N and "+selection)
+
+    # From grayscale().
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')   	
+    
+
     cmd.set("stick_radius",0.07, selection)
     cmd.set("sphere_scale",0.18, selection)
     cmd.set("sphere_scale",0.13, selection+" and elem H")
@@ -7287,14 +7914,129 @@ def bsbwsc(selection='all'):
     cmd.show("cartoon", selection)
     cmd.show("sticks", selection)
     cmd.show("spheres", selection)
-    cmd.color("gray85","elem C and "+selection)
-    cmd.color("gray98","elem H and "+selection)
-    cmd.color("gray55","elem O and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem CL and "+selection)
-    cmd.color("gray40","elem K and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem N and "+selection)
+
+    # Initial guess. Gives lighter carbons.	
+    #cmd.color("gray85","elem C and "+selection)
+    #cmd.color("gray98","elem H and "+selection)
+    #cmd.color("gray55","elem O and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem CL and "+selection)
+    #cmd.color("gray40","elem K and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem N and "+selection)
+    
+    # From grayscale.
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')
+
     cmd.set("stick_radius",0.07, selection)
     cmd.do("set cartoon_side_chain_helper, on")
     cmd.set("sphere_scale",0.18, selection)
@@ -7443,14 +8185,129 @@ cmd.extend('bsbwsc', bsbwsc)
     cmd.show("cartoon", selection)
     cmd.show("sticks", selection)
     cmd.show("spheres", selection)
-    cmd.color("gray85","elem C and "+selection)
-    cmd.color("gray98","elem H and "+selection)
-    cmd.color("gray55","elem O and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem CL and "+selection)
-    cmd.color("gray40","elem K and "+selection)
-    cmd.color("gray70","elem S and "+selection)
-    cmd.color("gray40","elem N and "+selection)
+
+    # Initial guess. Gives lighter carbons.	
+    #cmd.color("gray85","elem C and "+selection)
+    #cmd.color("gray98","elem H and "+selection)
+    #cmd.color("gray55","elem O and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem CL and "+selection)
+    #cmd.color("gray40","elem K and "+selection)
+    #cmd.color("gray70","elem S and "+selection)
+    #cmd.color("gray40","elem N and "+selection)
+    
+    # From grayscale.
+    cmd.color('grey64', 'elem Ac')
+    cmd.color('grey67', 'elem Al')
+    cmd.color('grey39', 'elem Am')
+    cmd.color('grey46', 'elem Sb')
+    cmd.color('grey75', 'elem Ar')
+    cmd.color('grey58', 'elem As')
+    cmd.color('grey33', 'elem At')
+    cmd.color('grey56', 'elem Ba')
+    cmd.color('grey40', 'elem Bk')
+    cmd.color('grey87', 'elem Be')
+    cmd.color('grey40', 'elem Bi')
+    cmd.color('grey20', 'elem Bh')
+    cmd.color('grey77', 'elem B')
+    cmd.color('grey26', 'elem Br')
+    cmd.color('grey86', 'elem Cd')
+    cmd.color('grey76', 'elem Ca')
+    cmd.color('grey34', 'elem Cf')
+    cmd.color('grey77', 'elem C')
+    cmd.color('grey98', 'elem Ce')
+    cmd.color('grey17', 'elem Cs')
+    cmd.color('grey70', 'elem Cl')
+    cmd.color('grey60', 'elem Cr')
+    cmd.color('grey64', 'elem Co')
+    cmd.color('grey54', 'elem Cu')
+    cmd.color('grey42', 'elem Cm')
+    cmd.color('grey89', 'elem D')
+    cmd.color('grey19', 'elem Db')
+    cmd.color('grey79', 'elem Dy')
+    cmd.color('grey29', 'elem Es')
+    cmd.color('grey67', 'elem Er')
+    cmd.color('grey85', 'elem Eu')
+    cmd.color('grey28', 'elem Fm')
+    cmd.color('grey93', 'elem F')
+    cmd.color('grey8', 'elem Fr')
+    cmd.color('grey82', 'elem Gd')
+    cmd.color('grey60', 'elem Ga')
+    cmd.color('grey52', 'elem Ge')
+    cmd.color('grey80', 'elem Au')
+    cmd.color('grey68', 'elem Hf')
+    cmd.color('grey20', 'elem Hs')
+    cmd.color('grey96', 'elem He')
+    cmd.color('grey75', 'elem Ho')
+    cmd.color('grey89', 'elem H')
+    cmd.color('grey49', 'elem In')
+    cmd.color('grey16', 'elem I')
+    cmd.color('grey29', 'elem Ir')
+    cmd.color('grey48', 'elem Fe')
+    cmd.color('grey65', 'elem Kr')
+    cmd.color('grey76', 'elem La')
+    cmd.color('grey19', 'elem Lr')
+    cmd.color('grey34', 'elem Pb')
+    cmd.color('grey60', 'elem Li')
+    cmd.color('grey48', 'elem Lu')
+    cmd.color('grey83', 'elem Mg')
+    cmd.color('grey52', 'elem Mn')
+    cmd.color('grey20', 'elem Mt')
+    cmd.color('grey23', 'elem Md')
+    cmd.color('grey72', 'elem Hg')
+    cmd.color('grey62', 'elem Mo')
+    cmd.color('grey93', 'elem Nd')
+    cmd.color('grey85', 'elem Ne')
+    cmd.color('grey43', 'elem Np')
+    cmd.color('grey67', 'elem Ni')
+    cmd.color('grey69', 'elem Nb')
+    cmd.color('grey25', 'elem N')
+    cmd.color('grey23', 'elem No')
+    cmd.color('grey36', 'elem Os')
+    cmd.color('grey44', 'elem O')
+    cmd.color('grey33', 'elem Pd')
+    cmd.color('grey57', 'elem P')
+    cmd.color('grey82', 'elem Pt')
+    cmd.color('grey37', 'elem Pu')
+    cmd.color('grey40', 'elem Po')
+    cmd.color('grey35', 'elem K')
+    cmd.color('grey95', 'elem Pr')
+    cmd.color('grey90', 'elem Pm')
+    cmd.color('grey52', 'elem Pa')
+    cmd.color('grey35', 'elem Ra')
+    cmd.color('grey46', 'elem Rn')
+    cmd.color('grey43', 'elem Re')
+    cmd.color('grey39', 'elem Rh')
+    cmd.color('grey27', 'elem Rb')
+    cmd.color('grey47', 'elem Ru')
+    cmd.color('grey19', 'elem Rf')
+    cmd.color('grey89', 'elem Sm')
+    cmd.color('grey90', 'elem Sc')
+    cmd.color('grey20', 'elem Sg')
+    cmd.color('grey66', 'elem Se')
+    cmd.color('grey80', 'elem Si')
+    cmd.color('grey75', 'elem Ag')
+    cmd.color('grey46', 'elem Na')
+    cmd.color('grey71', 'elem Sr')
+    cmd.color('grey76', 'elem S')
+    cmd.color('grey60', 'elem Ta')
+    cmd.color('grey53', 'elem Tc')
+    cmd.color('grey51', 'elem Te')
+    cmd.color('grey81', 'elem Tb')
+    cmd.color('grey39', 'elem Tl')
+    cmd.color('grey59', 'elem Th')
+    cmd.color('grey61', 'elem Tm')
+    cmd.color('grey48', 'elem Sn')
+    cmd.color('grey75', 'elem Ti')
+    cmd.color('grey50', 'elem W')
+    cmd.color('grey47', 'elem U')
+    cmd.color('grey65', 'elem V')
+    cmd.color('grey54', 'elem Xe')
+    cmd.color('grey55', 'elem Yb')
+    cmd.color('grey91', 'elem Y')
+    cmd.color('grey51', 'elem Zn')
+    cmd.color('grey81', 'elem Zr')
+
     cmd.set("stick_radius",0.07, selection)
     cmd.do("set cartoon_side_chain_helper, on")
     cmd.set("sphere_scale",0.18, selection)
@@ -7467,7 +8324,7 @@ cmd.extend('bsbwsc', bsbwsc)
 cmd.extend('bsbwsc', bsbwsc)
 
 
-def bsvdw(arg1="all"):
+def bstvdw(selection='all'):
     ''' 
     DESCRIPTION:
     Transparent vdw surface over ball and stick representation by Bobby Patton at Colorato State University. 
@@ -7487,7 +8344,7 @@ def bsvdw(arg1="all"):
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
-def bsvdw(arg1="all"):
+def bstvdw(selection='all'):
     # Bondi VDW values 
     cmd.alter("elem Ac", "vdw=2.00")
     cmd.alter("elem Al", "vdw=2.00")
@@ -7617,42 +8474,42 @@ def bsvdw(arg1="all"):
     cmd.space("cmyk")
 
     # defines BallnStick settings
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("slate","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection +" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
     cmd.set("dash_gap",0.01)
     cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
     cmd.hide("labels")
 
     # defines VDW Sphere settings
-    cmd.copy(arg1+"_vdw", arg1)
-    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.copy(selection+"_vdw", selection)
+    cmd.set("sphere_scale",1.0, selection+"_vdw and elem H")
     cmd.rebuild()
-    cmd.set("sphere_scale", 1, arg1+"_vdw")
-    cmd.hide("nonbonded", arg1+"_vdw")
-    cmd.hide("lines", arg1+"_vdw")
-    cmd.hide("sticks", arg1+"_vdw")
-    cmd.hide("cartoon", arg1+"_vdw")
-    cmd.show("spheres", arg1+"_vdw")
-    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    cmd.set("sphere_scale", 1, selection+"_vdw")
+    cmd.hide("nonbonded", selection+"_vdw")
+    cmd.hide("lines", selection+"_vdw")
+    cmd.hide("sticks", selection+"_vdw")
+    cmd.hide("cartoon", selection+"_vdw")
+    cmd.show("spheres", selection+"_vdw")
+    cmd.set("sphere_transparency", 0.7, selection+"_vdw")
     print("Note that the selection of 'all' does not work when applying this function")
     print("to multiple models as are found in pdb1 files and when multiple chains")
     print("make up the biological unit.")
     print("The shortcut has to be applied separately to each model.")
 
 
-cmd.extend('bsvdw', bsvdw)
+cmd.extend('bstvdw', bstvdw)
     '''
 
     # Bondi VDW values 
@@ -7784,42 +8641,42 @@ cmd.extend('bsvdw', bsvdw)
     cmd.space("cmyk")
 
     # defines BallnStick settings
-    cmd.show("sticks", arg1)
-    cmd.show("spheres", arg1)
-    cmd.color("gray85","elem C and "+arg1)
-    cmd.color("gray98","elem H and "+arg1)
-    cmd.color("slate","elem N and "+arg1)
-    cmd.set("stick_radius",0.07, arg1)
-    cmd.set("sphere_scale",0.18, arg1)
-    cmd.set("sphere_scale",0.13, arg1+" and elem H")
-    cmd.set("dash_gap",0.01, arg1)
-    cmd.set("dash_radius",0.07, arg1)
-    cmd.set("stick_color","black", arg1)
+    cmd.show("sticks", selection)
+    cmd.show("spheres", selection)
+    cmd.color("gray85","elem C and "+selection)
+    cmd.color("gray98","elem H and "+selection)
+    cmd.color("slate","elem N and "+selection)
+    cmd.set("stick_radius",0.07, selection)
+    cmd.set("sphere_scale",0.18, selection)
+    cmd.set("sphere_scale",0.13, selection +" and elem H")
+    cmd.set("dash_gap",0.01, selection)
+    cmd.set("dash_radius",0.07, selection)
+    cmd.set("stick_color","black", selection)
     cmd.set("dash_gap",0.01)
     cmd.set("dash_radius",0.035)
-    cmd.hide("nonbonded", arg1)
-    cmd.hide("lines", arg1)
-    cmd.zoom(arg1)
+    cmd.hide("nonbonded", selection)
+    cmd.hide("lines", selection)
+    cmd.zoom(selection)
     cmd.hide("labels")
 
     # defines VDW Sphere settings
-    cmd.copy(arg1+"_vdw", arg1)
-    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.copy(selection+"_vdw", selection)
+    cmd.set("sphere_scale",1.0, selection+"_vdw and elem H")
     cmd.rebuild()
-    cmd.set("sphere_scale", 1, arg1+"_vdw")
-    cmd.hide("nonbonded", arg1+"_vdw")
-    cmd.hide("lines", arg1+"_vdw")
-    cmd.hide("sticks", arg1+"_vdw")
-    cmd.hide("cartoon", arg1+"_vdw")
-    cmd.show("spheres", arg1+"_vdw")
-    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    cmd.set("sphere_scale", 1, selection+"_vdw")
+    cmd.hide("nonbonded", selection+"_vdw")
+    cmd.hide("lines", selection+"_vdw")
+    cmd.hide("sticks", selection+"_vdw")
+    cmd.hide("cartoon", selection+"_vdw")
+    cmd.show("spheres", selection+"_vdw")
+    cmd.set("sphere_transparency", 0.7, selection+"_vdw")
     print("Note that the selection of 'all' does not work when applying this function")
     print("to multiple models as are found in pdb1 files and when multiple chains")
     print("make up the biological unit.")
     print("The shortcut has to be applied separately to each model.")
 
 
-cmd.extend('bsvdw', bsvdw)
+cmd.extend('bstvdw', bstvdw)
 
 
 def buriedW(sele='all', cutoff=-1, state=1, quiet=1, _self=cmd):
@@ -9694,7 +10551,7 @@ def gscale(selection="all"):
     ARGUMENTS:
     <selection>
     EXAMPLE:
-    gs 3nd4
+    gscale 3nd4
 
 
     MORE DETAILS:
@@ -11969,6 +12826,36 @@ cmd.extend('quat350', quat350)
             biomt.setdefault(chains, dict()).setdefault(num, []).extend(vec)
     return biomt
 cmd.extend('quat350', quat350)
+
+
+def rgb(selection="all"):
+    ''' 
+    DESCRIPTION:
+    Restore rgb coloring of atoms by element. 
+
+    USAGE:
+    rgb <selection>
+
+    ARGUMENTS:
+    <selection>
+    EXAMPLE:
+    rgb 3nd4
+
+
+    MORE DETAILS:
+    Restore rgb coloring of atoms by element using PyMOL's color dictionary. This function is for those who cannot remember 'util.cbag'.
+    VERTICAL PML SCRIPT:
+    util.cbag
+    HORIZONTAL PML SCRIPT:
+    util.cbag
+    PYTHON CODE:
+def rgb(selection="all"):
+    cmd.do('util.cbag')
+cmd.extend('rgb',rgb)
+    '''
+
+    cmd.do('util.cbag')
+cmd.extend('rgb',rgb)
 
 
 def rline():
@@ -14937,7 +15824,7 @@ cmd.extend('timcolor',timcolor)
 cmd.extend('timcolor',timcolor)
 
 
-def tvdw(arg1='all'):
+def tvdw(selection='all'):
     ''' 
     DESCRIPTION:
     Transparent vdw surface by Bobby Patton at Colorato State University. 
@@ -14966,7 +15853,7 @@ def tvdw(arg1='all'):
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
-def tvdw(arg1='all'):
+def tvdw(selection='all'):
     # Bondi VDW values 
     cmd.alter("elem Ac", "vdw=2.00")
     cmd.alter("elem Al", "vdw=2.00")
@@ -15096,16 +15983,16 @@ def tvdw(arg1='all'):
     cmd.space("cmyk")
 
    #van der Waals settings
-    cmd.copy(arg1+"_vdw", arg1)
-    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.copy(selection+"_vdw", selection)
+    cmd.set("sphere_scale",1.0, selection+"_vdw")
     cmd.rebuild()
-    cmd.set("sphere_scale", 1, arg1+"_vdw")
-    cmd.hide("nonbonded", arg1+"_vdw")
-    cmd.hide("lines", arg1+"_vdw")
-    cmd.hide("sticks", arg1+"_vdw")
-    cmd.hide("cartoon", arg1+"_vdw")
-    cmd.show("spheres", arg1+"_vdw")
-    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    cmd.set("sphere_scale", 1, selection+"_vdw")
+    cmd.hide("nonbonded", selection+"_vdw")
+    cmd.hide("lines", selection+"_vdw")
+    cmd.hide("sticks",selection+"_vdw")
+    cmd.hide("cartoon", selection+"_vdw")
+    cmd.show("spheres", selection+"_vdw")
+    cmd.set("sphere_transparency", 0.7, selection +"_vdw")
 
     print("Note that the selection of 'all' does not work when applying this function")
     print("to multiple models as are found in pdb1 files and when multiple chains")
@@ -15245,16 +16132,16 @@ cmd.extend('tvdw', tvdw)
     cmd.space("cmyk")
 
    #van der Waals settings
-    cmd.copy(arg1+"_vdw", arg1)
-    cmd.set("sphere_scale",1.0, arg1+"_vdw and elem H")
+    cmd.copy(selection+"_vdw", selection)
+    cmd.set("sphere_scale",1.0, selection+"_vdw")
     cmd.rebuild()
-    cmd.set("sphere_scale", 1, arg1+"_vdw")
-    cmd.hide("nonbonded", arg1+"_vdw")
-    cmd.hide("lines", arg1+"_vdw")
-    cmd.hide("sticks", arg1+"_vdw")
-    cmd.hide("cartoon", arg1+"_vdw")
-    cmd.show("spheres", arg1+"_vdw")
-    cmd.set("sphere_transparency", 0.7, arg1+"_vdw")
+    cmd.set("sphere_scale", 1, selection+"_vdw")
+    cmd.hide("nonbonded", selection+"_vdw")
+    cmd.hide("lines", selection+"_vdw")
+    cmd.hide("sticks",selection+"_vdw")
+    cmd.hide("cartoon", selection+"_vdw")
+    cmd.show("spheres", selection+"_vdw")
+    cmd.set("sphere_transparency", 0.7, selection +"_vdw")
 
     print("Note that the selection of 'all' does not work when applying this function")
     print("to multiple models as are found in pdb1 files and when multiple chains")
@@ -15265,7 +16152,7 @@ cmd.extend('tvdw', tvdw)
 cmd.extend('tvdw', tvdw)
 
 
-def tvdwbw(arg1='all'):
+def tvdwbw(selection='all'):
     ''' 
     DESCRIPTION:
     Transparent vdw surface by Bobby Patton at Colorato State University and grayscale by gscale function.
@@ -15286,15 +16173,15 @@ def tvdwbw(arg1='all'):
     HORIZONTAL PML SCRIPT:
     NA
     PYTHON CODE:
-def tvdwbw(arg1='all'):
-    tvdw(arg1)
-    gscale(ag1)
+def tvdwbw(selection='all'):
+    tvdw(selection)
+    gscale(selection)
 
 cmd.extend('tvdwbw', tvdwbw)
     '''
 
-    tvdw(arg1)
-    gscale(ag1)
+    tvdw(selection)
+    gscale(selection)
 
 cmd.extend('tvdwbw', tvdwbw)
 
