@@ -6,7 +6,7 @@ Some shortcuts save the many hours of work required to assemble a new script fil
 You do not need to understand Python to be able run the script.
 
 # Quick overview
-To get a quick overview of this project, scroll down through this README.md file and see the pdfs of in the slideshow folder:
+To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the pdfs of in the slideshow folder:
 
 - *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
 - *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
@@ -27,7 +27,6 @@ These can be removed by entering the shortcut **rmsc**.
 
 The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 that is ***not*** shipped with PyMOL.
 Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
-
 
 
 ### Downloading script file from github
