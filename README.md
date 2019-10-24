@@ -30,16 +30,20 @@ Choose this variant file if you do not know how to add beautifulsoup4 to your ve
 
 
 
-### Installation
+### Downloading script file from github
 
 To download both files, git clone the repository. 
 Otherwise, left-click on  one of the files above and left-click "Raw".
 The raw file will be displayed in your browser.
-Select save under the file pull-down of your browser
+Select **save** under the file pull-down of your browser. 
+Your browser may add `.txt` after `.py`. 
+Delete  `.txt` by backspacing over it.
 Then save the file to your home directory.
+Your browser may try to append the `.py` with  `.txt` again via a popup gui but do not select this option.
 
 ![download scipt](https://github.com/MooersLab/pymolshortcuts/blob/master/gifs/DownloadScript.gif)
 
+### Installation
 
 To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
 The pymolrc file is an optional file.
