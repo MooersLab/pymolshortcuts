@@ -7,8 +7,8 @@ You do not need to understand Python to be able run the script.
 To get a quick overview of this project, see the pdfs of in the slideshow folder:
 
 - *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
-- *Mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
-- mooers26Oct2019SWTCCPyMOLshortcuts.pdf (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK)
+- *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
+- mooers26Oct2019SWTCCPyMOLshortcuts.pdf (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK) (TBD)
 
 
 
@@ -38,7 +38,7 @@ The raw file will be displayed in your browser.
 Select save under the file pull-down of your browser
 Then save the file to your home directory.
 
-![download scipt](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
+![download scipt](https://github.com/MooersLab/pymolshortcuts/blob/master/gifs/DownloadScript.gif)
 
 
 To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
