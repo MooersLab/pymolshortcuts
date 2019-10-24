@@ -4,23 +4,23 @@ This repository for ***pymolschortucts.py*** that contains 215 functions in 25 c
 These shortcuts include many convenience functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To get a quick overview of this project, see the pdfs of in the slideshow folder:
+
+# Quick overview
+To get a quick overview of this project, scroll down through this README.md file and see the pdfs of in the slideshow folder:
 
 - *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
 - *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
 - mooers26Oct2019SWTCCPyMOLshortcuts.pdf (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK) (TBD)
 
-
-
-
-The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
-This shortcut executes 16 lines of code.
+The animation below demonstrates the photorealistic effect from the ambient occlusion shortcut applied to a protein by entering two letters, **AO**. 
+This shortcut executes 16 lines of code with the entry of two letters!
 
 ![Ambient occlusion shortcut](https://media.giphy.com/media/VHeiY192SHWV2AObvl/giphy.gif)
 
-The animation below demonstrates the submitting of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
-They generate symmetry mates that fill five unit cells that form a L shape. 
-Each symmetry mate appears as a separate object in the menu on the right panel.
+The animation below demonstrates the submission of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
+They generate symmetry mates that fill five unit cells.
+The unit cells form a L shape. 
+Each symmetry mate appears as a separate object in the menu in the panel to the right of the vv.
 These can be removed by entering the shortcut **rmsc**. 
 
 ![supercell shortcut](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
@@ -45,7 +45,7 @@ Your browser may try to append the `.py` with  `.txt` again via a popup gui but 
 
 ### Installation
 
-To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcutsbs4.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
 The pymolrc file is an optional file.
 You may have to create it with a text editor if you have not done so already.
 If you do not have text editor, you can use PyMOL's built-in text editor.
