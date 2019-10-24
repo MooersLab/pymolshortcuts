@@ -1,17 +1,66 @@
 # pymolshortcuts
 
-This repository for ***pymolschortucts.py*** which contains 187 functions in 20 categories mapped to short-names that work like *aliases* or *shortcuts* (the table below is incomplete).
-These shortcuts include many convenience functions that make work in PyMOL more productive and fun!
+This repository for ***pymolschortucts.py*** that contains 215 functions in 25 categories mapped to short-names that work like aliases (the table below is incomplete).
+These shortcuts include many convenience functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To have the shortcuts always available, add the command 'run ~/pymolshortcuts.py' to your pymolrc or pymolrc.pml file in your home directory to load the functions in pymolshortcuts.py on startup of PyMOL.
-In spite of the command *run*, the functions will be loaded into memory but not executed.
-Enter **SC** to get a list of shortcuts printed to the command history window.
-Enter **help PW** to print the documentation for the shortcut **PW** to the command history window.
-While most shortcuts are ready to use, some shortcuts require the path names to the executables on your computer and some requrie access to Python modules that were not packaged with the incentive version of PyMOL.
-Use help(shortcutname) to learn how to install the required module(s).
+To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*. 
 
-For example, the **BW** command makes cartoon or sphere representations of the currently loaded molecule into black and white figures suitable for classroom handouts and coloring books for aspiring scientists.
+The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
+This shortcut executes 16 lines of code.
+
+![Ambient occlusion shortcut](https://media.giphy.com/media/VHeiY192SHWV2AObvl/giphy.gif)
+
+The animation below demonstrates the submitting of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
+They generate symmetry mates that fill five unit cells that form a L shape. 
+Each symmetry mate appears as a separate object in the menu on the right panel.
+These can be removed by entering the shortcut **rmsc**. 
+
+![supercell shortcut](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
+
+The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend on the Python module beautifulsoup4 that is ***not*** shipped with PyMOL.
+Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
+
+
+
+### Installation
+
+To download both files, git clone the repository. 
+Otherwise, left-click on  one of the files above and left-click "Raw".
+The raw file will be displayed in your browser.
+Select save under the file pull-down of your browser
+Then save the file to your home directory.
+
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+The pymolrc file is an optional file.
+You may have to create it with a text editor if you have not done so already.
+If you do not have text editor, you can use PyMOL's built-in text editor.
+Go to **File --> Edit pymolrc**.
+The functions will be loaded into memory but will not be executed despite the use of the command **run**.
+You may want to store the script **pymolshortcutNobs4.py** in a safer place than your home directory.
+I store mine in */Users/blaine/Scripts/PyMOLScripts/*
+
+If you want to use beautifulsoup4 and you have the incentive version of PyMOL that was installed with Anaconda, paste the following command at the upper PyMOL> prompt.
+
+```bash
+conda install requests beautifulsoup4 datetime
+```
+
+Be patient. The prompt can appear to hang for five to ten minutes while the installation occurs. 
+
+
+### Editing local paths
+
+Starting at line 190, you will need to edit the file paths to some of your applications that some functions will call.
+The paths are mapped to global variable names, so the paths only need to be defined once.
+
+
+### Listing the shortcuts
+
+Enter **SC** at the upper **PyMOL>** prompt the to get a list of shortcuts printed to the command history window.
+Use the **help** function to see the documentation for each shortcut. 
+For examples, enter **help PW** to print the documentation for the shortcut **PW** to the command history window. The documentation has four sections: a description of what the shortcut does, an example of running the shortcut, 
+the corresponding pml code with one command per line for easy reuse in a script file, and all of the commands on a single line for re-use on the command line as horizontal script. 
 
 The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
@@ -30,12 +79,6 @@ These save function names begin with **s**, (e.g., **spse filename** saves the c
 You can delete the unwanted version(s) at a latter time. 
 These functions are useful if you do not have these files under version control.
 
-The functions are stored in a single file: pymolshortcuts.py
-
-Edit the file paths to outside executables like text editors.
-The shortcuts work best on the command line below the command history window because you can copy and paste text onto this command line.
- 
-Videos that demonstrate representatives from each class of shortcut are planned.
 
 ## Print shortcuts and their descriptions
 
@@ -181,7 +224,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |:--------|:---------------------------------------------------------------|
 |gcal      |Open Google Calendar.                                          |
 |GM        |Open gmail.                                                    |
-|WM        |Open Web Mail in defualt browser. Adjust url for your institution. |
+|WM        |Open Web Mail in default browser. Adjust url for your institution. |
 |WS        |Open National Weather Service website for locale.              |
 
 ## Samples
@@ -210,7 +253,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |LGGT      |WT human gamma glutamyl transpeptidase at 1.67 Angstrom        |
 |LGU       |10-mer dsRNA.                                                  |
 |LN9       |Influenza N9 neuraminidase at 1.55 Angstrom resolution, PDB code |
-|LT4L      |Display WT T4 lysozyme as ribbon diagram (resoluton 1.08 Ang):  3FA0.  |
+|LT4L      |Display WT T4 lysozyme as ribbon diagram (resolution 1.08 Ang):  3FA0.  |
 |LU8       |16-mer dsRNA with 8 contiguous Us. U-helix RNA (1.37 Ang):  3nd3. |
 |LWC8      |16-mer dsRNA, Watson-Crick helix RNA. 1.55 Angstrom            |
 |LBST      |G2G3/U9U8 base step , PDB code 4PCO.                           |
@@ -273,13 +316,13 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |IPM       |Read list of search terms and submit each term to PubMed in a separate browser tab. |
 |IPMN      |Read list of search terms and submit each term to PubMed in a separate browser tab. |
 |RG        |Submit a search query of Research Gate.                        |
-|RGN       |Submit a search query of Research Gate and open the top N hits in sepearte tabs.  |
+|RGN       |Submit a search query of Research Gate and open the top N hits in separte tabs.  |
 |SD        |Submit a search term to Science Direct.                        |
-|SDN       |Submit a search term to Science Direct and open the top N hits in sepearte tabs. |
-|SF        |Send search term to sourceforge.                               |
-|SFN       |Send search term to sourceforge and open the top N hits in sepearte tabs. |
+|SDN       |Submit a search term to Science Direct and open the top N hits in separate tabs. |
+|SF        |Send search term to Source-forge.                               |
+|SFN       |Send search term to Source-forge and open the top N hits in separate tabs. |
 |SP        |Submit a search term to Springer Books                         |
-|SPN       |Submit a search term to Springer Books and open the top N hits in sepearte tabs. |
+|SPN       |Submit a search term to Springer Books and open the top N hits in separate tabs. |
 
 ## Open static web sites
 
@@ -292,7 +335,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |BC        |Open the webpage of the BIOCAT biological SAXS beamline at the Advanced Photon Source. |
 |BD        |Open the webpage of the Small Angle Scattering Biological Data Bank (SASBDB).  |
 |BX        |Send search term or phrase to bioRxiv                          |
-|CH        |Open the webste of UCSF Chimera.                               |
+|CH        |Open the website of UCSF Chimera.                               |
 |CHESS     |Open the website of CHESS.                                     |
 |EMDB      |Open the website of the Electron Microscopy Data Bank.         |
 |EP        |EasyPyMOL github site.                                         |
@@ -305,7 +348,7 @@ Videos that demonstrate representatives from each class of shortcut are planned.
 |notPyMOL  |Open website with list of other molecular graphics programs.   |
 |NSLSII    |Open the website of the National Synchrotron Light Source II (NSLSII) at Brookhaven National Laboratory. |
 |PPC       |Open the website of the Protein Production Facility at the University of Oklahoma in Norman. |
-|PS        |Open the home page of the Protein Soceity.                     |
+|PS        |Open the home page of the Protein Society.                     |
 |PW        |Submit search of the PyMOL Wiki.                               |
 |RS        |Open the homepage of the RNA Society.                          |
 |SAXS      |Open the webpage of SAXS links at OUHSC.                       |
