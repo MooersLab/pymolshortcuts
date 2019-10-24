@@ -62,6 +62,18 @@ conda install requests beautifulsoup4 datetime
 
 Be patient. The prompt can appear to hang for five to ten minutes while the installation occurs. 
 
+If you want to use beautifulsoup4 and you have installed open-source PyMOL via macports, you can install requests and beautifulsoup4 via the following command:
+
+```bash
+sudo port install py37-requests py37-beautifulsoup4
+```
+I am assuming that you installed PyMOL for the Python3.7 interpreter (the same version of Python currently used in the proprietary version that uses the Anaconda Python interpreter).
+Change py37 to py36 or py35 if you installed pymol for Python3.6 or Python3.7.
+The install via macports is much faster than via conda.
+
+[See the PyMOL wiki](https://pymolwiki.org/index.php/Windows_Install) for more open source PyMOL options for Windows, Linux, and Homebrew or Fink on the Mac.
+The =>2.0 versions of open-source PyMOL will use the system-wide Python interpreter to which you can add the beautifulsoup4 module.
+Note that you do have a free trial period with which you can use the incentive version of [PyMOL](https://pymol.org/2/). 
 
 ### Editing local paths
 
