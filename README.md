@@ -4,7 +4,11 @@ This repository for ***pymolschortucts.py*** that contains 215 functions in 25 c
 These shortcuts include many convenience functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*. 
+To get a quick overview of this project, see the pdfs of in the slideshow folder:
+
+- *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
+- ** (9 minute talk at the Cornbelt RNA meeting in Columbia, Missouri)
+- mooers26jul2019ACAPyMOLshortcuts.pdf (20 minute talk, SWTCC meeting in Norman, OK)
 
 The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
 This shortcut executes 16 lines of code.
