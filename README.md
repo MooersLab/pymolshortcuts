@@ -45,7 +45,9 @@ Your browser may try to append the `.py` with  `.txt` again via a popup gui but 
 
 ### Installation
 
-To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcutsbs4.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcutsNobs4.py' (recommended for most users) or 'run ~/pymolshortcutsbs4.py' (for advanced users) to the *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory.
+This command will to load the functions in the script on every startup of PyMOL so you do not have to think about doing so again.
+
 The pymolrc file is an optional file.
 You may have to create it with a text editor if you have not done so already.
 If you do not have text editor, you can use PyMOL's built-in text editor.
@@ -54,6 +56,9 @@ The functions will be loaded into memory but will not be executed despite the us
 You may want to store the script **pymolshortcutNobs4.py** in a safer place than your home directory.
 I store mine in */Users/blaine/Scripts/PyMOLScripts/*
 
+#### Additional instructions for users of beautifulsoup4 
+
+##### Incentive PyMOL
 If you want to use beautifulsoup4 and you have the incentive version of PyMOL that was installed with Anaconda, paste the following command at the upper PyMOL> prompt.
 
 ```bash
@@ -62,6 +67,7 @@ conda install requests beautifulsoup4 datetime
 
 Be patient. The prompt can appear to hang for five to ten minutes while the installation occurs. 
 
+##### macports open-source PyMOL
 If you want to use beautifulsoup4 and you have installed open-source PyMOL via macports, you can install requests and beautifulsoup4 via the following command:
 
 ```bash
@@ -71,6 +77,7 @@ I am assuming that you installed PyMOL for the Python3.7 interpreter (the same v
 Change py37 to py36 or py35 if you installed pymol for Python3.6 or Python3.7.
 The install via macports is much faster than via conda.
 
+##### other open-source PyMOL
 [See the PyMOL wiki](https://pymolwiki.org/index.php/Windows_Install) for more open source PyMOL options for Windows, Linux, and Homebrew or Fink on the Mac.
 The =>2.0 versions of open-source PyMOL will use the system-wide Python interpreter to which you can add the beautifulsoup4 module.
 Note that you do have a free trial period with which you can use the incentive version of [PyMOL](https://pymol.org/2/). 
