@@ -10,7 +10,7 @@ To get a quick overview of this project, scroll down through this README.md file
 
 - *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
 - *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
-- mooers26Oct2019SWTCCPyMOLshortcuts.pdf (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK) (TBD)
+- *mooers26Oct2019SWTCCPyMOLshortcuts.pdf* (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK)
 
 The animation below demonstrates the photorealistic effect from the ambient occlusion shortcut applied to a protein by entering two letters, **AO**. 
 This shortcut executes 16 lines of code with the entry of two letters!
