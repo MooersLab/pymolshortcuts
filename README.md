@@ -4,16 +4,23 @@ This repository for ***pymolschortucts.py*** that contains 215 functions in 25 c
 These shortcuts include many convenience functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
-To get a quick overview of this project, see the slides in the pdf file *mooers23jul2019ACAPyMOLshortcuts.pdf*. 
 
-The animation below demonstrates the ambient occlusion effect applied to a protein by entering two letters, **AO**. 
-This shortcut executes 16 lines of code.
+# Quick overview
+To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the pdfs of in the slideshow folder:
+
+- *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
+- *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
+- mooers26Oct2019SWTCCPyMOLshortcuts.pdf (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK) (TBD)
+
+The animation below demonstrates the photorealistic effect from the ambient occlusion shortcut applied to a protein by entering two letters, **AO**. 
+This shortcut executes 16 lines of code with the entry of two letters!
 
 ![Ambient occlusion shortcut](https://media.giphy.com/media/VHeiY192SHWV2AObvl/giphy.gif)
 
-The animation below demonstrates the submitting of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
-They generate symmetry mates that fill five unit cells that form a L shape. 
-Each symmetry mate appears as a separate object in the menu on the right panel.
+The animation below demonstrates the submission of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
+They generate symmetry mates that fill five unit cells.
+The unit cells form a L shape. 
+Each symmetry mate appears as a separate object in the menu in the panel to the right of the vv.
 These can be removed by entering the shortcut **rmsc**. 
 
 ![supercell shortcut](https://media.giphy.com/media/iDPLG20rlJGjqR6dKp/giphy.gif)
@@ -45,13 +52,19 @@ The Python program pip is available for all installing external modules. The rec
 To download all of the files, git clone the repository. 
 Otherwise, left-click on one of the files above and left-click "Raw".
 The raw file will be displayed in your browser.
-Select save under the file pull-down of your browser
+Select **save** under the file pull-down of your browser. 
+Your browser may add `.txt` after `.py`. 
+Delete  `.txt` by backspacing over it.
 Then save the file to your home directory.
+Your browser may try to append the `.py` with  `.txt` again via a popup gui but do not select this option.
 
+![download scipt](https://github.com/MooersLab/pymolshortcuts/blob/master/gifs/DownloadScript.gif)
 
-## Install of the script file
+### Installation
 
-To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in **pymolshortcuts.py** on startup of PyMOL.
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcutsNobs4.py' (recommended for most users) or 'run ~/pymolshortcutsbs4.py' (for advanced users) to the *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory.
+This command will to load the functions in the script on every startup of PyMOL so you do not have to think about doing so again.
+
 The pymolrc file is an optional file.
 You may have to create it with a text editor if you have not done so already.
 If you do not have text editor, you can use PyMOL's built-in text editor.
@@ -60,7 +73,10 @@ The functions will be loaded into memory but will not be executed despite the us
 You may want to store the script **pymolshortcuts.py** in a safer place than your home directory.
 I store mine in */Users/blaine/Scripts/PyMOLScripts/*
 
+#### Additional instructions for users of beautifulsoup4 
 
+##### Incentive PyMOL
+If you want to use beautifulsoup4 and you have the incentive version of PyMOL that was installed with Anaconda, paste the following command at the upper PyMOL> prompt.
 
 ## Configure the script for access to all shortcuts
 
@@ -111,6 +127,20 @@ See the PyMOL Wiki page for [Linux Installs](https://pymolwiki.org/index.php/Lin
 
 See the PyMOL Wiki page for installing [PyMOL on Windows](https://pymolwiki.org/index.php/Windows_Install).  The protocol varies with the flavor of Linux. I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7.
 
+##### macports open-source PyMOL
+If you want to use beautifulsoup4 and you have installed open-source PyMOL via macports, you can install requests and beautifulsoup4 via the following command:
+
+```bash
+sudo port install py37-requests py37-beautifulsoup4
+```
+I am assuming that you installed PyMOL for the Python3.7 interpreter (the same version of Python currently used in the proprietary version that uses the Anaconda Python interpreter).
+Change py37 to py36 or py35 if you installed pymol for Python3.6 or Python3.7.
+The install via macports is much faster than via conda.
+
+##### other open-source PyMOL
+[See the PyMOL wiki](https://pymolwiki.org/index.php/Windows_Install) for more open source PyMOL options for Windows, Linux, and Homebrew or Fink on the Mac.
+The =>2.0 versions of open-source PyMOL will use the system-wide Python interpreter to which you can add the beautifulsoup4 module.
+Note that you do have a free trial period with which you can use the incentive version of [PyMOL](https://pymol.org/2/). 
 
 
 
