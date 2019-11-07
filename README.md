@@ -71,12 +71,7 @@ If you do not have text editor, you can use PyMOL's built-in text editor.
 Go to **File --> Edit pymolrc**.
 The functions will be loaded into memory but will not be executed despite the use of the command **run**.
 You may want to store the script **pymolshortcuts.py** in a safer place than your home directory.
-I store mine in */Users/blaine/Scripts/PyMOLScripts/*
-
-#### Additional instructions for users of beautifulsoup4 
-
-##### Incentive PyMOL
-If you want to use beautifulsoup4 and you have the incentive version of PyMOL that was installed with Anaconda, paste the following command at the upper PyMOL> prompt.
+I store mine in */Users/blaine/Scripts/PyMOLScripts/*.
 
 ## Configure the script for access to all shortcuts
 
@@ -103,10 +98,12 @@ Around line 500, there are also paths to local directories of pdb files and webm
 
 Note that is possible to have multiple versions of PyMOL on one computer. On the Mac, you can give the package in Applications a different name. I append the version number to the stem of the file name: e.g., PyMOL233.app for version 2.3.3. Avoid trouble down the road by NOT introducing whitespaces into the file name. 
 
+
 ### Download incentive version of the current PyMOL
 
 The incentive version of [PyMOL](https://pymol.org/2/) is easiest to install due to the availability of installers.
 You can use the incentive version for 30 days for free without buying an annual license.
+
 
 ### Open source alternatives
 
@@ -121,26 +118,20 @@ Open source version of pymol via macports works fine. It is missing a few minor 
 
 #### Linux
 
-See the PyMOL Wiki page for [Linux Installs](https://pymolwiki.org/index.php/Linux_Install) .  The install protocol varies with the flavor of Linux. Install protocols for seven flavors of PyMOL are listed on the PyMOL Wiki. I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7. The webpage also describes installing PyMOL from source. From my past experience, this is more successful on Linux than on MacOS. 
+See the PyMOL Wiki page for [Linux Installs](https://pymolwiki.org/index.php/Linux_Install). 
+The install protocol varies with the flavor of Linux. 
+Install protocols for seven flavors of Linux are listed on the PyMOL Wiki. 
+I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7. 
+The webpage also describes installing PyMOL from source. 
+From my past experience, this is more successful on Linux than on MacOS. 
+
 
 #### Windows
 
 See the PyMOL Wiki page for installing [PyMOL on Windows](https://pymolwiki.org/index.php/Windows_Install).  The protocol varies with the flavor of Linux. I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7.
 
-##### macports open-source PyMOL
-If you want to use beautifulsoup4 and you have installed open-source PyMOL via macports, you can install requests and beautifulsoup4 via the following command:
 
-```bash
-sudo port install py37-requests py37-beautifulsoup4
-```
-I am assuming that you installed PyMOL for the Python3.7 interpreter (the same version of Python currently used in the proprietary version that uses the Anaconda Python interpreter).
-Change py37 to py36 or py35 if you installed pymol for Python3.6 or Python3.7.
-The install via macports is much faster than via conda.
-
-##### other open-source PyMOL
-[See the PyMOL wiki](https://pymolwiki.org/index.php/Windows_Install) for more open source PyMOL options for Windows, Linux, and Homebrew or Fink on the Mac.
-The =>2.0 versions of open-source PyMOL will use the system-wide Python interpreter to which you can add the beautifulsoup4 module.
-Note that you do have a free trial period with which you can use the incentive version of [PyMOL](https://pymol.org/2/). 
+If all of the above is overwhelmning, you do have a 30-day free-trial period with which you can use the incentive version of [PyMOL](https://pymol.org/2/). 
 
 
 
