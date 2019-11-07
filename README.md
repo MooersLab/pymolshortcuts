@@ -22,40 +22,100 @@ The variant file ***pymolschortuctsNobs4.py*** lacks a few functions that depend
 Choose this variant file if you do not know how to add beautifulsoup4 to your version of PyMOL.
 
 
+## Selecting the right pymolshortcuts.py script
 
-### Installation
+#### Have Open Source PyMOL or incentive version => 2.0.
 
-To download both files, git clone the repository. 
-Otherwise, left-click on  one of the files above and left-click "Raw".
+If you want to use the shortcuts with a version of PyMOL that has a Python interpreter to which you can add an external module (generally any Open source PyMOL or the incentive version equal to or greater than 2.0), download the *pymolshortcuts.py* script.
+
+#### Have  incentive version < 2.0 or do not want to mess with installing an external module
+
+If you have an incentive version less than 2.0 or you do not want to bother with installation of the datetime module, download the *pymolshortcutsNoDateTime.py*. This version of the script lacks the functions that depend on the datetime module. By using this version  You will not get error messages about this module not being found.
+
+
+### How to install the date time module
+
+#### These instructions are only for the users of pymolshortcuts.py
+
+The Python program pip is available for all installing external modules. The recommended way of using pip when more than one Python interpreter is on our computer is to import it as a module on the command line with the path of the python interpreter for which you are making the install. For example, to install the datetime module in the macports Python3.7, use `sudo -H /opt/local/bin/python3.7 -m pip install --upgrade datatme`. The minus m flag means import the following module.  Depending on your configuration of macports, you may not need to use `sudo -H`.
+
+
+## Download the script file
+
+To download all of the files, git clone the repository. 
+Otherwise, left-click on one of the files above and left-click "Raw".
 The raw file will be displayed in your browser.
 Select save under the file pull-down of your browser
 Then save the file to your home directory.
 
-To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in *pymolshortcuts.py* on startup of PyMOL.
+
+## Install of the script file
+
+To have the shortcuts always available in PyMOL, add the command 'run ~/pymolshortcuts.py' or 'run ~/pymolshortcutsNobs4.py' to your *.pymolrc*, *pymolrc* or *pymolrc.pml* file in your home directory to load the functions in **pymolshortcuts.py** on startup of PyMOL.
 The pymolrc file is an optional file.
 You may have to create it with a text editor if you have not done so already.
 If you do not have text editor, you can use PyMOL's built-in text editor.
 Go to **File --> Edit pymolrc**.
 The functions will be loaded into memory but will not be executed despite the use of the command **run**.
-You may want to store the script **pymolshortcutNobs4.py** in a safer place than your home directory.
+You may want to store the script **pymolshortcuts.py** in a safer place than your home directory.
 I store mine in */Users/blaine/Scripts/PyMOLScripts/*
 
-If you want to use beautifulsoup4 and you have the incentive version of PyMOL that was installed with Anaconda, paste the following command at the upper PyMOL> prompt.
-
-```bash
-conda install requests beautifulsoup4 datetime
-```
-
-Be patient. The prompt can appear to hang for five to ten minutes while the installation occurs. 
 
 
-### Editing local paths
+## Configure the script for access to all shortcuts
 
-Starting at line 190, you will need to edit the file paths to some of your applications that some functions will call.
-The paths are mapped to global variable names, so the paths only need to be defined once.
+#### Configuraton:  application start commands
+
+A number of shortcuts open external programs.
+The commands that work on the Mac OS are active by default.
+These are not path dependent.
+They should work irregardless of the nonconventional location of your applications, as long as they are in your PATH.
+They are found around **line 500** in the pymolshortcuts.py script file.
+
+The commands for Mac OS need to be commented out and the commands for Linux or Windows need to be uncommented.
+Do not use a word processor to edit this file. 
+Visual Studio Code is an excellent, free, and intuitive text editor that is platform independent.
+Install one of the Python in-plugins via the marketplace to get syntax highlighting of the pymolshortcuts.py script file
 
 
-### Listing the shortcuts
+#### Configuraton: paths to local directories and urls of some webpages
+
+Around line 500, there are also paths to local directories of pdb files and webmail sites that need to be customized.
+
+
+## Do not have PyMOL  or do not want to mess with your existing PyMOL?
+
+Note that is possible to have multiple versions of PyMOL on one computer. On the Mac, you can give the package in Applications a different name. I append the version number to the stem of the file name: e.g., PyMOL233.app for version 2.3.3. Avoid trouble down the road by NOT introducing whitespaces into the file name. 
+
+### Download incentive version of the current PyMOL
+
+The incentive version of [PyMOL](https://pymol.org/2/) is easiest to install due to the availability of installers.
+You can use the incentive version for 30 days for free without buying an annual license.
+
+### Open source alternatives
+
+#### Mac
+
+See the instructions on the PyMOL Wiki page for installing on the [Mac](https://pymolwiki.org/index.php/MAC_Install). 
+
+There are many ways of installing PyMOL on the Mac.
+I suggest using the install command below instead for installing pymol on the Mac with macports. I have used fink, anaconda, homebrew, and macports. I have the fewest problems with macports, followed by fink. The main barrier to using macports is the need to install the Xcode related command-line tools. The protocol for doing so varying with the version of the Mac operating system and the version of Xcode installed on your computer. Expect to spend at least an hour installing the command line tools and then macports. If this sounds like too much trouble, download the 30-day trials of the incentive version. 
+
+Open source version of pymol via macports works fine. It is missing a few minor thrills found in the incentive version like the ability to import background images into the viewport. You can have your favorite protein rocking over a scene from your last vacation. This is cool but not essential for serious work. Note that the install of pymol via macports on the Mac (`sudo port install pymol +python37`) allows specification of the version of the Python interpreter. PyMOL can be installed with versions 2.7, 3.5, 3.6, and 3.7 of Python. This is handy if you have a module written for only Python3.5 that you want to import into PyMOL to do something unique and creative without writing a new plugin for PyMOL. However, only one version of macports PyMOL can be active at a time. You could just run `sudo port install pymol +pythonXX` whenever you want to switch versions of pymol because the install goes very quickly. The proper way to switch *ports* is to enter `sudo activate `. Of course, you have to have the corresponding macports Python interpreter installed prior to installing pymol. Open source version of pymol via macports works fine in my hands. It has only a few minor frills missing that the incentive has. 
+
+#### Linux
+
+See the PyMOL Wiki page for [Linux Installs](https://pymolwiki.org/index.php/Linux_Install) .  The install protocol varies with the flavor of Linux. Install protocols for seven flavors of PyMOL are listed on the PyMOL Wiki. I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7. The webpage also describes installing PyMOL from source. From my past experience, this is more successful on Linux than on MacOS. 
+
+#### Windows
+
+See the PyMOL Wiki page for installing [PyMOL on Windows](https://pymolwiki.org/index.php/Windows_Install).  The protocol varies with the flavor of Linux. I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7.
+
+
+
+
+
+## Listing the shortcuts in PyMOL's command history window
 
 Enter **SC** at the upper **PyMOL>** prompt the to get a list of shortcuts printed to the command history window.
 Use the **help** function to see the documentation for each shortcut. 
