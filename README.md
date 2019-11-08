@@ -374,12 +374,9 @@ These functions are useful if you do not have these files under version control.
 |Shortcuts |Description                                                      |
 |:--------|:---------------------------------------------------------------|
 |AB        |Send search term or phrase to Amazon.com Books in default browser. |
-|def       |#     Send search term or phrase to anaconda.com books in default browser. |
 |GB        |Send search term or phrase to Amazon.com in default browser.   |
 |GH        |Send search term or phrase to GitHub in default browser.       |
-|GHN       |Send search term or phrase to GitHub in default browser.       |
 |GO        |Send search term or phrase Google in default browser.          |
-|GON       |Send search term or phrase Google in default browser and opens the top N results in N new tabs. |
 |GS        |Send search term or phrase to Google Scholar in default browser. |
 |GSN       |Send search term or phrase to Google Scholar in default browser. |
 |GV        |Send search term or phrase to Google Videos in default browser. |
@@ -440,9 +437,3 @@ These functions are useful if you do not have these files under version control.
 |SSURF     |Open the webpage of the Society for Science at User Research Facilities (SSURF). |
 |SO        |Submit a search term to Stackoverflow.                         |
 
-## 3D-PDFs
-
-|Shortcuts |Description                                                      |
-|:--------|:---------------------------------------------------------------|
-|ms2pdf    |Send molecular surface or ribbon cartoon from PyMOL to 3dpdf.  |
-|topdf     |Send stick models as pse file from PyMOL through Jmol to 3DPDF. |
