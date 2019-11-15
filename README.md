@@ -161,7 +161,7 @@ You can delete the unwanted version(s) at a latter time.
 These functions are useful if you do not have these files under version control.
 
 ##  Count files.
-| Shortcut   | shortDescription                                                          |
+| Shortcut   | Short Description                                                          |
 |:-----------|:--------------------------------------------------------------------------|
 | cntccp4s   | Count number of *.ccp4 (electron density map) files in current directory. |
 | cntfiles   | Count number of files in current directory.                               |
@@ -174,7 +174,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Data analysis program, open from withn PyMOL.
-| Shortcut   | shortDescription                                                                        |
+| Shortcut   | Short Description                                                                        |
 |:-----------|:----------------------------------------------------------------------------------------|
 | JASP       | Open JASP from within PyMOL.                                                            |
 | JMP        | Open the JMP from within PyMOL.                                                         |
@@ -190,21 +190,21 @@ These functions are useful if you do not have these files under version control.
 
 
 ## H-bonds
-| Shortcut   | shortDescription                                 |
+| Shortcut   | Short Description                                 |
 |:-----------|:-------------------------------------------------|
 | hb         | Creates an object of all H-bonds found by PyMOL. | 
 | rmhb       | Delete all H-bonds in the selection, which is all by default. | 
 
 
 ##  Image editing program, open from within PyMOL.
-| Shortcut   | shortDescription                                           |
+| Shortcut   | Short Description                                           |
 |:-----------|:-----------------------------------------------------------|
 | gimp       | Open the image editing program gimp from within PyMOL.     |
 | inkscape   | Open the image editing program inkscape from within PyMOL. | 
 
 
 ##  Many models (NMR and crystal packing).
-| Shortcut   | shortDescription                                   |
+| Shortcut   | Short Description                                   |
 |:-----------|:---------------------------------------------------|
 | nmr        | Show all models in a nmr structure.                |
 | nmroff     | Hide all but first model in a nmr structure.       |
@@ -234,7 +234,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Molecular graphics program, open from within PyMOL.
-| Shortcut   | shortDescription                                                |
+| Shortcut   | Short Description                                                |
 |:-----------|:----------------------------------------------------------------|
 | ccp4mg     | Open ccp4mg from within PyMOL.                                  |
 | chimera    | Open Chimera from within PyMOL.                                 |
@@ -245,7 +245,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Molecular representation, additional styles.
-| Shortcut   | shortDescription                                                                                         |
+| Shortcut   | Short Description                                                                                         |
 |:-----------|:---------------------------------------------------------------------------------------------------------|
 | AO         | Commands to make ambient occlusion image like those in Qutemole.                                         |
 | AOBW       | Commands to make ambient occlusion image like those in Qutemole but coloring with grayscale.             |
@@ -282,7 +282,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Molecular surfaces, color by biophysical properties.
-| Shortcut   | shortDescription                                                                            |
+| Shortcut   | Short Description                                                                            |
 |:-----------|:--------------------------------------------------------------------------------------------|
 | colorh1    | Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 1.     |
 | colorh2    | Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 2.     |
@@ -291,7 +291,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Molecular symmetry generation.
-| Shortcut   | shortDescription                                                                                           |
+| Shortcut   | Short Description                                                                                           |
 |:-----------|:-----------------------------------------------------------------------------------------------------------|
 | pdbremarks | Read REMARK lines from PDB file.                                                                           |
 |            | Return dictionary with remarkNum as key and list of lines as value.                                        |
@@ -305,7 +305,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Object selection.
-| Shortcut    | shortDescription                                                                           |
+| Shortcut    | Short Description                                                                           |
 |:------------|:-------------------------------------------------------------------------------------------|
 | buriedW     | Return a selection of buried waters.                                                       |
 | checkParams | Checks user params for the findSeq function.                                               |
@@ -313,7 +313,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Orient molecule with viewport axes.
-| Shortcut   | shortDescription                                                                             |
+| Shortcut   | Short Description                                                                             |
 |:-----------|:---------------------------------------------------------------------------------------------|
 | omx        | Align long axis of molecule along the x-axis of the viewport.                                |
 | omxy       | Align long axis of molecule along minus x-y axis.                                            |
@@ -328,13 +328,13 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Pairwise distances.
-| Shortcut   | shortDescription                                    |
+| Shortcut   | Short Description                                    |
 |:-----------|:----------------------------------------------------|
 | pairD      | Find the pairwise distances between two selections. | 
 
 
 ##  Save files with date and time in stem of filename.
-| Shortcut   | shortDescription                                                                                                         |
+| Shortcut   | Short Description                                                                                                         |
 |:-----------|:-------------------------------------------------------------------------------------------------------------------------|
 | saln       | Save a aln file (alignment file) with a time stamp.                                                                      |
 | sccp4      | Save a ccp4 electron density map with a time stamp.                                                                      |
@@ -366,7 +366,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ## Script writing aids. 
-| Shortcut   | shortDescription                                                                         |
+| Shortcut   | Short Description                                                                         |
 |:-----------|:-----------------------------------------------------------------------------------------|
 | gitAdd     | Enter help(gitAdd) to print steps for adding a file to version control.                  |
 | gitCommit  | Enter help(gitCommit) to print steps for saving updates to a file under version control. |
@@ -378,7 +378,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Send search term to searchable website.
-| Shortcut   | shortDescription                                                                    |
+| Shortcut   | Short Description                                                                    |
 |:-----------|:------------------------------------------------------------------------------------|
 | AB         | Send search term or phrase to Amazon.com Books in default browser.                  |
 | AC         | Send search term to Anaconda Cloud.                                                 |
@@ -406,7 +406,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Static images of various molecular scenes. Can serve as templates.
-| Shortcut   | shortDescription                                                                              |
+| Shortcut   | Short Description                                                                              |
 |:-----------|:----------------------------------------------------------------------------------------------|
 | BST        | G2G3/U9U8 base step , PDB code 4PCO.                                                          |
 | GGT        | WT human gamma glutamyl transpeptidase at 1.67 Angstrom resolution as cartoon. PDB Code 4gdx. |
@@ -420,7 +420,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ## Static images of various molecular scenes. Require coordinates on local computer.
-| Shortcut   | shortDescription                                                                            |
+| Shortcut   | Short Description                                                                            |
 |:-----------|:--------------------------------------------------------------------------------------------|
 | LBST       | G2G3/U9U8 base step , PDB code 4PCO.                                                        |
 | LGGT       | WT human gamma glutamyl transpeptidase as cartoon. PDB code 4gdx.                           |
@@ -435,13 +435,13 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Structure validation.
-| Shortcut   | shortDescription                         |
+| Shortcut   | Short Description                         |
 |:-----------|:-----------------------------------------|
 | sb         | Show van der Waals clashes as red discs. | 
 
 
 ##  Terminal, open from within PyMOL.
-| Shortcut   | shortDescription                    |
+| Shortcut   | Short Description                    |
 |:-----------|:------------------------------------|
 | iterm      | Open iTerm2 window on MacOS.        |
 | term       | Open a Terminal window on MacOS.    |
@@ -450,7 +450,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Text editor, launch from with PyMOL.
-| Shortcut   | shortDescription                                         |
+| Shortcut   | Short Description                                         |
 |:-----------|:---------------------------------------------------------|
 | atom       | Open the text editor Atom from within PyMOL.             |
 | bbedit     | Open file with the text editor bbedit from within PyMOL. |
@@ -468,7 +468,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Webapp,open from within PyMOL.
-| Shortcut   | shortDescription                  |
+| Shortcut   | Short Description                  |
 |:-----------|:----------------------------------|
 | gcal       | Open Google Calendar.             |
 | gmail      | Open gmail.                       |
@@ -476,7 +476,7 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Website, static, open from within PyMOL.
-| Shortcut   | shortDescription                                                                                                 |
+| Shortcut   | Short Description                                                                                                 |
 |:-----------|:-----------------------------------------------------------------------------------------------------------------|
 | ACA        | Open the American Crystallographic Association Annual Meeting webpage.                                           |
 | ALS        | Open website of the Advanced Light Source.                                                                       |
@@ -508,6 +508,6 @@ These functions are useful if you do not have these files under version control.
 
 
 ##  Word processor, open from within PyMOL.
-| Shortcut   | shortDescription             |
+| Shortcut   | Short Description             |
 |:-----------|:-----------------------------|
 | word       | Open word from within PyMOL. | 
