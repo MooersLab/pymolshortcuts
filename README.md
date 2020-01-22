@@ -5,7 +5,7 @@ These shortcuts include many convenience functions that make working in PyMOL mo
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
 
-A \href{paper}{https://onlinelibrary.wiley.com/doi/10.1002/pro.3781} about this project was publisehd in January 2020 in Protien Science. Access to the PDF is open.
+A [paper]{https://onlinelibrary.wiley.com/doi/10.1002/pro.3781} about this project was publisehd in January 2020 in Protien Science. Access to the PDF is open.
 
 To cite the paper if you use bibtex, use the following. The Google Scholar geneartoed ENDNOTE file (scholar.enw) is above with the other files:
 
