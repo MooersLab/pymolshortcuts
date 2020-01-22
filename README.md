@@ -5,6 +5,27 @@ These shortcuts include many convenience functions that make working in PyMOL mo
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
 
+A \href{paper}{https://onlinelibrary.wiley.com/doi/10.1002/pro.3781} about this project was publisehd in January 2020 in Protien Science. Access to the PDF is open.
+
+To cite the paper if you use bibtex, use the following. The ENDNOTE file is above with the other files.:
+
+```bibtex
+@article{mooers2020shortcuts,
+  title={Shortcuts for faster image creation in PyMOL},
+  author={Mooers, Blaine HM},
+  journal={Protein Science},
+  volume={29},
+  number={1},
+  pages={268--276},
+  year={2020},
+  publisher={Wiley Online Library}
+}
+```
+
+
+
+
+
 # Quick overview
 To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the pdfs of in the slideshow folder:
 
