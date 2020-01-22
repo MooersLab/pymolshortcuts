@@ -7,7 +7,7 @@ You do not need to understand Python to be able run the script.
 
 A \href{paper}{https://onlinelibrary.wiley.com/doi/10.1002/pro.3781} about this project was publisehd in January 2020 in Protien Science. Access to the PDF is open.
 
-To cite the paper if you use bibtex, use the following. The ENDNOTE file is above with the other files.:
+To cite the paper if you use bibtex, use the following. The Google Scholar geneartoed ENDNOTE file (scholar.enw) is above with the other files:
 
 ```bibtex
 @article{mooers2020shortcuts,
@@ -21,10 +21,6 @@ To cite the paper if you use bibtex, use the following. The ENDNOTE file is abov
   publisher={Wiley Online Library}
 }
 ```
-
-
-
-
 
 # Quick overview
 To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the pdfs of in the slideshow folder:
