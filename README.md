@@ -70,6 +70,22 @@ The Python program pip is available for all installing external modules. The rec
 
 ## Download the script file
 
+Before you download the script file, be sure that you have set your system to show file extensions. Both Mac and Windows operating system hide the file extension by default. 
+
+On the Mac, do the following
+
+- open a new Finder window on your Mac
+- In the Menu bar, go to Finder > Preferences
+- Check the box **Show all filename extnesion**
+
+
+On Windows, do the following:
+
+- search for File Explorer Options in Start search box and open the Folder Options box.
+- uncheck the box next to "Hide extensions for known file types"
+
+
+
 To download all of the files, git clone the repository. 
 Otherwise, left-click on one of the files above and left-click "Raw".
 The raw file will be displayed in your browser.
