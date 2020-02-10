@@ -74,15 +74,15 @@ Before you download the script file, be sure that you have set your system to sh
 
 On the Mac, do the following
 
-- open a new Finder window on your Mac
-- In the Menu bar, go to Finder > Preferences
+- Open a new Finder window.
+- In the menu bar, select Finder > Preferences.
 - Check the box **Show all filename extnesion**
 
 
 On Windows, do the following:
 
-- search for File Explorer Options in Start search box and open the Folder Options box.
-- uncheck the box next to "Hide extensions for known file types"
+- Search for **File Explorer Options** in Start search box and open the Folder Options box.
+- Uncheck the box next to **Hide extensions** for known file types".
 
 
 
