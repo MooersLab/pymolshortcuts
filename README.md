@@ -65,7 +65,7 @@ If you have an incentive version less than 2.0 or you do not want to bother with
 
 #### These instructions are only for the users of pymolshortcuts.py
 
-The Python program pip is available for all installing external modules. The recommended way of using pip when more than one Python interpreter is on our computer is to import it as a module on the command line with the path of the python interpreter for which you are making the install. For example, to install the datetime module in the macports Python3.7, use `sudo -H /opt/local/bin/python3.7 -m pip install --upgrade datatme`. The minus m flag means import the following module.  Depending on your configuration of macports, you may not need to use `sudo -H`.
+The Python program pip is available for all installing external modules. The recommended way of using pip when more than one Python interpreter is on our computer is to import it as a module on the command line with the path of the python interpreter for which you are making the install. For example, to install the datetime module in the macports Python3.7, use `sudo -H /opt/local/bin/python3.7 -m pip install --upgrade datetime`. The minus m flag means import the following module.  Depending on your configuration of macports, you may not need to use `sudo -H`.
 
 
 ## Download the script file
@@ -78,13 +78,10 @@ On the Mac, do the following
 - In the menu bar, select Finder > Preferences.
 - Check the box **Show all filename extnesion**
 
-
 On Windows, do the following:
 
 - Search for **File Explorer Options** in Start search box and open the Folder Options box.
 - Uncheck the box next to **Hide extensions** for known file types".
-
-
 
 To download all of the files, git clone the repository. 
 Otherwise, left-click on one of the files above and left-click "Raw".
