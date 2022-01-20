@@ -1,4 +1,6 @@
 # pymolshortcuts
+![Version](https://img.shields.io/static/v1?label=pymolshortcuts&message=0.1&color=brightcolor)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This repository for ***pymolschortucts.py*** that contains 215 functions in 25 categories mapped to short-names that work like aliases (the table below is incomplete).
 These shortcuts include many convenience functions that make working in PyMOL more productive and fun!
