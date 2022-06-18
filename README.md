@@ -3,11 +3,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This repository for ***pymolschortucts.py*** that contains 215 functions in 25 categories mapped to short-names that work like aliases (the table below is incomplete).
-These shortcuts include many convenient functions that make working in PyMOL more productive and fun!
+These shortcuts include many functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
 You do not need to understand Python to be able run the script.
 
-A [paper](https://onlinelibrary.wiley.com/doi/10.1002/pro.3781) about this project was publisehd in January 2020 in Protien Science. Access to the PDF is open; you do not need a subscription to Protein Science to download it.
+A [paper](https://onlinelibrary.wiley.com/doi/10.1002/pro.3781) about this project was publisehd in January 2020 in Protien Science. 
+Access to the PDF is open; you do not need a subscription to Protein Science to download it.
 
 To cite the software, use the following citation if you use bibtex. 
 
