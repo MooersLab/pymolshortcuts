@@ -553,7 +553,6 @@ These functions are useful if you do not have these files under version control.
 ## Related Repos
 
 - [easypymol](https://github.com/MooersLab/EasyPyMOL/edit/master/README.md)
-- [pymolshortcuts](https://github.com/MooersLab/pymolshortcuts)
 - [pymolsnips](https://github.com/MooersLab/pymolsnips)
 - [orgpymolpysnips](https://github.com/MooersLab/orgpymolpysnips)
 - [rstudiopymolpysnips](https://github.com/MooersLab/rstudiopymolpysnips)
