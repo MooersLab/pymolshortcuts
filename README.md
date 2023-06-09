@@ -14,15 +14,18 @@ To cite the software, use the following citation if you use bibtex.
 
 
 ```bibtex
-@article{mooers2020shortcuts,
-  title={Shortcuts for faster image creation in PyMOL},
-  author={Mooers, Blaine HM},
-  journal={Protein Science},
-  volume={29},
-  number={1},
-  pages={268--276},
-  year={2020},
-  publisher={Wiley Online Library}
+@Article{Mooers2020ShortcutsForFasterImageCreationInPyMOL,
+  author    = {Mooers, Blaine HM},
+  title     = {Shortcuts for faster image creation in PyMOL},
+  number    = {1},
+  pages     = {268--276},
+  volume    = {29},
+  file      = {:Mooers2020ShortcutsForFasterImageCreationInPyMOL.pdf:PDF},
+  url       = {https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/pro.3781},
+  journal   = {Protein Science},
+  publisher = {Wiley Online Library},
+  doi       = {10.1002/pro.3781},
+  year      = {2020},
 }
 ```
 
