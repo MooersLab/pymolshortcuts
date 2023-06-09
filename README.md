@@ -10,7 +10,7 @@ You do not need to understand Python to be able run the script.
 A [paper](https://onlinelibrary.wiley.com/doi/10.1002/pro.3781) about this project was publisehd in January 2020 in *Protien Science*. 
 Access to the PDF is open; you do not need a subscription to *Protein Science* to download it.
 
-To cite the software, use the following citation if you use bibtex. 
+To cite the software, use the following citation if you use BibTeX. 
 
 
 ```bibtex
