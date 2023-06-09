@@ -310,12 +310,12 @@ These functions are useful if you do not have these files under version control.
 | bsbw       | bs creates a gray-scaled ball-and-stick representation of an object.                                     |
 | bsbwsc     | bsbwsc creates a gray-scaled ball-and-stick representation of an object or selection.                    |
 |            | Only the side chains are shown as ball and stick when used with a cartoon (ribbon diagram).              |
-| bstvdw     | Transparent vdw surface over ball and stick representation by Bobby Patton at Colorato State University. |
+| bstvdw     | Transparent vdw surface over ball and stick representation by Robert Paton at Colorato State University. |
 | cartoonbw  | Grayscale by secondary structure.                                                                        |
 | gscale     | Apply grayscale to all atoms by element.                                                                 |
 | rgb        | Restore rgb coloring of atoms by element.                                                                |
-| tvdw       | Transparent vdw surface by Bobby Patton at Colorado State University.                                    |
-| tvdwbw     | Transparent vdw surface by Bobby Patton at Colorado State University and grayscale by gscale function.   | 
+| tvdw       | Transparent vdw surface by Robert Paton at Colorado State University.                                    |
+| tvdwbw     | Transparent vdw surface by Robert Paton at Colorado State University and grayscale by gscale function.   | 
 
 
 ##  Molecular surfaces, color by biophysical properties.
