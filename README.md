@@ -1,13 +1,14 @@
-# pymolshortcuts
+
 ![Version](https://img.shields.io/static/v1?label=pymolshortcuts&message=0.1&color=brightcolor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-This is the repository for ***pymolschortucts.py***. This file contains 215 functions in 25 categories mapped to short-names that work like aliases (the table below is incomplete).
+# pymolshortcuts
+This is the repository for ***pymolschortucts.py***. This file contains 215 functions in 25 categories mapped to short names that work like aliases (the table below is incomplete).
 These shortcuts include many functions that make working in PyMOL more productive and fun!
 Some shortcuts save the many hours of work required to assemble a new script file while other shortcuts save only a few minutes but lower motivational barriers.
-You do not need to understand Python to be able run the script.
+You do not need to understand Python to be able to run the script.
 
-A [paper](https://onlinelibrary.wiley.com/doi/10.1002/pro.3781) about this project was publisehd in January 2020 in *Protien Science*. 
+A [paper](https://onlinelibrary.wiley.com/doi/10.1002/pro.3781) about this project was published in Protien Science in January 2020. 
 Access to the PDF is open; you do not need a subscription to *Protein Science* to download it.
 
 To cite the software, use the following citation if you use BibTeX. 
@@ -29,15 +30,15 @@ To cite the software, use the following citation if you use BibTeX.
 }
 ```
 
-The Google Scholar genearted ENDNOTE file (scholar.enw) is above with the other files.
+The Google Scholar generated ENDNOTE file (scholar. new) is above with the other files.
 
 
 # Quick overview
-To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the pdfs of in the slideshow folder:
+To get a quick overview of this project, scroll down through this README.md file and watch the animations. To learn more,  see the PDFs in the slideshow folder:
 
-- *mooers23jul2019ACAPyMOLshortcuts.pdf* (20 minute talk at the American Crystallographic Association annual meeting in Covington, KY)
-- *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9 minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
-- *mooers26Oct2019SWTCCPyMOLshortcuts.pdf* (20 minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK)
+- *mooers23jul2019ACAPyMOLshortcuts.pdf* (20-minute talk at the American Crystallographic Association annual meeting in Covington, KY)
+- *mooers18oct2019RNAcornbeltPyMOLShortcuts4RNA.pdf* (9-minute talk at the Cornbelt RNA meeting at the U of Missouri in Columbia, Missouri)
+- *mooers26Oct2019SWTCCPyMOLshortcuts.pdf* (20-minute talk, Southwest Theoretical and Computational Chemistry (SWTCC) annual meeting at the U of Oklahoma in Norman, OK)
 
 The animation below demonstrates the photorealistic effect from the ambient occlusion shortcut applied to a protein by entering two letters, **AO**. 
 This shortcut executes 16 lines of code with the entry of two letters!
@@ -46,7 +47,7 @@ This shortcut executes 16 lines of code with the entry of two letters!
 
 The animation below demonstrates the submission of two shortcuts, **sc311** and **sc113**, separated by a semicolon on the command line.
 They generate symmetry mates that fill five unit cells.
-The unit cells form a L shape. 
+The unit cells form an L shape. 
 Each symmetry mate appears as a separate object in the menu in the panel to the right of the vv.
 These can be removed by entering the shortcut **rmsc**. 
 
@@ -64,7 +65,7 @@ If you want to use the shortcuts with a version of PyMOL that has a Python inter
 
 #### Have  incentive version < 2.0 or do not want to mess with installing an external module
 
-If you have an incentive version less than 2.0 or you do not want to bother with installation of the datetime module, download the *pymolshortcutsNoDateTime.py*. This version of the script lacks the functions that depend on the datetime module. By using this version  You will not get error messages about this module not being found.
+If you have an incentive version less than 2.0 or you do not want to bother with the installation of the *datetime* module, download the *pymolshortcutsNoDateTime.py*. This version of the script lacks the functions that depend on the datetime module. By using this version  You will not get error messages about this module not being found.
 
 
 ### How to install the date time module
@@ -82,11 +83,11 @@ On the Mac, do the following
 
 - Open a new Finder window.
 - In the menu bar, select Finder > Preferences.
-- Check the box **Show all filename extnesion**
+- Check the box **Show all filename extension**
 
 On Windows, do the following:
 
-- Search for **File Explorer Options** in Start search box and open the Folder Options box.
+- Search for **File Explorer Options** in the Start search box and open the Folder Options box.
 - Uncheck the box next to **Hide extensions** for known file types".
 
 To download all of the files, git clone the repository. 
@@ -96,7 +97,7 @@ Select **save** under the file pull-down of your browser.
 Your browser may add `.txt` after `.py`. 
 Delete  `.txt` by backspacing over it.
 Then save the file to your home directory.
-Your browser may try to append the `.py` with  `.txt` again via a popup gui but do not select this option.
+Your browser may try to append the `.py` with `.txt` again via a popup GUI, but do not select this option.
 
 ![download scipt](https://github.com/MooersLab/pymolshortcuts/blob/master/gifs/DownloadScript.gif)
 
@@ -107,7 +108,7 @@ This command will to load the functions in the script on every startup of PyMOL 
 
 The pymolrc file is an optional file.
 You may have to create it with a text editor if you have not done so already.
-If you do not have text editor, you can use PyMOL's built-in text editor.
+If you do not have a text editor, you can use PyMOL's built-in text editor.
 Go to **File --> Edit pymolrc**.
 The functions will be loaded into memory but will not be executed despite the use of the command **run**.
 You may want to store the script **pymolshortcuts.py** in a safer place than your home directory.
@@ -115,11 +116,11 @@ I store mine in */Users/blaine/Scripts/PyMOLScripts/*.
 
 ## Configure the script for access to all shortcuts
 
-#### Configuraton:  application start commands
+#### Configuration:  application start commands
 
 A number of shortcuts open external programs.
 The commands that work on the Mac OS are active by default.
-These are not path dependent.
+These are not path-dependent.
 They should work irregardless of the nonconventional location of your applications, as long as they are in your PATH.
 They are found around **line 500** in the pymolshortcuts.py script file.
 
@@ -129,32 +130,34 @@ Visual Studio Code is an excellent, free, and intuitive text editor that is plat
 Install one of the Python in-plugins via the marketplace to get syntax highlighting of the pymolshortcuts.py script file
 
 
-#### Configuraton: paths to local directories and urls of some webpages
+#### Configuration: paths to local directories and URLs of some web pages
 
-Around line 500, there are also paths to local directories of pdb files and webmail sites that need to be customized.
+Around line 500, there are also paths to local directories of PDB files and webmail sites that need to be customized.
 
 
 ## Do not have PyMOL  or do not want to mess with your existing PyMOL?
 
-Note that is possible to have multiple versions of PyMOL on one computer. On the Mac, you can give the package in Applications a different name. I append the version number to the stem of the file name: e.g., PyMOL233.app for version 2.3.3. Avoid trouble down the road by NOT introducing whitespaces into the file name. 
+Note that multiple versions of PyMOL can be on one computer. On the Mac, you can give the package in Applications a different name. 
+I append the version number to the stem of the file name, e.g., PyMOL233.app for version 2.3.3. 
+Avoid trouble down the road by NOT introducing whitespaces into the file name. 
 
 
-### Download incentive version of the current PyMOL
+### Download the incentive version of the current PyMOL
 
 The incentive version of [PyMOL](https://pymol.org/2/) is easiest to install due to the availability of installers.
 You can use the incentive version for 30 days for free without buying an annual license.
 
 
-### Open source alternatives
+### Open-source alternatives
 
 #### Mac
 
 See the instructions on the PyMOL Wiki page for installing on the [Mac](https://pymolwiki.org/index.php/MAC_Install). 
 
 There are many ways of installing PyMOL on the Mac.
-I suggest using the install command below instead for installing pymol on the Mac with macports. I have used fink, anaconda, homebrew, and macports. I have the fewest problems with macports, followed by fink. The main barrier to using macports is the need to install the Xcode related command-line tools. The protocol for doing so varying with the version of the Mac operating system and the version of Xcode installed on your computer. Expect to spend at least an hour installing the command line tools and then macports. If this sounds like too much trouble, download the 30-day trials of the incentive version. 
+I suggest using the install command below instead for installing pymol on the Mac with macports. I have used fink, anaconda, homebrew, and macports. I have the fewest problems with macports, followed by fink. The main barrier to using Macports is the need to install the Xcode-related command-line tools. The protocol for doing so varying with the version of the Mac operating system and the version of Xcode installed on your computer. Expect to spend at least an hour installing the command line tools and then macports. If this sounds like too much trouble, download the 30-day trials of the incentive version. 
 
-Open source version of pymol via macports works fine. It is missing a few minor thrills found in the incentive version like the ability to import background images into the viewport. You can have your favorite protein rocking over a scene from your last vacation. This is cool but not essential for serious work. Note that the install of pymol via macports on the Mac (`sudo port install pymol +python37`) allows specification of the version of the Python interpreter. PyMOL can be installed with versions 2.7, 3.5, 3.6, and 3.7 of Python. This is handy if you have a module written for only Python3.5 that you want to import into PyMOL to do something unique and creative without writing a new plugin for PyMOL. However, only one version of macports PyMOL can be active at a time. You could just run `sudo port install pymol +pythonXX` whenever you want to switch versions of pymol because the install goes very quickly. The proper way to switch *ports* is to enter `sudo activate `. Of course, you have to have the corresponding macports Python interpreter installed prior to installing pymol. Open source version of pymol via macports works fine in my hands. It has only a few minor frills missing that the incentive has. 
+Open source version of pymol via macports works fine. It is missing a few minor thrills found in the incentive version like the ability to import background images into the viewport. You can have your favorite protein rocking over a scene from your last vacation. This is cool  not essential for serious work. Note that the install of pymol via macports on the Mac (`sudo port install pymol +python37`) allows specification of the version of the Python interpreter. PyMOL can be installed with versions 2.7, 3.5, 3.6, and 3.7 of Python. This is handy if you have a module written for only Python3.5 that you want to import into PyMOL to do something unique and creative without writing a new plugin for PyMOL. However, only one version of macports PyMOL can be active at a time. You could just run `sudo port install pymol +pythonXX` whenever you want to switch versions of pymol because the install goes very quickly. The proper way to switch *ports* is to enter `sudo activate `. Of course, you have to have the corresponding macports Python interpreter installed prior to installing pymol. Open source version of pymol via macports works fine in my hands. It has only a few minor frills missing that the incentive has. 
 
 #### Linux
 
