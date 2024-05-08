@@ -87,7 +87,7 @@ On the Mac, do the following
 
 On Windows, do the following:
 
-- Search for **File Explorer Options** in the Start search box and open the Folder Options box.
+- Search for **File Explorer Options** in the Start search box and open the **Folder Options** box.
 - Uncheck the box next to **Hide extensions** for known file types".
 
 To download all of the files, git clone the repository. 
@@ -121,7 +121,7 @@ I store mine in */Users/blaine/Scripts/PyMOLScripts/*.
 A number of shortcuts open external programs.
 The commands that work on the Mac OS are active by default.
 These are not path-dependent.
-They should work irregardless of the nonconventional location of your applications, as long as they are in your PATH.
+They should work regardless of the nonconventional location of your applications, as long as they are in your PATH.
 They are found around **line 500** in the pymolshortcuts.py script file.
 
 The commands for Mac OS need to be commented out and the commands for Linux or Windows need to be uncommented.
@@ -144,7 +144,7 @@ Avoid trouble down the road by NOT introducing whitespaces into the file name.
 
 ### Download the incentive version of the current PyMOL
 
-The incentive version of [PyMOL](https://pymol.org/2/) is easiest to install due to the availability of installers.
+The incentive version of [PyMOL](https://pymol.org/2/) is the easiest to install due to the availability of installers.
 You can use the incentive version for 30 days for free without buying an annual license.
 
 
@@ -155,9 +155,26 @@ You can use the incentive version for 30 days for free without buying an annual 
 See the instructions on the PyMOL Wiki page for installing on the [Mac](https://pymolwiki.org/index.php/MAC_Install). 
 
 There are many ways of installing PyMOL on the Mac.
-I suggest using the install command below instead for installing pymol on the Mac with macports. I have used fink, anaconda, homebrew, and macports. I have the fewest problems with macports, followed by fink. The main barrier to using Macports is the need to install the Xcode-related command-line tools. The protocol for doing so varying with the version of the Mac operating system and the version of Xcode installed on your computer. Expect to spend at least an hour installing the command line tools and then macports. If this sounds like too much trouble, download the 30-day trials of the incentive version. 
+I suggest using the install command below instead for installing pymol on the Mac with Macports. 
+I have used Fink, Anaconda, Homebrew, and Macports. 
+I have the fewest problems with Macports, followed by Fink. 
 
-Open source version of pymol via macports works fine. It is missing a few minor thrills found in the incentive version like the ability to import background images into the viewport. You can have your favorite protein rocking over a scene from your last vacation. This is cool  not essential for serious work. Note that the install of pymol via macports on the Mac (`sudo port install pymol +python37`) allows specification of the version of the Python interpreter. PyMOL can be installed with versions 2.7, 3.5, 3.6, and 3.7 of Python. This is handy if you have a module written for only Python3.5 that you want to import into PyMOL to do something unique and creative without writing a new plugin for PyMOL. However, only one version of macports PyMOL can be active at a time. You could just run `sudo port install pymol +pythonXX` whenever you want to switch versions of pymol because the install goes very quickly. The proper way to switch *ports* is to enter `sudo activate `. Of course, you have to have the corresponding macports Python interpreter installed prior to installing pymol. Open source version of pymol via macports works fine in my hands. It has only a few minor frills missing that the incentive has. 
+The main barrier to using Macports is the need to install the Xcode-related command-line tools. 
+The protocol for doing so varies with the version of the Mac operating system and the version of Xcode installed on your computer. 
+Expect to spend at least an hour installing the command line tools and then Macports. 
+If this sounds like too much trouble, download the 30-day trial of the incentive version. 
+
+Open source version of pymol via Macports works fine. It is missing a few minor thrills found in the incentive version like the ability to import background images into the viewport. 
+You can have your favorite protein rocking over a scene from your last vacation. 
+This is cool  not essential for serious work. 
+Note that the installation of PyMOL via MacPorts on the Mac (`sudo port install pymol +python37`) allows specification of the version of the Python interpreter. 
+PyMOL can be installed with versions 2.7, 3.5, 3.6, and 3.7 of Python. 
+This is handy if you have a module written for only Python3.5 that you want to import into PyMOL to do something unique and creative without writing a new plugin for PyMOL. 
+However, only one version of Macports PyMOL can be active at a time. 
+You could just run `sudo port install pymol +pythonXX` whenever you want to switch versions of pymol because the installation goes very quickly. 
+The proper way to switch *ports* is to enter `sudo activate `. 
+Of course, you have to have the corresponding Macports Python interpreter installed prior to installing pymol. 
+Open source version of pymol via Macports works fine in my hands. It has only a few minor frills missing that the incentive has. 
 
 #### Linux
 
@@ -165,7 +182,7 @@ See the PyMOL Wiki page for [Linux Installs](https://pymolwiki.org/index.php/Lin
 The install protocol varies with the flavor of Linux. 
 Install protocols for seven flavors of Linux are listed on the PyMOL Wiki. 
 I have had success with installing recent versions of PyMOL on Ubuntu and Centos 7. 
-The webpage also describes installing PyMOL from source. 
+The webpage also describes installing PyMOL from source code. 
 From my past experience, this is more successful on Linux than on MacOS. 
 
 
@@ -181,18 +198,22 @@ If all of the above is overwhelmning, you do have a 30-day free-trial period wit
 
 ## Listing the shortcuts in PyMOL's command history window
 
-Enter **SC** at the upper **PyMOL>** prompt the to get a list of shortcuts printed to the command history window.
+Enter **SC** at the upper **PyMOL>** prompt to get a list of shortcuts printed to the command history window.
 Use the **help** function to see the documentation for each shortcut. 
-For examples, enter **help PW** to print the documentation for the shortcut **PW** to the command history window. The documentation has four sections: a description of what the shortcut does, an example of running the shortcut, 
-the corresponding pml code with one command per line for easy reuse in a script file, and all of the commands on a single line for re-use on the command line as horizontal script. 
+For example, enter **help PW** to print the documentation for the shortcut **PW** to the command history window. 
+The documentation has four sections: 
+- a description of what the shortcut does
+- an example of running the shortcut, 
+- the corresponding pml code with one command per line for easy reuse in a script file
+- all of the commands on a single line for re-use on the command line as a horizontal script. 
 
-The shortcut **PW** takes one or more search terms and the sends them to the PyMOL Wiki.
+The shortcut **PW** takes one or more search terms and then sends them to the PyMOL Wiki.
 A browser tab opens for each search term, so multiple searches are run in parallel while you continue your work in PyMOL.
 You can inspect the results of the searches when there is a natural break in your work in PyMOL.
 Other search functions can submit parallel searches of PubMed, Google, bioRxiv, Research Gate, GitHub, and more.
 See the tables below.
 
-Another class of shortcuts launch your favorite full-featured text editor from within PyMOL.
+Another class of shortcuts launches your favorite full-featured text editor from within PyMOL.
 You have to install the text editor and edit the file path to the executable.
 
 Another class of shortcuts opens the manuscript or grant application that you are working on in Overleaf.
@@ -200,20 +221,20 @@ You have to edit the script by pasting in the appropriate link to the specific d
 
 Another class of shortcuts saves files with timestamps embedded in the filename to avoid overwriting png, pdb, pse, and other types of files written out from PyMOL.
 These save function names begin with **s**, (e.g., **spse filename** saves the current session with date and time to nearest second embedded in the file name).
-You can delete the unwanted version(s) at a latter time. 
+You can delete the unwanted version(s) at a later time. 
 These functions are useful if you do not have these files under version control.
 
 ##  Count files.
-| Shortcut   | Short Description                                                          |
-|:-----------|:--------------------------------------------------------------------------|
-| cntccp4s   | Count number of *.ccp4 (electron density map) files in current directory. |
-| cntfiles   | Count number of files in current directory.                               |
-| cntlogs    | Count number of *.log files in current directory.                         |
-| cntmtzs    | Count number of *.mtz (structure factor) files in current directory.      |
-| cntpdbs    | Count number of pdb files in current directory.                           |
-| cntpmls    | Count number of pml (Pymol macro language) files in current directory.    |
-| cntpngs    | Count number of *.png image files in current directory.                   |
-| cntpses    | Count number of *.pse (session) files in current directory.               | 
+| Shortcut   | Short Description                                                                 |
+|:-----------|:----------------------------------------------------------------------------------|
+| cntccp4s   | Count number of *.ccp4 (electron density map) files in the current directory.     |
+| cntfiles   | Count the number of files in the current directory.                               |
+| cntlogs    | Count the number of *.log files in the current directory.                         |
+| cntmtzs    | Count the number of *.mtz (structure factor) files in the current directory.      |
+| cntpdbs    | Count the number of pdb files in the current directory.                           |
+| cntpmls    | Count the number of pml (Pymol macro language) files in the current directory.    |
+| cntpngs    | Count the number of *.png image files in the current directory.                   |
+| cntpses    | Count the number of *.pse (session) files in the current directory.               | 
 
 
 ##  Data analysis program, open from withn PyMOL.
@@ -224,15 +245,14 @@ These functions are useful if you do not have these files under version control.
 | RStudio    | Open Rstudio GUI.                                                                       |
 | cranR      | Open Cran R from within PyMOL.                                                          |
 | ddb        | Open DBBrowserSQLite.                                                                   |
-| excel      | Open excel from within PyMOL.                                                           |
+| Excel      | Open Excel from within PyMOL.                                                           |
 | jabref     | Open the jabref from within PyMOL.                                                      |
-| julia      | Open the julia from within PyMOL.                                                       |
+| Julia      | Open the Julia from within PyMOL.                                                       |
 | juliapro   | Open the juliapro from within PyMOL.                                                    |
 | oc         | Open the data analysis program octave (open source analog of matlab) from within PyMOL. |
-| ppt        | Open the powerpoint from within PyMOL.                                                  | 
+| ppt        | Open the PowerPoint from within PyMOL.                                                  | 
 
-
-## H-bonds
+ ## H-bonds
 | Shortcut   | Short Description                                 |
 |:-----------|:-------------------------------------------------|
 | hb         | Creates an object of all H-bonds found by PyMOL. | 
