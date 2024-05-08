@@ -1,5 +1,5 @@
 
-![Version](https://img.shields.io/static/v1?label=pymolshortcuts&message=0.1&color=brightcolor)
+![Version](https://img.shields.io/static/v1?label=pymolshortcuts&message=0.2&color=brightcolor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 # pymolshortcuts
@@ -587,3 +587,18 @@ These functions are useful if you do not have these files under version control.
 - [colabOpenSourcePyMOLpySnips](https://github.com/MooersLab/colabOpenSourcePyMOLpySnips)
 - [colabPyMOLpySnips](https://github.com/MooersLab/colabPyMOLpySnips)
 - [PyMOLwallhangings](https://github.com/MooersLab/PyMOLwallhangings)
+
+## Update history
+Insert update history
+|Version      | Changes                                                                                                                                    | Date                 |
+|:-----------:|:------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------:|
+| Version 0.2 |  Added badges, funding, update table, and edited README.md                                                                                 | 2024 May 8           |
+
+
+
+
+## Funding
+
+- NIH: R01 CA242845, R01 AI088011
+- NIH: P30 CA225520 (PI: R. Mannel); P20GM103640 and P30GM145423 (PI: A. West)
+
