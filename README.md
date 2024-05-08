@@ -270,7 +270,7 @@ These functions are useful if you do not have these files under version control.
 | Shortcut   | Short Description                                   |
 |:-----------|:---------------------------------------------------|
 | nmr        | Show all models in a nmr structure.                |
-| nmroff     | Hide all but first model in a nmr structure.       |
+| nmroff     | Hide all but the first model in a nmr structure.       |
 | rmd        | Remove all measurement objects in the interal GUI. |
 | rmsc       | Remove supercell objects.                          |
 | sc111      | Make a lattice of 1 x 1 x 1 unit cells.            |
@@ -304,7 +304,7 @@ These functions are useful if you do not have these files under version control.
 | coot       | Open coot from within PyMOL.                                    |
 | jmol       | Open Jmol from within PyMOL.                                    |
 | vmd        | Open vmd from within PyMOL.                                     |
-| yasara     | Open the molecular graphics prograom YASASRA from within PyMOL. | 
+| yasara     | Open the molecular graphics program YASASRA from within PyMOL. | 
 
 
 ##  Molecular representation, additional styles.
@@ -314,7 +314,7 @@ These functions are useful if you do not have these files under version control.
 | AOBW       | Commands to make ambient occlusion image like those in Qutemole but coloring with grayscale.             |
 | AOD        | Make ambient occlusion image of any with dark carbon atoms.                                              |
 | AODBW      | Make ambient occlusion image of any with dark carbon atoms in grayscale.                                 |
-| BU         | Commands to make biological unit.                                                                        |
+| BU         | Commands to make the biological unit.                                                                        |
 | BW         | Make black-and white-ribbon cartoon on a white background.                                               |
 | CB         | Runs Jared Sampson's script "colorblindfriendly.py".                                                     |
 | CBSS       | Apply colorblind-friendly coloring to ribbon or cartoon representations.                                 |
@@ -344,7 +344,7 @@ These functions are useful if you do not have these files under version control.
 | tvdwbw     | Transparent vdw surface by Robert Paton at Colorado State University and grayscale by gscale function.   | 
 
 
-##  Molecular surfaces, color by biophysical properties.
+##  Molecular surfaces, colored by biophysical properties.
 | Shortcut   | Short Description                                                                            |
 |:-----------|:--------------------------------------------------------------------------------------------|
 | colorh1    | Color protein molecules according to the Eisenberg hydrophobicity scale. Uses scheme 1.     |
